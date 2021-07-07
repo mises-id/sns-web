@@ -1,24 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import { ConfigProvider ,Button} from 'zarm';
+import enUS from 'zarm/lib/config-provider/locale/en_US';
+import 'zarm/dist/zarm.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ConfigProvider locale={enUS} primaryColor="#1890ff">
+      <div style={{ width: 400, margin: '100px auto' }}>
+        <Button theme="primary">Hello World!</Button>
+      </div>
+    </ConfigProvider>
   );
 }
 
