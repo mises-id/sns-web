@@ -1,8 +1,9 @@
-
+//English langage
 const enUS = {
   translation:{
-    loading:'hhhhhhh',
-    aaa:'yoyoyooyoyoyo'
+    follow:'Follows',
+    found:'Found',
+    myself:'Myself'
   }
 }
 export default enUS

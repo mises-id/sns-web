@@ -2,9 +2,9 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 /**
- * 根据路由配置生成相应路由
- * @param {array} routeConfig 路由配置
- * @param {string} parentPath 父级路由
+ * The corresponding route is generated according to the route configuration
+ * @param {array} routeConfig route config
+ * @param {string} parentPath parent Path
  */
 export function routes(routeConfig, parentPath = '') {
     if (!routeConfig || routeConfig.length === 0) {
@@ -14,7 +14,7 @@ export function routes(routeConfig, parentPath = '') {
         routeConfig.map(route => (
             <Route path={parentPath + route.path} key={parentPath + route.path} exact={route.exact} render={(props) => (
                 <route.component {...props}>
-                    {/* 在父级路由通过 this.props.children 即可添加嵌套路由*/}
+                    {/* The nested route can be added through this.props.children in the parent route*/}
                     {routes(route.routes, parentPath + route.path)}
                 </route.component>
             )} />
@@ -23,7 +23,7 @@ export function routes(routeConfig, parentPath = '') {
 }
 
 /**
- * 调用示例
+ * example
  * 
     export const getHomeData = (userId) => {
         return {
@@ -106,9 +106,9 @@ export function createReducer(initialState, handlers) {
 }
 
 /**
- * 异步加载组件
- * @param load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
- * @returns {AsyncComponent} 返回一个高阶组件用于封装需要异步加载的组件
+ * Loading components asynchronously
+ * @param load Component load function, the load function will return a promise, when the file load is completed, resolve
+ * @returns {AsyncComponent} Returns a HOC component that encapsulates the component that needs to be loaded asynchronously
  */
 export function getAsyncComponent(load) {
     return class AsyncComponent extends React.Component {

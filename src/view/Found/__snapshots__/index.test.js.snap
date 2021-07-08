@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Found should render correctly 1`] = `
+<div>
+  发现
+</div>
+`;

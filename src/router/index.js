@@ -6,25 +6,25 @@ const Follows = getAsyncComponent(() => import(/* webpackChunkName: 'pageFollow'
 const Myself = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/Myself'))
 
 const routeConfig = [
-    {
-        path: '/home',
-        component: Home,
-        routes: [
-            {
-                path: '/',
-                component: Follows,
-                exact: true
-            },
-            {
-                path: '/found',
-                component: Found
-            },
-            {
-                path: '/myself',
-                component: Myself
-            }
-        ]
-    }
+	{
+		path: '/home',
+		component: Home,
+		routes: [
+			{
+				path: '/',
+				component: Follows,
+				exact: true
+			},
+			{
+				path: '/found',
+				component: Found
+			},
+			{
+				path: '/myself',
+				component: Myself
+			}
+		]
+	}
 ]
 
 export default routeConfig
