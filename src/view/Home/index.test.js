@@ -1,9 +1,9 @@
 import React from 'react';
+import Home from './';
 import {shallow } from 'enzyme';
-import Found from './';
-describe('Found', () => {
+describe('Home', () => {
   it('should render correctly', () => {
-    const component = shallow(<Found></Found>)
+    const component = shallow(<Home></Home>)
     expect(component).toMatchSnapshot();
   });
 });

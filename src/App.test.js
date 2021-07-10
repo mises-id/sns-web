@@ -1,8 +1,6 @@
 import React from 'react';
 import App from './App';
-import { shallow,configure } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-configure({ adapter: new Adapter() });
+import { shallow } from 'enzyme';
 describe('App', () => {
   it('should render correctly', () => {
     const component = shallow(<App></App>)

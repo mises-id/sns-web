@@ -1,3 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App should render correctly 1`] = `ShallowWrapper {}`;
+exports[`App should render correctly 1`] = `
+<ConfigProvider
+  locale={
+    Object {
+      "ActionSheet": Object {
+        "cancelText": "Cancel",
+      },
+      "Alert": Object {
+        "cancelText": "Close",
+      },
+      "Confirm": Object {
+        "cancelText": "Cancel",
+        "okText": "OK",
+      },
+      "DatePicker": Object {
+        "cancelText": "Cancel",
+        "okText": "OK",
+        "title": "please select",
+      },
+      "DatePickerView": Object {
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "month": "",
+        "year": "",
+      },
+      "DateSelect": Object {
+        "placeholder": "please select",
+      },
+      "ImagePreview": Object {
+        "loadBefore": "load origin",
+        "loadEnd": "loading completed",
+        "loadStart": "loading",
+      },
+      "Keyboard": Object {
+        "okText": "OK",
+      },
+      "Picker": Object {
+        "cancelText": "Cancel",
+        "okText": "OK",
+        "title": "please select",
+      },
+      "Pull": Object {
+        "completeText": "loading completed",
+        "dropText": "release to refresh",
+        "failureText": "failed to load",
+        "loadingText": "loading",
+        "pullText": "pull down to refresh",
+        "successText": "loaded successfully",
+      },
+      "SearchBar": Object {
+        "cancelText": "Cancel",
+        "placeholder": "Search",
+      },
+      "Select": Object {
+        "placeholder": "please select",
+      },
+      "StackPicker": Object {
+        "cancelText": "Cancel",
+        "okText": "OK",
+      },
+      "locale": "en-US",
+    }
+  }
+  primaryColor="#5c65f6"
+  theme="light"
+>
+  <Provider
+    store={
+      Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+  >
+    <PersistGate
+      loading={null}
+      persistor={
+        Object {
+          "@@observable": [Function],
+          "dispatch": [Function],
+          "flush": [Function],
+          "getState": [Function],
+          "pause": [Function],
+          "persist": [Function],
+          "purge": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        }
+      }
+    >
+      <BrowserRouter>
+        <Switch>
+          <Route
+            key="/home"
+            path="/home"
+            render={[Function]}
+          />
+          <Redirect
+            to="/home"
+          />
+        </Switch>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
+</ConfigProvider>
+`;

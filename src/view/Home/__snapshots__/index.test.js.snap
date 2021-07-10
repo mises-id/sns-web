@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home should render correctly 1`] = `
+<div>
+  <Tabs
+    direction="horizontal"
+    disabled={false}
+    lineWidth={5}
+    onChange={[Function]}
+    prefixCls="za-tabs"
+    scrollable={false}
+    swipeable={true}
+    value={0}
+  >
+    <TabPanel
+      key="/home"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className="active"
+        >
+          follow
+        </span>
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": 500,
+          }
+        }
+      />
+    </TabPanel>
+    <TabPanel
+      key="/home/found"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className=""
+        >
+          found
+        </span>
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": 500,
+          }
+        }
+      />
+    </TabPanel>
+    <TabPanel
+      key="/home/myself"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className=""
+        >
+          myself
+        </span>
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": 500,
+          }
+        }
+      />
+    </TabPanel>
+  </Tabs>
+</div>
+`;

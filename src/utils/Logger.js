@@ -15,7 +15,7 @@ export default class Logger {
    * @param {object} args - data to be logged
    * @returns - void
    */
-  static async log(...args) {
+  static  log(...args) {
     // Check if user passed accepted opt-in to metrics
     if (__DEV__) {
       args.unshift(DEBUG);
@@ -30,7 +30,7 @@ export default class Logger {
    * @param {string|object} extra - Extra error info
    * @returns - void
    */
-  static async error(error, extra) {
+  static  error(error, extra) {
     // Check if user passed accepted opt-in to metrics
     const metricsOptIn =  localStorage.getItem(METRICS_OPT_IN);
     if (__DEV__) {
@@ -92,7 +92,7 @@ export default class Logger {
    * @param {object} args - data to be logged
    * @returns - void
    */
-  static async message(...args) {
+  static  message(...args) {
     // Check if user passed accepted opt-in to metrics
     if (__DEV__) {
       args.unshift(DEBUG);
