@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment should render correctly 1`] = `
+<div
+  className="m-flex m-flex-col page"
+>
+  <NavBar
+    left={
+      <Icon
+        onClick={[Function]}
+        prefixCls="za-icon"
+        size="sm"
+        theme="default"
+        type="arrow-left"
+        viewBox="0 0 32 32"
+      />
+    }
+    prefixCls="za-nav-bar"
+    title="commentPageTitle"
+  />
+  <div
+    className="m-padding-left15 m-flex-1 commentBox"
+  >
+    <ForwardRef(forwardRef)
+      className="m-layout"
+      load={
+        Object {
+          "distance": 200,
+          "handler": [Function],
+          "state": 0,
+        }
+      }
+      refresh={
+        Object {
+          "handler": [Function],
+          "state": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    className="footer m-bg-fff"
+  >
+    <div
+      className="m-flex"
+    >
+      <Image
+        size={30}
+      />
+      <div
+        className="comment m-flex-1 m-flex m-padding-lr15"
+      >
+        <div
+          className="m-margin-right5"
+        >
+          <Image
+            shape="square"
+            size={16}
+            source="write.png"
+          />
+        </div>
+        <Input
+          placeholder="Write a comment..."
+          type="text"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

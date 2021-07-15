@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image should render correctly 1`] = `
+<img
+  alt="avatar"
+  className="border-circle"
+  src="normal.png"
+  style={
+    Object {
+      "height": "40px",
+      "width": "40px",
+    }
+  }
+/>
+`;

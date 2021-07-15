@@ -1,2 +1,180 @@
-.aaa{
+/*
+ * @Author: lmk
+ * @Date: 2021-07-08 13:15:26
+ * @LastEditTime: 2021-07-15 16:16:54
+ * @LastEditors: lmk
+ * @Description: common style
+ */
+/*var*/
+$themeBg:#F8F8F8;
+//normallize
+p{
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+  white-space: break-spaces;
+  line-height:19px;
+}
+/*padding margin style*/
+$mpType:padding margin;
+$mpDirection:left top bottom right;
+$mpSize:5 8 10 12 15 20;
+$mpSecondDirection:tb lr;
+@each $mt in $mpType {
+  //padding margin 
+  @each $ms in $mpSize {
+    .m-#{$mt}#{$ms}{
+      #{$mt}: #{$ms}px;
+    }
+  }
+  //padding&&margintop/left/right/bottom
+  @each $md in $mpDirection {
+    @each $ms in $mpSize {
+      .m-#{$mt}-#{$md}#{$ms}{
+        #{$mt}-#{$md}: #{$ms}px;
+      }
+    }
+  }
+  //padding&&marginlr/tb
+  @each $msd in $mpSecondDirection {
+    @each $ms in $mpSize {
+      .m-#{$mt}-#{$msd}#{$ms}{
+        @if $msd=='tb' {
+          #{$mt}-top:#{$ms}px;
+          #{$mt}-bottom:#{$ms}px;
+        }
+        @if $msd=='lr' {
+          #{$mt}-left:#{$ms}px;
+          #{$mt}-right:#{$ms}px;
+        }
+      }
+    }
+  }
+}
+/*position style*/
+$positon:relative fixed absolute;
+@each $var in $positon {
+	.m-position-#{$var}{
+		position: #{$var};
+	}
+}
+
+/*colors style*/
+$positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555; 
+@each $var in $positon {
+	.m-colors-#{$var}{
+    $unquote:'#';
+		color: #{$unquote}#{$var};
+	}
+  .m-bg-#{$var}{
+    $unquote:'#';
+		background-color: #{$unquote}#{$var};
+	}
+}
+/*mobile 1px line*/
+@mixin line($color){
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: scaleY(.5);
+  background-color: $color;
+}
+@mixin lineStyle($position,$color){
+  position: relative;
+  @if $position=='bottom' {
+    &::after{
+      @include line($color);
+      bottom: 0;
+    }
+  }
+  @if $position=='top' {
+    &::before{
+      @include line($color);
+      top: 0;
+    }
+  }
+}
+@mixin lineClass($position,$color){
+  &-#{$position}{
+    @include lineStyle($position,$color)
+  }
+}
+.m-line{
+  @include lineClass(bottom,#EEEEEE );
+  @include lineClass(top,#EEEEEE )
+}
+/*flex*/
+.m-flex{
+  display: flex;
+  align-items: center;
+  &.m-row{
+    &-between{
+      justify-content: space-between;
+    }
+    &-right{
+      justify-content: right;
+    }
+    &-center{
+      justify-content: center;
+    }
+  }
+  &-1{
+    flex: 1;
+  }
+  &-col{
+    align-items:inherit;
+    flex-direction: column;
+  }
+  &.m-col{
+    &-top{
+      align-items:flex-start;
+    }
+  }
+}
+/*font size*/
+$size:12 13 15 16;
+@each $var in $size {
+	.m-font#{$var}{
+		font-size: #{$var}px;
+	}
+}
+/*border radius*/
+.border{
+  &-circle{
+    border-radius: 50%;
+  }
+  &-square{
+    border-radius: 1px;
+  }
+}
+/* text align*/
+$align:center left right;
+@each $var in $align {
+	.m-text-#{$var}{
+		text-align: #{$var};
+	}
+}
+/**
+ * @description: common className
+ */
+ @mixin title($size) {
+  font-weight: bold;
+  font-size: $size+px;
+ }
+.m-title{
+  @include title(20)
+}
+
+.m-layout{
+  overflow-y: auto;
+  height: calc(100vh - 45px)
+}
+.za-nav-bar{
+  background: white;
+  @include lineStyle(bottom,#EEEEEE );
+}
+.page{
+  height: 100vh;
 }

@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link should render correctly 1`] = `
+<div
+  className="m-flex m-row-between forwardBox m-bg-f8f8f8"
+>
+  <div
+    className="m-flex"
+  >
+    <Image
+      shape="square"
+      size="sm"
+    />
+    <div
+      className="m-margin-left8"
+    >
+      <span
+        className="m-font12"
+      >
+        Alice
+      </span>
+      <p
+        className="timeAndType m-margin-top5 m-colors-999"
+      >
+        05.25
+        <span
+          className="m-margin-left5"
+        >
+          post
+        </span>
+      </p>
+    </div>
+  </div>
+  <img
+    alt="link"
+    className="iconStyle m-margin-right5"
+    src="link.png"
+  />
+</div>
+`;

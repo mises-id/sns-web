@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserHeader should render correctly 1`] = `
+<div
+  className="m-flex m-row-between normal"
+>
+  <div
+    className="m-flex"
+  >
+    <Image />
+    <div
+      className="m-margin-left12"
+    >
+      <span
+        className="nickname"
+      >
+        Alice
+      </span>
+      <div
+        className="timeAndType m-margin-top8"
+      >
+        05.25
+        <span
+          className="m-margin-left5"
+        >
+          post
+        </span>
+      </div>
+    </div>
+  </div>
+  <Button
+    block={false}
+    disabled={false}
+    ghost={true}
+    htmlType="button"
+    icon={
+      <Icon
+        className="followIcon"
+        prefixCls="za-icon"
+        size="md"
+        theme="primary"
+        type="add"
+        viewBox="0 0 32 32"
+      />
+    }
+    loading={false}
+    prefixCls="za-button"
+    shadow={false}
+    shape="round"
+    size="xs"
+    theme="primary"
+  >
+    <div
+      className="m-font12"
+    >
+      followTxt
+    </div>
+  </Button>
+</div>
+`;

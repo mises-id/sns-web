@@ -94,18 +94,38 @@ exports[`App should render correctly 1`] = `
         }
       }
     >
-      <BrowserRouter>
-        <Switch>
-          <Route
+      <Component>
+        <Component>
+          <Component
             key="/home"
             path="/home"
             render={[Function]}
           />
-          <Redirect
+          <Component
+            key="/userInfo"
+            path="/userInfo"
+            render={[Function]}
+          />
+          <Component
+            key="/follow"
+            path="/follow"
+            render={[Function]}
+          />
+          <Component
+            key="/post"
+            path="/post"
+            render={[Function]}
+          />
+          <Component
+            key="/comment"
+            path="/comment"
+            render={[Function]}
+          />
+          <Component
             to="/home"
           />
-        </Switch>
-      </BrowserRouter>
+        </Component>
+      </Component>
     </PersistGate>
   </Provider>
 </ConfigProvider>

@@ -9,6 +9,7 @@ import { routes } from './utils/reactUtil';
 import { Provider } from 'react-redux';
 import { persistor, store } from './stores';
 import {PersistGate} from 'redux-persist/lib/integration/react';
+import { hot } from 'react-hot-loader/root'
 function App() {
   return (
     <ConfigProvider locale={enUS} primaryColor="#5c65f6">
@@ -26,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default process.env.NODE_ENV === "development" ? hot(App) : App;

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cell should render correctly 1`] = `
+<div
+  className="m-flex m-row-between m-padding-tb20  m-line-bottom"
+>
+  <div
+    className="m-flex"
+  >
+    <span
+      className="m-colors-333 m-font16 "
+    >
+      test
+    </span>
+  </div>
+  <div
+    className="m-flex"
+  >
+    <img
+      alt=""
+      className="arrow"
+      src="arrow.png"
+    />
+  </div>
+</div>
+`;

@@ -1,5 +1,18 @@
 .active{
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 19px;
+  font-weight: bolder;
   transition: all .2s;
+}
+.unactive{
+  color: #666666;
+  font-size: 15px;
+}
+.za-tabs--horizontal .za-tabs__tablist{
+  height: 50px;
+}
+.za-tabs--horizontal .za-tabs__line{
+  height: 4px;
+  .za-tabs__line__inner{
+    border-radius: 10px;
+  }
 }

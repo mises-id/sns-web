@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Me should render correctly 1`] = `
+<div
+  className="m-layout"
+>
+  <div
+    className="m-padding-top15  m-bg-f8f8f8"
+  />
+  <div
+    className="m-padding-lr15"
+  >
+    <Cell
+      iconSize={60}
+      label="Susan"
+      onPress={[Function]}
+    />
+    <Cell
+      icon="following.png"
+      iconSize={20}
+      key="0"
+      label="following"
+      onPress={[Function]}
+      showLine={false}
+    />
+    <Cell
+      icon="followers.png"
+      iconSize={20}
+      key="1"
+      label="followers"
+      onPress={[Function]}
+      showLine={false}
+    />
+    <Cell
+      icon="post.png"
+      iconSize={20}
+      key="2"
+      label="posts"
+      onPress={[Function]}
+      showLine={false}
+    />
+  </div>
+</div>
+`;

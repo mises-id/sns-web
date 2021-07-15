@@ -1,0 +1,76 @@
+.followBox{
+  background-color:  $themeBg;
+}
+.normal{
+  .timeAndType{
+    font-size: 11px;
+  }
+  .nickname{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .za-button--xs{
+    height: 25px;
+    padding: 0 10px;
+    .za-icon.followIcon{
+      font-size: 10px;
+    }
+  }
+}
+.forward{
+  .timeAndType{
+    font-size: 9px;
+  }
+  .nickname{
+    font-size: 13px;
+  }
+  .za-button--xs{
+    height: 20px;
+    padding: 0 6px;
+    .za-icon.followIcon{
+      font-size: 10px;
+    }
+  }
+}
+
+.itemContent{
+  line-height: 19px;
+  color: #222;
+  word-break: break-all;
+  white-space: break-spaces;
+}
+.forwardBox{
+  border-radius: 3px;
+  padding: 6px;
+}
+.iconStyle{
+  width: 15px;
+  height: 15px;
+}
+.itemFunctionBox{
+  .m-flex{
+    &:not(:first-child){
+      margin-left: 50px;
+    }
+  }
+}
+.comment{
+  margin-left: 5px;
+  height: 40px;
+  border-radius: 500px;
+  background-color: $themeBg;
+}
+.commentNickname{
+  @include title(15)
+}
+.footerBtn{
+  width: 133px;
+  margin: 15px auto 30px;
+  .za-icon--arrow-right{
+    font-size: 8px;
+    margin-left: 7px;
+  }
+  .za-button{
+    height: 33px;
+  }
+}

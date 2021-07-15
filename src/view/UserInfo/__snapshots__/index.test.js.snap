@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserInfo should render correctly 1`] = `
+<div>
+  <NavBar
+    left={
+      <Icon
+        onClick={[Function]}
+        prefixCls="za-icon"
+        size="sm"
+        theme="default"
+        type="arrow-left"
+        viewBox="0 0 32 32"
+      />
+    }
+    prefixCls="za-nav-bar"
+    title="userInfoPageTitle"
+  />
+  <div
+    className="m-layout m-bg-f8f8f8"
+  >
+    <div
+      className="m-bg-fff"
+    >
+      <Cell
+        className="m-padding-lr15"
+        label="avatar"
+        rightChild={
+          <Image
+            size={35}
+          />
+        }
+        showIcon={false}
+      />
+      <Cell
+        className="m-padding-lr15"
+        label="username"
+        rightChild={
+          <Input
+            placeholder="placeholder"
+            type="text"
+          />
+        }
+        showIcon={false}
+      />
+      <Cell
+        className="m-padding-lr15"
+        label="gender"
+        rightChild={
+          <Input
+            placeholder="placeholder"
+            type="text"
+          />
+        }
+        showIcon={false}
+      />
+      <Cell
+        className="m-padding-lr15"
+        label="phone"
+        rightChild={
+          <Input
+            placeholder="placeholder"
+            type="text"
+          />
+        }
+        showIcon={false}
+      />
+      <Cell
+        className="m-padding-lr15"
+        label="mail"
+        rightChild={
+          <Input
+            placeholder="placeholder"
+            type="text"
+          />
+        }
+        showIcon={false}
+      />
+      <Cell
+        className="m-padding-lr15"
+        label="address"
+        rightChild={
+          <Input
+            placeholder="placeholder"
+            type="text"
+          />
+        }
+        showIcon={false}
+      />
+    </div>
+  </div>
+</div>
+`;
