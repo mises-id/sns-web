@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GreatePosts should render correctly 1`] = `
+<div>
+  <NavBar
+    left={
+      <span
+        className="m-font16"
+        onClick={[Function]}
+      >
+        cancel
+      </span>
+    }
+    prefixCls="za-nav-bar"
+    right={
+      <div
+        style={
+          Object {
+            "width": "61px",
+          }
+        }
+      >
+        <Button
+          block={true}
+          disabled={false}
+          ghost={false}
+          htmlType="button"
+          loading={false}
+          prefixCls="za-button"
+          shadow={false}
+          shape="round"
+          size="xs"
+          theme="primary"
+        >
+          send
+        </Button>
+      </div>
+    }
+  />
+  <div
+    className="m-layout m-bg-f8f8f8"
+  >
+    <div
+      className="m-padding15"
+    >
+      <Input
+        className="m-font17"
+        placeholder="placeholder..."
+        rows={10}
+        type="text"
+      />
+    </div>
+  </div>
+</div>
+`;

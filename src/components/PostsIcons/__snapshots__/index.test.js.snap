@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostsIcon should render correctly 1`] = `
+<div
+  className="m-margin-top12 m-flex itemFunctionBox"
+>
+  <div
+    className="m-flex"
+    onClick={[Function]}
+  >
+    <img
+      alt="like"
+      className="iconStyle"
+      src="like.png"
+    />
+    <span
+      className="m-font12 m-margin-left8 m-colors-333"
+    >
+      235
+    </span>
+  </div>
+  <div
+    className="m-flex"
+  >
+    <img
+      alt="comment"
+      className="iconStyle"
+      src="comment.png"
+    />
+    <span
+      className="m-font12 m-colors-333 m-margin-left8"
+    >
+      68
+    </span>
+  </div>
+  <div
+    className="m-flex"
+    onClick={[Function]}
+  >
+    <img
+      alt="forward"
+      className="iconStyle"
+      src="forward.png"
+    />
+    <span
+      className="m-font12 m-colors-333 m-margin-left8"
+    >
+      34
+    </span>
+  </div>
+</div>
+`;

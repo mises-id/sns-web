@@ -4,7 +4,7 @@ exports[`Image should render correctly 1`] = `
 <img
   alt="avatar"
   className="border-circle"
-  src="normal.png"
+  src="head.png"
   style={
     Object {
       "height": "40px",

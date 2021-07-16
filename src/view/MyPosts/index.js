@@ -1,10 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import { Pull } from 'zarm';
+/*
+ * @Author: lmk
+ * @Date: 2021-07-15 23:43:29
+ * @LastEditTime: 2021-07-16 13:54:59
+ * @LastEditors: lmk
+ * @Description: my post page
+ */
+import React, {  useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Icon, NavBar, Pull } from 'zarm';
+import UserHeader from '../Follows/UserHeader';
+import Link from '../Follows/Link';
 import '@/styles/followPage.scss'
-import UserHeader from './UserHeader/index';
-import Link from './Link';
 import PostsIcons from '@/components/PostsIcons';
-import Empty from '@/components/Empty';
+import Image from '@/components/Image';
+import send from '@/images/send.png'
+import './index.scss'
 const REFRESH_STATE = {
   normal: 0, 
   pull: 1, 
@@ -22,12 +32,8 @@ const LOAD_STATE = {
   failure: 4, 
   complete: 5, 
 };
-
-
-
 let mounted = true;
-
-const Follow = ({history}) => {
+const MyPosts = ({history}) => {
   const pullRef = useRef();
   const [dataSource, setDataSource] = useState([]);
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
@@ -58,13 +64,9 @@ const Follow = ({history}) => {
   const goDetail = ()=>{
     history.push({pathname:'/post'})
   }
-  const forwardPress = (e,val)=>{
-    e.stopPropagation();
-    history.push({pathname:'forward'})
-  }
   const renderView =(val={},index)=>{
     return <div key={index} className="m-padding15 m-bg-fff m-line-bottom" onClick={()=>goDetail(val)}>
-      <UserHeader></UserHeader>
+      <UserHeader  btnType="myPosts"  ></UserHeader>
       <p className="itemContent m-font15 m-padding-tb15">It's a great website, share with you. Wow!!! Come and play with me.</p>
       {/* example */}
       {index===0&&<Link theme="primary"></Link>}
@@ -74,7 +76,7 @@ const Follow = ({history}) => {
         <Link theme="white"></Link>
         </div>}
       <div className="m-margin-top12">
-        <PostsIcons likePress={setLike} item={val} forwardPress={forwardPress}></PostsIcons>
+        <PostsIcons likePress={setLike} item={val}></PostsIcons>
       </div>
     </div>
   }
@@ -106,18 +108,23 @@ const Follow = ({history}) => {
     }, 2000);
   };
   useEffect(() => {
-    //fetchData(20)
+    fetchData(20)
     return () => {
       mounted = false;
     };
   }, []);
-
-  return (
-    <div className="followBox">
-      <Pull
+  const createPosts = ()=>{
+    history.push({pathname:'/createPosts'})
+  }
+  const {t} = useTranslation()
+  return <div>
+    <NavBar
+      left={<Icon type="arrow-left" size="sm" onClick={() => window.history.back()} />}
+      title={t('myPostPageTitle')}
+    />
+    <Pull
       ref={pullRef}
       className="m-layout"
-      style={{paddingTop:'10px'}}
       refresh={{
         state: refreshing,
         handler: refreshData,
@@ -128,10 +135,10 @@ const Follow = ({history}) => {
         handler: loadData,
       }}>
       {dataSource.map(renderView)}
-      {loading!==2&&<Empty></Empty>}
-
     </Pull>
+    <div className="m-position-fixed createPosts">
+      <Image size={75} onClick={createPosts} source={send}></Image>
     </div>
-  );
-};
-export default Follow;
+  </div>
+}
+export default MyPosts

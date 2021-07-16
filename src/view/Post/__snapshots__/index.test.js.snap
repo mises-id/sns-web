@@ -47,50 +47,12 @@ exports[`Post should render correctly 1`] = `
           />
         </div>
         <div
-          className="m-margin-top12 m-flex itemFunctionBox"
+          className="m-margin-top12"
         >
-          <div
-            className="m-flex"
-          >
-            <img
-              alt="like"
-              className="iconStyle"
-              src="like.png"
-            />
-            <span
-              className="m-font12 m-margin-left8 m-colors-333"
-            >
-              235
-            </span>
-          </div>
-          <div
-            className="m-flex"
-          >
-            <img
-              alt="comment"
-              className="iconStyle"
-              src="comment.png"
-            />
-            <span
-              className="m-font12 m-colors-333 m-margin-left8"
-            >
-              68
-            </span>
-          </div>
-          <div
-            className="m-flex"
-          >
-            <img
-              alt="share"
-              className="iconStyle"
-              src="share.png"
-            />
-            <span
-              className="m-font12 m-colors-333 m-margin-left8"
-            >
-              34
-            </span>
-          </div>
+          <PostsIcons
+            item={Object {}}
+            likePress={[Function]}
+          />
         </div>
       </div>
     </div>

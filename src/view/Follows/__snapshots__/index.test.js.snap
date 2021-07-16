@@ -24,6 +24,8 @@ exports[`Follows should render correctly 1`] = `
         "paddingTop": "10px",
       }
     }
-  />
+  >
+    <Empty />
+  </ForwardRef(forwardRef)>
 </div>
 `;

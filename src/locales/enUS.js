@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-07-15 16:12:20
+ * @LastEditTime: 2021-07-16 00:22:51
  * @LastEditors: lmk
  * @Description: 
  */
@@ -27,12 +27,16 @@ const enUS = {
     phone:"Phone",
     mail:"Mail",
     address:'Address',
-    placeholder:'Please input the content',
+    placeholder:'Please enter the content',
     followingPageTitle:'Following',
     followersPageTitle:'Followers',
     postPageTitle:"Post",
     lookAtAll:"Look at all",
-    commentPageTitle:'Comment'
+    commentPageTitle:'Comment',
+    myPostPageTitle:'My Posts',
+    cancel:'Cancel',
+    send:'Send',
+    empty:'Data is empty~'
   }
 }
 export default enUS

@@ -122,6 +122,21 @@ exports[`App should render correctly 1`] = `
             render={[Function]}
           />
           <Component
+            key="/myPosts"
+            path="/myPosts"
+            render={[Function]}
+          />
+          <Component
+            key="/createPosts"
+            path="/createPosts"
+            render={[Function]}
+          />
+          <Component
+            key="/forward"
+            path="/forward"
+            render={[Function]}
+          />
+          <Component
             to="/home"
           />
         </Component>

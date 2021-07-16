@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-07-15 16:42:50
+ * @LastEditTime: 2021-07-15 23:51:07
  * @LastEditors: lmk
  * @Description: 
  */
@@ -27,7 +27,7 @@ const Myself = ({history})=>{
   },{
     label:t('posts'),
     icon:post,
-    url:''
+    url:'/myPosts'
   }]
   const userInfo = ()=>{
     history.push('/userInfo')

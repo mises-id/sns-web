@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyPost should render correctly 1`] = `
+<div>
+  <NavBar
+    left={
+      <Icon
+        onClick={[Function]}
+        prefixCls="za-icon"
+        size="sm"
+        theme="default"
+        type="arrow-left"
+        viewBox="0 0 32 32"
+      />
+    }
+    prefixCls="za-nav-bar"
+    title="myPostPageTitle"
+  />
+  <ForwardRef(forwardRef)
+    className="m-layout"
+    load={
+      Object {
+        "distance": 200,
+        "handler": [Function],
+        "state": 0,
+      }
+    }
+    refresh={
+      Object {
+        "handler": [Function],
+        "state": 0,
+      }
+    }
+  />
+  <div
+    className="m-position-fixed createPosts"
+  >
+    <Image
+      onClick={[Function]}
+      size={75}
+      source="send.png"
+    />
+  </div>
+</div>
+`;

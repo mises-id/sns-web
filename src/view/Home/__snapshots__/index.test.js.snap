@@ -1,48 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Home should render correctly 1`] = `
-<Tabs
-  direction="horizontal"
-  disabled={false}
-  lineWidth={10}
-  onChange={[Function]}
-  prefixCls="za-tabs"
-  scrollable={false}
-  swipeable={true}
-  value={2}
->
-  <TabPanel
-    key="/home"
+<div>
+  <Tabs
+    direction="horizontal"
+    disabled={false}
+    lineWidth={10}
+    onChange={[Function]}
     prefixCls="za-tabs"
-    title={
-      <span
-        className="unactive"
-      >
-        follow
-      </span>
-    }
-  />
-  <TabPanel
-    key="/home/discover"
-    prefixCls="za-tabs"
-    title={
-      <span
-        className="unactive"
-      >
-        discover
-      </span>
-    }
-  />
-  <TabPanel
-    key="/home/me"
-    prefixCls="za-tabs"
-    title={
-      <span
-        className="active"
-      >
-        me
-      </span>
-    }
-  />
-</Tabs>
+    scrollable={false}
+    swipeable={false}
+    value={0}
+  >
+    <TabPanel
+      key="/home"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className="active"
+        >
+          follow
+        </span>
+      }
+    />
+    <TabPanel
+      key="/home/discover"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className="unactive"
+        >
+          discover
+        </span>
+      }
+    />
+    <TabPanel
+      key="/home/me"
+      prefixCls="za-tabs"
+      title={
+        <span
+          className="unactive"
+        >
+          me
+        </span>
+      }
+    />
+  </Tabs>
+  <div
+    className="m-position-fixed createPosts"
+  >
+    <Image
+      onClick={[Function]}
+      size={75}
+      source="send.png"
+    />
+  </div>
+</div>
 `;

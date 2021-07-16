@@ -17,7 +17,7 @@ exports[`UserHeader should render correctly 1`] = `
         Alice
       </span>
       <div
-        className="timeAndType m-margin-top8"
+        className="timeAndType m-margin-top5"
       >
         05.25
         <span
@@ -50,11 +50,7 @@ exports[`UserHeader should render correctly 1`] = `
     size="xs"
     theme="primary"
   >
-    <div
-      className="m-font12"
-    >
-      followTxt
-    </div>
+    followTxt
   </Button>
 </div>
 `;

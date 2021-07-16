@@ -1,16 +1,16 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 10:12:21
- * @LastEditTime: 2021-07-15 10:42:47
+ * @LastEditTime: 2021-07-16 14:16:42
  * @LastEditors: lmk
- * @Description: image test
+ * @Description: PostsIcon test
  */
 import React from 'react';
 import {shallow} from 'enzyme';
-import Image from '.';
-describe('Image', () => {
+import PostsIcon from './';
+describe('PostsIcon', () => {
   it('should render correctly', () => {
-    const component = shallow(<Image />)
+    const component = shallow(<PostsIcon />)
     expect(component).toMatchSnapshot();
   });
 });

@@ -1,0 +1,11 @@
+.itemFunctionBox{
+  .m-flex{
+    &:not(:first-child){
+      margin-left: 50px;
+    }
+  }
+}
+.iconStyle{
+  width: 15px;
+  height: 15px;
+}

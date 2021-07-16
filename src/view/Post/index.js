@@ -1,28 +1,31 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-07-15 16:43:28
+ * @LastEditTime: 2021-07-16 10:52:18
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon, Input, NavBar } from 'zarm';
-import liked from '@/images/liked.png'
-import like from '@/images/like.png'
-import comment from '@/images/comment.png'
+import '@/styles/followPage.scss'
 import write from '@/images/write.png'
-import share from '@/images/share.png'
 import UserHeader from '../Follows/UserHeader';
 import Link from '../Follows/Link';
 import './index.scss'
 import Image from '@/components/Image';
+import PostsIcons from '@/components/PostsIcons';
 const Post = ({history})=>{
   const {t} = useTranslation();
-  const [item] = useState({})
+  const [item,setitem] = useState({})
   const commentList = [{},{},{}]
   const goComment = ()=>{
     history.push({pathname:'/comment'})
+  }
+  const setLike = (e,val)=>{
+    e.stopPropagation()
+    val.liked = !val.liked;
+    setitem({...val})
   }
   return <div>
     <NavBar
@@ -39,19 +42,8 @@ const Post = ({history})=>{
             <p className="itemContent m-font13 m-padding-tb10">It's a great website, share with you. Wow!!! Come and play with me.</p>
             <Link theme="white"></Link>
           </div>
-          <div className="m-margin-top12 m-flex itemFunctionBox">
-            <div className="m-flex">
-              <img src={item.liked ? liked : like}  className="iconStyle" alt="like"></img>
-              <span className={`m-font12 m-margin-left8 ${item.liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>235</span>
-            </div>
-            <div className="m-flex">
-              <img src={comment}  className="iconStyle" alt="comment"></img>
-              <span className="m-font12 m-colors-333 m-margin-left8">68</span>
-            </div>
-            <div className="m-flex">
-              <img src={share}  className="iconStyle" alt="share"></img>
-              <span className="m-font12 m-colors-333 m-margin-left8">34</span>
-            </div>
+          <div className="m-margin-top12">
+            <PostsIcons likePress={setLike} item={item}></PostsIcons>
           </div>
         </div>
       </div>

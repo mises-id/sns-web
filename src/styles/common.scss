@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2021-07-15 16:16:54
+ * @LastEditTime: 2021-07-16 11:32:16
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -18,7 +18,7 @@ p{
 /*padding margin style*/
 $mpType:padding margin;
 $mpDirection:left top bottom right;
-$mpSize:5 8 10 12 15 20;
+$mpSize:5 8 10 12 15   20;
 $mpSecondDirection:tb lr;
 @each $mt in $mpType {
   //padding margin 
@@ -134,7 +134,7 @@ $positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555;
   }
 }
 /*font size*/
-$size:12 13 15 16;
+$size:12 13 15 16 17;
 @each $var in $size {
 	.m-font#{$var}{
 		font-size: #{$var}px;
@@ -171,9 +171,11 @@ $align:center left right;
   overflow-y: auto;
   height: calc(100vh - 45px)
 }
-.za-nav-bar{
-  background: white;
-  @include lineStyle(bottom,#EEEEEE );
+body{
+  .za-nav-bar{
+    background: white;
+    @include lineStyle(bottom,#EEEEEE );
+  }
 }
 .page{
   height: 100vh;

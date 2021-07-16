@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Empty should render correctly 1`] = `
+<div
+  className="m-text-center emptyBox"
+>
+  <img
+    alt="empty"
+    className="emptyImg"
+    src="empty.png"
+  />
+  <p
+    className="emptyTxt"
+  >
+    empty
+  </p>
+</div>
+`;

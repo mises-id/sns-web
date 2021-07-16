@@ -20,7 +20,7 @@ exports[`Link should render correctly 1`] = `
         Alice
       </span>
       <p
-        className="timeAndType m-margin-top5 m-colors-999"
+        className="timeAndType m-colors-999"
       >
         05.25
         <span

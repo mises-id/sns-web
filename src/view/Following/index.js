@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-07-15 16:42:29
+ * @LastEditTime: 2021-07-16 11:25:02
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -59,7 +59,7 @@ const Following = ({history})=>{
   };
   const renderView =(val={},index)=>{
     return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label="aaa" key={index}
-    rightChild={<img className="followIcon" src={followed} alt="followIcon"/>}></Cell>
+    rightChild={<img className="followedIcon" src={followed} alt="followIcon"/>}></Cell>
   }
   //getData
   const fetchData = (length, dataSource = []) => {
@@ -92,7 +92,6 @@ const Following = ({history})=>{
       setLoading(loadingState);
     }, 2000);
   };
-
   useEffect(() => {
     setDataSource(fetchData(20));
     return () => {

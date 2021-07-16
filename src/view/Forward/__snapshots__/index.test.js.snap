@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Forward should render correctly 1`] = `
+<div>
+  <NavBar
+    left={
+      <span
+        className="m-font16"
+        onClick={[Function]}
+      >
+        cancel
+      </span>
+    }
+    prefixCls="za-nav-bar"
+    right={
+      <div
+        style={
+          Object {
+            "width": "61px",
+          }
+        }
+      >
+        <Button
+          block={true}
+          disabled={false}
+          ghost={false}
+          htmlType="button"
+          loading={false}
+          prefixCls="za-button"
+          shadow={false}
+          shape="round"
+          size="xs"
+          theme="primary"
+        >
+          send
+        </Button>
+      </div>
+    }
+  />
+  <div
+    className="m-layout m-bg-f8f8f8"
+  >
+    <div
+      className="m-padding15"
+    >
+      <Input
+        className="m-font17"
+        placeholder="placeholder..."
+        rows={5}
+        type="text"
+      />
+      <div
+        className="m-bg-fff m-padding10 m-margin-top10"
+      >
+        <UserHeader
+          size={30}
+        />
+        <p
+          className="itemContent m-font13 m-padding-tb10"
+        >
+          It's a great website, share with you. Wow!!! Come and play with me.
+        </p>
+        <Link />
+      </div>
+    </div>
+  </div>
+</div>
+`;

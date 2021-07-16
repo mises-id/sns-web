@@ -1,12 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2021-07-15 16:15:21
+ * @LastEditTime: 2021-07-16 00:26:34
  * @LastEditors: lmk
  * @Description: routerConfig
  */
 import { getAsyncComponent } from '@/utils/reactUtil'
-
 const Home = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/Home'))
 const Follows = getAsyncComponent(() => import(/* webpackChunkName: 'pageFollow' */ '@/view/Follows'))
 const Me = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/Me'))
@@ -15,6 +14,9 @@ const CreateMisesId = getAsyncComponent(() => import(/* webpackChunkName: 'Creat
 const Following = getAsyncComponent(() => import(/* webpackChunkName: 'Following' */ '@/view/Following'))
 const Post = getAsyncComponent(() => import(/* webpackChunkName: 'Post' */ '@/view/Post'))
 const Comment = getAsyncComponent(() => import(/* webpackChunkName: 'Comment' */ '@/view/Comment'))
+const MyPosts = getAsyncComponent(() => import(/* webpackChunkName: 'MyPost' */ '@/view/MyPosts'))
+const GreatePosts = getAsyncComponent(() => import(/* webpackChunkName: 'GreatePosts' */ '@/view/GreatePosts'))
+const Forward = getAsyncComponent(() => import(/* webpackChunkName: 'Forward' */ '@/view/Forward'))
 
 const routeConfig = [
 	{
@@ -55,6 +57,18 @@ const routeConfig = [
 	{
 		path: '/comment',
 		component: Comment,
+	},
+	{
+		path: '/myPosts',
+		component: MyPosts,
+	},
+	{
+		path: '/createPosts',
+		component: GreatePosts,
+	},
+	{
+		path: '/forward',
+		component: Forward,
 	}
 ]
 
