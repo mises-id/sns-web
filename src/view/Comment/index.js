@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-07-16 11:24:38
+ * @LastEditTime: 2021-07-19 22:28:31
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -93,7 +93,7 @@ const Comment = (props)=>{
   };
 
   useEffect(() => {
-    setDataSource(fetchData(20));
+    //setDataSource(fetchData(20));
     return () => {
       mounted = false;
     };

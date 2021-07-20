@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2021-07-16 13:54:59
+ * @LastEditTime: 2021-07-19 22:28:50
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -108,7 +108,7 @@ const MyPosts = ({history}) => {
     }, 2000);
   };
   useEffect(() => {
-    fetchData(20)
+    //fetchData(20)
     return () => {
       mounted = false;
     };

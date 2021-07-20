@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-07-16 11:25:02
+ * @LastEditTime: 2021-07-19 22:28:43
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -93,7 +93,7 @@ const Following = ({history})=>{
     }, 2000);
   };
   useEffect(() => {
-    setDataSource(fetchData(20));
+    //setDataSource(fetchData(20));
     return () => {
       mounted = false;
     };

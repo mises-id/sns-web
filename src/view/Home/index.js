@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-07-16 14:17:01
+ * @LastEditTime: 2021-07-19 22:33:16
  * @LastEditors: lmk
  * @Description: 
  */
@@ -14,7 +14,7 @@ import Image from '@/components/Image';
 const {Panel} = Tabs;
 const Home = ({history,children})=>{
   const {t} = useTranslation()
-  const tab = [{ path: '/home', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }];
+  const tab = [{ path: '/home', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/createMisesId', text:t('me') }];
   const [value, setvalue] = useState(0)
   const [swipeable, setswipeable] = useState(false)
   useEffect(()=>{
