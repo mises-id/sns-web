@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-07-16 10:52:18
+ * @LastEditTime: 2021-07-23 15:11:58
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -15,6 +15,7 @@ import Link from '../Follows/Link';
 import './index.scss'
 import Image from '@/components/Image';
 import PostsIcons from '@/components/PostsIcons';
+import { liked } from '@/components/PostsIcons/common';
 const Post = ({history})=>{
   const {t} = useTranslation();
   const [item,setitem] = useState({})
@@ -23,9 +24,9 @@ const Post = ({history})=>{
     history.push({pathname:'/comment'})
   }
   const setLike = (e,val)=>{
-    e.stopPropagation()
-    val.liked = !val.liked;
-    setitem({...val})
+    liked(e,val).then(res=>{
+      setitem({...val})
+    });
   }
   return <div>
     <NavBar

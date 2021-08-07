@@ -6,4 +6,20 @@
       text-align: right;
     }
   }
+  .avatar-input{
+    width: 35px;
+    height: 35px;
+    z-index: 111;
+    opacity: 0;
+  }
+}
+.placeholder{
+  color: #adadad;
+}
+.save-box{
+  width: 80vw;
+  margin: 50px auto 0;
+}
+body .za-button--primary.za-button--loading .za-activity-indicator.za-activity-indicator--circular circle{
+  stroke:var(--theme-primary)
 }

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PullList should render correctly 1`] = `
+<Fragment>
+  <div
+    className="m-flex m-row-center m-padding20"
+  >
+    <ActivityIndicator
+      loading={true}
+      percent={20}
+      prefixCls="za-activity-indicator"
+      strokeWidth={5}
+      type="spinner"
+    />
+  </div>
+  <ForwardRef(forwardRef)
+    className="m-layout"
+    load={
+      Object {
+        "distance": 200,
+        "handler": [Function],
+        "state": 0,
+      }
+    }
+    refresh={
+      Object {
+        "handler": [Function],
+        "state": 0,
+      }
+    }
+  />
+</Fragment>
+`;

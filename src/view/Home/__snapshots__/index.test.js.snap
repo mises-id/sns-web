@@ -13,7 +13,7 @@ exports[`Home should render correctly 1`] = `
     value={0}
   >
     <TabPanel
-      key="/home"
+      key="/home/"
       prefixCls="za-tabs"
       title={
         <span
@@ -22,7 +22,9 @@ exports[`Home should render correctly 1`] = `
           follow
         </span>
       }
-    />
+    >
+      <div />
+    </TabPanel>
     <TabPanel
       key="/home/discover"
       prefixCls="za-tabs"
@@ -33,7 +35,9 @@ exports[`Home should render correctly 1`] = `
           discover
         </span>
       }
-    />
+    >
+      <div />
+    </TabPanel>
     <TabPanel
       key="/home/me"
       prefixCls="za-tabs"
@@ -44,12 +48,15 @@ exports[`Home should render correctly 1`] = `
           me
         </span>
       }
-    />
+    >
+      <div />
+    </TabPanel>
   </Tabs>
   <div
     className="m-position-fixed createPosts"
   >
     <Image
+      alt="posts"
       onClick={[Function]}
       size={75}
       source="send.png"

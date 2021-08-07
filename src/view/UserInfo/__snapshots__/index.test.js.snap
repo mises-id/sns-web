@@ -20,23 +20,34 @@ exports[`UserInfo should render correctly 1`] = `
     className="m-layout m-bg-f8f8f8"
   >
     <div
-      className="m-bg-fff"
+      className="m-bg-fff m-padding-lr15"
     >
       <Cell
-        className="m-padding-lr15"
         label="avatar"
         rightChild={
-          <Image
-            size={35}
-          />
+          <div
+            className="m-position-relative"
+          >
+            <input
+              accept="image/png,image/jpeg"
+              className="avatar-input m-position-absolute"
+              onChange={[Function]}
+              type="file"
+            />
+            <Image
+              size={35}
+            />
+          </div>
         }
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15"
         label="username"
         rightChild={
           <Input
+            clearable={false}
+            disabled={false}
+            onChange={[Function]}
             placeholder="placeholder"
             type="text"
           />
@@ -44,21 +55,23 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15"
         label="gender"
         rightChild={
-          <Input
-            placeholder="placeholder"
-            type="text"
-          />
+          <div
+            className="placeholder"
+            onClick={[Function]}
+          >
+            placeholder
+          </div>
         }
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15"
         label="phone"
         rightChild={
           <Input
+            clearable={false}
+            onChange={[Function]}
             placeholder="placeholder"
             type="text"
           />
@@ -66,10 +79,11 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15"
         label="mail"
         rightChild={
           <Input
+            clearable={false}
+            onChange={[Function]}
             placeholder="placeholder"
             type="text"
           />
@@ -77,10 +91,11 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15"
         label="address"
         rightChild={
           <Input
+            clearable={false}
+            onChange={[Function]}
             placeholder="placeholder"
             type="text"
           />
@@ -88,6 +103,135 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
     </div>
+    <div
+      className="m-padding20 save-box"
+    >
+      <Button
+        block={true}
+        disabled={false}
+        ghost={true}
+        htmlType="button"
+        loading={false}
+        onClick={[Function]}
+        prefixCls="za-button"
+        shadow={false}
+        shape="round"
+        size="md"
+        theme="primary"
+      >
+        send
+      </Button>
+    </div>
   </div>
+  <Modal
+    animationDuration={200}
+    animationType="slideUp"
+    closable={false}
+    destroy={true}
+    footer={
+      <React.Fragment>
+        <div
+          className="m-flex-1 m-padding-lr10"
+        >
+          <Button
+            block={true}
+            disabled={false}
+            ghost={true}
+            htmlType="button"
+            loading={false}
+            onClick={[Function]}
+            prefixCls="za-button"
+            shadow={false}
+            shape="round"
+            size="sm"
+            theme="primary"
+          >
+            cancel
+          </Button>
+        </div>
+        <div
+          className="m-flex-1 m-padding-lr10"
+        >
+          <Button
+            block={true}
+            disabled={false}
+            ghost={true}
+            htmlType="button"
+            loading={false}
+            onClick={[Function]}
+            prefixCls="za-button"
+            shadow={false}
+            shape="round"
+            size="sm"
+            theme="primary"
+          >
+            send
+          </Button>
+        </div>
+      </React.Fragment>
+    }
+    hasFooter={true}
+    mask={true}
+    maskClosable={true}
+    maskType="normal"
+    prefixCls="za-modal"
+    shape="radius"
+    visible={false}
+    width="90%"
+  >
+    <ForwardRef
+      aspectRatio={1}
+      guides={false}
+      initialAspectRatio={1}
+      minContainerHeight={300}
+      minCropBoxHeight={100}
+      minCropBoxWidth={100}
+      onInitialized={[Function]}
+      src=""
+      style={
+        Object {
+          "height": 400,
+          "width": "100%",
+        }
+      }
+      viewMode={1}
+    />
+  </Modal>
+  <ForwardRef(forwardRef)
+    dataSource={
+      Array [
+        Object {
+          "label": "female",
+          "value": "female",
+        },
+        Object {
+          "label": "male",
+          "value": "male",
+        },
+        Object {
+          "label": "other",
+          "value": "other",
+        },
+      ]
+    }
+    defaultValue={
+      Array [
+        undefined,
+      ]
+    }
+    onCancel={[Function]}
+    onOk={[Function]}
+    value={
+      Array [
+        undefined,
+      ]
+    }
+    visible={false}
+    wheelDefaultValue={
+      Array [
+        undefined,
+      ]
+    }
+  />
 </div>
 `;

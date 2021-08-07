@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:02:30
- * @LastEditTime: 2021-07-15 16:36:39
+ * @LastEditTime: 2021-07-23 14:05:49
  * @LastEditors: lmk
  * @Description: 
  */
@@ -20,4 +20,10 @@ jest.mock('react-router-dom', () => ({
     state: null,
     key: '5nvxpbdafa',
   }),
+}));
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn().mockReturnValue({
+   loginForm:{}
+  }),
+  useDispatch:jest.fn()
 }));

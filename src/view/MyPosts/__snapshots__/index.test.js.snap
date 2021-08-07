@@ -16,21 +16,10 @@ exports[`MyPost should render correctly 1`] = `
     prefixCls="za-nav-bar"
     title="myPostPageTitle"
   />
-  <ForwardRef(forwardRef)
-    className="m-layout"
-    load={
-      Object {
-        "distance": 200,
-        "handler": [Function],
-        "state": 0,
-      }
-    }
-    refresh={
-      Object {
-        "handler": [Function],
-        "state": 0,
-      }
-    }
+  <PullList
+    data={Array []}
+    load={[Function]}
+    renderView={[Function]}
   />
   <div
     className="m-position-fixed createPosts"

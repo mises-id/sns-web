@@ -21,21 +21,10 @@ exports[`Comment should render correctly 1`] = `
   <div
     className="m-padding-left15 m-flex-1 commentBox"
   >
-    <ForwardRef(forwardRef)
-      className="m-layout"
-      load={
-        Object {
-          "distance": 200,
-          "handler": [Function],
-          "state": 0,
-        }
-      }
-      refresh={
-        Object {
-          "handler": [Function],
-          "state": 0,
-        }
-      }
+    <PullList
+      data={Array []}
+      load={[Function]}
+      renderView={[Function]}
     />
   </div>
   <div

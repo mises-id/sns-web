@@ -1,12 +1,20 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-08 22:26:09
+ * @LastEditTime: 2021-08-07 10:19:37
+ * @LastEditors: lmk
+ * @Description: 
+ */
 import {REHYDRATE} from 'redux-persist';
 
 const initialState = {
-  loginForm:{}
+  loginForm:{},
+  auth:'',
+  token:''
 };
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
     case REHYDRATE:
-      console.log(action.payload)
       if (action.payload && action.payload.user) {
         return {...state, ...action.payload.user};
       }
@@ -16,11 +24,16 @@ const userReducers = (state = initialState, action) => {
         ...state,
         loginForm: action.data,
       };
-    case 'SET_USER_LOCATION': //设置用户位置
+    case 'SET_USER_AUTH': //设置用户权限
       return {
         ...state,
-        location: action.data,
-      };
+        auth: action.data,
+      };  
+    case 'SET_USER_TOKEN': //设置用户权限
+      return {
+        ...state,
+        token: action.data,
+      };  
     default:
       return state;
   }
