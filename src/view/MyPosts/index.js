@@ -8,9 +8,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon, NavBar} from 'zarm';
+import '@/styles/followPage.scss'
 import UserHeader from '../Follows/UserHeader';
 import Link from '../Follows/Link';
-import '@/styles/followPage.scss'
 import PostsIcons from '@/components/PostsIcons';
 import Image from '@/components/Image';
 import send from '@/images/send.png'
