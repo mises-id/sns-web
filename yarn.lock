@@ -13189,8 +13189,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -13710,10 +13712,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zarm@^2.9.3:
-  version "2.9.3"
-  resolved "https://registry.yarnpkg.com/zarm/-/zarm-2.9.3.tgz#6ed4bb299537be48f75862d40043c533ed86f660"
-  integrity sha512-sQ7FyXRtRY0bc8EcwT09gR0KlN8M1Tp7x697QS8royvG8XpAFQKKaLK7yO+PqiKHqifiobRGh4BLOUl7LkwbxQ==
+zarm@^2.9.6:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/zarm/-/zarm-2.9.6.tgz#acc3e5f03f3c9473c92b80c95598d996f0baa4f6"
+  integrity sha512-NS7fS6625ZnlfyedPvW73nWCRAC4yAx8BHbMttL7mNpyJZ+BIYXVJykhn0d47n7C3tRtrDTCwE2dHd2Ok8UTTw==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@zarm-design/icons" "^0.1.1"

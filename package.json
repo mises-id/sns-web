@@ -30,7 +30,7 @@
     "sass-loader": "7.3.1",
     "sass-resources-loader": "^2.2.3",
     "web-vitals": "^1.0.1",
-    "zarm": "^2.9.3"
+    "zarm": "^2.9.6"
   },
   "scripts": {
     "start": "react-app-rewired start",
