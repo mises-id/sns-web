@@ -16,30 +16,10 @@ exports[`Following should render correctly 1`] = `
     prefixCls="za-nav-bar"
     title="followingPageTitle"
   />
-  <div
-    className="m-bg-f8f8f8"
-  >
-    <ForwardRef(forwardRef)
-      className="m-layout"
-      load={
-        Object {
-          "distance": 200,
-          "handler": [Function],
-          "state": 0,
-        }
-      }
-      refresh={
-        Object {
-          "handler": [Function],
-          "state": 0,
-        }
-      }
-      style={
-        Object {
-          "paddingTop": "10px",
-        }
-      }
-    />
-  </div>
+  <PullList
+    data={Array []}
+    load={[Function]}
+    renderView={[Function]}
+  />
 </div>
 `;

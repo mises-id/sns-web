@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-07-16 00:22:51
+ * @LastEditTime: 2021-07-23 15:25:41
  * @LastEditors: lmk
  * @Description: 
  */
@@ -12,6 +12,7 @@ const enUS = {
     discover:'Discover',
     me:'Me',
     followTxt:'follow',
+    followedTxt:'following',
     createId:"Create mises id",
     restoreId:'Restore mises id',
     aboutId:'About mises id',
@@ -29,14 +30,16 @@ const enUS = {
     address:'Address',
     placeholder:'Please enter the content',
     followingPageTitle:'Following',
-    followersPageTitle:'Followers',
+    fansPageTitle:'Followers',
     postPageTitle:"Post",
     lookAtAll:"Look at all",
     commentPageTitle:'Comment',
     myPostPageTitle:'My Posts',
     cancel:'Cancel',
     send:'Send',
-    empty:'Data is empty~'
+    empty:'Data is empty~',
+    updataUserInfoSuccess:'Update success',
+    sendSuccess:"Send success"
   }
 }
 export default enUS

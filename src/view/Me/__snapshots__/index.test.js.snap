@@ -12,7 +12,6 @@ exports[`Me should render correctly 1`] = `
   >
     <Cell
       iconSize={60}
-      label="Susan"
       onPress={[Function]}
     />
     <Cell

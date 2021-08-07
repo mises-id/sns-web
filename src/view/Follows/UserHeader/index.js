@@ -1,9 +1,16 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-15 01:03:58
+ * @LastEditTime: 2021-07-23 18:01:27
+ * @LastEditors: lmk
+ * @Description: 
+ */
 import Image from '@/components/Image/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from 'zarm';
 import deteleIcon from '@/images/delete.png'
-const UserHeader = ({size,btnType="follow"})=>{
+const UserHeader = ({size,btnType="follow",item={},followed})=>{
   const {t} = useTranslation()
   return <div className={`m-flex m-row-between ${size ? 'forward' :'normal'}`}>
     <div className="m-flex">
@@ -13,7 +20,7 @@ const UserHeader = ({size,btnType="follow"})=>{
         <div className="timeAndType m-margin-top5">05.25<span className="m-margin-left5">post</span></div>
       </div>
     </div>
-    {btnType==='follow'&&<Button icon={<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme="primary" ghost size="xs">{t('followTxt')}</Button>}
+    {btnType==='follow'&&<Button icon={<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme="primary" ghost size="xs" onClick={followed}>{t('followTxt')}</Button>}
     {btnType==='myPosts'&&<div className="btnStyle delete">
       <Image source={deteleIcon} size={15} shape="square"></Image></div>}
   </div>

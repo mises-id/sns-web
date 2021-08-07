@@ -26,6 +26,7 @@ exports[`GreatePosts should render correctly 1`] = `
           ghost={false}
           htmlType="button"
           loading={false}
+          onClick={[Function]}
           prefixCls="za-button"
           shadow={false}
           shape="round"
@@ -45,9 +46,11 @@ exports[`GreatePosts should render correctly 1`] = `
     >
       <Input
         className="m-font17"
+        onChange={[Function]}
         placeholder="placeholder..."
         rows={10}
         type="text"
+        value=""
       />
     </div>
   </div>

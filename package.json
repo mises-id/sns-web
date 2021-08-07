@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.13.3",
     "customize-cra": "^1.0.0",
     "enzyme": "^3.11.0",
@@ -17,6 +18,7 @@
     "react": "^17.0.2",
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewired": "^2.1.8",
+    "react-cropper": "^2.1.8",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "react-i18next": "^11.11.1",
@@ -35,7 +37,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "tree":"tree -I 'node_modules|__snapshots__|images|yarn*|package-lock.json'>README.md"
+    "tree": "tree -I 'node_modules|__snapshots__|images|yarn*|package-lock.json'>README.md"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +73,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
-    "testPathIgnorePatterns":["/node_modules/","<rootDir>/src/utils/reactUtil.js"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/src/utils/reactUtil.js"
+    ]
   }
 }
