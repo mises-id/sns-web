@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-06 13:08:58
+ * @LastEditTime: 2021-08-09 21:45:43
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -21,11 +21,18 @@ const GreatePosts = (props)=>{
       return false;
     }
     const form = {
-      status_type:'status',
+      status_type:'text',
+      form_type:"status",
       content:postsContent.value
     }
     createStatus(form).then(res=>{
-      Toast.show(t('sendSuccess'))
+      Toast.show({
+        content:t('sendSuccess'),
+        stayTime: 1500,
+        afterClose:()=>{
+          window.history.back()
+        }
+      })
     }).finally(()=>setloading(false))
   }
   return <div>

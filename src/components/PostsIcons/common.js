@@ -4,7 +4,7 @@ import { likeStatus } from "@/api/status";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2021-07-23 15:22:23
+ * @LastEditTime: 2021-08-09 22:41:36
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -27,10 +27,9 @@ export function liked(e,val){
  * @param {*} val current item data
  * @return {*} Promise
  */
-export function followed(e,val){
-  e.stopPropagation()
+export function followed(val){
   const fn = val.followed ? unfollow : follow;
-  return fn(val.id).catch(res=>{
+  return fn({to_user_id:val.id}).catch(res=>{
     val.followed = !val.followed;
   })
 }

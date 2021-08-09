@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-07 10:13:56
+ * @LastEditTime: 2021-08-09 22:51:25
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -60,4 +60,19 @@ export default function urlToJson(url = window.location.href) {
   }
 
   return obj;
+}
+
+/**
+* @param {*} 
+*/
+export async function getList(fn,params){
+  try {
+    const res = await fn(params)
+    const last_id = res.pagination.next_id;
+    return Promise.resolve({
+      ...res,last_id
+    })
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-07 14:14:50
+ * @LastEditTime: 2021-08-10 00:34:27
  * @LastEditors: lmk
  * @Description: 
  */
@@ -11,9 +11,9 @@ import { Tabs } from 'zarm';
 import send from '@/images/send.png'
 import './index.scss'
 import Image from '@/components/Image';
-import { signin } from '@/api/user';
+import { getUserSelfInfo, signin } from '@/api/user';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserAuth, setUserToken } from '@/actions/user';
+import { setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
 import urlToJson from '@/utils';
 const {Panel} = Tabs;
 const Home = ({history,children=[]})=>{
@@ -38,7 +38,7 @@ const Home = ({history,children=[]})=>{
       break;
     }
     const {mises_id,nonce,sig} = urlToJson();
-    if(mises_id){
+    if(mises_id&&nonce&&sig){
       const auth = `mises_id=${mises_id}&nonce=${nonce}&sig=${sig}`;
       dispatch(setUserAuth(auth))
     }
@@ -65,6 +65,11 @@ const Home = ({history,children=[]})=>{
         return t;
       })
     }
+    if(token){
+      getUserSelfInfo().then(res=>{
+        dispatch(setLoginForm(res))
+      })
+    }
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
@@ -86,12 +91,11 @@ const Home = ({history,children=[]})=>{
   }
   //show current path route page
   const showChild = path=>children.find(val=>val.key===path) || <div></div>
-  const isShow = value!==2 ? true : value===2&&token
   return <div>
     <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={swipeable}>
       {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>{showChild(val.path)}</Panel>))}
     </Tabs>
-    {isShow&&<div className="m-position-fixed createPosts">
+    {token&&<div className="m-position-fixed createPosts">
       <Image size={75} alt="posts" onClick={createPosts} source={send}></Image>
     </div>}
   </div>

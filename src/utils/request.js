@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2021-08-07 20:40:35
+ * @LastEditTime: 2021-08-09 21:04:02
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -10,7 +10,7 @@ import { store } from "@/stores";
 import { Toast } from 'zarm';
 import { setLoginForm, setUserToken } from '@/actions/user';
 import { getAuth, openLoginPage } from './postMessage';
-export const baseURL = 'http://18.224.164.67:8080/api/v1/'
+export const baseURL = 'http://api.mises.site:8080/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url http://47.100.235.21:12338

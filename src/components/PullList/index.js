@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2021-08-06 18:17:36
+ * @LastEditTime: 2021-08-10 00:26:59
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -40,8 +40,8 @@ const PullList = ({renderView,data,isAuto=true,load}) => {
   const [loading, setLoading] = useState(LOAD_STATE.normal);
   const [isOnceLoad, setisOnceLoad] = useState(true)
   const fetchData = type=>{
-    return load(type).then(({pagination:{total_pages,page_num}})=>{
-      if(total_pages===page_num){
+    return load(type).then(({pagination})=>{
+      if(!pagination.last_id){
         setLoading(LOAD_STATE.complete)
       }
     }).catch(err=>{
@@ -52,40 +52,24 @@ const PullList = ({renderView,data,isAuto=true,load}) => {
   // refresh
   const refreshData = async () => {
     if (!mounted) return;
-    setLoading(LOAD_STATE.normal)
     setRefreshing(REFRESH_STATE.loading);
     try {
-      const data = await fetchData('refresh');
-      console.log(data)
+      await fetchData('refresh');
       setRefreshing(REFRESH_STATE.success);
     } catch (error) {
+      setRefreshing(REFRESH_STATE.failure);
     }
   };
-  const getRandomNum = (min, max) => {
-    const Range = max - min;
-    const Rand = Math.random();
-    return min + Math.round(Rand * Range);
-  };
-  
   // load more
   const loadData = async () => {
     if (!mounted) return;
     setLoading(LOAD_STATE.loading);
-    const randomNum = getRandomNum(0, 5);
-    console.log(`状态: ${randomNum === 0 ? '失败' : randomNum === 1 ? '完成' : '成功'}`);
-
-    let loadingState = LOAD_STATE.success;
-    if (randomNum === 0) {
-      loadingState = LOAD_STATE.failure;
-    } else if (randomNum === 1) {
-      loadingState = LOAD_STATE.complete;
-    }
     try {
       await fetchData('load');
+      setLoading(LOAD_STATE.success)
     } catch (error) {
-      
+      setLoading(LOAD_STATE.failure)
     }
-    setLoading(loadingState);
   };
   useEffect(() => {
     isAuto&&fetchData()

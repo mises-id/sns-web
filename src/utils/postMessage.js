@@ -1,10 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-07 19:06:13
+ * @LastEditTime: 2021-08-10 00:20:00
  * @LastEditors: lmk
  * @Description: to reactnative
  */
+
+import { createStatus } from "@/api/status";
+
 /**
  * @description: 
  * @param {*} 
@@ -20,7 +23,9 @@ const isRn = ()=>!!window.ReactNativeWebView;
 const postmessageFn = (type,data="")=>{
   return new Promise((resolve,reject)=>{
     isRn()&&window.ReactNativeWebView.postMessage(JSON.stringify({type,data}))
-    window.ReactNativeWebViewCallback = res=> res.success ? resolve(res) : reject()
+    window.ReactNativeWebViewCallback = res=> {
+      res.success ? resolve(res) : reject(res.message)
+    }
   })
 }
 /**
@@ -58,10 +63,26 @@ export function getAuth(){
 
 /**
  * @description:
- * @param {*}
+ * @param {*} open login page
  * @return {*}
  */
 
 export function openLoginPage(){
   return postmessageFn('openLoginPage')
+}
+
+/**
+* @param {*} add forward callback
+*/
+export function forwardCallback(){
+  return postmessageFn('forwardCallback')
+}
+window.addForward = data=>{
+  const form = {
+    status_type:'link',
+    form_type:"forward",
+    content:data.content,
+    link_meta:data
+  }
+  createStatus(form).then(forwardCallback)
 }

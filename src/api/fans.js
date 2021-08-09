@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:51:20
- * @LastEditTime: 2021-07-21 21:57:11
+ * @LastEditTime: 2021-08-09 21:51:18
  * @LastEditors: lmk
  * @Description: fans
  */
@@ -20,18 +20,20 @@ export function friendShip(params){
 /**
 * @param {*} follow user
 */
-export function follow(uid){
+export function follow(data){
   return request({
-    url:`/user/${uid}/follow`,
+    url:`/user/follow`,
     method:'post',
+    data
   })
 }
 /**
 * @param {*} unfollow
 */
-export function unfollow(uid){
+export function unfollow(data){
   return request({
-    url:`/user/${uid}/follow`,
+    url:`/user/follow`,
     method:'delete',
+    data
   })
 }

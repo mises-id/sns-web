@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-07-23 15:25:41
+ * @LastEditTime: 2021-08-09 21:41:36
  * @LastEditors: lmk
  * @Description: 
  */
@@ -39,7 +39,8 @@ const enUS = {
     send:'Send',
     empty:'Data is empty~',
     updataUserInfoSuccess:'Update success',
-    sendSuccess:"Send success"
+    sendSuccess:"Send success",
+    deleteSuccess:"Delete success"
   }
 }
 export default enUS

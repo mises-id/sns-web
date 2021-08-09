@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2021-07-22 17:42:09
+ * @LastEditTime: 2021-08-09 21:40:18
  * @LastEditors: lmk
  * @Description: status
  */
@@ -46,11 +46,38 @@ export function likeStatus(id){
   })
 }
 /**
-* @param {*} get current user timeline
+* @param {*} get current user following
 */
-export function getTimeline(params){
+export function following(params){
   return request({
     params,
     url:'/timeline/me'
+  })
+}
+/**
+* @param {*} discover data
+*/
+export function recommend(params){
+  return request({
+    params,
+    url:'/status/recommend'
+  })
+}
+/**
+* @param {*} my posts
+*/
+export function myPostsData(params){
+  return request({
+    params,
+    url:`/user/${params.uid}/status`
+  })
+}
+/**
+* @param {*} 
+*/
+export function deletePosts(id){
+  return request({
+    url:`/status/${id}`,
+    method:'DELETE'
   })
 }

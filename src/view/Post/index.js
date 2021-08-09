@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-07-23 15:11:58
+ * @LastEditTime: 2021-08-08 00:17:08
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Input, NavBar } from 'zarm';
+import { Button, Input ,Icon} from 'zarm';
 import '@/styles/followPage.scss'
 import write from '@/images/write.png'
 import UserHeader from '../Follows/UserHeader';
@@ -16,6 +16,7 @@ import './index.scss'
 import Image from '@/components/Image';
 import PostsIcons from '@/components/PostsIcons';
 import { liked } from '@/components/PostsIcons/common';
+import Navbar from '@/components/NavBar';
 const Post = ({history})=>{
   const {t} = useTranslation();
   const [item,setitem] = useState({})
@@ -29,9 +30,7 @@ const Post = ({history})=>{
     });
   }
   return <div>
-    <NavBar
-      left={<Icon type="arrow-left" size="sm" onClick={() => window.history.back()} />}
-      title={t('postPageTitle')}
+    <Navbar title={t('postPageTitle')}
     />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-bg-fff">

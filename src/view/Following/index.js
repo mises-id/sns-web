@@ -1,14 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-08-06 10:19:52
+ * @LastEditTime: 2021-08-08 00:12:01
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
 import Cell from '@/components/Cell';
 import React, {  useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon, NavBar } from 'zarm';
 import followed from '@/images/followed.png' //mutual following
 // import follow from '@/images/follow.png' //follow
 // import following from '@/images/isfollow.png' //following
@@ -17,6 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { friendShip } from '@/api/fans';
 import { useSelector } from 'react-redux';
 import PullList from '@/components/PullList';
+import Navbar from '@/components/NavBar';
 const Following = ({history})=>{
   const {t} = useTranslation();
   const location = useLocation();
@@ -45,9 +45,7 @@ const Following = ({history})=>{
     }
   };
   return <div>
-    <NavBar
-      left={<Icon type="arrow-left" size="sm" onClick={() => window.history.back()} />}
-      title={t(pageTitle)}
+    <Navbar title={t(pageTitle)}
     />
     <PullList renderView={renderView} data={dataSource} load={fetchData}></PullList>
   </div>

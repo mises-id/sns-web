@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2021-08-07 21:09:08
+ * @LastEditTime: 2021-08-07 22:33:22
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -11,7 +11,7 @@ import { useBind } from '@/utils';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon, Input, NavBar ,Modal,Button,Picker,Toast} from 'zarm';
+import {  Input ,Modal,Button,Picker,Toast} from 'zarm';
 import './index.scss'
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -19,6 +19,7 @@ import { attachment } from '@/api/updata';
 import { updateUser } from '@/api/user';
 import { setUserInfo } from '@/utils/postMessage';
 import { setLoginForm } from '@/actions/user';
+import Navbar from '@/components/NavBar';
 const genderList = [{ value: 'female', label: 'female' },
 { value: 'male', label: 'male' },{ value: 'other', label: 'other' }]
 const UserInfo = (props)=>{
@@ -124,15 +125,13 @@ const UserInfo = (props)=>{
       setsaveLoading(false)
       return Promise.resolve()
     } catch (error) {
+      Toast.show(error)
       setsaveLoading(false)
       return Promise.reject(error)
     }
   }
   return <div>
-    <NavBar
-      left={<Icon type="arrow-left" size="sm" onClick={() => window.history.back()} />}
-      title={t('userInfoPageTitle')}
-    />
+    <Navbar title={t('userInfoPageTitle')}/>
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-bg-fff m-padding-lr15">
         <Cell label={t('avatar')}  showIcon={false}
