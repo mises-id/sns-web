@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2021-08-10 16:31:44
+ * @LastEditTime: 2021-08-11 01:53:03
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -29,7 +29,7 @@ const MyPosts = ({history}) => {
     });
   }
   const forwardPress = (val)=>{
-    history.push({pathname:'/forward'})
+    history.push({pathname:'/forward',state:{id:val.id}})
   }
   const goDetail = ()=>{
     history.push({pathname:'/post'})

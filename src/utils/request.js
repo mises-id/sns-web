@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2021-08-09 21:04:02
+ * @LastEditTime: 2021-08-11 00:53:10
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -78,6 +78,7 @@ const invalidToken = ()=>{
     const auth = store.getState().user.auth;
     console.log(data,auth)
     if(data===auth){
+      window.onload();
     }else{
       openLoginPage()
     }

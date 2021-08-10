@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2021-08-10 16:30:44
+ * @LastEditTime: 2021-08-11 01:53:00
  * @LastEditors: lmk
  * @Description: 
  */
@@ -41,11 +41,11 @@ const Follow = ({history={}}) => {
       setdataSource([...dataSource])
     });
   }
-  const goDetail = ()=>{
-    history.push({pathname:'/post'})
+  const goDetail = val=>{
+    history.push({pathname:'/post',state:{id:val.id}})
   }
   const forwardPress = (val)=>{
-    history.push({pathname:'/forward'})
+    history.push({pathname:'/forward',state:{id:val.id}})
   }
   const followPress = (e,val)=>{
     followed(e,val).then(res=>{

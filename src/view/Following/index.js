@@ -1,16 +1,16 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-08-10 13:51:22
+ * @LastEditTime: 2021-08-11 02:40:33
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
 import Cell from '@/components/Cell';
 import React, {  useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import followed from '@/images/followed.png' //mutual following
-// import follow from '@/images/follow.png' //follow
-// import following from '@/images/isfollow.png' //following
+import friend from '@/images/friend.png' //friend
+import followed from '@/images/followed.png' // my follow
+import fans from '@/images/fans.png' //fans
 import './index.scss';
 import { useLocation } from 'react-router-dom';
 import { friendShip } from '@/api/fans';
@@ -24,10 +24,17 @@ const Following = ({history})=>{
   const {state={}} = location || {}
   const type = state.pageType || 'following'
   const pageTitle = `${type}PageTitle`
-  const user = useSelector(state => state.user)||{}
+  const user = useSelector(state => state.user)||{};
   const renderView =(val={},index)=>{
-    return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label={val.username} key={index}
-    rightChild={<img className="followedIcon" src={followed} alt="followIcon"  icon={val.avatar.medium}/>}></Cell>
+    const user = val.user;
+    const icon = {
+      following: followed,
+      fan: fans,
+      friend: friend,
+    }[val.relation_type];
+    return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label={user.username} key={index}
+    rightChild={<img className="followedIcon" src={icon} alt="followIcon"  
+    icon={user.avatar&&user.avatar.medium}/>}></Cell>
   }
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource] = useList(friendShip,{

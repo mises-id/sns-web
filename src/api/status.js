@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2021-08-10 14:28:41
+ * @LastEditTime: 2021-08-10 18:08:39
  * @LastEditors: lmk
  * @Description: status
  */
@@ -34,6 +34,14 @@ export function removeStatus(id){
   return request({
     url:`/status/${id}`,
     method:'delete',
+  })
+}
+/**
+* @param {*} remove Status
+*/
+export function getStatusItem(id){
+  return request({
+    url:`/status/${id}`
   })
 }
 /**
@@ -88,5 +96,15 @@ export function deletePosts(id){
   return request({
     url:`/status/${id}`,
     method:'DELETE'
+  })
+}
+
+/**
+* @param {*} 
+*/
+export function getComment(params){
+  return request({
+    url:`/comment`,
+    params
   })
 }

@@ -1,26 +1,22 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-08-07 15:14:11
+ * @LastEditTime: 2021-08-11 00:38:30
  * @LastEditors: lmk
  * @Description: 
  */
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import './index.scss'
 import { useTranslation } from 'react-i18next';
 import following from '@/images/following.png'
 import followers from '@/images/followers.png'
 import post from '@/images/post.png'
 import Cell from '@/components/Cell';
-import { getUserSelfInfo } from '@/api/user';
-import { setLoginForm } from '@/actions/user';
-import { useDispatch, useSelector } from 'react-redux';
-let flag = false;
+import {  useSelector } from 'react-redux';
 const Myself = ({history})=>{
   const {t} = useTranslation();
   const {loginForm:user={}} = useSelector(state => state.user) || {}
   const [loginForm] = useState(user)
-  const dispatch = useDispatch()
   const list = [{
     label:t('following'),
     icon:following,
@@ -39,25 +35,11 @@ const Myself = ({history})=>{
   //router to userInfo
   const userInfo = ()=>{
     history.push('/userInfo')
-    flag = false
   }
   //click global cell 
   const cellClick = val=>{
     history.push({pathname:val.url,state:{pageType:val.pageType}})
-    flag = false
   }
-  const useReducer = useSelector(state => state.user)
-  //get info 
-  useEffect(() => {
-    if(!flag){
-      flag = true;
-      if(useReducer.token){
-        getUserSelfInfo().then(res=>{
-          dispatch(setLoginForm(res))
-        })
-      }
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
   return <div className="m-layout">
     <div className="m-padding-top15  m-bg-f8f8f8"></div>
     <div className="m-padding-lr15">

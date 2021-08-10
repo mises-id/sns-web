@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-10 16:34:39
+ * @LastEditTime: 2021-08-11 02:11:12
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -92,4 +92,17 @@ export function useList(fn,params){
     }
   }
   return [fetchData,last_id,dataSource,setdataSource]
+}
+/**
+* @param {*} 
+*/
+export function useRouteState(history){
+  const state = history.location?.state;
+  const [historyState, sethistoryState] = useState('');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getState = useCallback(() => sethistoryState(state));
+  useEffect(()=>{
+    getState()
+  },[getState])
+  return historyState;
 }

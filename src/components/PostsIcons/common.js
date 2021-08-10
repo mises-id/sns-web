@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2021-08-10 16:16:43
+ * @LastEditTime: 2021-08-10 16:40:04
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -34,7 +34,7 @@ export async function liked(val){
 export function followed(val){
   const fn = val.followed ? unfollow : follow;
   val.followed = !val.followed;
-  return fn({to_user_id:val.id}).catch(res=>{
+  return fn({to_user_id:val.user.uid}).catch(res=>{
     val.followed = !val.followed;
   })
 }
