@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2021-08-10 00:26:59
+ * @LastEditTime: 2021-08-10 14:51:42
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -39,14 +39,18 @@ const PullList = ({renderView,data,isAuto=true,load}) => {
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
   const [loading, setLoading] = useState(LOAD_STATE.normal);
   const [isOnceLoad, setisOnceLoad] = useState(true)
+  const [lastId, setlastId] = useState('')
   const fetchData = type=>{
-    return load(type).then(({pagination})=>{
-      if(!pagination.last_id){
-        setLoading(LOAD_STATE.complete)
+    if(loading===LOAD_STATE.loading || refreshing===REFRESH_STATE.loading) return false
+    return load(type).then((res)=>{
+      if(res){
+        const last_id = res.pagination.last_id
+        setlastId(last_id)
+        !last_id&&setLoading(LOAD_STATE.complete)
       }
     }).catch(err=>{
       !isOnceLoad&&setLoading(LOAD_STATE.failure);
-      setRefreshing(REFRESH_STATE.failure);
+      setRefreshing(REFRESH_STATE.normal);
     }).finally(()=>setisOnceLoad(false)) //if once loading 
   }
   // refresh
@@ -62,17 +66,17 @@ const PullList = ({renderView,data,isAuto=true,load}) => {
   };
   // load more
   const loadData = async () => {
-    if (!mounted) return;
+    if (!mounted || !lastId) return;
     setLoading(LOAD_STATE.loading);
     try {
       await fetchData('load');
-      setLoading(LOAD_STATE.success)
+      loading!==LOAD_STATE.complete&&setLoading(LOAD_STATE.success)
     } catch (error) {
       setLoading(LOAD_STATE.failure)
     }
   };
   useEffect(() => {
-    isAuto&&fetchData()
+    isAuto&&fetchData('load')
     return () => {
       setisOnceLoad(true);
     };

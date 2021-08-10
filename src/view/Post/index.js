@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-08 00:17:08
+ * @LastEditTime: 2021-08-10 13:08:02
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -15,7 +15,7 @@ import Link from '../Follows/Link';
 import './index.scss'
 import Image from '@/components/Image';
 import PostsIcons from '@/components/PostsIcons';
-import { liked } from '@/components/PostsIcons/common';
+import { followed, liked } from '@/components/PostsIcons/common';
 import Navbar from '@/components/NavBar';
 const Post = ({history})=>{
   const {t} = useTranslation();
@@ -24,10 +24,18 @@ const Post = ({history})=>{
   const goComment = ()=>{
     history.push({pathname:'/comment'})
   }
-  const setLike = (e,val)=>{
-    liked(e,val).then(res=>{
-      setitem({...val})
+  const setLike = ()=>{
+    liked(item).then(res=>{
+      setitem({...item})
     });
+  }
+  const followPress = ()=>{
+    followed(item).then(res=>{
+      setitem({...item})
+    });
+  }
+  const forwardPress = ()=>{
+    history.push({pathname:'/forward'})
   }
   return <div>
     <Navbar title={t('postPageTitle')}
@@ -35,7 +43,7 @@ const Post = ({history})=>{
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-bg-fff">
         <div  className="m-padding15 m-bg-fff m-line-bottom">
-          <UserHeader></UserHeader>
+        <UserHeader item={{...item.user,from_type:item.from_type}}  followed={followPress}></UserHeader>
           <p className="itemContent m-font15 m-padding-tb15">It's a great website, share with you. Wow!!! Come and play with me.</p>
           <div className="m-bg-f8f8f8 m-padding10">
             <UserHeader size={30}></UserHeader>
@@ -43,7 +51,7 @@ const Post = ({history})=>{
             <Link theme="white"></Link>
           </div>
           <div className="m-margin-top12">
-            <PostsIcons likePress={setLike} item={item}></PostsIcons>
+            <PostsIcons likeCallback={setLike} item={item} forwardCallback={forwardPress} />
           </div>
         </div>
       </div>

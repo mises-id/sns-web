@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-09 22:51:25
+ * @LastEditTime: 2021-08-10 15:04:12
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -65,14 +65,27 @@ export default function urlToJson(url = window.location.href) {
 /**
 * @param {*} 
 */
-export async function getList(fn,params){
-  try {
-    const res = await fn(params)
-    const last_id = res.pagination.next_id;
-    return Promise.resolve({
-      ...res,last_id
-    })
-  } catch (error) {
-    return Promise.reject(error)
+export function useList(fn,params){
+  let [last_id, setlast_id] = useState('');
+  let [dataSource, setdataSource] = useState([]);
+  const fetchData = async type=>{
+    try {
+      const isRefresh = type==='refresh';
+      if(isRefresh){
+        last_id = '';
+        setlast_id(last_id);
+      }
+      const res = await fn({...params,last_id});
+      const {last_id:lastId} = res.pagination;
+      setlast_id(lastId);
+      if(isRefresh){
+        dataSource = []
+      }
+      setdataSource([...dataSource,...res.data]);
+      return Promise.resolve(res)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
+  return [fetchData,last_id,dataSource,setdataSource]
 }

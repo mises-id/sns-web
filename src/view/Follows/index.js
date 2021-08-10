@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2021-08-09 23:52:56
+ * @LastEditTime: 2021-08-10 13:09:11
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,49 +18,38 @@ import Empty from '@/components/Empty';
 import { Button } from 'zarm';
 import { OpenCreateUserPanel } from '@/utils/postMessage';
 import { useTranslation } from 'react-i18next';
+import { useList } from '@/utils';
 const Follow = ({history}) => {
   const user = useSelector(state => state.user)
   const isDiscoverPage = history.location.pathname;
   const [isDiscover, setisDiscover] = useState(false)
+  const fn = isDiscoverPage.indexOf('discover')>-1 ? recommend : following;
+  const [lastId, setlastId] = useState('')
+  const [fetchData,last_id,dataSource,setdataSource] = useList(fn,{
+    uid:user.loginForm.uid,
+    limit:5,last_id:lastId
+  })
   //getData
+  useEffect(() => {
+    setlastId(last_id)
+  }, [last_id])
   useEffect(() => {
     setisDiscover(isDiscoverPage.indexOf('discover')>-1);
   }, [isDiscoverPage])
-  let last_id = '';
-  const fetchData = async (type) => {
-    const fn = isDiscoverPage.indexOf('discover')>-1 ? recommend : following;
-    try {
-      const res = await fn({
-        uid:user.loginForm.uid,
-        limit:5,
-        last_id:last_id
-      })
-      last_id = res.pagination.last_id;
-      if(type==='refresh'){
-        setDataSource([])
-      }
-      setDataSource([...dataSource,...res.data]);
-      return Promise.resolve(res)
-    } catch (error) {
-      return Promise.reject(222)
-    }
-  };
-  const [dataSource, setDataSource] = useState([]);
-  const setLike = (e,val)=>{
-    liked(e,val).then(res=>{
-      setDataSource([...dataSource])
+  const setLike = (val)=>{
+    liked(val).then(res=>{
+      setdataSource([...dataSource])
     });
   }
   const goDetail = ()=>{
     history.push({pathname:'/post'})
   }
-  const forwardPress = (e,val)=>{
-    e.stopPropagation();
+  const forwardPress = (val)=>{
     history.push({pathname:'/forward'})
   }
   const followPress = (e,val)=>{
     followed(e,val).then(res=>{
-      setDataSource([...dataSource])
+      setdataSource([...dataSource])
     });
   }
   const renderView =(val={},index)=>{
@@ -75,7 +64,7 @@ const Follow = ({history}) => {
         <Link theme="white"></Link>
       </div>}
       <div className="m-margin-top12">
-        <PostsIcons likePress={setLike} item={val} forwardPress={forwardPress}></PostsIcons>
+        <PostsIcons likeCallback={()=>setLike(val)} item={val} forwardCallback={()=>forwardPress(val)} />
       </div>
     </div>
   }

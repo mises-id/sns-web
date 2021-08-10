@@ -1,25 +1,29 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-09 21:36:55
+ * @LastEditTime: 2021-08-10 13:18:46
  * @LastEditors: lmk
  * @Description: 
  */
 import Image from '@/components/Image/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from 'zarm';
+import { Button, Icon, Toast } from 'zarm';
 import deteleIcon from '@/images/delete.png'
+import { useLogin } from '@/components/PostsIcons/common';
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
-  const followedItem = e=>{
+  const {isLogin} = useLogin();
+  const hasLogin = (e,fn)=>{
     e.stopPropagation();
-    followed&&followed()
+    if(!isLogin){
+      Toast.show(t('notLogin'))
+      return false;
+    }
+    fn&&fn()
   }
-  const deleteItemClick = e=>{
-    e.stopPropagation();
-    deleteItem&&deleteItem()
-  }
+  const followedItem = e=>hasLogin(e,followed)
+  const deleteItemClick = e=>hasLogin(e,deleteItem)
   return <div className={`m-flex m-row-between ${size ? 'forward' :'normal'}`}>
     <div className="m-flex">
       <Image size={size}/>

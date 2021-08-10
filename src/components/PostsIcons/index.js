@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-09 22:03:57
+ * @LastEditTime: 2021-08-10 13:18:52
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -11,6 +11,9 @@ import like from '@/images/like.png'
 import comment from '@/images/comment.png'
 import forward from '@/images/forward.png'
 import './index.scss'
+import { Toast } from 'zarm';
+import { useTranslation } from 'react-i18next';
+import { useLogin } from './common';
 /**
  * @description: 
  * @param {*}forwardPress.type:function //click forward icon
@@ -18,17 +21,29 @@ import './index.scss'
  * @param {*}likePress.type:object //icon data
  * @return {*} element
  */
-const PostsIcons = ({item={},likePress,forwardPress})=>{
+const PostsIcons = ({item={},likeCallback,forwardCallback})=>{
+  const {isLogin} = useLogin();
+  const {t} = useTranslation();
+  const hasLogin = (e,fn)=>{
+    e.stopPropagation();
+    if(!isLogin){
+      Toast.show(t('notLogin'))
+      return false;
+    }
+    fn&&fn()
+  }
+  const forwardPress = e=>hasLogin(e,forwardCallback)
+  const likePress = e=>hasLogin(e,likeCallback)
   return <div className="m-margin-top12 m-flex itemFunctionBox">
-  <div className="m-flex"  onClick={(e)=>likePress(e,item)}>
-    <img src={item.is_like ? liked : like}  className="iconStyle" alt="like"></img>
-    <span className={`m-font12 m-margin-left8 ${item.is_like ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
+  <div className="m-flex"  onClick={likePress}>
+    <img src={item.is_liked ? liked : like}  className="iconStyle" alt="like"></img>
+    <span className={`m-font12 m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
   </div>
   <div className="m-flex">
     <img src={comment}  className="iconStyle" alt="comment"></img>
     <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
   </div>
-  <div className="m-flex" onClick={(e)=>forwardPress(e,item)}>
+  <div className="m-flex" onClick={forwardPress}>
     <img src={forward}  className="iconStyle" alt="forward" ></img>
     <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
   </div>

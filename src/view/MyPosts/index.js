@@ -1,11 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2021-08-10 01:17:04
+ * @LastEditTime: 2021-08-10 13:51:11
  * @LastEditors: lmk
  * @Description: my post page
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@/styles/followPage.scss'
 import UserHeader from '../Follows/UserHeader';
@@ -20,48 +20,40 @@ import { liked } from '@/components/PostsIcons/common';
 import Navbar from '@/components/NavBar';
 import { useSelector } from 'react-redux';
 import { Toast } from 'zarm';
+import { useList } from '@/utils';
 const MyPosts = ({history}) => {
-  const [dataSource, setDataSource] = useState([]);
   const user = useSelector(state => state.user)
   const setLike = (e,val)=>{
     liked(e,val).then(res=>{
       setDataSource([...dataSource])
     });
   }
-  const forwardPress = (e,val)=>{
-    e.stopPropagation();
+  const forwardPress = (val)=>{
     history.push({pathname:'/forward'})
   }
   const goDetail = ()=>{
     history.push({pathname:'/post'})
   }
-  let last_id = '';
   const deleteItem = ({id},index)=>{
     deletePosts(id).then(res=>{
       Toast.show(t('deleteSuccess'));
       dataSource.splice(index,1);
       setDataSource([...dataSource]);
       if(dataSource.length===0){ //if empty 
-        last_id = '';
+        setlastId('')
         fetchData()
       }
     })
   }
+  const [lastId, setlastId] = useState('')
+  const [fetchData,last_id,dataSource,setDataSource] = useList(myPostsData,{
+    uid:user.loginForm.uid,
+    limit:5,last_id:lastId
+  })
   //getData
-  const fetchData = async () => {
-    try {
-      const res = await myPostsData({
-        uid:user.loginForm.uid,
-        limit:5,
-        last_id
-      });
-      setDataSource([...dataSource,...res.data])
-      last_id = res.pagination.next_id;
-      return Promise.resolve(res)
-    } catch (error) {
-      return Promise.reject(new Error('load error'))
-    }
-  };
+  useEffect(() => {
+    setlastId(last_id)
+  }, [last_id])
   const createPosts = ()=>history.push({pathname:'/createPosts'})
   const {t} = useTranslation()
   //render item
@@ -79,7 +71,7 @@ const MyPosts = ({history}) => {
         <Link theme="white"></Link>
       </div>}
       <div className="m-margin-top12">
-        <PostsIcons likePress={setLike} item={val} forwardPress={forwardPress}></PostsIcons>
+        <PostsIcons likeCallback={()=>setLike(val)} item={val} forwardCallback={()=>forwardPress(val)} />
       </div>
     </div>
   }

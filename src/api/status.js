@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2021-08-09 21:40:18
+ * @LastEditTime: 2021-08-10 14:28:41
  * @LastEditors: lmk
  * @Description: status
  */
@@ -43,6 +43,15 @@ export function likeStatus(id){
   return request({
     url:`/status/${id}/like`,
     method:'post',
+  })
+}
+/**
+* @param {*} unlike Status
+*/
+export function unLikeStatus(id){
+  return request({
+    url:`/status/${id}/like`,
+    method:'delete',
   })
 }
 /**
