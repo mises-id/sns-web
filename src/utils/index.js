@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-11 02:11:12
+ * @LastEditTime: 2021-08-11 02:48:50
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -97,7 +97,7 @@ export function useList(fn,params){
 * @param {*} 
 */
 export function useRouteState(history){
-  const state = history.location?.state;
+  const state = history?.location?.state;
   const [historyState, sethistoryState] = useState('');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getState = useCallback(() => sethistoryState(state));

@@ -24,24 +24,7 @@ exports[`Post should render correctly 1`] = `
         />
         <p
           className="itemContent m-font15 m-padding-tb15"
-        >
-          It's a great website, share with you. Wow!!! Come and play with me.
-        </p>
-        <div
-          className="m-bg-f8f8f8 m-padding10"
-        >
-          <UserHeader
-            size={30}
-          />
-          <p
-            className="itemContent m-font13 m-padding-tb10"
-          >
-            It's a great website, share with you. Wow!!! Come and play with me.
-          </p>
-          <Link
-            theme="white"
-          />
-        </div>
+        />
         <div
           className="m-margin-top12"
         >
@@ -75,106 +58,12 @@ exports[`Post should render correctly 1`] = `
             />
           </div>
           <Input
+            onChange={[Function]}
             placeholder="Write a comment..."
             type="text"
+            value=""
           />
         </div>
-      </div>
-      <div
-        className="m-flex m-col-top m-padding-top10"
-        key="0"
-      >
-        <Image
-          size={30}
-        />
-        <div
-          className="m-margin-left12 m-line-bottom"
-        >
-          <span
-            className="commentNickname"
-          >
-            Emma
-          </span>
-          <p
-            className="m-font15 m-colors-555  m-padding-bottom10"
-          >
-            It's a great website, share with you. Wow!!! Come and play with me.
-          </p>
-        </div>
-      </div>
-      <div
-        className="m-flex m-col-top m-padding-top10"
-        key="1"
-      >
-        <Image
-          size={30}
-        />
-        <div
-          className="m-margin-left12 m-line-bottom"
-        >
-          <span
-            className="commentNickname"
-          >
-            Emma
-          </span>
-          <p
-            className="m-font15 m-colors-555  m-padding-bottom10"
-          >
-            It's a great website, share with you. Wow!!! Come and play with me.
-          </p>
-        </div>
-      </div>
-      <div
-        className="m-flex m-col-top m-padding-top10"
-        key="2"
-      >
-        <Image
-          size={30}
-        />
-        <div
-          className="m-margin-left12 m-line-bottom"
-        >
-          <span
-            className="commentNickname"
-          >
-            Emma
-          </span>
-          <p
-            className="m-font15 m-colors-555  m-padding-bottom10"
-          >
-            It's a great website, share with you. Wow!!! Come and play with me.
-          </p>
-        </div>
-      </div>
-      <div
-        className="footerBtn"
-      >
-        <Button
-          block={true}
-          disabled={false}
-          ghost={true}
-          htmlType="button"
-          loading={false}
-          onClick={[Function]}
-          prefixCls="za-button"
-          shadow={false}
-          shape="round"
-          size="sm"
-          theme="primary"
-        >
-          <div
-            className="m-flex m-row-center"
-          >
-            lookAtAll
-            <Icon
-              prefixCls="za-icon"
-              size="xs"
-              theme="primary"
-              type="arrow-right"
-              viewBox="0 0 32 32"
-            />
-          </div>
-        </Button>
       </div>
     </div>
   </div>

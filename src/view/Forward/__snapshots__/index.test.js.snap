@@ -26,6 +26,7 @@ exports[`Forward should render correctly 1`] = `
           ghost={false}
           htmlType="button"
           loading={false}
+          onClick={[Function]}
           prefixCls="za-button"
           shadow={false}
           shape="round"
@@ -45,22 +46,27 @@ exports[`Forward should render correctly 1`] = `
     >
       <Input
         className="m-font17"
+        onChange={[Function]}
         placeholder="placeholder..."
         rows={5}
         type="text"
+        value=""
       />
       <div
         className="m-bg-fff m-padding10 m-margin-top10"
       >
         <UserHeader
+          btnType="empty"
+          item={
+            Object {
+              "form_type": undefined,
+            }
+          }
           size={30}
         />
         <p
           className="itemContent m-font13 m-padding-tb10"
-        >
-          It's a great website, share with you. Wow!!! Come and play with me.
-        </p>
-        <Link />
+        />
       </div>
     </div>
   </div>

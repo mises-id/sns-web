@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-11 01:53:07
+ * @LastEditTime: 2021-08-11 02:48:40
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -18,8 +18,8 @@ import PostsIcons from '@/components/PostsIcons';
 import { followed, liked } from '@/components/PostsIcons/common';
 import Navbar from '@/components/NavBar';
 import {  getComment, getStatusItem } from '@/api/status';
-import { useBind } from '@/utils';
-const Post = ({history})=>{
+import { useBind, useRouteState } from '@/utils';
+const Post = ({history={}})=>{
   const {t} = useTranslation();
   const [item,setitem] = useState({})
   const goComment = ()=>{
@@ -51,12 +51,16 @@ const Post = ({history})=>{
   }
   const [id, setid] = useState('');
   const commentContent = useBind('')
+  const historyState = useRouteState(history);
+
   useEffect(() => {
-    const state = history.location.state || {};
-    setid(state.id);
-    getDetail(state.id)
-    getCommentList(state.id)
-  }, [history.location.state])
+    if(historyState) {
+      setid(historyState.id);
+      getDetail(historyState.id)
+      getCommentList(historyState.id)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [historyState]);
   const submit = ()=>{
     console.log(commentContent)
   }
