@@ -1,10 +1,9 @@
 import { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-10 16:21:22
+ * @LastEditTime: 2021-08-10 16:34:39
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -93,11 +92,4 @@ export function useList(fn,params){
     }
   }
   return [fetchData,last_id,dataSource,setdataSource]
-}
-/**
-* @param {*} 
-*/
-export function userForm(){
-  const user = useSelector(state => state.user)||{}
-  return user
 }
