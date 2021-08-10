@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2021-08-10 13:09:11
+ * @LastEditTime: 2021-08-10 16:30:44
  * @LastEditors: lmk
  * @Description: 
  */
@@ -19,14 +19,14 @@ import { Button } from 'zarm';
 import { OpenCreateUserPanel } from '@/utils/postMessage';
 import { useTranslation } from 'react-i18next';
 import { useList } from '@/utils';
-const Follow = ({history}) => {
-  const user = useSelector(state => state.user)
-  const isDiscoverPage = history.location.pathname;
+const Follow = ({history={}}) => {
+  const user = useSelector(state => state.user)||{}
+  const isDiscoverPage = history.location?history.location.pathname : '';
   const [isDiscover, setisDiscover] = useState(false)
   const fn = isDiscoverPage.indexOf('discover')>-1 ? recommend : following;
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource,setdataSource] = useList(fn,{
-    uid:user.loginForm.uid,
+    uid:user.loginForm&&user.loginForm.uid,
     limit:5,last_id:lastId
   })
   //getData

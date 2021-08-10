@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2021-08-10 14:28:51
+ * @LastEditTime: 2021-08-10 16:16:43
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -42,7 +42,7 @@ export function followed(val){
 * @param {*} 
 */
 export function useLogin(){
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user) || {};
   const isLogin = !!user.token;
   return {isLogin}
 }

@@ -2,18 +2,7 @@
 
 exports[`Post should render correctly 1`] = `
 <div>
-  <NavBar
-    left={
-      <Icon
-        onClick={[Function]}
-        prefixCls="za-icon"
-        size="sm"
-        theme="default"
-        type="arrow-left"
-        viewBox="0 0 32 32"
-      />
-    }
-    prefixCls="za-nav-bar"
+  <Navbar
     title="postPageTitle"
   />
   <div
@@ -25,7 +14,14 @@ exports[`Post should render correctly 1`] = `
       <div
         className="m-padding15 m-bg-fff m-line-bottom"
       >
-        <UserHeader />
+        <UserHeader
+          followed={[Function]}
+          item={
+            Object {
+              "from_type": undefined,
+            }
+          }
+        />
         <p
           className="itemContent m-font15 m-padding-tb15"
         >
@@ -50,8 +46,9 @@ exports[`Post should render correctly 1`] = `
           className="m-margin-top12"
         >
           <PostsIcons
+            forwardCallback={[Function]}
             item={Object {}}
-            likePress={[Function]}
+            likeCallback={[Function]}
           />
         </div>
       </div>

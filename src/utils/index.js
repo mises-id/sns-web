@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-10 15:04:12
+ * @LastEditTime: 2021-08-10 16:21:22
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -63,8 +64,12 @@ export default function urlToJson(url = window.location.href) {
 }
 
 /**
-* @param {*} 
-*/
+ * @description: 
+ * @param {*} funtion fn getdatalist
+ * params request data
+ * @return {*}
+ */
+
 export function useList(fn,params){
   let [last_id, setlast_id] = useState('');
   let [dataSource, setdataSource] = useState([]);
@@ -88,4 +93,11 @@ export function useList(fn,params){
     }
   }
   return [fetchData,last_id,dataSource,setdataSource]
+}
+/**
+* @param {*} 
+*/
+export function userForm(){
+  const user = useSelector(state => state.user)||{}
+  return user
 }

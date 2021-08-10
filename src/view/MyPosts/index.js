@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2021-08-10 13:51:11
+ * @LastEditTime: 2021-08-10 16:31:44
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux';
 import { Toast } from 'zarm';
 import { useList } from '@/utils';
 const MyPosts = ({history}) => {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user)||{}
   const setLike = (e,val)=>{
     liked(e,val).then(res=>{
       setDataSource([...dataSource])
@@ -47,7 +47,7 @@ const MyPosts = ({history}) => {
   }
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource,setDataSource] = useList(myPostsData,{
-    uid:user.loginForm.uid,
+    uid:user.loginForm&&user.loginForm.uid,
     limit:5,last_id:lastId
   })
   //getData

@@ -24,14 +24,14 @@ const Following = ({history})=>{
   const {state={}} = location || {}
   const type = state.pageType || 'following'
   const pageTitle = `${type}PageTitle`
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user)||{}
   const renderView =(val={},index)=>{
     return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label={val.username} key={index}
     rightChild={<img className="followedIcon" src={followed} alt="followIcon"  icon={val.avatar.medium}/>}></Cell>
   }
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource] = useList(friendShip,{
-    uid:user.loginForm.uid,relate:type,
+    uid:user.loginForm&&user.loginForm.uid,relate:type,
     limit:5,last_id:lastId
   })
   //getData

@@ -13,9 +13,7 @@ exports[`UserHeader should render correctly 1`] = `
     >
       <span
         className="nickname"
-      >
-        Alice
-      </span>
+      />
       <div
         className="timeAndType m-margin-top5"
       >
@@ -44,6 +42,7 @@ exports[`UserHeader should render correctly 1`] = `
       />
     }
     loading={false}
+    onClick={[Function]}
     prefixCls="za-button"
     shadow={false}
     shape="round"

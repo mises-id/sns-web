@@ -1,10 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Follows should render correctly 1`] = `
-<PullList
-  className="followBox"
-  data={Array []}
-  load={[Function]}
-  renderView={[Function]}
+<Empty
+  btnElement={
+    <div
+      className="create-btn"
+    >
+      <Button
+        block={true}
+        disabled={false}
+        ghost={true}
+        htmlType="button"
+        loading={false}
+        onClick={[Function]}
+        prefixCls="za-button"
+        shadow={false}
+        shape="round"
+        size="md"
+        theme="primary"
+      >
+        createId
+      </Button>
+    </div>
+  }
+  showBtn={true}
 />
 `;

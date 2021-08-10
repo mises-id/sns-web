@@ -52,15 +52,5 @@ exports[`Home should render correctly 1`] = `
       <div />
     </TabPanel>
   </Tabs>
-  <div
-    className="m-position-fixed createPosts"
-  >
-    <Image
-      alt="posts"
-      onClick={[Function]}
-      size={75}
-      source="send.png"
-    />
-  </div>
 </div>
 `;

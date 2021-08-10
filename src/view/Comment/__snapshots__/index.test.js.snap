@@ -4,18 +4,7 @@ exports[`Comment should render correctly 1`] = `
 <div
   className="m-flex m-flex-col page"
 >
-  <NavBar
-    left={
-      <Icon
-        onClick={[Function]}
-        prefixCls="za-icon"
-        size="sm"
-        theme="default"
-        type="arrow-left"
-        viewBox="0 0 32 32"
-      />
-    }
-    prefixCls="za-nav-bar"
+  <Navbar
     title="commentPageTitle"
   />
   <div

@@ -15,9 +15,7 @@ exports[`PostsIcon should render correctly 1`] = `
     />
     <span
       className="m-font12 m-margin-left8 m-colors-333"
-    >
-      235
-    </span>
+    />
   </div>
   <div
     className="m-flex"
@@ -29,9 +27,7 @@ exports[`PostsIcon should render correctly 1`] = `
     />
     <span
       className="m-font12 m-colors-333 m-margin-left8"
-    >
-      68
-    </span>
+    />
   </div>
   <div
     className="m-flex"
@@ -44,9 +40,7 @@ exports[`PostsIcon should render correctly 1`] = `
     />
     <span
       className="m-font12 m-colors-333 m-margin-left8"
-    >
-      34
-    </span>
+    />
   </div>
 </div>
 `;
