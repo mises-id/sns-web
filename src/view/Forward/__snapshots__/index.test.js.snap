@@ -59,7 +59,8 @@ exports[`Forward should render correctly 1`] = `
           btnType="empty"
           item={
             Object {
-              "form_type": undefined,
+              "created_at": undefined,
+              "from_type": undefined,
             }
           }
           size={30}

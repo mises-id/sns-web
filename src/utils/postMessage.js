@@ -1,13 +1,10 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-10 23:17:29
+ * @LastEditTime: 2021-08-13 00:10:31
  * @LastEditors: lmk
  * @Description: to reactnative
  */
-
-import { createStatus } from "@/api/status";
-
 /**
  * @description: 
  * @param {*} 
@@ -70,19 +67,9 @@ export function getAuth(){
 export function openLoginPage(){
   return postmessageFn('openLoginPage')
 }
-
 /**
-* @param {*} add forward callback
+* @param {*} open new tagpage
 */
-export function forwardCallback(){
-  return postmessageFn('forwardCallback')
-}
-window.addForward = data=>{
-  const form = {
-    status_type:'link',
-    form_type:"forward",
-    content:data.content,
-    link_meta:data
-  }
-  createStatus(form).then(forwardCallback)
+export function newTagPage(data){
+  return postmessageFn('newTagPage',data)
 }

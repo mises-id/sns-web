@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-11 02:26:20
+ * @LastEditTime: 2021-08-12 22:14:09
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -61,9 +61,9 @@ const Forward = ({history={}})=>{
           placeholder={`${t('placeholder')}...`}
         />
         <div className="m-bg-fff m-padding10 m-margin-top10">
-          <UserHeader size={30} item={{...item.user,form_type:item.form_type}} btnType="empty"></UserHeader>
+          <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>
           <p className="itemContent m-font13 m-padding-tb10">{item.content}</p>
-          {/* <Link></Link> */}
+          {item.status_type==='link'&&<Link theme="primary" item={item.link_meta}></Link>}
         </div>
       </div>
     </div>

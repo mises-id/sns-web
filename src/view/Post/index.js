@@ -1,52 +1,41 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-11 02:48:40
+ * @LastEditTime: 2021-08-12 23:42:32
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Input ,Icon} from 'zarm';
+import { Button, Input ,Icon, Toast} from 'zarm';
 import '@/styles/followPage.scss'
 import write from '@/images/write.png'
-import UserHeader from '../Follows/UserHeader';
-import Link from '../Follows/Link';
 import './index.scss'
 import Image from '@/components/Image';
-import PostsIcons from '@/components/PostsIcons';
-import { followed, liked } from '@/components/PostsIcons/common';
 import Navbar from '@/components/NavBar';
 import {  getComment, getStatusItem } from '@/api/status';
-import { useBind, useRouteState } from '@/utils';
+import { useBind, useChangePosts, useRouteState } from '@/utils';
+import { useSelector } from 'react-redux';
+import { createComment } from '@/api/comment';
+import PostItem from '@/components/PostItem';
 const Post = ({history={}})=>{
   const {t} = useTranslation();
   const [item,setitem] = useState({})
+  const [source, setsource] = useState('');
+  const user = useSelector(state => state.user)||{};
+  const {setLike,followPress} = useChangePosts(setitem,item);
   const goComment = ()=>{
-    history.push({pathname:'/comment'})
-  }
-  const setLike = ()=>{
-    liked(item).then(res=>{
-      setitem({...item})
-    });
-  }
-  const followPress = ()=>{
-    followed(item).then(res=>{
-      setitem({...item})
-    });
-  }
-  const forwardPress = val=>{
-    history.push({pathname:'/forward',state:{id:val.id}})
+    history.push({pathname:'/comment',state:{id}})
   }
   const getDetail = id=>{
-    getStatusItem(id).then(res=>{
-      setitem(res);
-    })
+    getStatusItem(id).then(setitem)
   }
-  const [comment, setcomment] = useState([])
+  const [comment, setcomment] = useState([]);
+  const [showMore, setshowMore] = useState(false)
   const getCommentList = id=>{
     getComment({status_id:id,limit:3}).then(res=>{
       setcomment(res.data)
+      setshowMore(!!res.pagination.last_id)
     })
   }
   const [id, setid] = useState('');
@@ -54,6 +43,9 @@ const Post = ({history={}})=>{
   const historyState = useRouteState(history);
 
   useEffect(() => {
+    if(user.loginForm&&user.loginForm.avatar){
+      setsource(user.loginForm.avatar.medium)
+    }
     if(historyState) {
       setid(historyState.id);
       getDetail(historyState.id)
@@ -61,44 +53,46 @@ const Post = ({history={}})=>{
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historyState]);
-  const submit = ()=>{
-    console.log(commentContent)
+  const submit = e=>{
+    e.preventDefault();
+    if(!user.token){
+      Toast.show(t('notLogin'))
+      return false;
+    }
+    createComment({
+      content:commentContent.value,
+      status_id:id
+    }).then(res=>{
+      comment.unshift(res);
+      comment.length>3&&setshowMore(true);
+      setcomment(comment.slice(0,3));
+      commentContent.onChange('')
+    })
   }
   return <div>
-    <Navbar title={t('postPageTitle')}
-    />
+    <Navbar title={t('postPageTitle')}  />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-bg-fff">
-        <div  className="m-padding15 m-bg-fff m-line-bottom">
-        <UserHeader item={{...item.user,from_type:item.from_type}}  followed={followPress}></UserHeader>
-          <p className="itemContent m-font15 m-padding-tb15">{item.content}</p>
-          {item.status_type==='link'&&<Link theme="primary"></Link>}
-          {item.from_type==='forward'&&<div className="m-bg-f8f8f8 m-padding10">
-            <UserHeader item={item} size={30} followed={()=>followPress(item)}></UserHeader>
-            <p className="itemContent m-font13 m-padding-tb10">It's a great website, share with you. Wow!!! Come and play with me.</p>
-            <Link theme="white"></Link>
-          </div>}
-          <div className="m-margin-top12">
-            <PostsIcons likeCallback={setLike} item={item} forwardCallback={forwardPress} />
-          </div>
-        </div>
+        <PostItem val={item} history={history} changeFollow={followPress} setLike={setLike} />
       </div>
       <div className="m-margin-top15 m-bg-fff m-padding15">
         <div className="m-flex">
-          <Image size={30}></Image>
+          <Image size={30} source={source}></Image>
           <div className="comment m-flex-1 m-flex m-padding-lr15">
             <div className="m-margin-right5"><Image source={write} size={16} shape="square"></Image></div>
-            <Input placeholder="Write a comment..." {...commentContent} type="text"></Input>
+            <form onSubmit={submit} className="m-flex-1">
+              <Input placeholder="Write a comment..." {...commentContent} type="text"></Input>
+            </form>
           </div>
         </div>
         {comment.map((val,index)=>(<div key={index} className="m-flex m-col-top m-padding-top10">
-          <Image size={30}></Image>
-          <div className="m-margin-left12 m-line-bottom">
-            <span className="commentNickname">Emma</span>
-            <p className="m-font15 m-colors-555  m-padding-bottom10">It's a great website, share with you. Wow!!! Come and play with me.</p>
+          <Image size={30} source={val.user.avatar ? val.user.avatar.medium : ''}></Image>
+          <div className="m-margin-left12 m-line-bottom m-flex-1">
+            <span className="commentNickname">{val.user.username}</span>
+            <p className="m-font15 m-colors-555  m-padding-bottom10">{val.content}</p>
           </div>
         </div>))}
-        {comment.length ? <div className="footerBtn">
+        {showMore ? <div className="footerBtn">
           <Button shape="round" size="sm" theme="primary" ghost block onClick={goComment}>
           <div className="m-flex m-row-center">{t('lookAtAll')}<Icon type="arrow-right" theme="primary" size="xs"></Icon></div>
           </Button>

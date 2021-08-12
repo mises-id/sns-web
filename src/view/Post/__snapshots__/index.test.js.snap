@@ -11,30 +11,12 @@ exports[`Post should render correctly 1`] = `
     <div
       className="m-bg-fff"
     >
-      <div
-        className="m-padding15 m-bg-fff m-line-bottom"
-      >
-        <UserHeader
-          followed={[Function]}
-          item={
-            Object {
-              "from_type": undefined,
-            }
-          }
-        />
-        <p
-          className="itemContent m-font15 m-padding-tb15"
-        />
-        <div
-          className="m-margin-top12"
-        >
-          <PostsIcons
-            forwardCallback={[Function]}
-            item={Object {}}
-            likeCallback={[Function]}
-          />
-        </div>
-      </div>
+      <PostItem
+        changeFollow={[Function]}
+        history={Object {}}
+        setLike={[Function]}
+        val={Object {}}
+      />
     </div>
     <div
       className="m-margin-top15 m-bg-fff m-padding15"
@@ -44,6 +26,7 @@ exports[`Post should render correctly 1`] = `
       >
         <Image
           size={30}
+          source=""
         />
         <div
           className="comment m-flex-1 m-flex m-padding-lr15"
@@ -57,12 +40,17 @@ exports[`Post should render correctly 1`] = `
               source="write.png"
             />
           </div>
-          <Input
-            onChange={[Function]}
-            placeholder="Write a comment..."
-            type="text"
-            value=""
-          />
+          <form
+            className="m-flex-1"
+            onSubmit={[Function]}
+          >
+            <Input
+              onChange={[Function]}
+              placeholder="Write a comment..."
+              type="text"
+              value=""
+            />
+          </form>
         </div>
       </div>
     </div>

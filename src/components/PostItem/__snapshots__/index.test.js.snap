@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateMisesId should render correctly 1`] = `
+<div
+  className="m-padding15 m-bg-fff m-line-bottom"
+  onClick={[Function]}
+>
+  <UserHeader
+    followed={[Function]}
+    item={
+      Object {
+        "created_at": undefined,
+        "from_type": undefined,
+      }
+    }
+  />
+  <p
+    className="itemContent m-font15 m-padding-tb15"
+  />
+  <div
+    className="m-margin-top12"
+  >
+    <PostsIcons
+      forwardCallback={[Function]}
+      item={Object {}}
+      likeCallback={[Function]}
+    />
+  </div>
+</div>
+`;

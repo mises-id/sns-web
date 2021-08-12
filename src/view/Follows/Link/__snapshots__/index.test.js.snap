@@ -3,6 +3,7 @@
 exports[`Link should render correctly 1`] = `
 <div
   className="m-flex m-row-between forwardBox m-bg-f8f8f8"
+  onClick={[Function]}
 >
   <div
     className="m-flex"
@@ -16,19 +17,10 @@ exports[`Link should render correctly 1`] = `
     >
       <span
         className="m-font12"
-      >
-        Alice
-      </span>
+      />
       <p
         className="timeAndType m-colors-999"
-      >
-        05.25
-        <span
-          className="m-margin-left5"
-        >
-          post
-        </span>
-      </p>
+      />
     </div>
   </div>
   <img

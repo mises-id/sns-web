@@ -37,10 +37,17 @@ exports[`Comment should render correctly 1`] = `
             source="write.png"
           />
         </div>
-        <Input
-          placeholder="Write a comment..."
-          type="text"
-        />
+        <form
+          className="m-flex-1"
+          onSubmit={[Function]}
+        >
+          <Input
+            onChange={[Function]}
+            placeholder="Write a comment..."
+            type="text"
+            value=""
+          />
+        </form>
       </div>
     </div>
   </div>

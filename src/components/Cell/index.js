@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2021-07-15 14:21:38
+ * @LastEditTime: 2021-08-12 21:56:05
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -23,7 +23,7 @@ import './index.scss'
 const Cell = ({icon,label,onPress,iconSize,showArrow=true,rightChild,className="",showIcon=true,showLine=true})=>{
   return <div className={`m-flex m-row-between m-padding-tb20 ${className} ${showLine ? 'm-line-bottom' : ''}`} onClick={onPress}>
   <div className="m-flex">
-    {showIcon&&<Image size={iconSize} source={icon} shape="square"></Image>}
+    {showIcon&&<Image size={iconSize} source={icon}></Image>}
     <span className={`m-colors-333 m-font16 ${showIcon ? 'm-margin-left15' : ''}`}>{label}</span>
   </div>
   <div className="m-flex">

@@ -1,9 +1,10 @@
+import { followed, liked } from "@/components/PostsIcons/common";
 import { useCallback, useEffect, useState } from "react";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-11 02:48:50
+ * @LastEditTime: 2021-08-12 23:28:53
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -105,4 +106,23 @@ export function useRouteState(history){
     getState()
   },[getState])
   return historyState;
+}
+/**
+* @param {*} 
+*/
+export function useChangePosts(setdataSource,dataSource){
+  const setLike = val=>{
+    liked(val).then(()=>{
+      const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
+      setdataSource(data)
+    });
+  }
+  const followPress = (val,flag)=>{
+    const item = flag ? val.parent_status : val;
+    followed(item).then(()=>{
+      const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
+      setdataSource(data)
+    });
+  }
+  return {setLike,followPress}
 }

@@ -1,41 +1,56 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-08 00:11:55
+ * @LastEditTime: 2021-08-13 00:11:20
  * @LastEditors: lmk
  * @Description: comment
  */
 
 import './index.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {Input } from 'zarm';
 import Image from '@/components/Image';
 import write from '@/images/write.png'
 import PullList from '@/components/PullList';
 import Navbar from '@/components/NavBar';
+import { useBind, useList } from '@/utils';
+import { getComment } from '@/api/status';
+import { createComment } from '@/api/comment';
 
-const Comment = (props)=>{
-  const {t} = useTranslation()
-  const [dataSource, setDataSource] = useState([]);
+const Comment = ({history})=>{
+  const {t} = useTranslation();
+  const state = history?.location?.state || {};
   const renderView =(val={},index)=>{
     return <div key={index} className="m-flex m-col-top m-padding-top10">
-    <Image size={30}></Image>
-    <div className="m-margin-left12 m-line-bottom">
-      <span className="commentNickname">Emma</span>
-      <p className="m-font15 m-colors-555  m-padding-bottom10 m-padding-right15">It's a great website, share with you. Wow!!! Come and play with me.</p>
+    <Image size={30} source={val.user.avatar ? val.user.avatar.medium : ''}></Image>
+    <div className="m-margin-left12 m-line-bottom m-flex-1">
+      <span className="commentNickname">{val.user.username}</span>
+      <p className="m-font15 m-colors-555  m-padding-bottom10">{val.content}</p>
     </div>
   </div>
   }
   //getData
-  const fetchData = async () => {
-    const newData = [];
-    for (let i = 0; i < 10; i++) {
-      newData.push({id:dataSource.length+i});
-    }
-    setDataSource([...dataSource,...newData])
-    return Promise.resolve()
-  };
+  const [lastId, setlastId] = useState('')
+  const [fetchData,last_id,dataSource,setdataSource] = useList(getComment,{
+    status_id:state.id,
+    limit:5,last_id:lastId
+  })
+  useEffect(() => {
+    setlastId(last_id)
+  }, [last_id])
+  const commentContent = useBind('');
+  const submit = e=>{
+    e.preventDefault()
+    createComment({
+      content:commentContent.value,
+      status_id:state.id
+    }).then(res=>{
+      dataSource.unshift(res);
+      setdataSource([...dataSource])
+      commentContent.onChange('')
+    })
+  }
   return <div className="m-flex m-flex-col page">
     <Navbar title={t('commentPageTitle')}
     />
@@ -47,7 +62,9 @@ const Comment = (props)=>{
         <Image size={30}></Image>
         <div className="comment m-flex-1 m-flex m-padding-lr15">
           <div className="m-margin-right5"><Image source={write} size={16} shape="square"></Image></div>
-          <Input placeholder="Write a comment..." type="text"></Input>
+          <form onSubmit={submit} className="m-flex-1">
+              <Input placeholder="Write a comment..." {...commentContent} type="text"></Input>
+            </form>
         </div>
       </div>
     </div>

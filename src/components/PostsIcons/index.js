@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-10 13:18:52
+ * @LastEditTime: 2021-08-11 22:59:05
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -45,7 +45,7 @@ const PostsIcons = ({item={},likeCallback,forwardCallback})=>{
   </div>
   <div className="m-flex" onClick={forwardPress}>
     <img src={forward}  className="iconStyle" alt="forward" ></img>
-    <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
+    <span className="m-font12 m-colors-333 m-margin-left8">{item.forwards_count}</span>
   </div>
 </div>
 }

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateMisesId should render correctly 1`] = `
+<NavBar
+  left={
+    <Icon
+      onClick={[Function]}
+      prefixCls="za-icon"
+      size="sm"
+      theme="default"
+      type="arrow-left"
+      viewBox="0 0 32 32"
+    />
+  }
+  prefixCls="za-nav-bar"
+/>
+`;

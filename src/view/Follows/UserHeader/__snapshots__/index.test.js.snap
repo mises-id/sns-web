@@ -13,16 +13,16 @@ exports[`UserHeader should render correctly 1`] = `
     >
       <span
         className="nickname"
-      />
+      >
+        notName
+      </span>
       <div
         className="timeAndType m-margin-top5"
       >
-        05.25
+        08.13
         <span
           className="m-margin-left5"
-        >
-          post
-        </span>
+        />
       </div>
     </div>
   </div>
