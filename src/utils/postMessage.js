@@ -1,10 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-13 00:10:31
+ * @LastEditTime: 2021-08-13 01:04:24
  * @LastEditors: lmk
  * @Description: to reactnative
  */
+
+import { ActivityIndicator, Loading } from "zarm";
+
 /**
  * @description: 
  * @param {*} 
@@ -20,8 +23,12 @@ const isRn = ()=>!!window.ReactNativeWebView;
 const postmessageFn = (type,data="")=>{
   return new Promise((resolve,reject)=>{
     isRn()&&window.ReactNativeWebView.postMessage(JSON.stringify({type,data}))
+    Loading.show({
+      content: <ActivityIndicator size="lg" />
+    });
     window.ReactNativeWebViewCallback = res=> {
-      res.success ? resolve(res) : reject(res.message)
+      res.success ? resolve(res) : reject(res.message);
+      Loading.hide()
     }
   })
 }
@@ -72,4 +79,16 @@ export function openLoginPage(){
 */
 export function newTagPage(data){
   return postmessageFn('newTagPage',data)
+}
+/**
+* @param {*} sdk follow
+*/
+export function sdkFollow(data){
+  return postmessageFn('follow',data)
+}
+/**
+* @param {*} sdk follow
+*/
+export function sdkUnFollow(data){
+  return postmessageFn('unfollow',data)
 }
