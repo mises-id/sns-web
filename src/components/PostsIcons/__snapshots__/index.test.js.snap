@@ -19,6 +19,7 @@ exports[`PostsIcon should render correctly 1`] = `
   </div>
   <div
     className="m-flex"
+    onClick={[Function]}
   >
     <img
       alt="comment"

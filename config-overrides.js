@@ -1,10 +1,15 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-08-10 01:15:37
+ * @LastEditTime: 2021-08-14 19:01:23
+ * @LastEditors: lmk
+ * @Description: 
+ */
 const path = require("path");
 
 const { override,
   fixBabelImports,
   addWebpackAlias,
-  addWebpackPlugin,
-  addPostcssPlugins,
   adjustStyleLoaders } = require('customize-cra');
 
 const resolve = _path => path.resolve(__dirname, _path)
@@ -36,7 +41,7 @@ module.exports = {
     }),
     //别名
     addWebpackAlias({
-      ['@']: resolve("./src")
+      '@': resolve("./src")
     }),
     CSSPlugin,
     // 添加loader 全局css
