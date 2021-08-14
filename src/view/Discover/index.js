@@ -1,4 +1,11 @@
-import React, { useReducer, useEffect, useRef, useState } from 'react';
+/*
+ * @Author: lmk
+ * @Date: 2021-07-08 15:07:31
+ * @LastEditTime: 2021-08-14 19:01:06
+ * @LastEditors: lmk
+ * @Description:
+ */
+import React, { useState } from 'react';
 import { Cell ,Radio} from 'zarm';
 const Found = (props)=>{
   const [multiple, setmultiple] = useState(true)

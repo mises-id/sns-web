@@ -7,7 +7,9 @@ exports[`UserHeader should render correctly 1`] = `
   <div
     className="m-flex"
   >
-    <Image />
+    <Image
+      source=""
+    />
     <div
       className="m-margin-left12"
     >
@@ -19,7 +21,7 @@ exports[`UserHeader should render correctly 1`] = `
       <div
         className="timeAndType m-margin-top5"
       >
-        08.13
+        08.14
         <span
           className="m-margin-left5"
         />
@@ -47,9 +49,12 @@ exports[`UserHeader should render correctly 1`] = `
     shadow={false}
     shape="round"
     size="xs"
+    style={Object {}}
     theme="primary"
   >
-    followTxt
+    <span>
+      followTxt
+    </span>
   </Button>
 </div>
 `;
