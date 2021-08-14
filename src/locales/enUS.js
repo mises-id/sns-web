@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-10 13:14:01
+ * @LastEditTime: 2021-08-14 13:17:09
  * @LastEditors: lmk
  * @Description: 
  */
@@ -41,7 +41,7 @@ const enUS = {
     updataUserInfoSuccess:'Update success',
     sendSuccess:"Send success",
     deleteSuccess:"Delete success",
-    notLogin:'Not Logged In'
+    notLogin:'Do you want to log in?'
   }
 }
 export default enUS

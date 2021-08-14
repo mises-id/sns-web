@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-13 01:04:24
+ * @LastEditTime: 2021-08-14 13:19:53
  * @LastEditors: lmk
  * @Description: to reactnative
  */
@@ -66,9 +66,9 @@ export function getAuth(){
 }
 
 /**
- * @description:
- * @param {*} open login page
- * @return {*}
+ * @description:open login page
+ * @param {*} 
+ * @return {*} promies
  */
 
 export function openLoginPage(){

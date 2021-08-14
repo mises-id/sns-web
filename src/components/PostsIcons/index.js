@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-11 22:59:05
+ * @LastEditTime: 2021-08-14 13:22:27
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -11,9 +11,10 @@ import like from '@/images/like.png'
 import comment from '@/images/comment.png'
 import forward from '@/images/forward.png'
 import './index.scss'
-import { Toast } from 'zarm';
+import { Modal } from 'zarm';
 import { useTranslation } from 'react-i18next';
 import { useLogin } from './common';
+import { openLoginPage } from '@/utils/postMessage';
 /**
  * @description: 
  * @param {*}forwardPress.type:function //click forward icon
@@ -27,7 +28,15 @@ const PostsIcons = ({item={},likeCallback,forwardCallback})=>{
   const hasLogin = (e,fn)=>{
     e.stopPropagation();
     if(!isLogin){
-      Toast.show(t('notLogin'))
+      //Toast.show(t('notLogin'))
+      Modal.confirm({
+        title: 'Message',
+        content: t('notLogin'),
+        onCancel: () => {},
+        onOk: () => {
+          openLoginPage()
+        },
+      });
       return false;
     }
     fn&&fn()
@@ -39,7 +48,7 @@ const PostsIcons = ({item={},likeCallback,forwardCallback})=>{
     <img src={item.is_liked ? liked : like}  className="iconStyle" alt="like"></img>
     <span className={`m-font12 m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
   </div>
-  <div className="m-flex">
+  <div className="m-flex" onClick={hasLogin}>
     <img src={comment}  className="iconStyle" alt="comment"></img>
     <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
   </div>

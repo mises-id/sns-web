@@ -1,17 +1,18 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-13 01:31:35
+ * @LastEditTime: 2021-08-14 13:19:26
  * @LastEditors: lmk
  * @Description: 
  */
 import Image from '@/components/Image/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Toast } from 'zarm';
+import { Button, Icon, Modal } from 'zarm';
 import deteleIcon from '@/images/delete.png'
 import { useLogin } from '@/components/PostsIcons/common';
 import dayjs from 'dayjs';
+import { openLoginPage } from '@/utils/postMessage';
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
@@ -21,7 +22,14 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const hasLogin = (e,fn)=>{
     e.stopPropagation();
     if(!isLogin){
-      Toast.show(t('notLogin'))
+      Modal.confirm({
+        title: 'Message',
+        content: t('notLogin'),
+        onCancel: () => {},
+        onOk: () => {
+          openLoginPage()
+        },
+      });
       return false;
     }
     fn&&fn()
@@ -41,7 +49,7 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
     {btnType==='follow'&&<Button style={item.is_followed ? {
       borderColor:"#DDDDDD",
       color:'#666666'
-    } : ''} icon={!item.is_followed&&<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme={!item.is_followed ? "primary" : ""} ghost size="xs" onClick={followedItem}><span>{t(isFollow)}</span></Button>}
+    } : {}} icon={!item.is_followed&&<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme={!item.is_followed ? "primary" : ""} ghost size="xs" onClick={followedItem}><span>{t(isFollow)}</span></Button>}
     {btnType==='myPosts'&&<div className="btnStyle delete" onClick={deleteItemClick}>
       <Image source={deteleIcon} size={15} shape="square"></Image></div>}
   </div>
