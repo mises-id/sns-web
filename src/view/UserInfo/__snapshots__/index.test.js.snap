@@ -61,7 +61,7 @@ exports[`UserInfo should render correctly 1`] = `
           <Input
             clearable={false}
             onChange={[Function]}
-            placeholder="placeholder"
+            placeholder="phonePlaceholder"
             type="text"
           />
         }
@@ -73,7 +73,7 @@ exports[`UserInfo should render correctly 1`] = `
           <Input
             clearable={false}
             onChange={[Function]}
-            placeholder="placeholder"
+            placeholder="emailPlaceholder"
             type="text"
           />
         }
@@ -85,7 +85,7 @@ exports[`UserInfo should render correctly 1`] = `
           <Input
             clearable={false}
             onChange={[Function]}
-            placeholder="placeholder"
+            placeholder="addressPlaceholder"
             type="text"
           />
         }

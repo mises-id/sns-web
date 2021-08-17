@@ -21,40 +21,12 @@ exports[`UserHeader should render correctly 1`] = `
       <div
         className="timeAndType m-margin-top5"
       >
-        08.14
+        08.18
         <span
           className="m-margin-left5"
         />
       </div>
     </div>
   </div>
-  <Button
-    block={false}
-    disabled={false}
-    ghost={true}
-    htmlType="button"
-    icon={
-      <Icon
-        className="followIcon"
-        prefixCls="za-icon"
-        size="md"
-        theme="primary"
-        type="add"
-        viewBox="0 0 32 32"
-      />
-    }
-    loading={false}
-    onClick={[Function]}
-    prefixCls="za-button"
-    shadow={false}
-    shape="round"
-    size="xs"
-    style={Object {}}
-    theme="primary"
-  >
-    <span>
-      followTxt
-    </span>
-  </Button>
 </div>
 `;

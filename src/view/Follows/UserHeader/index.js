@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-16 22:09:26
+ * @LastEditTime: 2021-08-18 00:33:50
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,7 +18,7 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
   const format = time=> dayjs(time).format('MM.DD')
-  const {loginForm={}} = useSelector(state => state.user);
+  const {loginForm={}} = useSelector(state => state.user) || {};
   const isMe = loginForm.uid===item.uid;
   const hasLogin = async (e,fn)=>{
     e.stopPropagation();

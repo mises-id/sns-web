@@ -21,6 +21,7 @@ exports[`CreateMisesId should render correctly 1`] = `
     className="m-margin-top12"
   >
     <PostsIcons
+      commentPage={[Function]}
       forwardCallback={[Function]}
       item={Object {}}
       likeCallback={[Function]}

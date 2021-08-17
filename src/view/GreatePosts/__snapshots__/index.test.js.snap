@@ -47,7 +47,7 @@ exports[`GreatePosts should render correctly 1`] = `
       <Input
         className="m-font17"
         onChange={[Function]}
-        placeholder="placeholder..."
+        placeholder="createPostsPlaceholder..."
         rows={10}
         type="text"
         value=""

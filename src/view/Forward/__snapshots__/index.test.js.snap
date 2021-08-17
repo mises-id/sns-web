@@ -47,7 +47,7 @@ exports[`Forward should render correctly 1`] = `
       <Input
         className="m-font17"
         onChange={[Function]}
-        placeholder="placeholder..."
+        placeholder="forwardPlaceholder..."
         rows={5}
         type="text"
         value=""
