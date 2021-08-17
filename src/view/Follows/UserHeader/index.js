@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
-  const format = time=> dayjs(time).format('MM.DD')
+  const format = time=> time && dayjs(time).format('MM.DD')
   const {loginForm={}} = useSelector(state => state.user) || {};
   const isMe = loginForm.uid===item.uid;
   const hasLogin = async (e,fn)=>{
