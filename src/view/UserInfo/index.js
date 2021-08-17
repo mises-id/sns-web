@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2021-08-13 00:43:42
+ * @LastEditTime: 2021-08-18 00:10:58
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -119,7 +119,7 @@ const UserInfo = (props)=>{
     byForm[by] = form[by];
     try {
       const avatarDid = user.avatar&&user.avatar.large ? user.avatar.large : '';
-      await setUserInfo({username:username.value,gender:user.gender,mobile:phone.value,email:mail.value,avatarDid})
+      setUserInfo({username:username.value,gender:user.gender,mobile:phone.value,email:mail.value,avatarDid})
       const res = await updateUser(byForm)
       dispatch(setLoginForm(res))
       setsaveLoading(false)
@@ -141,11 +141,11 @@ const UserInfo = (props)=>{
         <Cell label={t('gender')} showIcon={false}
         rightChild={<div className={!user.gender?'placeholder':''} onClick={()=>setpickerVisible(true)}>{user.gender || t('placeholder')}</div>}></Cell>
         <Cell label={t('phone')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...phone} placeholder={t('placeholder')} />}></Cell>
+        rightChild={<Input type="text" clearable={false} {...phone} placeholder={t('phonePlaceholder')} />}></Cell>
         <Cell label={t('mail')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...mail} placeholder={t('placeholder')} />}></Cell>
+        rightChild={<Input type="text" clearable={false} {...mail} placeholder={t('emailPlaceholder')} />}></Cell>
         <Cell label={t('address')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...address} placeholder={t('placeholder')} />}></Cell>
+        rightChild={<Input type="text" clearable={false} {...address} placeholder={t('addressPlaceholder')} />}></Cell>
       </div>
       <div className="m-padding20 save-box">
         <Button block theme="primary" loading={saveLoading} ghost size="md" shape="round" onClick={()=>saveInfo('info')}>{t('send')}</Button>

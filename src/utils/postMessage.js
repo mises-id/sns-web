@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-14 13:19:53
+ * @LastEditTime: 2021-08-16 23:49:24
  * @LastEditors: lmk
  * @Description: to reactnative
  */
@@ -20,15 +20,19 @@ const isRn = ()=>!!window.ReactNativeWebView;
  * @param {*} data website to rn
  * @return {*}
  */
-const postmessageFn = (type,data="")=>{
+const postmessageFn = (type,data="",loadingFlag=true)=>{
   return new Promise((resolve,reject)=>{
     isRn()&&window.ReactNativeWebView.postMessage(JSON.stringify({type,data}))
-    Loading.show({
+    loadingFlag&&Loading.show({
       content: <ActivityIndicator size="lg" />
     });
+    if(!isRn()) {
+      resolve();
+      Loading.hide()
+    };
     window.ReactNativeWebViewCallback = res=> {
       res.success ? resolve(res) : reject(res.message);
-      Loading.hide()
+      loadingFlag&&Loading.hide()
     }
   })
 }
@@ -54,7 +58,7 @@ export function OpenRestoreUserPanel(){
  * @return {*}
  */
 export function setUserInfo(data){
-  return postmessageFn('setUserInfo',data)
+  return postmessageFn('setUserInfo',data,false)
 }
 /**
  * @description: get authcode
@@ -66,13 +70,31 @@ export function getAuth(){
 }
 
 /**
+ * @description: get ListUsers
+ * @param {*}
+ * @return {*}
+ */
+ export function getListUsersCount(){
+  return postmessageFn('getListUsersCount')
+}
+
+/**
  * @description:open login page
  * @param {*} 
  * @return {*} promies
  */
 
-export function openLoginPage(){
+ export function openLoginPage(){
   return postmessageFn('openLoginPage')
+}
+/**
+ * @description:open login page
+ * @param {*} 
+ * @return {*} promies
+ */
+
+export function openRegister(){
+  return postmessageFn('openRegister')
 }
 /**
 * @param {*} open new tagpage
@@ -84,11 +106,11 @@ export function newTagPage(data){
 * @param {*} sdk follow
 */
 export function sdkFollow(data){
-  return postmessageFn('follow',data)
+  return postmessageFn('follow',data,false)
 }
 /**
 * @param {*} sdk follow
 */
 export function sdkUnFollow(data){
-  return postmessageFn('unfollow',data)
+  return postmessageFn('unfollow',data,false)
 }

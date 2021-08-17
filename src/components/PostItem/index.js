@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2021-08-13 00:11:56
+ * @LastEditTime: 2021-08-16 23:32:07
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,6 +18,10 @@ const PostItem = ({val={},index,history,changeFollow,setLike,btnType,deleteItem}
     const id = val.parent_status ? val.parent_status.id : val.id
     history.push({pathname:'/forward',state:{id}})
   }
+  const commentPage = ()=>{
+    console.log(val.id)
+    history.push({pathname:'/comment',state:{id:val.id}})
+  }
   return <div key={index} className="m-padding15 m-bg-fff m-line-bottom" onClick={()=>goDetail(val)}>
   <UserHeader item={{...val.user,from_type:val.from_type,created_at:val.created_at}}  followed={()=>changeFollow(val)} btnType={btnType} deleteItem={deleteItem}></UserHeader>
   <p className="itemContent m-font15 m-padding-tb15">{val.content}</p>
@@ -30,7 +34,7 @@ const PostItem = ({val={},index,history,changeFollow,setLike,btnType,deleteItem}
     <p className="forwardPostsData">like {val.parent_status.likes_count} · comment {val.parent_status.comments_count} · foward {val.parent_status.forwards_count}</p>
   </div>}
   <div className="m-margin-top12">
-    <PostsIcons likeCallback={()=>setLike(val)} item={val} forwardCallback={()=>forwardPress(val)} />
+    <PostsIcons likeCallback={()=>setLike(val)} commentPage={commentPage} item={val} forwardCallback={()=>forwardPress(val)} />
   </div>
 </div>
 }

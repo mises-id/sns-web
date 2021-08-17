@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-14 13:22:27
+ * @LastEditTime: 2021-08-16 23:31:34
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -14,7 +14,7 @@ import './index.scss'
 import { Modal } from 'zarm';
 import { useTranslation } from 'react-i18next';
 import { useLogin } from './common';
-import { openLoginPage } from '@/utils/postMessage';
+import { getListUsersCount, OpenCreateUserPanel, openLoginPage } from '@/utils/postMessage';
 /**
  * @description: 
  * @param {*}forwardPress.type:function //click forward icon
@@ -22,33 +22,41 @@ import { openLoginPage } from '@/utils/postMessage';
  * @param {*}likePress.type:object //icon data
  * @return {*} element
  */
-const PostsIcons = ({item={},likeCallback,forwardCallback})=>{
+const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage})=>{
   const {isLogin} = useLogin();
   const {t} = useTranslation();
-  const hasLogin = (e,fn)=>{
+  const hasLogin = async (e,fn)=>{
     e.stopPropagation();
+   
     if(!isLogin){
-      //Toast.show(t('notLogin'))
-      Modal.confirm({
-        title: 'Message',
-        content: t('notLogin'),
-        onCancel: () => {},
-        onOk: () => {
-          openLoginPage()
-        },
-      });
+      try {
+        const {data:count} = await getListUsersCount();
+        const flag = count > 0;
+        const content = flag ? t('notLogin') : t('notRegister') ;
+        Modal.confirm({
+          title: 'Message',
+          content,
+          onCancel: () => {},
+          onOk: () => {
+            flag ? openLoginPage() : OpenCreateUserPanel();
+          },
+        });
+      } catch (error) {
+        console.log(error)
+      }
       return false;
     }
     fn&&fn()
   }
   const forwardPress = e=>hasLogin(e,forwardCallback)
   const likePress = e=>hasLogin(e,likeCallback)
+  const commentPress = e=>hasLogin(e,commentPage)
   return <div className="m-margin-top12 m-flex itemFunctionBox">
   <div className="m-flex"  onClick={likePress}>
     <img src={item.is_liked ? liked : like}  className="iconStyle" alt="like"></img>
     <span className={`m-font12 m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
   </div>
-  <div className="m-flex" onClick={hasLogin}>
+  <div className="m-flex" onClick={commentPress}>
     <img src={comment}  className="iconStyle" alt="comment"></img>
     <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
   </div>

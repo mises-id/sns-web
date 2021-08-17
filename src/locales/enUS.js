@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-14 13:17:09
+ * @LastEditTime: 2021-08-18 00:10:51
  * @LastEditors: lmk
  * @Description: 
  */
@@ -14,6 +14,7 @@ const enUS = {
     followTxt:'follow',
     followedTxt:'following',
     createId:"Create mises id",
+    loginUser:"Log in mises id",
     restoreId:'Restore mises id',
     aboutId:'About mises id',
     restore:"Restore mises id",
@@ -36,12 +37,20 @@ const enUS = {
     commentPageTitle:'Comment',
     myPostPageTitle:'My Posts',
     cancel:'Cancel',
-    send:'Send',
+    send:'Apply',
     empty:'Data is empty~',
     updataUserInfoSuccess:'Update success',
     sendSuccess:"Send success",
     deleteSuccess:"Delete success",
-    notLogin:'Do you want to log in?'
+    notLogin:'Do you want to log in?',
+    notRegister:'Do you want to register?',
+    createMisesIdTips:"Misesid is a decentralized network, user can create his misesid account which stores his personal information and social relations, the account is totally owned by user himself, it can not be banned by any persons or orgnizations.",
+    createPostsPlaceholder:'write your post',
+    forwardPlaceholder:'write your post',
+    usernamePlaceholder:'write your username',
+    phonePlaceholder:'write your phone number',
+    emailPlaceholder:'write your email',
+    addressPlaceholder:'write your address'
   }
 }
 export default enUS

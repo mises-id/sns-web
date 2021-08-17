@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-14 13:19:26
+ * @LastEditTime: 2021-08-16 22:09:26
  * @LastEditors: lmk
  * @Description: 
  */
@@ -12,29 +12,37 @@ import { Button, Icon, Modal } from 'zarm';
 import deteleIcon from '@/images/delete.png'
 import { useLogin } from '@/components/PostsIcons/common';
 import dayjs from 'dayjs';
-import { openLoginPage } from '@/utils/postMessage';
+import {getListUsersCount, OpenCreateUserPanel, openLoginPage } from '@/utils/postMessage';
+import { useSelector } from 'react-redux';
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
-  const format = time=>{
-    return dayjs(time).format('MM.DD')
-  }
-  const hasLogin = (e,fn)=>{
+  const format = time=> dayjs(time).format('MM.DD')
+  const {loginForm={}} = useSelector(state => state.user);
+  const isMe = loginForm.uid===item.uid;
+  const hasLogin = async (e,fn)=>{
     e.stopPropagation();
     if(!isLogin){
-      Modal.confirm({
-        title: 'Message',
-        content: t('notLogin'),
-        onCancel: () => {},
-        onOk: () => {
-          openLoginPage()
-        },
-      });
+      try {
+        const {data:count} = await getListUsersCount();
+        const flag = count > 0;
+        const content = flag ? t('notLogin') : t('notRegister') ;
+        Modal.confirm({
+          title: 'Message',
+          content,
+          onCancel: () => {},
+          onOk: () => {
+            flag ? openLoginPage() : OpenCreateUserPanel();
+          },
+        });
+      } catch (error) {
+        console.log(error)
+      }
       return false;
     }
     fn&&fn()
   }
-  
+
   const isFollow = item.is_followed ? 'followedTxt' : 'followTxt'
   const followedItem = e=>hasLogin(e,followed)
   const deleteItemClick = e=>hasLogin(e,deleteItem)
@@ -46,7 +54,7 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
         <div className="timeAndType m-margin-top5">{format(item.created_at)}<span className="m-margin-left5">{item.from_type}</span></div>
       </div>
     </div>
-    {btnType==='follow'&&<Button style={item.is_followed ? {
+    {!isMe&&btnType==='follow'&&<Button style={item.is_followed ? {
       borderColor:"#DDDDDD",
       color:'#666666'
     } : {}} icon={!item.is_followed&&<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme={!item.is_followed ? "primary" : ""} ghost size="xs" onClick={followedItem}><span>{t(isFollow)}</span></Button>}

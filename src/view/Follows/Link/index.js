@@ -29,7 +29,7 @@ const Link = ({theme="primary",item={}})=>{
   <div className="m-flex">
     <Image shape='square' size='sm' source={item.attachment_url}/>
     <div className="m-margin-left8">
-      <span className="m-font12">{item.title}</span>
+      <span className="m-font12 title">{item.title}</span>
       <p className="timeAndType m-colors-999">{item.host}</p>
     </div>
   </div>
