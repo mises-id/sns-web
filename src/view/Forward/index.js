@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-12 22:14:09
+ * @LastEditTime: 2021-08-18 00:08:37
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -58,7 +58,7 @@ const Forward = ({history={}})=>{
           rows={5}
           className="m-font17"
           {...content}
-          placeholder={`${t('placeholder')}...`}
+          placeholder={`${t('forwardPlaceholder')}...`}
         />
         <div className="m-bg-fff m-padding10 m-margin-top10">
           <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>

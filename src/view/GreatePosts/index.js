@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-09 21:45:43
+ * @LastEditTime: 2021-08-18 00:07:58
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -17,7 +17,7 @@ const GreatePosts = (props)=>{
   const [loading, setloading] = useState(false)
   const send = ()=>{
     if(postsContent.value===''){
-      Toast.show(t('placeholder'))
+      Toast.show(t('createPostsPlaceholder'))
       return false;
     }
     const form = {
@@ -47,7 +47,7 @@ const GreatePosts = (props)=>{
           type="text"
           {...postsContent}
           className="m-font17"
-          placeholder={`${t('placeholder')}...`}
+          placeholder={`${t('createPostsPlaceholder')}...`}
         />
       </div>
     </div>
