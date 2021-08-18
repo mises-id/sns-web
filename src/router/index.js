@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2021-08-09 11:49:10
+ * @LastEditTime: 2021-08-18 22:37:02
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -17,6 +17,7 @@ const Comment = getAsyncComponent(() => import(/* webpackChunkName: 'Comment' */
 const MyPosts = getAsyncComponent(() => import(/* webpackChunkName: 'MyPost' */ '@/view/MyPosts'))
 const GreatePosts = getAsyncComponent(() => import(/* webpackChunkName: 'GreatePosts' */ '@/view/GreatePosts'))
 const Forward = getAsyncComponent(() => import(/* webpackChunkName: 'Forward' */ '@/view/Forward'))
+const Empty = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Empty'))
 
 const routeConfig = [
 	{
@@ -69,6 +70,10 @@ const routeConfig = [
 	{
 		path: '/forward',
 		component: Forward,
+	},
+	{
+		path: '/empty',
+		component: Empty,
 	}
 ]
 

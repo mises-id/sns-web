@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2021-08-12 23:54:21
+ * @LastEditTime: 2021-08-18 13:36:01
  * @LastEditors: lmk
  * @Description: 
  */
@@ -10,7 +10,7 @@ import React from 'react';
 import link from '@/images/link.png'
 import Image from '@/components/Image/index';
 import './index.scss'
-import { newTagPage } from '@/utils/postMessage';
+// import { newTagPage } from '@/ut÷ils/postMessage';
 /**
  * @description: userHeader and follow Btn
  * @param {*} theme
@@ -23,7 +23,8 @@ const Link = ({theme="primary",item={}})=>{
   }[theme]
   const linkTo =e=>{
     e.stopPropagation();
-    newTagPage(item.link)
+    //newTagPage(item.link)
+    window.location.href=item.link
   }
   return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
   <div className="m-flex">

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-18 00:10:51
+ * @LastEditTime: 2021-08-18 22:39:09
  * @LastEditors: lmk
  * @Description: 
  */
@@ -50,7 +50,8 @@ const enUS = {
     usernamePlaceholder:'write your username',
     phonePlaceholder:'write your phone number',
     emailPlaceholder:'write your email',
-    addressPlaceholder:'write your address'
+    addressPlaceholder:'write your address',
+    forwordsubmit:'forward',
   }
 }
 export default enUS

@@ -33,7 +33,7 @@ exports[`Forward should render correctly 1`] = `
           size="xs"
           theme="primary"
         >
-          send
+          forwordsubmit
         </Button>
       </div>
     }

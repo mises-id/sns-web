@@ -49,7 +49,7 @@ const Forward = ({history={}})=>{
   return <div>
     <NavBar
       left={<span  onClick={() => window.history.back()} className="m-font16">{t('cancel')}</span>}
-      right={<div style={{width:'61px'}}><Button theme="primary" onClick={submit} block size="xs" shape="round">{t('send')}</Button></div>}
+      right={<div style={{width:'61px'}}><Button theme="primary" onClick={submit} block size="xs" shape="round">{t('forwordsubmit')}</Button></div>}
     />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-padding15"> 
