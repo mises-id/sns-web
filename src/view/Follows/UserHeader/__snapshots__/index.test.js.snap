@@ -21,7 +21,6 @@ exports[`UserHeader should render correctly 1`] = `
       <div
         className="timeAndType m-margin-top5"
       >
-        08.18
         <span
           className="m-margin-left5"
         />
