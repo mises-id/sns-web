@@ -132,7 +132,7 @@ const UserInfo = (props)=>{
   }
   return <div>
     <Navbar title={t('userInfoPageTitle')}/>
-    <div className="m-layout m-bg-f8f8f8">
+    <div className="m-layout m-bg-f8f8f8 userinfo">
       <div className="m-bg-fff m-padding-lr15">
         <Cell label={t('avatar')}  showIcon={false}
         rightChild={<div className="m-position-relative"><input type="file" accept="image/png,image/jpeg" className="avatar-input m-position-absolute" onChange={getAvatarChange}></input><Image size={35} source={user.avatar&&user.avatar.large}></Image></div>}></Cell>
