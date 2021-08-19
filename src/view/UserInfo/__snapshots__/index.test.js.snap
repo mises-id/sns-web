@@ -6,7 +6,7 @@ exports[`UserInfo should render correctly 1`] = `
     title="userInfoPageTitle"
   />
   <div
-    className="m-layout m-bg-f8f8f8"
+    className="m-layout m-bg-f8f8f8 userinfo"
   >
     <div
       className="m-bg-fff m-padding-lr15"
