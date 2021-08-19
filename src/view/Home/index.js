@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-10 00:34:27
+ * @LastEditTime: 2021-08-19 23:55:33
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,7 +18,7 @@ import urlToJson from '@/utils';
 const {Panel} = Tabs;
 const Home = ({history,children=[]})=>{
   const {t} = useTranslation()
-  const [tab, settab] = useState([{ path: '/home/', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
+  const [tab] = useState([{ path: '/home/', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
   const [value, setvalue] = useState(0)
   const [swipeable, setswipeable] = useState(false)
   const dispatch = useDispatch()
@@ -53,18 +53,18 @@ const Home = ({history,children=[]})=>{
       }).then(data=>{
         data.token&&dispatch(setUserToken(data.token))
       })
-      settab(t=>{
-        t[2].path = '/home/me'
-        return t;
-      })
+      // settab(t=>{
+      //   t[2].path = '/home/me'
+      //   return t;
+      // })
       return false;
     }
-    if(!token){
-      settab(t=>{
-        t[2].path = '/home/createMisesId'
-        return t;
-      })
-    }
+    // if(!token){
+    //   settab(t=>{
+    //     t[2].path = '/home/createMisesId'
+    //     return t;
+    //   })
+    // }
     if(token){
       getUserSelfInfo().then(res=>{
         dispatch(setLoginForm(res))
