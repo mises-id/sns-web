@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2021-08-18 13:36:01
+ * @LastEditTime: 2021-08-22 15:48:49
  * @LastEditors: lmk
  * @Description: 
  */
@@ -28,7 +28,7 @@ const Link = ({theme="primary",item={}})=>{
   }
   return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
   <div className="m-flex">
-    <Image shape='square' size='sm' source={item.attachment_url}/>
+    <Image shape='square' size='sm' alt="image" source={item.attachment_url}/>
     <div className="m-margin-left8">
       <span className="m-font12 title">{item.title}</span>
       <p className="timeAndType m-colors-999">{item.host}</p>
