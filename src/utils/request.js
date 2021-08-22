@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2021-08-19 23:49:03
+ * @LastEditTime: 2021-08-22 15:48:07
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -74,7 +74,7 @@ const reject = ({code,message})=>{
 const invalidToken = ()=>{
   dispatch(setLoginForm({}))
   dispatch(setUserToken(''))
-  getAuth().then((res)=>{
+  getAuth().then((res={})=>{
     const auth = store.getState().user.auth;
     console.log(res.data,auth)
     if(res.data===auth){
