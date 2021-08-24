@@ -46,6 +46,7 @@ exports[`Forward should render correctly 1`] = `
     >
       <Input
         className="m-font17"
+        maxLength="4000"
         onChange={[Function]}
         placeholder="forwardPlaceholder..."
         rows={5}
@@ -66,7 +67,7 @@ exports[`Forward should render correctly 1`] = `
           size={30}
         />
         <p
-          className="itemContent m-font13 m-padding-tb10"
+          className="itemContent m-font13 m-margin-tb10 item-eli"
         />
       </div>
     </div>

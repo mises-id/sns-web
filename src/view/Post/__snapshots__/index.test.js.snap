@@ -5,55 +5,5 @@ exports[`Post should render correctly 1`] = `
   <Navbar
     title="postPageTitle"
   />
-  <div
-    className="m-layout m-bg-f8f8f8"
-  >
-    <div
-      className="m-bg-fff"
-    >
-      <PostItem
-        changeFollow={[Function]}
-        history={Object {}}
-        setLike={[Function]}
-        val={Object {}}
-      />
-    </div>
-    <div
-      className="m-margin-top15 m-bg-fff m-padding15"
-    >
-      <div
-        className="m-flex"
-      >
-        <Image
-          size={30}
-          source=""
-        />
-        <div
-          className="comment m-flex-1 m-flex m-padding-lr15"
-        >
-          <div
-            className="m-margin-right5"
-          >
-            <Image
-              shape="square"
-              size={16}
-              source="write.png"
-            />
-          </div>
-          <form
-            className="m-flex-1"
-            onSubmit={[Function]}
-          >
-            <Input
-              onChange={[Function]}
-              placeholder="Write a comment..."
-              type="text"
-              value=""
-            />
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 `;
