@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-16 23:49:24
+ * @LastEditTime: 2021-08-23 23:19:03
  * @LastEditors: lmk
  * @Description: to reactnative
  */
@@ -66,7 +66,7 @@ export function setUserInfo(data){
  * @return {*}
  */
 export function getAuth(){
-  return postmessageFn('getAuth')
+  return postmessageFn('getAuth','',false)
 }
 
 /**
@@ -75,7 +75,7 @@ export function getAuth(){
  * @return {*}
  */
  export function getListUsersCount(){
-  return postmessageFn('getListUsersCount')
+  return postmessageFn('getListUsersCount','',false)
 }
 
 /**

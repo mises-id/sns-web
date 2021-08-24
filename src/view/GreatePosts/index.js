@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-18 00:07:58
+ * @LastEditTime: 2021-08-23 23:16:37
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -44,6 +44,7 @@ const GreatePosts = (props)=>{
       <div className="m-padding15"> 
         <Input
           rows={10}
+          maxLength="4000"
           type="text"
           {...postsContent}
           className="m-font17"

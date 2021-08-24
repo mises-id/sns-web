@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-12 23:42:32
+ * @LastEditTime: 2021-08-23 23:10:39
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Input ,Icon, Toast} from 'zarm';
+import { Button, Input ,Icon, Toast, Loading} from 'zarm';
 import '@/styles/followPage.scss'
 import write from '@/images/write.png'
 import './index.scss'
@@ -20,7 +20,7 @@ import { createComment } from '@/api/comment';
 import PostItem from '@/components/PostItem';
 const Post = ({history={}})=>{
   const {t} = useTranslation();
-  const [item,setitem] = useState({})
+  const [item,setitem] = useState('')
   const [source, setsource] = useState('');
   const user = useSelector(state => state.user)||{};
   const {setLike,followPress} = useChangePosts(setitem,item);
@@ -28,7 +28,10 @@ const Post = ({history={}})=>{
     history.push({pathname:'/comment',state:{id}})
   }
   const getDetail = id=>{
-    getStatusItem(id).then(setitem)
+    getStatusItem(id).then(res=>{
+      setitem(res)
+      Loading.hide()
+    })
   }
   const [comment, setcomment] = useState([]);
   const [showMore, setshowMore] = useState(false)
@@ -47,6 +50,7 @@ const Post = ({history={}})=>{
       setsource(user.loginForm.avatar.medium)
     }
     if(historyState) {
+      Loading.show()
       setid(historyState.id);
       getDetail(historyState.id)
       getCommentList(historyState.id)
@@ -71,9 +75,9 @@ const Post = ({history={}})=>{
   }
   return <div>
     <Navbar title={t('postPageTitle')}  />
-    <div className="m-layout m-bg-f8f8f8">
+    {item&&<div className="m-layout m-bg-f8f8f8">
       <div className="m-bg-fff">
-        <PostItem val={item} history={history} changeFollow={followPress} setLike={setLike} />
+        <PostItem val={item} history={history} type="detail" changeFollow={followPress} setLike={setLike} />
       </div>
       <div className="m-margin-top15 m-bg-fff m-padding15">
         <div className="m-flex">
@@ -98,7 +102,7 @@ const Post = ({history={}})=>{
           </Button>
         </div>:''}
       </div>
-    </div>
+    </div>}
   </div>
 }
 export default Post
