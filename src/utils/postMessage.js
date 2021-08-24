@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-23 23:19:03
+ * @LastEditTime: 2021-08-24 11:24:44
  * @LastEditors: lmk
  * @Description: to reactnative
  */
@@ -109,8 +109,14 @@ export function sdkFollow(data){
   return postmessageFn('follow',data,false)
 }
 /**
-* @param {*} sdk follow
+* @param {*} sdk unfollow
 */
 export function sdkUnFollow(data){
   return postmessageFn('unfollow',data,false)
+}
+/**
+* @param {*} sdk location href
+*/
+export function sdkLocationHref(data){
+  return postmessageFn('locationHref',data,false)
 }
