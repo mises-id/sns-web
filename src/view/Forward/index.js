@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-23 23:16:49
+ * @LastEditTime: 2021-08-24 13:44:35
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -14,7 +14,7 @@ import Link from '../Follows/Link';
 import { useBind, useRouteState } from '@/utils';
 import { createStatus, getStatusItem } from '@/api/status';
 const Forward = ({history={}})=>{
-  const [item,setitem] = useState({})
+  const [item,setitem] = useState('')
   const {t} = useTranslation();
   const historyState = useRouteState(history);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,11 +61,11 @@ const Forward = ({history={}})=>{
           maxLength="4000"
           placeholder={`${t('forwardPlaceholder')}...`}
         />
-        <div className="m-bg-fff m-padding10 m-margin-top10">
+        {item&&<div className="m-bg-fff m-padding10 m-margin-top10">
           <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>
           <p className="itemContent m-font13 m-margin-tb10 item-eli">{item.content}</p>
           {item.status_type==='link'&&<Link theme="primary" item={item.link_meta}></Link>}
-        </div>
+        </div>}
       </div>
     </div>
   </div>

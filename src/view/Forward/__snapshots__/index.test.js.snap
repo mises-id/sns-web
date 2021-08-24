@@ -53,23 +53,6 @@ exports[`Forward should render correctly 1`] = `
         type="text"
         value=""
       />
-      <div
-        className="m-bg-fff m-padding10 m-margin-top10"
-      >
-        <UserHeader
-          btnType="empty"
-          item={
-            Object {
-              "created_at": undefined,
-              "from_type": undefined,
-            }
-          }
-          size={30}
-        />
-        <p
-          className="itemContent m-font13 m-margin-tb10 item-eli"
-        />
-      </div>
     </div>
   </div>
 </div>

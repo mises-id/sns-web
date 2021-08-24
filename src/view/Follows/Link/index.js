@@ -10,7 +10,7 @@ import React from 'react';
 import link from '@/images/link.png'
 import Image from '@/components/Image/index';
 import './index.scss'
-// import { newTagPage } from '@/ut÷ils/postMessage';
+import { sdkLocationHref } from '@/utils/postMessage';
 /**
  * @description: userHeader and follow Btn
  * @param {*} theme
@@ -23,7 +23,7 @@ const Link = ({theme="primary",item={}})=>{
   }[theme]
   const linkTo =e=>{
     e.stopPropagation();
-    //newTagPage(item.link)
+    sdkLocationHref(item.link)
     window.location.href=item.link
   }
   return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
