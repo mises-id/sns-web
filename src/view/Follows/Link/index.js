@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2021-08-24 16:03:11
+ * @LastEditTime: 2021-08-24 21:38:50
  * @LastEditors: lmk
  * @Description: 
  */
@@ -23,6 +23,7 @@ const Link = ({theme="primary",item={}})=>{
   }[theme]
   const linkTo =e=>{
     e.stopPropagation();
+    // window.location.href = item.link
     sdkLocationHref(item.link)
   }
   return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>

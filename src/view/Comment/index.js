@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-13 00:11:20
+ * @LastEditTime: 2021-08-24 19:36:34
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -34,7 +34,7 @@ const Comment = ({history})=>{
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource,setdataSource] = useList(getComment,{
     status_id:state.id,
-    limit:5,last_id:lastId
+    limit:20,last_id:lastId
   })
   useEffect(() => {
     setlastId(last_id)
@@ -42,6 +42,7 @@ const Comment = ({history})=>{
   const commentContent = useBind('');
   const submit = e=>{
     e.preventDefault()
+    if(!commentContent.value) return false;
     createComment({
       content:commentContent.value,
       status_id:state.id

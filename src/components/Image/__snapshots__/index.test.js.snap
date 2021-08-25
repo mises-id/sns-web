@@ -9,6 +9,7 @@ exports[`Image should render correctly 1`] = `
   style={
     Object {
       "height": "40px",
+      "objectFit": "cover",
       "width": "40px",
     }
   }

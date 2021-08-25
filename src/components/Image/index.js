@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2021-08-22 15:47:11
+ * @LastEditTime: 2021-08-24 19:39:55
  * @LastEditors: lmk
  * @Description: 
  */
@@ -30,6 +30,6 @@ const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick})=>{
     xs:'15px'
   }[size] : `${size}px`;
   const error = e=> setsrc(normal)
-  return (src&&<img onError={error.bind(this)} src={src} style={{height:imgSize,width:imgSize}} className={`border-${shape}`} alt={alt} onClick={onClick}/>)
+  return (src&&<img onError={error.bind(this)} src={src} style={{height:imgSize,width:imgSize,    objectFit: 'cover'}} className={`border-${shape}`} alt={alt} onClick={onClick}/>)
 }
 export default Image
