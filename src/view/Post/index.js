@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-23 23:10:39
+ * @LastEditTime: 2021-08-24 19:37:23
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -59,6 +59,7 @@ const Post = ({history={}})=>{
   }, [historyState]);
   const submit = e=>{
     e.preventDefault();
+    if(!commentContent.value) return false;
     if(!user.token){
       Toast.show(t('notLogin'))
       return false;
