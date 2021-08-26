@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-26 13:55:35
+ * @LastEditTime: 2021-08-24 19:37:23
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -23,7 +23,6 @@ const Post = ({history={}})=>{
   const [item,setitem] = useState('')
   const [source, setsource] = useState('');
   const user = useSelector(state => state.user)||{};
-  const [loading, setloading] = useState(false)
   const {setLike,followPress} = useChangePosts(setitem,item);
   const goComment = ()=>{
     history.push({pathname:'/comment',state:{id}})
@@ -60,14 +59,11 @@ const Post = ({history={}})=>{
   }, [historyState]);
   const submit = e=>{
     e.preventDefault();
+    if(!commentContent.value) return false;
     if(!user.token){
       Toast.show(t('notLogin'))
       return false;
     }
-    if(loading || !commentContent.value){
-      return false
-    }
-    setloading(true);
     createComment({
       content:commentContent.value,
       status_id:id
@@ -76,8 +72,6 @@ const Post = ({history={}})=>{
       comment.length>3&&setshowMore(true);
       setcomment(comment.slice(0,3));
       commentContent.onChange('')
-    }).finally(()=>{
-      setloading(false);
     })
   }
   return <div>
