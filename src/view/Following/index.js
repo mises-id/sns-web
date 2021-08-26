@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-08-26 13:29:48
+ * @LastEditTime: 2021-08-26 14:13:11
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -36,7 +36,7 @@ const Following = ({history})=>{
     const setFollow = async ()=>{
       const followFlag = val.relation_type==='fan' // 为粉丝则没有互相关注
       try {
-        const followObj = {user:{uid:val.user.uid,is_followed:!followFlag}};
+        const followObj = {user:{uid:val.user.uid,is_followed:!followFlag,misesid:val.user.misesid}};
         await followed(followObj);
         if(val.relation_type==='fan'){
           const followType = type==='following'&&val.old_relation_type!=='friend' ? 'following' : 'friend';
