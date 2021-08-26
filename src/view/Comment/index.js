@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-24 19:36:34
+ * @LastEditTime: 2021-08-26 14:06:13
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -50,6 +50,8 @@ const Comment = ({history})=>{
       dataSource.unshift(res);
       setdataSource([...dataSource])
       commentContent.onChange('')
+    }).finally(()=>{
+      setloading(false);
     })
   }
   return <div className="m-flex m-flex-col page">
