@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-24 13:44:35
+ * @LastEditTime: 2021-08-26 21:49:49
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -24,6 +24,7 @@ const Forward = ({history={}})=>{
     })
   });
   const content = useBind('');
+  const [loading, setloading] = useState(false)
   const submit = ()=>{
     const form = {
       status_type:'text',
@@ -31,16 +32,17 @@ const Forward = ({history={}})=>{
       content:content.value,
       parent_id:historyState.id
     }
+    setloading(true)
     createStatus(form).then(res=>{
       Toast.show({
         content:t('sendSuccess'),
         stayTime: 1500,
         afterClose:()=>{
           window.history.back()
+          setloading(false)
         }
       })
-
-    })
+    }).catch(()=>setloading(false))
   }
   useEffect(() => {
     if(historyState) getPosts()
@@ -49,7 +51,7 @@ const Forward = ({history={}})=>{
   return <div>
     <NavBar
       left={<span  onClick={() => window.history.back()} className="m-font16">{t('cancel')}</span>}
-      right={<div style={{width:'61px'}}><Button theme="primary" onClick={submit} block size="xs" shape="round">{t('forwordsubmit')}</Button></div>}
+      right={<div style={{width:'61px'}}><Button theme="primary" disabled={loading} loading={loading} onClick={submit} block size="xs" shape="round">{t('forwordsubmit')}</Button></div>}
     />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-padding15"> 
