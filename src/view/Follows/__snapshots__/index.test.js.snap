@@ -1,28 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Follows should render correctly 1`] = `
-<Empty
-  btnElement={
-    <div
-      className="create-btn"
-    >
-      <Button
-        block={true}
-        disabled={false}
-        ghost={true}
-        htmlType="button"
-        loading={false}
-        onClick={[Function]}
-        prefixCls="za-button"
-        shadow={false}
-        shape="round"
-        size="md"
-        theme="primary"
-      >
-        createId
-      </Button>
-    </div>
-  }
-  showBtn={true}
-/>
+<div>
+  <div
+    style={
+      Object {
+        "padding": "20px",
+        "textAlign": "center",
+      }
+    }
+  >
+    <ActivityIndicator
+      loading={true}
+      percent={20}
+      prefixCls="za-activity-indicator"
+      strokeWidth={5}
+      type="spinner"
+    />
+  </div>
+</div>
 `;

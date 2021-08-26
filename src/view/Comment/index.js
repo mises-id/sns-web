@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-24 19:36:34
+ * @LastEditTime: 2021-08-26 13:56:33
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -9,7 +9,7 @@
 import './index.scss';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {Input } from 'zarm';
+import {Input, Toast } from 'zarm';
 import Image from '@/components/Image';
 import write from '@/images/write.png'
 import PullList from '@/components/PullList';
@@ -17,6 +17,7 @@ import Navbar from '@/components/NavBar';
 import { useBind, useList } from '@/utils';
 import { getComment } from '@/api/status';
 import { createComment } from '@/api/comment';
+import { useSelector } from 'react-redux';
 
 const Comment = ({history})=>{
   const {t} = useTranslation();
@@ -36,13 +37,22 @@ const Comment = ({history})=>{
     status_id:state.id,
     limit:20,last_id:lastId
   })
+  const user = useSelector(state => state.user)||{};
+  const [loading, setloading] = useState(false)
   useEffect(() => {
     setlastId(last_id)
   }, [last_id])
   const commentContent = useBind('');
   const submit = e=>{
     e.preventDefault()
-    if(!commentContent.value) return false;
+    if(!user.token){
+      Toast.show(t('notLogin'))
+      return false;
+    }
+    if(loading || !commentContent.value){
+      return false
+    }
+    setloading(true);
     createComment({
       content:commentContent.value,
       status_id:state.id
