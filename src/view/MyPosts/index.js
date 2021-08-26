@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2021-08-12 23:08:58
+ * @LastEditTime: 2021-08-26 22:21:25
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -20,7 +20,10 @@ import { useChangePosts, useList } from '@/utils';
 import PostItem from '@/components/PostItem';
 const MyPosts = ({history}) => {
   const user = useSelector(state => state.user)||{}
+  const [deleteLoading, setdeleteLoading] = useState(false)
   const deleteItem = ({id},index)=>{
+    if(deleteLoading) return false;
+    setdeleteLoading(true)
     deletePosts(id).then(res=>{
       Toast.show(t('deleteSuccess'));
       dataSource.splice(index,1);
@@ -29,12 +32,15 @@ const MyPosts = ({history}) => {
         setlastId('')
         fetchData()
       }
+      setdeleteLoading(false)
+    }).catch(res=>{
+      setdeleteLoading(false)
     })
   }
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource,setdataSource] = useList(myPostsData,{
     uid:user.loginForm&&user.loginForm.uid,
-    limit:5,last_id:lastId
+    limit:20,last_id:lastId
   })
   //getData
   useEffect(() => {

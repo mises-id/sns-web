@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2021-08-26 13:48:03
+ * @LastEditTime: 2021-08-26 23:01:25
  * @LastEditors: lmk
  * @Description: 
  */
@@ -24,14 +24,18 @@ const Follow = ({ history = {} }) => {
   const [loading, setloading] = useState(true)
   const [fetchData, last_id, dataSource, setdataSource] = useList(fn, {
     uid: user.loginForm && user.loginForm.uid,
-    limit: 5, last_id: lastId
+    limit: 20, last_id: lastId
   })
   const [flag, setflag] = useState(false);
   //getData
   const getFlag = async () => {
-    const count = await getListUsersCount();
-    setflag(count > 0)
-    setloading(false)
+    try {
+      const {data:count} = await getListUsersCount();
+      setflag(count > 0)
+      setloading(false)
+    } catch (error) {
+      console.log(error,'wwwwwww')
+    }
   }
   useEffect(() => {
     setlastId(last_id)

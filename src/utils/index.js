@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-12 23:28:53
+ * @LastEditTime: 2021-08-26 22:14:31
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -111,18 +111,36 @@ export function useRouteState(history){
 * @param {*} 
 */
 export function useChangePosts(setdataSource,dataSource){
-  const setLike = val=>{
-    liked(val).then(()=>{
-      const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
-      setdataSource(data)
-    });
+  const success = ()=>{
+    const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
+    setdataSource(data)
   }
-  const followPress = (val,flag)=>{
-    const item = flag ? val.parent_status : val;
-    followed(item).then(()=>{
-      const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
-      setdataSource(data)
-    });
+  const [likeLoading, setlikeLoading] = useState(false)
+  const setLike = async val=>{
+    try {
+      if(likeLoading) return false;
+      setlikeLoading(true)
+      await liked(val)
+      success()
+      setlikeLoading(false)
+    } catch (error) {
+      setlikeLoading(false)
+      return Promise.reject()
+    }
+  }
+  const [followLoading, setfollowLoading] = useState(false)
+  const followPress = async (val,flag)=>{
+    try {
+      const item = flag ? val.parent_status : val;
+      if(followLoading) return false;
+      setfollowLoading(true)
+      await followed(item)
+      setfollowLoading(false)
+      success()
+    } catch (error) {
+      setfollowLoading(false)
+      return Promise.reject()
+    }
   }
   return {setLike,followPress}
 }

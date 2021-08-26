@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-08-26 14:54:08
+ * @LastEditTime: 2021-08-26 22:21:45
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -26,6 +26,7 @@ const Following = ({history})=>{
   const type = state.pageType || 'following'
   const pageTitle = `${type}PageTitle`
   const user = useSelector(state => state.user)||{};
+  const [followLoading, setfollowLoading] = useState(false)
   const renderView =(val={},index)=>{
     const user = val.user;
     const icon = {
@@ -36,8 +37,11 @@ const Following = ({history})=>{
     const setFollow = async ()=>{
       const followFlag = val.relation_type==='fan' // 为粉丝则没有互相关注
       try {
+        if(followLoading) return false;
         const followObj = {user:{uid:val.user.uid,is_followed:!followFlag,misesid:val.user.misesid}};
+        setfollowLoading(true)
         await followed(followObj);
+        setfollowLoading(false)
         if(val.relation_type==='fan'){
           const followType = type==='following'&&val.old_relation_type!=='friend' ? 'following' : 'friend';
           setData(followType)
@@ -46,6 +50,7 @@ const Following = ({history})=>{
         setData('fan') 
       } catch (error) {
         console.log(error)
+        setfollowLoading(false)
       }
     }
     const setData = (type,index)=>{
@@ -62,7 +67,7 @@ const Following = ({history})=>{
   const [lastId, setlastId] = useState('')
   const [fetchData,last_id,dataSource,setdataSource] = useList(friendShip,{
     uid:user.loginForm&&user.loginForm.uid,relation_type:type,
-    limit:5,last_id:lastId
+    limit:20,last_id:lastId
   })
   //getData
   useEffect(() => {

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2021-08-26 13:34:51
+ * @LastEditTime: 2021-08-26 21:56:07
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -154,7 +154,7 @@ const UserInfo = (props)=>{
         rightChild={<Input type="text" clearable={false} {...address} placeholder={t('addressPlaceholder')} />}></Cell>
       </div>
       <div className="m-padding20 save-box">
-        <Button block theme="primary" loading={saveLoading} ghost size="md" shape="round" onClick={()=>saveInfo('info')}>{t('send')}</Button>
+        <Button block theme="primary" disabled={saveLoading} loading={saveLoading} ghost size="md" shape="round" onClick={()=>saveInfo('info')}>{t('send')}</Button>
       </div>
     </div>
     <Modal
@@ -170,7 +170,7 @@ const UserInfo = (props)=>{
             </Button>
           </div>
           <div className="m-flex-1 m-padding-lr10">
-            <Button block theme="primary" ghost loading={avatarLoading} size="sm" shape="round" onClick={sendAvatar}>
+            <Button block theme="primary" ghost disabled={avatarLoading} loading={avatarLoading} size="sm" shape="round" onClick={sendAvatar}>
               {t('send')}
             </Button>
           </div>

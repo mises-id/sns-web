@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-23 23:16:37
+ * @LastEditTime: 2021-08-26 21:46:36
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -25,20 +25,22 @@ const GreatePosts = (props)=>{
       form_type:"status",
       content:postsContent.value
     }
+    setloading(true)
     createStatus(form).then(res=>{
       Toast.show({
         content:t('sendSuccess'),
         stayTime: 1500,
         afterClose:()=>{
           window.history.back()
+          setloading(false)
         }
       })
-    }).finally(()=>setloading(false))
+    }).catch(()=>setloading(false))
   }
   return <div>
     <NavBar
       left={<span  onClick={() => window.history.back()} className="m-font16">{t('cancel')}</span>}
-      right={<div style={{width:'61px'}}><Button theme="primary" onClick={send} loading={loading} block size="xs" shape="round">{t('send')}</Button></div>}
+      right={<div style={{width:'61px'}}><Button theme="primary" disabled={loading} onClick={send} loading={loading} block size="xs" shape="round">{t('send')}</Button></div>}
     />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-padding15"> 

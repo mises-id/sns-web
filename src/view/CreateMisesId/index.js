@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 10:45:52
- * @LastEditTime: 2021-08-16 23:25:01
+ * @LastEditTime: 2021-08-26 23:02:25
  * @LastEditors: lmk
  * @Description: create mises page
  */
@@ -15,7 +15,7 @@ const CreateMisesId = (props)=>{
   const [flag, setflag] = useState(false);
   //getData
   const getFlag = async () =>{
-    const count = await getListUsersCount();
+    const {data:count} = await getListUsersCount();
     setflag(count > 0)
   }
   useEffect(() => {

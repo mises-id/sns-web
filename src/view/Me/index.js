@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-08-24 13:56:39
+ * @LastEditTime: 2021-08-26 23:02:57
  * @LastEditors: lmk
  * @Description: 
  */
@@ -23,7 +23,7 @@ const Myself = ({ history }) => {
   const [loading, setloading] = useState(true)
   //getData
   const getFlag = async () => {
-    const count = await getListUsersCount();
+    const {data:count} = await getListUsersCount();
     setflag(count > 0)
     setloading(false)
   }
