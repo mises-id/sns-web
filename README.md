@@ -1,5 +1,6 @@
-.
+```bash
 ├── README.md
+├── appspec.yml
 ├── babel.config.js
 ├── config-overrides.js
 ├── jsconfig.json
@@ -11,16 +12,45 @@
 │   ├── logo512.png
 │   ├── manifest.json
 │   └── robots.txt
+├── scripts
+│   ├── check.sh
+│   ├── start_running.sh
+│   └── stop_running.sh
 └── src
     ├── App.js
-    ├── App.test.js
+    ├── App.test1.js
     ├── actions
+    │   └── user.js
+    ├── api
+    │   ├── comment.js
+    │   ├── fans.js
+    │   ├── status.js
+    │   ├── updata.js
+    │   └── user.js
     ├── components
     │   ├── Cell
     │   │   ├── index.js
     │   │   ├── index.scss
     │   │   └── index.test.js
-    │   └── Image
+    │   ├── Empty
+    │   │   ├── index.js
+    │   │   ├── index.scss
+    │   │   └── index.test.js
+    │   ├── Image
+    │   │   ├── index.js
+    │   │   └── index.test.js
+    │   ├── NavBar
+    │   │   ├── index.js
+    │   │   └── index.test.js
+    │   ├── PostItem
+    │   │   ├── index.js
+    │   │   └── index.test.js
+    │   ├── PostsIcons
+    │   │   ├── common.js
+    │   │   ├── index.js
+    │   │   ├── index.scss
+    │   │   └── index.test.js
+    │   └── PullList
     │       ├── index.js
     │       └── index.test.js
     ├── index.js
@@ -41,14 +71,21 @@
     ├── styles
     │   ├── App.css
     │   ├── common.scss
+    │   ├── followPage.scss
     │   └── index.css
     ├── test
     │   └── testSetup.js
     ├── utils
     │   ├── Logger.js
     │   ├── index.js
-    │   └── reactUtil.js
+    │   ├── postMessage.js
+    │   ├── reactUtil.js
+    │   └── request.js
     └── view
+        ├── Comment
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
         ├── CreateMisesId
         │   ├── index.js
         │   ├── index.scss
@@ -56,6 +93,8 @@
         ├── Discover
         │   ├── index.js
         │   └── index.test.js
+        ├── Empty
+        │   └── index.js
         ├── Following
         │   ├── index.js
         │   ├── index.scss
@@ -63,10 +102,18 @@
         ├── Follows
         │   ├── Link
         │   │   ├── index.js
+        │   │   ├── index.scss
         │   │   └── index.test.js
         │   ├── UserHeader
         │   │   ├── index.js
         │   │   └── index.test.js
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── Forward
+        │   ├── index.js
+        │   └── index.test.js
+        ├── GreatePosts
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
@@ -78,9 +125,18 @@
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
+        ├── MyPosts
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── Post
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
         └── UserInfo
             ├── index.js
             ├── index.scss
             └── index.test.js
 
-23 directories, 60 files
+36 directories, 102 files
+```
