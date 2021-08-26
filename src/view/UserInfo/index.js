@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2021-08-18 00:10:58
+ * @LastEditTime: 2021-08-26 13:34:51
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -121,14 +121,20 @@ const UserInfo = (props)=>{
       const avatarDid = user.avatar&&user.avatar.large ? user.avatar.large : '';
       setUserInfo({username:username.value,gender:user.gender,mobile:phone.value,email:mail.value,avatarDid})
       const res = await updateUser(byForm)
-      dispatch(setLoginForm(res))
-      setsaveLoading(false)
-      return Promise.resolve()
+      if(res){
+        dispatch(setLoginForm(res))
+        setsaveLoading(false)
+        return Promise.resolve()
+      }
+      return errorMessage('error')
     } catch (error) {
-      Toast.show(error)
-      setsaveLoading(false)
-      return Promise.reject(error)
+      return errorMessage(error)
     }
+  }
+  const errorMessage = error=>{
+    Toast.show(error)
+    setsaveLoading(false)
+    return Promise.reject(error)
   }
   return <div>
     <Navbar title={t('userInfoPageTitle')}/>

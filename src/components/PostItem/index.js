@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2021-08-23 23:11:30
+ * @LastEditTime: 2021-08-25 16:04:57
  * @LastEditors: lmk
  * @Description: 
  */
@@ -13,6 +13,10 @@ import '@/styles/followPage.scss'
 const PostItem = ({val={},index,history,changeFollow,setLike,btnType,deleteItem,type})=>{
   const goDetail = item=>{
     type!=='detail'&&history.push({pathname:'/post',state:{id:item.id}})
+  }
+  const forwardDetail = (e,item)=>{
+    e.stopPropagation()
+    history.push({pathname:'/post',state:{id:item.id}})
   }
   const forwardPress = ()=>{
     const id = val.parent_status ? val.parent_status.id : val.id
@@ -27,7 +31,8 @@ const PostItem = ({val={},index,history,changeFollow,setLike,btnType,deleteItem,
   <p  className={`itemContent m-font15 m-margin-tb15 ${type!=='detail' ? 'item-eli' : ''}`}>{val.content}</p>
   {/* example */}
   {val.status_type==='link'&&<Link theme="primary" item={val.link_meta}></Link>}
-  {val.from_type==='forward'&&<div className="m-bg-f8f8f8 m-padding10">
+  {val.from_type==='forward'&&<div className="m-bg-f8f8f8 m-padding10" 
+    onClick={e=>forwardDetail(e,val.parent_status)}>
     <UserHeader item={{...val.parent_status.user,from_type:val.parent_status.from_type,created_at:val.parent_status.created_at}} size={30} followed={()=>changeFollow(val,!!val.parent_status)}></UserHeader>
     <p className="itemContent m-font13 m-margin-tb10">{val.parent_status.content}</p>
     {val.parent_status.status_type==='link'&&<Link theme="white" item={val.parent_status.link_meta}></Link>}
