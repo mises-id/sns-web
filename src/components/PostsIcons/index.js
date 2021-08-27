@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-16 23:31:34
+ * @LastEditTime: 2021-08-27 14:11:41
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -11,10 +11,8 @@ import like from '@/images/like.png'
 import comment from '@/images/comment.png'
 import forward from '@/images/forward.png'
 import './index.scss'
-import { Modal } from 'zarm';
-import { useTranslation } from 'react-i18next';
 import { useLogin } from './common';
-import { getListUsersCount, OpenCreateUserPanel, openLoginPage } from '@/utils/postMessage';
+import { useLoginModal } from '@/utils';
 /**
  * @description: 
  * @param {*}forwardPress.type:function //click forward icon
@@ -24,26 +22,11 @@ import { getListUsersCount, OpenCreateUserPanel, openLoginPage } from '@/utils/p
  */
 const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage})=>{
   const {isLogin} = useLogin();
-  const {t} = useTranslation();
-  const hasLogin = async (e,fn)=>{
+  const loginModal = useLoginModal()
+  const hasLogin = (e,fn)=>{
     e.stopPropagation();
-   
     if(!isLogin){
-      try {
-        const {data:count} = await getListUsersCount();
-        const flag = count > 0;
-        const content = flag ? t('notLogin') : t('notRegister') ;
-        Modal.confirm({
-          title: 'Message',
-          content,
-          onCancel: () => {},
-          onOk: () => {
-            flag ? openLoginPage() : OpenCreateUserPanel();
-          },
-        });
-      } catch (error) {
-        console.log(error)
-      }
+      loginModal()
       return false;
     }
     fn&&fn()

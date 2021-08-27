@@ -1,43 +1,30 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-18 00:33:50
+ * @LastEditTime: 2021-08-27 14:11:34
  * @LastEditors: lmk
  * @Description: 
  */
 import Image from '@/components/Image/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Modal } from 'zarm';
+import { Button, Icon } from 'zarm';
 import deteleIcon from '@/images/delete.png'
 import { useLogin } from '@/components/PostsIcons/common';
 import dayjs from 'dayjs';
-import {getListUsersCount, OpenCreateUserPanel, openLoginPage } from '@/utils/postMessage';
 import { useSelector } from 'react-redux';
+import { useLoginModal } from '@/utils';
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
   const format = time=> time && dayjs(time).format('MM.DD')
   const {loginForm={}} = useSelector(state => state.user) || {};
   const isMe = loginForm.uid===item.uid;
-  const hasLogin = async (e,fn)=>{
+  const loginModal = useLoginModal()
+  const hasLogin = (e,fn)=>{
     e.stopPropagation();
     if(!isLogin){
-      try {
-        const {data:count} = await getListUsersCount();
-        const flag = count > 0;
-        const content = flag ? t('notLogin') : t('notRegister') ;
-        Modal.confirm({
-          title: 'Message',
-          content,
-          onCancel: () => {},
-          onOk: () => {
-            flag ? openLoginPage() : OpenCreateUserPanel();
-          },
-        });
-      } catch (error) {
-        console.log(error)
-      }
+      loginModal()
       return false;
     }
     fn&&fn()
