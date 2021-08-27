@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2021-08-27 12:50:36
+ * @LastEditTime: 2021-08-27 14:15:59
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -40,14 +40,14 @@ export async function followed(item={}){
   try {
     const activeUser = await getActiveUser();
     const isActive = !!activeUser.data
-    sdkFn({
-      misesid:val.misesid,
-      activeUser:isActive
-    });
-    if(!isActive) return false;
+    if(!isActive) {
+      return Promise.reject('not found active user')
+    }
+    sdkFn(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;
   } catch (error) {
+    return Promise.reject(error)
     //val.is_followed = !val.is_followed;
   }
 }

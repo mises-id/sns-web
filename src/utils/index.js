@@ -1,33 +1,15 @@
 import { followed, liked } from "@/components/PostsIcons/common";
 import { useCallback, useEffect, useState } from "react";
-
+import { getListUsersCount, OpenCreateUserPanel, openLoginPage } from "@/utils/postMessage";
+import { useTranslation } from "react-i18next";
+import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-26 22:14:31
+ * @LastEditTime: 2021-08-27 14:13:30
  * @LastEditors: lmk
  * @Description: project util function
  */
-export const pullState = {
-  //pull loading state
-  refresh: {
-    normal: 0,
-    pull: 1,
-    drop: 2,
-    loading: 3,
-    success: 4,
-    failure: 5,
-  },
-  load: {
-    normal: 0,
-    pull: 1,
-    drop: 2,
-    loading: 3,
-    success: 4,
-    failure: 5,
-  }
-}
-
 /**
  * @param {*} init set text value
  */
@@ -129,6 +111,7 @@ export function useChangePosts(setdataSource,dataSource){
     }
   }
   const [followLoading, setfollowLoading] = useState(false)
+  const loginModal = useLoginModal()
   const followPress = async (val,flag)=>{
     try {
       const item = flag ? val.parent_status : val;
@@ -138,9 +121,32 @@ export function useChangePosts(setdataSource,dataSource){
       setfollowLoading(false)
       success()
     } catch (error) {
+      error==='not found active user'&&loginModal()
       setfollowLoading(false)
       return Promise.reject()
     }
   }
   return {setLike,followPress}
+}
+
+export function useLoginModal(){
+  const {t} = useTranslation()
+  const loginModal = async ()=>{
+    try {
+      const {data:count} = await getListUsersCount();
+      const flag = count > 0;
+      const content = flag ? t('notLogin') : t('notRegister') ;
+      Modal.confirm({
+        title: 'Message',
+        content,
+        onCancel: () => {},
+        onOk: () => {
+          flag ? openLoginPage() : OpenCreateUserPanel();
+        },
+      });
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+  return loginModal
 }
