@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-19 23:55:33
+ * @LastEditTime: 2021-08-27 13:01:37
  * @LastEditors: lmk
  * @Description: 
  */
@@ -20,7 +20,6 @@ const Home = ({history,children=[]})=>{
   const {t} = useTranslation()
   const [tab] = useState([{ path: '/home/', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
   const [value, setvalue] = useState(0)
-  const [swipeable, setswipeable] = useState(false)
   const dispatch = useDispatch()
   const setTabActive = ()=>{
     const {pathname} = window.location;
@@ -74,9 +73,11 @@ const Home = ({history,children=[]})=>{
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 
+    history.listen(location => {
+      setTabActive();
+    })
     return ()=>{
       document.body.style.overflow = 'auto';
-      setswipeable(false)
     }
   },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -92,7 +93,7 @@ const Home = ({history,children=[]})=>{
   //show current path route page
   const showChild = path=>children.find(val=>val.key===path) || <div></div>
   return <div>
-    <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={swipeable}>
+    <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={false}>
       {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>{showChild(val.path)}</Panel>))}
     </Tabs>
     {token&&<div className="m-position-fixed createPosts">

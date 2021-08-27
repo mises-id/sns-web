@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2021-08-26 23:01:01
+ * @LastEditTime: 2021-08-27 12:58:42
  * @LastEditors: lmk
  * @Description: to reactnative
  */
@@ -27,7 +27,7 @@ const postmessageFn = (type,data="",loadingFlag=true)=>{
       content: <ActivityIndicator size="lg" />
     });
     if(!isRn()) {
-      resolve();
+      resolve({});
       Loading.hide()
     };
     window.ReactNativeWebViewCallback = res=> {
@@ -119,4 +119,10 @@ export function sdkUnFollow(data){
 */
 export function sdkLocationHref(data){
   return postmessageFn('locationHref',data,false)
+}
+/**
+* @param {*} sdk getActiveUser
+*/
+export function getActiveUser(){
+  return postmessageFn('getActiveUser','',false)
 }
