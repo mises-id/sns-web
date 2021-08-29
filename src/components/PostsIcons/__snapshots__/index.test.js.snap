@@ -2,7 +2,7 @@
 
 exports[`PostsIcon should render correctly 1`] = `
 <div
-  className="m-margin-top12 m-flex itemFunctionBox"
+  className="m-flex itemFunctionBox"
 >
   <div
     className="m-flex"

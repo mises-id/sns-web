@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2021-08-26 22:21:45
+ * @LastEditTime: 2021-08-29 21:16:08
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -60,7 +60,7 @@ const Following = ({history})=>{
       //dataSource.splice(index,1);
       setdataSource([...dataSource])
     }
-    return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label={user.username} key={index}
+    return <Cell iconSize={35} className="m-bg-fff m-padding-lr15 m-padding-tb12" showArrow={false} label={user.username || 'Anonymous'} key={index}
     icon={user.avatar?user.avatar.medium:''}
     rightChild={<img onClick={setFollow} className="followedIcon" src={icon} alt="followIcon" />}></Cell>
   }

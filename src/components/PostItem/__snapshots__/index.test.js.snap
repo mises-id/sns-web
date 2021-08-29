@@ -14,18 +14,14 @@ exports[`CreateMisesId should render correctly 1`] = `
       }
     }
   />
-  <p
-    className="itemContent m-font15 m-margin-tb15 item-eli"
-  />
   <div
-    className="m-margin-top12"
-  >
-    <PostsIcons
-      commentPage={[Function]}
-      forwardCallback={[Function]}
-      item={Object {}}
-      likeCallback={[Function]}
-    />
-  </div>
+    className="emptyContent"
+  />
+  <PostsIcons
+    commentPage={[Function]}
+    forwardCallback={[Function]}
+    item={Object {}}
+    likeCallback={[Function]}
+  />
 </div>
 `;

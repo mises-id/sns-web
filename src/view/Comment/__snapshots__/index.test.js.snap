@@ -8,7 +8,7 @@ exports[`Comment should render correctly 1`] = `
     title="commentPageTitle"
   />
   <div
-    className="m-padding-left15 m-flex-1 commentBox"
+    className="m-flex-1 commentBox"
   >
     <PullList
       data={Array []}
@@ -42,6 +42,8 @@ exports[`Comment should render correctly 1`] = `
           onSubmit={[Function]}
         >
           <Input
+            className="input"
+            clearable={false}
             onChange={[Function]}
             placeholder="Write a comment..."
             type="text"

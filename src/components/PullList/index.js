@@ -46,7 +46,7 @@ const PullList = ({renderView,data,isAuto=true,load}) => {
       if(res){
         const last_id = res.pagination.last_id
         setlastId(last_id)
-        !last_id&&setLoading(LOAD_STATE.complete)
+        //!last_id&&setLoading(LOAD_STATE.complete)
       }
     }).catch(err=>{
       !isOnceLoad&&setLoading(LOAD_STATE.failure);

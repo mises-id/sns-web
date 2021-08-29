@@ -1,6 +1,5 @@
 .footer{
   padding: 15px 20px;
-  box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
 }
 .commentBox{
   height: calc(100vh - 60px - 60px);
@@ -9,5 +8,10 @@
   }
 }
 .commentNickname{
-  @include title(15)
+  @include title(15);
+  color:#111
+}
+.content{
+  margin-right: 36px;
+  line-height: 19px;
 }

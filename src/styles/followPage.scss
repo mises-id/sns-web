@@ -1,12 +1,18 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:53:56
- * @LastEditTime: 2021-08-11 23:11:18
+ * @LastEditTime: 2021-08-29 12:25:04
  * @LastEditors: lmk
  * @Description: all follow Page Style
  */
 .followBox{
   background-color:  $themeBg;
+}
+.timeAndType{
+  line-height: 1;
+  color: #666;
+  margin-bottom:3px;
+  font-weight: 400;
 }
 .normal{
   .timeAndType{
@@ -15,13 +21,8 @@
   .nickname{
     font-size: 16px;
     font-weight: bold;
-  }
-  .za-button--xs{
-    height: 25px;
-    padding: 0 10px;
-    .za-icon.followIcon{
-      font-size: 10px;
-    }
+    color: #111;
+    line-height: 1;
   }
 }
 .forward{
@@ -30,21 +31,21 @@
   }
   .nickname{
     font-size: 13px;
-  }
-  .za-button--xs{
-    height: 20px;
-    padding: 0 6px;
-    .za-icon.followIcon{
-      font-size: 10px;
-    }
+    color: #222;
+    font-weight: 500;
   }
 }
-
 .itemContent{
   line-height: 19px;
   color: #222;
   word-break: break-all;
   white-space: break-spaces;
+  &.detail-content{
+    line-height: 25px;
+  }
+}
+.emptyContent{
+  margin-bottom: 15px;
 }
 .forwardBox{
   border-radius: 3px;
@@ -73,4 +74,7 @@
 .forwardPostsData{
   color: #999999;
   font-size: 10px;
+  margin-bottom: 5px;
+  margin-top: 12px;
+  line-height: 1;
 }

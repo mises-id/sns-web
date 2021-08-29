@@ -1,19 +1,20 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-27 14:11:34
+ * @LastEditTime: 2021-08-29 16:29:39
  * @LastEditors: lmk
  * @Description: 
  */
 import Image from '@/components/Image/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from 'zarm';
 import deteleIcon from '@/images/delete.png'
 import { useLogin } from '@/components/PostsIcons/common';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useLoginModal } from '@/utils';
+import MButton from '@/components/MButton';
+import addIcon from '@/images/add.png'
 const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
   const {t} = useTranslation();
   const {isLogin} = useLogin();
@@ -37,16 +38,15 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
     <div className="m-flex">
       <Image size={size} source={item.avatar ? item.avatar.medium : ''}/>
       <div className={!size ? 'm-margin-left12':'m-margin-left8'}>
-        <span className='nickname'>{item.username||'notName'}</span>
-        <div className="timeAndType m-margin-top5">{format(item.created_at)}<span className="m-margin-left5">{item.from_type}</span></div>
+        <span className='nickname'>{item.username||'Anonymous'}</span>
+        <div className={!size ? 'm-margin-top12 timeAndType' : 'm-margin-top8 timeAndType'}>{format(item.created_at)}<span className="m-margin-left3">{item.from_type}</span></div>
       </div>
     </div>
-    {!isMe&&btnType==='follow'&&<Button style={item.is_followed ? {
+    {!isMe&&btnType==='follow'&&<MButton txt={t(isFollow)} onPress={followedItem} {...(item.is_followed ? {
       borderColor:"#DDDDDD",
-      color:'#666666'
-    } : {}} icon={!item.is_followed&&<Icon type="add" className="followIcon" theme="primary" />} shape="round" theme={!item.is_followed ? "primary" : ""} ghost size="xs" onClick={followedItem}><span>{t(isFollow)}</span></Button>}
-    {btnType==='myPosts'&&<div className="btnStyle delete" onClick={deleteItemClick}>
-      <Image source={deteleIcon} size={15} shape="square"></Image></div>}
+      txtColor:'#666' 
+    } : {})} imgIcon={!item.is_followed ? addIcon : ''} width={!size ? 70 : 60 } height={!size ? 25 : 20}/>}
+    {btnType==='myPosts'&&<MButton iconSize={14} imgIcon={deteleIcon} borderColor="#DDDDDD" onPress={deleteItemClick}/>}
   </div>
 }
 export default UserHeader

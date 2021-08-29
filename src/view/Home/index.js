@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-27 13:01:37
+ * @LastEditTime: 2021-08-29 12:33:54
  * @LastEditors: lmk
  * @Description: 
  */
@@ -94,10 +94,12 @@ const Home = ({history,children=[]})=>{
   const showChild = path=>children.find(val=>val.key===path) || <div></div>
   return <div>
     <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={false}>
-      {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>{showChild(val.path)}</Panel>))}
+      {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>
+        <div className="Panel">{showChild(val.path)}</div>
+      </Panel>))}
     </Tabs>
     {token&&<div className="m-position-fixed createPosts">
-      <Image size={75} alt="posts" onClick={createPosts} source={send}></Image>
+      <Image size={75} alt="posts" onClick={createPosts} source={send} shape="square"></Image>
     </div>}
   </div>
 }

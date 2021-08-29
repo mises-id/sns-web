@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-26 21:49:49
+ * @LastEditTime: 2021-08-29 16:21:42
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -51,7 +51,7 @@ const Forward = ({history={}})=>{
   return <div>
     <NavBar
       left={<span  onClick={() => window.history.back()} className="m-font16">{t('cancel')}</span>}
-      right={<div style={{width:'61px'}}><Button theme="primary" disabled={loading} loading={loading} onClick={submit} block size="xs" shape="round">{t('forwordsubmit')}</Button></div>}
+      right={<div style={{width:'61px'}}><Button theme="primary" disabled={loading} loading={loading} onClick={submit} block size="xs" shape="round">{t('send')}</Button></div>}
     />
     <div className="m-layout m-bg-f8f8f8">
       <div className="m-padding15"> 
@@ -65,7 +65,8 @@ const Forward = ({history={}})=>{
         />
         {item&&<div className="m-bg-fff m-padding10 m-margin-top10">
           <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>
-          <p className="itemContent m-font13 m-margin-tb10 item-eli">{item.content}</p>
+          {item.content&&<p className="itemContent m-font13 m-margin-tb10 item-eli">{item.content}</p>}
+          {!item.content&&<div className="m-margin-bottom10"></div>}
           {item.status_type==='link'&&<Link theme="primary" item={item.link_meta}></Link>}
         </div>}
       </div>

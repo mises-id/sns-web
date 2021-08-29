@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2021-08-12 21:56:05
+ * @LastEditTime: 2021-08-29 12:33:10
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -20,11 +20,11 @@ import './index.scss'
  * @param {*} showLine isshow bottomLine
  * @return {*} cellelement
  */
-const Cell = ({icon,label,onPress,iconSize,showArrow=true,rightChild,className="",showIcon=true,showLine=true})=>{
-  return <div className={`m-flex m-row-between m-padding-tb20 ${className} ${showLine ? 'm-line-bottom' : ''}`} onClick={onPress}>
+const Cell = ({icon,label,onPress,iconSize,showArrow=true,rightChild,className="m-padding-tb20",showIcon=true,showLine=true,labelStyle={},shape="circle"})=>{
+  return <div className={`m-flex m-row-between  ${className} ${showLine ? 'm-line-bottom' : ''}`} onClick={onPress}>
   <div className="m-flex">
-    {showIcon&&<Image size={iconSize} source={icon}></Image>}
-    <span className={`m-colors-333 m-font16 ${showIcon ? 'm-margin-left15' : ''}`}>{label}</span>
+    {showIcon&&<Image size={iconSize} shape={shape} source={icon}></Image>}
+    <span className={`m-colors-333 m-font16 ${showIcon ? 'm-margin-left13' : ''}`} style={labelStyle}>{label}</span>
   </div>
   <div className="m-flex">
     {rightChild&&<div className={`${showArrow ? 'm-margin-right15' : ''}`}>{rightChild}</div>}

@@ -9,9 +9,10 @@ exports[`UserInfo should render correctly 1`] = `
     className="m-layout m-bg-f8f8f8 userinfo"
   >
     <div
-      className="m-bg-fff m-padding-lr15"
+      className="m-bg-fff"
     >
       <Cell
+        className="m-padding-lr15 m-padding-tb12"
         label="avatar"
         rightChild={
           <div
@@ -31,6 +32,7 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
+        className="m-padding-lr15 m-padding-tb19"
         label="username"
         rightChild={
           <Input
@@ -44,6 +46,7 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
+        className="m-padding-lr15 m-padding-tb19"
         label="gender"
         rightChild={
           <div
@@ -56,9 +59,11 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
+        className="m-padding-lr15 m-padding-tb19"
         label="phone"
         rightChild={
           <Input
+            className="userinfo-input"
             clearable={false}
             onChange={[Function]}
             placeholder="phonePlaceholder"
@@ -68,9 +73,11 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
+        className="m-padding-lr15 m-padding-tb19"
         label="mail"
         rightChild={
           <Input
+            className="userinfo-input"
             clearable={false}
             onChange={[Function]}
             placeholder="emailPlaceholder"
@@ -80,9 +87,11 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
+        className="m-padding-lr15 m-padding-tb19"
         label="address"
         rightChild={
           <Input
+            className="userinfo-input"
             clearable={false}
             onChange={[Function]}
             placeholder="addressPlaceholder"
@@ -108,7 +117,7 @@ exports[`UserInfo should render correctly 1`] = `
         size="md"
         theme="primary"
       >
-        send
+        apply
       </Button>
     </div>
   </div>

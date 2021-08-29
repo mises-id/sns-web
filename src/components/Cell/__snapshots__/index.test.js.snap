@@ -2,13 +2,14 @@
 
 exports[`Cell should render correctly 1`] = `
 <div
-  className="m-flex m-row-between m-padding-tb20  m-line-bottom"
+  className="m-flex m-row-between  m-padding-tb20 m-line-bottom"
 >
   <div
     className="m-flex"
   >
     <span
       className="m-colors-333 m-font16 "
+      style={Object {}}
     >
       test
     </span>

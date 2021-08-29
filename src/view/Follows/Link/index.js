@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2021-08-24 21:38:50
+ * @LastEditTime: 2021-08-29 16:08:30
  * @LastEditors: lmk
  * @Description: 
  */
@@ -16,7 +16,7 @@ import { sdkLocationHref } from '@/utils/postMessage';
  * @param {*} theme
  * @return {*} element 
  */ 
-const Link = ({theme="primary",item={}})=>{
+const Link = ({theme="primary",item={},type})=>{
   const bgClass = {
     primary:'m-bg-f8f8f8',
     white:"m-bg-fff"
@@ -28,10 +28,10 @@ const Link = ({theme="primary",item={}})=>{
   }
   return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
   <div className="m-flex">
-    <Image shape='square' size='sm' alt="image" source={item.attachment_url}/>
-    <div className="m-margin-left8">
-      <span className="m-font12 title">{item.title}</span>
-      <p className="timeAndType m-colors-999">{item.host}</p>
+    <Image shape='square' size={!type ? 'sm' : 35} alt="image" source={item.attachment_url}/>
+    <div className="m-margin-left7">
+      <span className={`title ${!type ? 'm-font12' : 'm-font15'}`}>{item.title}</span>
+      <p  className={`m-colors-999 timeAndType ${!type ? 'm-font10' : 'm-font13'}`}>{item.host}</p>
     </div>
   </div>
   <img src={link} className="iconStyle m-margin-right5" alt="link"></img>
