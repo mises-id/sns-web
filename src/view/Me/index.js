@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-08-26 23:02:57
+ * @LastEditTime: 2021-08-29 21:16:31
  * @LastEditors: lmk
  * @Description: 
  */
@@ -55,10 +55,13 @@ const Myself = ({ history }) => {
     {loading ? <div style={{ textAlign: 'center', padding: '20px' }}>
       <ActivityIndicator type="spinner" />
     </div> : (token ? <div className="m-layout">
-      <div className="m-padding-top15  m-bg-f8f8f8"></div>
-      <div className="m-padding-lr15">
-        <Cell iconSize={60} icon={loginForm.avatar && loginForm.avatar.large} label={loginForm.username} onPress={userInfo}></Cell>
-        {list.map((val, index) => (<Cell showLine={false} icon={val.icon} iconSize={20} key={index} label={val.label} onPress={() => cellClick(val)}></Cell>))}
+      <div className="m-padding-lr15  m-bg-fff">
+        <Cell iconSize={60} 
+        icon={loginForm.avatar && loginForm.avatar.large} 
+        label={loginForm.username || 'Anonymous'} 
+        labelStyle={{fontSize:'23px',fontWeight:'bold'}}
+        onPress={userInfo}/>
+        {list.map((val, index) => (<Cell shape="square" showLine={false} icon={val.icon} iconSize={20} key={index} label={val.label} onPress={() => cellClick(val)}></Cell>))}
       </div>
     </div> : <div className="m-flex m-flex-col m-layout">
       <div className="m-flex-1 m-padding15" style={{ height: 0, overflowY: 'auto' }}>

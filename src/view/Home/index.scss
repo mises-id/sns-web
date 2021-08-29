@@ -2,6 +2,7 @@
   font-size: 19px;
   font-weight: bolder;
   transition: all .2s;
+  color: #333333;
 }
 .unactive{
   color: #666666;
@@ -12,12 +13,25 @@
 }
 .za-tabs--horizontal .za-tabs__line{
   height: 4px;
+  margin-bottom: 2px;
   .za-tabs__line__inner{
     border-radius: 10px;
+  }
+  
+}
+.za-tabs{
+  .za-tabs__header{
+    background-color: white;
+    &::after{
+      display: none;
+    }
   }
 }
 .createPosts{
   right: 15px;
   z-index: 555;
   bottom: 30px;
+}
+.Panel{
+  padding-top: 10px;
 }

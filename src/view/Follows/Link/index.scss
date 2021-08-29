@@ -5,11 +5,13 @@
 .forwardBox{
   border-radius: 3px;
   padding: 6px;
-  margin-bottom: 5px;
 }
 
 .timeAndType{
-  font-size: 11px;
+  font-size: 10px;
+  margin-bottom: 3px;
+  line-height: 1;
+  margin-top: 4px;
 }
 .title{
   overflow: hidden;
@@ -17,4 +19,7 @@
   white-space: nowrap;
   width: 60vw;
   display: block;
+  margin-top: 3px;
+  line-height: 1;
+  color: #222;
 }

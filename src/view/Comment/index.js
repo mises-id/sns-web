@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-26 14:06:13
+ * @LastEditTime: 2021-08-29 23:05:29
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -23,13 +23,13 @@ const Comment = ({history})=>{
   const {t} = useTranslation();
   const state = history?.location?.state || {};
   const renderView =(val={},index)=>{
-    return <div key={index} className="m-flex m-col-top m-padding-top10">
-    <Image size={30} source={val.user.avatar ? val.user.avatar.medium : ''}></Image>
-    <div className="m-margin-left12 m-line-bottom m-flex-1">
-      <span className="commentNickname">{val.user.username}</span>
-      <p className="m-font15 m-colors-555  m-padding-bottom10">{val.content}</p>
-    </div>
-  </div>
+    return <div key={index}  className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15">
+            <Image size={30} source={val.user.avatar ? val.user.avatar.medium : ''}></Image>
+            <div className="m-margin-left11 m-line-bottom m-flex-1">
+              <span className="commentNickname">{val.user.username || 'Anonymous'}</span>
+              <p className="m-font15 m-colors-555 m-margin-top12 content  m-padding-bottom13">{val.content}</p>
+            </div>
+          </div>
   }
   //getData
   const [lastId, setlastId] = useState('')
@@ -65,9 +65,9 @@ const Comment = ({history})=>{
     })
   }
   return <div className="m-flex m-flex-col page">
-    <Navbar title={t('commentPageTitle')}
+    <Navbar title={t('commentPageTitle')+(dataSource.length ? `(${dataSource.length})` : '')}
     />
-    <div className="m-padding-left15 m-flex-1 commentBox">
+    <div className="m-flex-1 commentBox">
       <PullList renderView={renderView} data={dataSource} load={fetchData}></PullList>
     </div>
     <div className="footer m-bg-fff">
@@ -76,8 +76,8 @@ const Comment = ({history})=>{
         <div className="comment m-flex-1 m-flex m-padding-lr15">
           <div className="m-margin-right5"><Image source={write} size={16} shape="square"></Image></div>
           <form onSubmit={submit} className="m-flex-1">
-              <Input placeholder="Write a comment..." {...commentContent} type="text"></Input>
-            </form>
+            <Input placeholder="Write a comment..."  clearable={false} className="input" {...commentContent} type="text" ></Input>
+          </form>
         </div>
       </div>
     </div>

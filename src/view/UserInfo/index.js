@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2021-08-26 21:56:07
+ * @LastEditTime: 2021-08-29 16:14:16
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -139,22 +139,22 @@ const UserInfo = (props)=>{
   return <div>
     <Navbar title={t('userInfoPageTitle')}/>
     <div className="m-layout m-bg-f8f8f8 userinfo">
-      <div className="m-bg-fff m-padding-lr15">
-        <Cell label={t('avatar')}  showIcon={false}
+      <div className="m-bg-fff">
+        <Cell label={t('avatar')}  showIcon={false} className="m-padding-lr15 m-padding-tb12"
         rightChild={<div className="m-position-relative"><input type="file" accept="image/png,image/jpeg" className="avatar-input m-position-absolute" onChange={getAvatarChange}></input><Image size={35} source={user.avatar&&user.avatar.large}></Image></div>}></Cell>
-        <Cell label={t('username')} showIcon={false}
+        <Cell label={t('username')} showIcon={false} className="m-padding-lr15 m-padding-tb19"
         rightChild={<Input type="text" clearable={false} disabled={!!loginForm.username} {...username} placeholder={t('placeholder')} />}></Cell>
-        <Cell label={t('gender')} showIcon={false}
+        <Cell label={t('gender')} showIcon={false} className="m-padding-lr15 m-padding-tb19"
         rightChild={<div className={!user.gender?'placeholder':''} onClick={()=>setpickerVisible(true)}>{user.gender || t('placeholder')}</div>}></Cell>
-        <Cell label={t('phone')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...phone} placeholder={t('phonePlaceholder')} />}></Cell>
-        <Cell label={t('mail')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...mail} placeholder={t('emailPlaceholder')} />}></Cell>
-        <Cell label={t('address')} showIcon={false}
-        rightChild={<Input type="text" clearable={false} {...address} placeholder={t('addressPlaceholder')} />}></Cell>
+        <Cell label={t('phone')} showIcon={false} className="m-padding-lr15 m-padding-tb19"
+        rightChild={<Input type="text" className="userinfo-input" clearable={false} {...phone} placeholder={t('phonePlaceholder')} />}></Cell>
+        <Cell label={t('mail')} showIcon={false} className="m-padding-lr15 m-padding-tb19"
+        rightChild={<Input type="text" className="userinfo-input" clearable={false} {...mail} placeholder={t('emailPlaceholder')} />}></Cell>
+        <Cell label={t('address')} showIcon={false} className="m-padding-lr15 m-padding-tb19"
+        rightChild={<Input type="text" className="userinfo-input" clearable={false} {...address} placeholder={t('addressPlaceholder')} />}></Cell>
       </div>
       <div className="m-padding20 save-box">
-        <Button block theme="primary" disabled={saveLoading} loading={saveLoading} ghost size="md" shape="round" onClick={()=>saveInfo('info')}>{t('send')}</Button>
+        <Button block theme="primary" disabled={saveLoading} loading={saveLoading} ghost size="md" shape="round" onClick={()=>saveInfo('info')}>{t('apply')}</Button>
       </div>
     </div>
     <Modal

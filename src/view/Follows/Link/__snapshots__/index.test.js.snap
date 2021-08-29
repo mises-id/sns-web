@@ -14,13 +14,13 @@ exports[`Link should render correctly 1`] = `
       size="sm"
     />
     <div
-      className="m-margin-left8"
+      className="m-margin-left7"
     >
       <span
-        className="m-font12 title"
+        className="title m-font12"
       />
       <p
-        className="timeAndType m-colors-999"
+        className="m-colors-999 timeAndType m-font10"
       />
     </div>
   </div>
