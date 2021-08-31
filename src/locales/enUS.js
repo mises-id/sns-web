@@ -53,7 +53,7 @@ const enUS = {
     emailPlaceholder:'write your email',
     addressPlaceholder:'write your address',
     forwordsubmit:'forward',
-    "unloginFollowingTitle":'You aren’t following anyone yet',
+    "unloginFollowingTitle":'You aren\'t following anyone yet',
     "unloginFollowingsecTitle":'Everything you care about will be displayed here.',
     'findAccounts':'Find accounts'
   }

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-08-30 23:04:35
+ * @LastEditTime: 2021-08-31 17:00:55
  * @LastEditors: lmk
  * @Description: 
  */
@@ -56,7 +56,7 @@ const Myself = ({ history }) => {
     {loading ? <div style={{ textAlign: 'center', padding: '20px' }}>
       <ActivityIndicator type="spinner" />
     </div> : (token ? <div className="m-layout">
-      <div className="m-padding-lr15  m-bg-fff">
+      <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
         <Cell iconSize={60} 
         icon={loginForm.avatar && loginForm.avatar.large} 
         label={loginForm.username || 'Anonymous'} 

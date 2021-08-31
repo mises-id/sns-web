@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2021-08-30 22:37:39
+ * @LastEditTime: 2021-08-31 16:58:59
  * @LastEditors: lmk
  * @Description: 
  */
@@ -44,8 +44,8 @@ const Follow = ({ history = {} }) => {
   const btnElement = () => {
     return <div className="empty-box">
       <img src={emptyIcon} alt="" className="empty-icon"/>
-      <p className="m-colors-333 m-title m-margin-bottom20">{t('unloginFollowingTitle')}</p>
-      <p className="m-font15 m-colors-666">{t('unloginFollowingsecTitle')}</p>
+      <p className="m-colors-333 m-title m-margin-bottom20 m-padding-lr20 m-tips">{t('unloginFollowingTitle')}</p>
+      <p className="m-font15 m-colors-666 m-padding-lr20 m-tips">{t('unloginFollowingsecTitle')}</p>
       <div className="find m-font14" onClick={find}>{t('findAccounts')}</div>
     </div>
   }
