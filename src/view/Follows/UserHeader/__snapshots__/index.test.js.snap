@@ -19,7 +19,7 @@ exports[`UserHeader should render correctly 1`] = `
         Anonymous
       </span>
       <div
-        className="m-margin-top12 timeAndType"
+        className="m-margin-top8 timeAndType"
       >
         <span
           className="m-margin-left3"

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-29 16:31:30
+ * @LastEditTime: 2021-08-30 23:04:24
  * @LastEditors: lmk
  * @Description: 
  */
@@ -13,12 +13,12 @@ const enUS = {
     me:'Me',
     followTxt:'follow',
     followedTxt:'following',
-    createId:"Create mises id",
-    loginUser:"Log in mises id",
-    restoreId:'Restore mises id',
-    aboutId:'About mises id',
-    restore:"Restore mises id",
-    restoreTips:'Mises ID is restored by entering a mnemonic.',
+    createId:"Create misesid",
+    loginUser:"Log in misesid",
+    restoreId:'Restore misesid',
+    aboutId:'About misesid',
+    restore:"Restore misesid",
+    restoreTips:'Misesid is restored by entering a mnemonic.',
     following:"Following",
     followers:"Followers",
     posts:'Posts',
@@ -53,6 +53,9 @@ const enUS = {
     emailPlaceholder:'write your email',
     addressPlaceholder:'write your address',
     forwordsubmit:'forward',
+    "unloginFollowingTitle":'You aren’t following anyone yet',
+    "unloginFollowingsecTitle":'Everything you care about will be displayed here.',
+    'findAccounts':'Find accounts'
   }
 }
 export default enUS
