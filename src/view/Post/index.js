@@ -1,14 +1,15 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2021-08-29 22:58:53
+ * @LastEditTime: 2021-08-31 01:28:35
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Input ,Icon, Toast, Loading} from 'zarm';
+import { Button, Input , Toast, Loading} from 'zarm';
 import write from '@/images/write.png'
+import look from '@/images/look.png'
 import './index.scss'
 import Image from '@/components/Image';
 import Navbar from '@/components/NavBar';
@@ -104,7 +105,7 @@ const Post = ({history={}})=>{
         </div>))}
         {showMore ? <div className="footerBtn">
           <Button shape="round" size="sm" theme="primary" ghost block onClick={goComment}>
-          <div className="m-flex m-row-center">{t('lookAtAll')}<Icon type="arrow-right" theme="primary" size="xs"></Icon></div>
+          <div className="m-flex m-row-center">{t('lookAtAll')}<img src={look} alt="look" className="look"></img></div>
           </Button>
         </div>:''}
       </div>

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2021-08-29 23:05:29
+ * @LastEditTime: 2021-08-31 01:31:49
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -27,7 +27,7 @@ const Comment = ({history})=>{
             <Image size={30} source={val.user.avatar ? val.user.avatar.medium : ''}></Image>
             <div className="m-margin-left11 m-line-bottom m-flex-1">
               <span className="commentNickname">{val.user.username || 'Anonymous'}</span>
-              <p className="m-font15 m-colors-555 m-margin-top12 content  m-padding-bottom13">{val.content}</p>
+              <p className="m-font15 m-colors-555 m-margin-top8 content  m-padding-bottom13">{val.content}</p>
             </div>
           </div>
   }
@@ -74,7 +74,7 @@ const Comment = ({history})=>{
       <div className="m-flex">
         <Image size={30}></Image>
         <div className="comment m-flex-1 m-flex m-padding-lr15">
-          <div className="m-margin-right5"><Image source={write} size={16} shape="square"></Image></div>
+          <div className="m-margin-right10"><Image source={write} size={16} shape="square"></Image></div>
           <form onSubmit={submit} className="m-flex-1">
             <Input placeholder="Write a comment..."  clearable={false} className="input" {...commentContent} type="text" ></Input>
           </form>

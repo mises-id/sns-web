@@ -23,11 +23,7 @@ exports[`Home should render correctly 1`] = `
         </span>
       }
     >
-      <div
-        className="Panel"
-      >
-        <div />
-      </div>
+      <div />
     </TabPanel>
     <TabPanel
       key="/home/discover"
@@ -40,11 +36,7 @@ exports[`Home should render correctly 1`] = `
         </span>
       }
     >
-      <div
-        className="Panel"
-      >
-        <div />
-      </div>
+      <div />
     </TabPanel>
     <TabPanel
       key="/home/me"
@@ -57,11 +49,7 @@ exports[`Home should render correctly 1`] = `
         </span>
       }
     >
-      <div
-        className="Panel"
-      >
-        <div />
-      </div>
+      <div />
     </TabPanel>
   </Tabs>
 </div>

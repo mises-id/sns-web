@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2021-08-29 16:29:39
+ * @LastEditTime: 2021-08-31 01:28:55
  * @LastEditors: lmk
  * @Description: 
  */
@@ -39,12 +39,15 @@ const UserHeader = ({size,btnType="follow",item={},followed,deleteItem})=>{
       <Image size={size} source={item.avatar ? item.avatar.medium : ''}/>
       <div className={!size ? 'm-margin-left12':'m-margin-left8'}>
         <span className='nickname'>{item.username||'Anonymous'}</span>
-        <div className={!size ? 'm-margin-top12 timeAndType' : 'm-margin-top8 timeAndType'}>{format(item.created_at)}<span className="m-margin-left3">{item.from_type}</span></div>
+        <div className={!size ? 'm-margin-top8 timeAndType' : 'm-margin-top4 timeAndType'}>
+          {format(item.created_at)}<span className="m-margin-left3">{item.from_type}</span>
+        </div>
       </div>
     </div>
     {!isMe&&btnType==='follow'&&<MButton txt={t(isFollow)} onPress={followedItem} {...(item.is_followed ? {
       borderColor:"#DDDDDD",
-      txtColor:'#666' 
+      txtColor:'#666' ,
+      txtSize: !size ? 12 : 11
     } : {})} imgIcon={!item.is_followed ? addIcon : ''} width={!size ? 70 : 60 } height={!size ? 25 : 20}/>}
     {btnType==='myPosts'&&<MButton iconSize={14} imgIcon={deteleIcon} borderColor="#DDDDDD" onPress={deleteItemClick}/>}
   </div>

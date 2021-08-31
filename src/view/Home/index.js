@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-29 12:33:54
+ * @LastEditTime: 2021-08-30 21:59:34
  * @LastEditors: lmk
  * @Description: 
  */
@@ -95,7 +95,7 @@ const Home = ({history,children=[]})=>{
   return <div>
     <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={false}>
       {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>
-        <div className="Panel">{showChild(val.path)}</div>
+      {showChild(val.path)}
       </Panel>))}
     </Tabs>
     {token&&<div className="m-position-fixed createPosts">

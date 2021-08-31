@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2021-08-24 19:39:55
+ * @LastEditTime: 2021-08-30 21:57:00
  * @LastEditors: lmk
  * @Description: 
  */
@@ -28,7 +28,7 @@ const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick})=>{
     lg:'40px',
     sm:'28px',
     xs:'15px'
-  }[size] : `${size}px`;
+  }[size] || size : `${size}px`;
   const error = e=> setsrc(normal)
   return (src&&<img onError={error.bind(this)} src={src} style={{height:imgSize,width:imgSize,    objectFit: 'cover'}} className={`border-${shape}`} alt={alt} onClick={onClick}/>)
 }

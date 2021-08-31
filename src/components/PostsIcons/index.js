@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-28 23:27:29
+ * @LastEditTime: 2021-08-29 23:38:22
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -33,13 +33,12 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage})=>{
   }
   const forwardPress = e=>hasLogin(e,forwardCallback)
   const likePress = e=>hasLogin(e,likeCallback)
-  const commentPress = e=>hasLogin(e,commentPage)
   return  <div className="m-flex itemFunctionBox">
       <div className="m-flex"  onClick={likePress}>
         <img src={item.is_liked ? liked : like}  className="iconStyle" alt="like"></img>
         <span className={`m-font12 m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
       </div>
-      <div className="m-flex" onClick={commentPress}>
+      <div className="m-flex" onClick={commentPage}>
         <img src={comment}  className="iconStyle" alt="comment"></img>
         <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
       </div>

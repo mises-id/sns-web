@@ -3,13 +3,16 @@
 exports[`CreateMisesId should render correctly 1`] = `
 <NavBar
   left={
-    <Icon
+    <img
+      alt="back"
       onClick={[Function]}
-      prefixCls="za-icon"
-      size="sm"
-      theme="default"
-      type="arrow-left"
-      viewBox="0 0 32 32"
+      src="back.png"
+      style={
+        Object {
+          "height": "22px",
+          "width": "22px",
+        }
+      }
     />
   }
   prefixCls="za-nav-bar"

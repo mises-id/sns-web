@@ -1,5 +1,6 @@
 .followBox{
   background-color:  $themeBg;
+  margin-top:10px;
 }
 .normal{
   .timeAndType{
@@ -46,4 +47,24 @@
 .iconStyle{
   width: 15px;
   height: 15px;
+}
+.empty-box{
+  margin-top: 75px;
+  text-align: center;
+}
+.empty-icon{
+  width: 56px;
+  height: 61px;
+  display: block;
+  margin: 0 auto 30px;
+}
+.find{
+  width: 130px;
+  height: 33px;
+  line-height: 33px;
+  background-color: #5c65f6;
+  margin: 39px auto;
+  color: white;
+  font-weight: bold;
+  border-radius: 40px;
 }
