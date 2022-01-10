@@ -1,0 +1,22 @@
+.reply-input-box{
+  position:fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background: white;
+  padding: 10px 15px;
+  z-index: 1111;
+}
+.input{
+  height: 40px;
+  border-radius: 500px;
+  background-color: $themeBg;
+  line-height: 40px;
+  padding: 0 19px;
+  margin-right: 15px;
+}
+.button{
+  width: 65px;
+  height: 30px;
+}

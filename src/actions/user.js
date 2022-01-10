@@ -1,28 +1,35 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 22:14:52
- * @LastEditTime: 2021-08-05 22:53:20
+ * @LastEditTime: 2022-01-06 12:02:03
  * @LastEditors: lmk
  * @Description: user actions
  */
-//更新登录信息
+//Update login information
 export function setLoginForm(data){
   return {
     type: 'SET_USER_LOGIN',
     data
   };
 }
-//更新用户权限
+//Update user permissions
 export function setUserAuth(data){
   return {
     type: 'SET_USER_AUTH',
     data
   };
 }
-//更新用户token
+//Update user token
 export function setUserToken(data){
   return {
     type: 'SET_USER_TOKEN',
+    data
+  };
+}
+// Update user focus corner
+export function setFollowingBadge(data){
+  return {
+    type: 'SET_FOLLOWING_BADGE',
     data
   };
 }

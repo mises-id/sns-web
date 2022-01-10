@@ -1,6 +1,6 @@
 {
-  "short_name": "Anonymous",
-  "name": "Anonymous",
+  "short_name": "sns-web",
+  "name": "sns-web",
   "icons": [
     {
       "src": "favicon.ico",

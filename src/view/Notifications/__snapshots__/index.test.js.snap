@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notifications should render correctly 1`] = `
+<div>
+  <Navbar
+    title="NotificationsPageTitle"
+  />
+  <PullList
+    data={Array []}
+    load={[Function]}
+    renderView={[Function]}
+  />
+</div>
+`;

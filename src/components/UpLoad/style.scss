@@ -1,0 +1,43 @@
+.grid-rows{
+  @include m-grid($width:96vw,$rowSize:4);
+}
+.upload-box-size{
+  width: calc(25vw - 17px);
+  height: calc(25vw - 17px);
+  margin-bottom: 15px;
+  &.upload-box{
+    background-color: #F8F8F8;
+  }
+  .file{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    width: calc(25vw - 17px);
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+  .remove-image{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: -8px;
+    top: -5px;
+  }
+}
+.edit-image-box{
+  height: 100vh;
+}
+.img-object-fit{
+  object-fit: cover;
+}
+.camera-icon{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}

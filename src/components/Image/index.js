@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2021-08-30 21:57:00
+ * @LastEditTime: 2022-01-05 15:12:08
  * @LastEditors: lmk
  * @Description: 
  */
@@ -16,10 +16,11 @@ import image from '@/images/image.png'
  * @param {*} alt img type
  * @return {*} element
  */
-const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick})=>{
+const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick,borderRadius='1px',height})=>{
   //shape:circle square 
   const normal = alt==="avatar" ? head : image;
   const [src, setsrc] = useState(normal)
+  borderRadius = shape==='circle' ? '50%' : borderRadius;
   useEffect(() => {
     source&&setsrc(source)
   }, [source])
@@ -30,6 +31,8 @@ const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick})=>{
     xs:'15px'
   }[size] || size : `${size}px`;
   const error = e=> setsrc(normal)
-  return (src&&<img onError={error.bind(this)} src={src} style={{height:imgSize,width:imgSize,    objectFit: 'cover'}} className={`border-${shape}`} alt={alt} onClick={onClick}/>)
+  return (src&&<img onError={error.bind(this)} src={src} 
+  style={{height:height || imgSize,width:imgSize,objectFit: 'cover',borderRadius}} 
+  className={`border-${shape}`} alt={alt} onClick={onClick}/>)
 }
 export default Image

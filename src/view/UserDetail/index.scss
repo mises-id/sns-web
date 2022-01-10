@@ -1,0 +1,98 @@
+
+.user-bg{
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.app-container{
+  position: relative;
+  // min-height: 100vh;
+  background: white;
+}
+.nav-icon{
+  width: 30px;
+  height: 30px;
+}
+@mixin headerBgView {
+  position: relative;
+  z-index: 2;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.nav-box{
+  @include headerBgView;
+  height: 60px;
+}
+.userinfo-box{
+  @include headerBgView;
+  padding: 20px 15px;
+}
+.avatar-box{
+  border-radius: 50%;
+  border: 2px solid white;
+  width: 79px;
+  height: 79px;
+}
+.user-info{
+  margin-left: 13px;
+}
+.username{
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
+}
+.follow-box{
+  margin-top: 35px;
+  font-size: 14px;
+  .follow-name{
+    color: #666;
+  }
+  .follow-num{
+    color: #333;
+    font-weight: bold;
+    margin-right: 7px;
+  }
+  div{
+    &:first-child{
+      margin-right: 22px;
+    }
+  }
+}
+.active{
+  font-size: 19px;
+  font-weight: bolder;
+  transition: all .2s;
+  color: #333333;
+}
+.unactive{
+  color: #666666;
+  font-size: 15px;
+}
+.tab-content{
+  // margin-top: 20px;
+}
+.za-tabs{
+  .za-tabs__header{
+    background-color: white;
+  }
+}
+.tab-header{
+  .za-tabs__tablist{
+    width: 180px;
+  }
+  &::after{
+    display: none;
+  }
+}
+.user-post-content{
+  .m-layout{
+    height: calc(var(--window-height) - 90px - 132px);
+  }
+}
+.user-follow-page{
+  .m-layout{
+    height: calc(var(--window-height) - 90px);
+  }
+}

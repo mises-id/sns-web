@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2021-08-30 22:23:49
+ * @LastEditTime: 2022-01-05 16:01:30
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -60,7 +60,7 @@ $positon:relative fixed absolute;
 }
 
 /*colors style*/
-$positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555; 
+$positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555 111; 
 @each $var in $positon {
 	.m-colors-#{$var}{
     $unquote:'#';
@@ -132,9 +132,12 @@ $positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555;
       align-items:flex-start;
     }
   }
+  &-warp{
+    flex-wrap: wrap;
+  }
 }
 /*font size*/
-$size:12 13 15 16 17 18 20;
+$size:12 13 14 15 16 17 18 20;
 @each $var in $size {
 	.m-font#{$var}{
 		font-size: #{$var}px;
@@ -193,5 +196,34 @@ body{
 	overflow: hidden;
 }
 .input{
+  font-size: 15px;
+}
+//grid布局
+//设置grid的模块高度 列分为几分 宽度 行分为几份
+@mixin m-grid($height:100vh,$colSize:3,$width:100vw,$rowSize:3,$gutter:0){
+  grid-template-columns: repeat($rowSize,$width / $rowSize);
+  grid-gap: $gutter;
+}
+.m-grid{
+  display: grid;
+  box-sizing: border-box;
+  align-items: center;
+  justify-items: center;
+}
+.za-tabs--horizontal .za-tabs__line{
+  height: 4px;
+  margin-bottom: 2px;
+  .za-tabs__line__inner{
+    border-radius: 10px;
+  }
+}
+.active{
+  font-size: 19px;
+  font-weight: bolder;
+  transition: all .2s;
+  color: #333333;
+}
+.unactive{
+  color: #666666;
   font-size: 15px;
 }

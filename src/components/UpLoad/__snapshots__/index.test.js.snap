@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpLoad should render correctly 1`] = `
+<div
+  className="m-grid grid-rows m-padding8"
+>
+  <div
+    className="m-position-relative border-radius5 upload-box upload-box-size"
+  >
+    <input
+      accept="image/png,image/jpg,image/jpeg"
+      className="file"
+      maxLength={9}
+      multiple={true}
+      onChange={[Function]}
+      type="file"
+    />
+    <div
+      className="camera-icon"
+    >
+      <Image
+        height="auto"
+        shape="square"
+        size={25}
+        source="camera.png"
+      />
+    </div>
+  </div>
+  <ForwardRef(ForwardedRefComp)
+    animationType="slideDown"
+    direction="bottom"
+    mask={false}
+    visible={false}
+  />
+</div>
+`;

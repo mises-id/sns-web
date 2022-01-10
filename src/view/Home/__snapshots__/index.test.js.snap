@@ -16,11 +16,13 @@ exports[`Home should render correctly 1`] = `
       key="/home/"
       prefixCls="za-tabs"
       title={
-        <span
-          className="active"
-        >
-          follow
-        </span>
+        <React.Fragment>
+          <span
+            className="active"
+          >
+            follow
+          </span>
+        </React.Fragment>
       }
     >
       <div />
@@ -29,11 +31,13 @@ exports[`Home should render correctly 1`] = `
       key="/home/discover"
       prefixCls="za-tabs"
       title={
-        <span
-          className="unactive"
-        >
-          discover
-        </span>
+        <React.Fragment>
+          <span
+            className="unactive"
+          >
+            discover
+          </span>
+        </React.Fragment>
       }
     >
       <div />
@@ -42,11 +46,13 @@ exports[`Home should render correctly 1`] = `
       key="/home/me"
       prefixCls="za-tabs"
       title={
-        <span
-          className="unactive"
-        >
-          me
-        </span>
+        <React.Fragment>
+          <span
+            className="unactive"
+          >
+            me
+          </span>
+        </React.Fragment>
       }
     >
       <div />

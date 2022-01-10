@@ -19,5 +19,20 @@ exports[`MyPost should render correctly 1`] = `
       source="send.png"
     />
   </div>
+  <ForwardRef(forwardRef)
+    actions={
+      Array [
+        Object {
+          "onClick": [Function],
+          "text": "Delete",
+          "theme": "danger",
+        },
+      ]
+    }
+    onCancel={[Function]}
+    onMaskClick={[Function]}
+    spacing={true}
+    visible={false}
+  />
 </div>
 `;

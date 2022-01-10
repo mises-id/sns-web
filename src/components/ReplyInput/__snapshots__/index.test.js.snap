@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReplyInput should render correctly 1`] = `
+<div
+  className="reply-input-box m-line-top"
+>
+  <form
+    className="m-flex-1 m-flex"
+  >
+    <Input
+      className="input"
+      clearable={false}
+      placeholder="commentPlaceholder"
+      type="text"
+    />
+    <Button
+      block={true}
+      className="button"
+      disabled={false}
+      ghost={false}
+      htmlType="button"
+      loading={false}
+      prefixCls="za-button"
+      shadow={false}
+      shape="round"
+      size="xs"
+      theme="primary"
+    >
+      send
+    </Button>
+  </form>
+</div>
+`;

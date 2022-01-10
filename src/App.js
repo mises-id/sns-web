@@ -1,11 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-13 01:22:31
+ * @LastEditTime: 2022-01-05 10:03:35
  * @LastEditors: lmk
  * @Description: 
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles/App.css';
 import { ConfigProvider} from 'zarm';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
@@ -17,9 +17,13 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './stores';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import { hot } from 'react-hot-loader/root'
+import {setTheme} from '@/styles/setZarmTheme'
 const App = ()=> {
+  useEffect(() => {
+    setTheme()
+  }, [])
   return (
-    <ConfigProvider locale={enUS} primaryColor="#5c65f6">
+    <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Router>

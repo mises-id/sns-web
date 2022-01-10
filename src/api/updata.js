@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-22 13:30:37
- * @LastEditTime: 2021-07-22 14:02:02
+ * @LastEditTime: 2021-12-31 17:52:22
  * @LastEditors: lmk
  * @Description: file updata
  */
@@ -14,7 +14,7 @@ import request from "@/utils/request";
 export function attachment(data){
   return request({
     data,
-    url:'/attachment',
+    url:'/upload',
     method:'post',
     headers:{
       'Content-Type' : 'multipart/form-data',

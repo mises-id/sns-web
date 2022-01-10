@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2021-08-29 16:08:30
+ * @LastEditTime: 2022-01-04 16:34:07
  * @LastEditors: lmk
  * @Description: 
  */
@@ -10,7 +10,7 @@ import React from 'react';
 import link from '@/images/link.png'
 import Image from '@/components/Image/index';
 import './index.scss'
-import { sdkLocationHref } from '@/utils/postMessage';
+// import { sdkLocationHref } from '@/utils/postMessage';
 /**
  * @description: userHeader and follow Btn
  * @param {*} theme
@@ -23,10 +23,10 @@ const Link = ({theme="primary",item={},type})=>{
   }[theme]
   const linkTo =e=>{
     e.stopPropagation();
-    // window.location.href = item.link
-    sdkLocationHref(item.link)
+    window.open(item.link)
+    // sdkLocationHref(item.link)
   }
-  return <div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
+  return (item&&<div className={`m-flex m-row-between forwardBox ${bgClass}`} onClick={linkTo}>
   <div className="m-flex">
     <Image shape='square' size={!type ? 'sm' : 35} alt="image" source={item.attachment_url}/>
     <div className="m-margin-left7">
@@ -35,6 +35,6 @@ const Link = ({theme="primary",item={},type})=>{
     </div>
   </div>
   <img src={link} className="iconStyle m-margin-right5" alt="link"></img>
-</div>
+</div>)
 }
 export default Link

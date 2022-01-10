@@ -1,12 +1,11 @@
 import { follow, unfollow } from "@/api/fans";
 import { likeStatus, unLikeStatus } from "@/api/status";
-import { getActiveUser, sdkFollow, sdkUnFollow } from "@/utils/postMessage";
 import { useSelector } from "react-redux";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2021-08-27 14:15:59
+ * @LastEditTime: 2022-01-07 15:23:52
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -34,26 +33,18 @@ export async function liked(val){
  * @return {*} Promise
  */
 export async function followed(item={}){
-  const val = item.user;
+  const val = item.user || item;
   const fetchFn = val.is_followed ? unfollow : follow;
-  const sdkFn = val.is_followed ? sdkUnFollow : sdkFollow;
   try {
-    const activeUser = await getActiveUser();
-    const isActive = !!activeUser.data
-    if(!isActive) {
-      return Promise.reject('not found active user')
-    }
-    sdkFn(val.misesid);
+    await window.mises.isActive();
+    val.is_followed ? window.mises.userUnFollow(val.misesid) : window.mises.userFollow(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;
   } catch (error) {
     return Promise.reject(error)
-    //val.is_followed = !val.is_followed;
   }
 }
-/**
-* @param {*} 
-*/
+
 export function useLogin(){
   const user = useSelector(state => state.user) || {};
   const isLogin = !!user.token;

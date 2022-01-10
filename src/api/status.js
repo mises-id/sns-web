@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2021-08-10 18:08:39
+ * @LastEditTime: 2022-01-07 16:30:05
  * @LastEditors: lmk
  * @Description: status
  */
@@ -90,6 +90,15 @@ export function myPostsData(params){
   })
 }
 /**
+* @param {*} my likes
+*/
+export function likesData(params){
+  return request({
+    params,
+    url:`/user/${params.uid}/like`
+  })
+}
+/**
 * @param {*} 
 */
 export function deletePosts(id){
@@ -106,5 +115,21 @@ export function getComment(params){
   return request({
     url:`/comment`,
     params
+  })
+}
+/**
+* @param {*} discover data
+*/
+export function recommendUser(){
+  return request({
+    url:'/user/recommend'
+  })
+}
+/**
+* @param {*} discover data
+*/
+export function followingLatest(){
+  return request({
+    url:'/user/following/latest'
   })
 }

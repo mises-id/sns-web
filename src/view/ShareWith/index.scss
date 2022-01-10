@@ -1,0 +1,26 @@
+.radio-item{
+  padding: 28px 0 28px 15px;
+  background-color: white;
+}
+.limit{
+  padding-left: 35px;
+  line-height: 1;
+  margin-top: 18px;
+}
+.select{
+  width: 60px;
+  height: 30px;
+  border: 1px solid #EEEEEE;
+  border-radius: 3px;
+  line-height: 30px;
+  padding-left: 15px;
+  padding-right: 8px;
+  margin-left: 15px;
+  margin-right: 7px;
+}
+.show-selectPicker{
+  transform: rotate(180deg);
+}
+.select-icon{
+  transition: all 0.3s;
+}

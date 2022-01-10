@@ -1,0 +1,67 @@
+.icon{
+  width: 22px;
+  height: 22px;
+}
+.icon-box{
+  padding: 20px;
+  text-align: center;
+  img{
+    margin: 0 25px;
+    overflow: hidden;
+  }
+}
+
+.edit-image-box{
+  height: 100vh;
+  background: #000000;
+}
+.edit-text-container{
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+.edit-cropper-box{
+  background-color: white;
+}
+.edit-text-container,.edit-cropper-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+}
+.bg-white {
+  background: white;
+}
+.color-list-item{
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 2px solid white;
+}
+.color-list-box{
+  width: 35px;
+  height: 40px;
+}
+.color-list-container{
+  height: 80px;
+  width: 100%;
+  padding: 0 10px;
+}
+body{
+  .edit-text-container{
+    .za-nav-bar{
+      background: transparent;
+      @include lineStyle(bottom,transparent );
+    }
+  }
+}
+.content-editable{
+  width: 100%;
+  padding: 20px;
+}
+.content-textarea{
+  word-break: break-all;
+  font-size: 30px;
+  border-radius: 10px;
+  padding: 10px;
+}

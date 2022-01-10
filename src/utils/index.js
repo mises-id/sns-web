@@ -1,12 +1,12 @@
 import { followed, liked } from "@/components/PostsIcons/common";
-import { useCallback, useEffect, useState } from "react";
-import { getListUsersCount, OpenCreateUserPanel, openLoginPage } from "@/utils/postMessage";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2021-08-27 14:13:30
+ * @LastEditTime: 2022-01-10 17:48:18
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -28,7 +28,7 @@ export function useBind(init) {
  * @param {*} url
  * @return {*}
  */
-export default function urlToJson(url = window.location.href) {
+export function urlToJson(url = window.location.href) {
 
   let obj = {},
     index = url.indexOf('?'),
@@ -45,6 +45,19 @@ export default function urlToJson(url = window.location.href) {
   return obj;
 }
 
+export function objToUrl(object){
+  if(JSON.stringify(object).indexOf("{")>-1&&JSON.stringify(object).indexOf("}")>-1){
+    let query = '';
+    console.log(object)
+    for (const key in object) {
+      const element = object[key];
+      if(element) query+=`${query==='' ? '?' : '&'}${key}=${element}`
+    }
+    return query
+  }
+  return ''
+}
+
 /**
  * @description: 
  * @param {*} funtion fn getdatalist
@@ -52,7 +65,7 @@ export default function urlToJson(url = window.location.href) {
  * @return {*}
  */
 
-export function useList(fn,params){
+export function useList(fn,params={}){
   let [last_id, setlast_id] = useState('');
   let [dataSource, setdataSource] = useState([]);
   const fetchData = async type=>{
@@ -80,13 +93,9 @@ export function useList(fn,params){
 * @param {*} 
 */
 export function useRouteState(history){
-  const state = history?.location?.state;
-  const [historyState, sethistoryState] = useState('');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getState = useCallback(() => sethistoryState(state));
-  useEffect(()=>{
-    getState()
-  },[getState])
+  const location = useLocation();
+  const {search} = location || {}
+  const historyState = urlToJson(search)
   return historyState;
 }
 /**
@@ -121,7 +130,10 @@ export function useChangePosts(setdataSource,dataSource){
       setfollowLoading(false)
       success()
     } catch (error) {
-      error==='not found active user'&&loginModal()
+      console.log(error)
+      error==='not found active user'&&loginModal(()=>{
+        followPress(val,flag)
+      })
       setfollowLoading(false)
       return Promise.reject()
     }
@@ -131,9 +143,9 @@ export function useChangePosts(setdataSource,dataSource){
 
 export function useLoginModal(){
   const {t} = useTranslation()
-  const loginModal = async ()=>{
+  const loginModal = async (cb)=>{
     try {
-      const {data:count} = await getListUsersCount();
+      const count = await window.mises.getMisesAccounts();
       const flag = count > 0;
       const content = flag ? t('notLogin') : t('notRegister') ;
       Modal.confirm({
@@ -141,7 +153,7 @@ export function useLoginModal(){
         content,
         onCancel: () => {},
         onOk: () => {
-          flag ? openLoginPage() : OpenCreateUserPanel();
+          window.mises.requestAccounts().then(cb);
         },
       });
     } catch (error) {
@@ -149,4 +161,27 @@ export function useLoginModal(){
     }
   }
   return loginModal
+}
+export const shareWith = [{
+  label:'Public',
+  value:'public'
+},{
+  label:'Private',
+  value:'private'
+},{
+  label:'Time Limited Post',
+  value:'limited'
+}]
+export function getShareWithObj(value){
+  return shareWith.find(val=>val.value===value) || {}
+}
+
+export function username(val){
+  if(val.username) return val.username;
+  if(val.misesid&&val.misesid.length>8){
+    const startNum = val.misesid.length - 8;
+    const str = val.misesid.substr(startNum)
+    return `misesid:${str}`
+  }
+  return "Anonymous"
 }
