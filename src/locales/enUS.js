@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2021-08-30 23:04:24
+ * @LastEditTime: 2022-01-10 12:33:17
  * @LastEditors: lmk
  * @Description: 
  */
@@ -47,15 +47,27 @@ const enUS = {
     notRegister:'Do you want to register?',
     createMisesIdTips:"Misesid is a decentralized network, user can create his misesid account which stores his personal information and social relations, the account is totally owned by user himself, it can not be banned by any persons or orgnizations.",
     createPostsPlaceholder:'Please enter the contents',
+    createPostsTips:"Please enter contents or upload pictures",
     forwardPlaceholder:'Please enter the contents',
     usernamePlaceholder:'write your username',
     phonePlaceholder:'write your phone number',
     emailPlaceholder:'write your email',
     addressPlaceholder:'write your address',
     forwordsubmit:'forward',
-    "unloginFollowingTitle":'You aren’t following anyone yet',
+    "unloginFollowingTitle":'You aren\'t following anyone yet',
     "unloginFollowingsecTitle":'Everything you care about will be displayed here.',
-    'findAccounts':'Find accounts'
+    'findAccounts':'Find accounts',
+    "upLoadFileWarning":"Up to 9 image can be uploaded",
+    "NotificationsPageTitle":"Notifications",
+    "MyLikesPageTitle":"My Likes",
+    "createPostsPublic":'Public',
+    "createPostsLabel":'Share With',
+    done:"Done",
+    editPhoto:'Edit photo',
+    'blackListPageTitle':"Black List",
+    "commentPlaceholder":"Write a comment...",
+    'succcess':"Succeeded"
+
   }
 }
 export default enUS

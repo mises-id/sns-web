@@ -19,6 +19,7 @@ exports[`PostsIcon should render correctly 1`] = `
   </div>
   <div
     className="m-flex"
+    onClick={[Function]}
   >
     <img
       alt="comment"
@@ -40,6 +41,16 @@ exports[`PostsIcon should render correctly 1`] = `
     />
     <span
       className="m-font12 m-colors-333 m-margin-left8"
+    />
+  </div>
+  <div
+    className="m-flex"
+    onClick={[Function]}
+  >
+    <img
+      alt="forward"
+      className="iconStyle"
+      src="shareto.png"
     />
   </div>
 </div>

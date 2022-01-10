@@ -8,6 +8,7 @@ exports[`Image should render correctly 1`] = `
   src="head.png"
   style={
     Object {
+      "borderRadius": "50%",
       "height": "40px",
       "objectFit": "cover",
       "width": "40px",

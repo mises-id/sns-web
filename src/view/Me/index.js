@@ -1,85 +1,191 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2021-08-30 23:04:35
+ * @LastEditTime: 2022-01-10 17:50:20
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
-import React, { useEffect, useState } from 'react';
-import './index.scss'
-import { useTranslation } from 'react-i18next';
-import following from '@/images/following.png'
-import followers from '@/images/followers.png'
-import post from '@/images/post.png'
-import Cell from '@/components/Cell';
-import { ActivityIndicator, Button } from 'zarm';
-import { useSelector } from 'react-redux';
-import { getListUsersCount, OpenCreateUserPanel, openLoginPage, OpenRestoreUserPanel } from '@/utils/postMessage';
-import bg from '@/images/me-bg.png';
+import React, { useEffect, useState } from "react";
+import "./index.scss";
+import { useTranslation } from "react-i18next";
+import me_1 from "@/images/me_1.png";
+import me_2 from "@/images/me_2.png";
+import me_3 from "@/images/me_3.png";
+import me_4 from "@/images/me_4.png";
+import me_5 from "@/images/me_5.png";
+import me_6 from "@/images/me_6.png";
+import Cell from "@/components/Cell";
+import { ActivityIndicator, Badge, Button } from "zarm";
+import { useDispatch, useSelector } from "react-redux";
+import bg from "@/images/me-bg.png";
+import { setUserAuth, setUserToken } from "@/actions/user";
+import { objToUrl, urlToJson, username } from "@/utils";
 const Myself = ({ history }) => {
   const { t } = useTranslation();
-  const { loginForm: user = {}, token } = useSelector(state => state.user) || {}
-  const [loginForm] = useState(user)
+  const [loginForm,setLoginForm] = useState({});
+  const [token, settoken] = useState('')
+   // eslint-disable-next-line
+  const selector = useSelector((state) => state.user) || {};
+  const dispatch = useDispatch()
+  // If this page is displayed, the current user is updated
+  useEffect(() => {
+    window.mises.getAuth().then(res=>{
+      const resAuth = urlToJson(`?${res.auth}`)
+      const selectorAuth = urlToJson(`?${selector.auth}`)
+      if(resAuth.mises_id!==selectorAuth.mises_id){
+        dispatch(setUserAuth(''))
+        dispatch(setUserToken(''))
+        dispatch(setUserAuth(res.auth))
+        console.log(res.auth)
+      }
+    }).catch(err=>{
+      console.log(err)
+    })
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setLoginForm(selector.loginForm)
+    settoken(selector.token)
+    
+  }, [selector])
   const [flag, setflag] = useState(false);
-  const [loading, setloading] = useState(true)
+  const [loading, setloading] = useState(true);
   //getData
   const getFlag = async () => {
-    const {data:count} = await getListUsersCount();
-    setflag(count > 0)
-    setloading(false)
-  }
+    try {
+      if (!token) {
+        const count = await window.mises.getMisesAccounts();
+        setflag(count > 0);
+      }
+      setloading(false);
+    } catch (error) {
+      setflag(false);
+      setloading(false);
+    }
+  };
   useEffect(() => {
-    getFlag()
-  }, [token])
-  const onclick = flag ? openLoginPage : OpenCreateUserPanel;
-  const restore = OpenRestoreUserPanel
-  const list = [{
-    label: t('following'),
-    icon: following,
-    url: '/follow',
-    pageType: 'following'
-  }, {
-    label: t('followers'),
-    icon: followers,
-    url: '/follow',
-    pageType: 'fans'
-  }, {
-    label: t('posts'),
-    icon: post,
-    url: '/myPosts'
-  }]
+    getFlag();
+  }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    list[2].badge = selector.badge.notifications_count;
+    list[1].isNew = !!selector.loginForm.new_fans_count;
+    setTabList(list)
+  }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
+  const onclick = () => {
+    window.mises.requestAccounts().catch(err=>{
+      
+    })
+  };
+  const restore = () => window.mises.openRestore();
+  const [list,setTabList] = useState([
+    {
+      label: t("following"),
+      icon: me_1,
+      url: "/follow",
+      pageType: "following",
+      badge:loginForm.followings_count
+    },
+    {
+      label: t("followers"),
+      icon: me_2,
+      url: "/follow",
+      pageType: "fans",
+      badge:loginForm.fans_count,
+      isNew:false // If this item is updated
+    },
+    {
+      label: t("NotificationsPageTitle"),
+      icon: me_3,
+      url: "/notifications",
+      badge:0,
+      isBg:true // has backgroundcolor
+    },
+    {
+      label: t("MyLikesPageTitle"),
+      icon: me_4,
+      url: "/myLikes",
+    },
+    {
+      label: t("posts"),
+      icon: me_5,
+      url: "/myPosts",
+    },
+    {
+      label: t("blackListPageTitle"),
+      icon: me_6,
+      url: "/blackList",
+    }
+  ]);
   //router to userInfo
-  const userInfo = () => history.push('/userInfo')
-  //click global cell 
-  const cellClick = val => history.push({ pathname: val.url, state: { pageType: val.pageType } })
-  return <div>
-    {loading ? <div style={{ textAlign: 'center', padding: '20px' }}>
-      <ActivityIndicator type="spinner" />
-    </div> : (token ? <div className="m-layout">
-      <div className="m-padding-lr15  m-bg-fff">
-        <Cell iconSize={60} 
-        icon={loginForm.avatar && loginForm.avatar.large} 
-        label={loginForm.username || 'Anonymous'} 
-        labelStyle={{fontSize:'23px',fontWeight:'bold'}}
-        onPress={userInfo}/>
-        {list.map((val, index) => (<Cell shape="square" showLine={false} icon={val.icon} iconSize={20} key={index} label={val.label} onPress={() => cellClick(val)}></Cell>))}
-      </div>
-    </div> : <div className=" m-layout m-bg-fff">
-      <img alt="bg" src={bg} className="bg"/>
-      <div className="m-margin-left15 m-margin-bottom25">
-        <p className="nickname m-margin-top15 m-margin-bottom20 m-colors-333">{t('aboutId')}</p>
-        <p className="m-font15 m-colors-333 m-margin-top8 m-padding-right24 m-tips">{t('createMisesIdTips')} </p>
-      </div>
-      <div className="m-margin-lr40">
-        <div className="m-padding-top25">
-          <Button block shape="round" theme="primary"  onClick={onclick}>{t(flag ? 'loginUser' : 'createId')}</Button>
+  const userInfo = () => history.push("/userInfo");
+  //click global cell
+  const cellClick = (val) =>
+    history.push({ pathname: val.url, search: objToUrl({ pageType: val.pageType }) });
+  return (
+    <div>
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <ActivityIndicator type="spinner" />
         </div>
-        <div className="m-padding-top25">
-          <Button block shape="round" theme="primary" ghost onClick={restore}>{t('restore')}</Button>
+      ) : token ? (
+        <div className="m-layout">
+          <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
+            <Cell
+              iconSize={60}
+              icon={loginForm.avatar && loginForm.avatar.large}
+              label={username(loginForm)}
+              labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
+              onPress={userInfo}
+            />
+            {list.map((val, index) => (
+              <Cell
+                shape="square"
+                showLine={false}
+                icon={val.icon}
+                iconSize={20}
+                key={index}
+                label={
+                  val.isNew ? <Badge shape="dot">{val.label}</Badge> : val.label
+                }
+                rightChild={
+                  val.badge ? (val.isBg ? <Badge shape="round" text={val.badge}></Badge> : <span className="right-badge">{val.badge}</span>) : <span></span>
+                }
+                onPress={() => cellClick(val)}
+              ></Cell>
+            ))}
+          </div>
         </div>
-      </div>
-    </div>)}
-
-  </div>
-}
-export default Myself
+      ) : (
+        <div className=" m-layout m-bg-fff">
+          <img alt="bg" src={bg} className="bg" />
+          <div className="m-margin-left15 m-margin-bottom25">
+            <p className="nickname m-margin-top15 m-margin-bottom20 m-colors-333">
+              {t("aboutId")}
+            </p>
+            <p className="m-font15 m-colors-333 m-margin-top8 m-padding-right24 m-tips">
+              {t("createMisesIdTips")}{" "}
+            </p>
+          </div>
+          <div className="m-margin-lr40">
+            <div className="m-padding-top25">
+              <Button block shape="round" theme="primary" onClick={onclick}>
+                {t(flag ? "loginUser" : "createId")}
+              </Button>
+            </div>
+            <div className="m-padding-top25">
+              <Button
+                block
+                shape="round"
+                theme="primary"
+                ghost
+                onClick={restore}
+              >
+                {t("restore")}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+export default Myself;

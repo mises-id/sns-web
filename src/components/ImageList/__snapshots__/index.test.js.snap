@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageList should render correctly 1`] = `
+<div
+  className="imageList"
+>
+  <img
+    alt=""
+    className="image-max"
+    onClick={[Function]}
+    onLoad={[Function]}
+    src="https://home.mises.site/upload/attachment/2021/11/18/10/avatar12.png"
+    style={
+      Object {
+        "height": "auto",
+        "width": "auto",
+      }
+    }
+  />
+  <ForwardRef(forwardRef)
+    activeIndex={0}
+    images={
+      Array [
+        "https://home.mises.site/upload/attachment/2021/11/18/10/avatar12.png",
+      ]
+    }
+    maxScale={10}
+    onClose={[Function]}
+    visible={false}
+  />
+</div>
+`;

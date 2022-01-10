@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:02:30
- * @LastEditTime: 2021-07-23 14:05:49
+ * @LastEditTime: 2022-01-10 17:46:02
  * @LastEditors: lmk
  * @Description: 
  */
@@ -19,6 +19,9 @@ jest.mock('react-router-dom', () => ({
     hash: '',
     state: null,
     key: '5nvxpbdafa',
+  }),
+  useHistory: () => ({
+    push: jest.fn(),
   }),
 }));
 jest.mock('react-redux', () => ({

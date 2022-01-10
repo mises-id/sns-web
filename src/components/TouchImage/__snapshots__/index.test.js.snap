@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TouchImage should render correctly 1`] = `
+<div
+  className="img-box"
+>
+  <img
+    className="img"
+    id="img"
+  />
+</div>
+`;

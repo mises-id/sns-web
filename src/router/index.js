@@ -1,24 +1,27 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2021-08-18 22:37:02
+ * @LastEditTime: 2022-01-10 09:23:56
  * @LastEditors: lmk
  * @Description: routerConfig
  */
 import { getAsyncComponent } from '@/utils/reactUtil'
+const BlackList = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/BlackList'))
+const UserFollowPage = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/UserDetail/UserFollowPage'))
+const UserDetail = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/UserDetail'))
 const Home = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/Home'))
+const MyLikes = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/MyLikes'))
 const Follows = getAsyncComponent(() => import(/* webpackChunkName: 'pageFollow' */ '@/view/Follows'))
 const Me = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/Me'))
 const UserInfo = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/UserInfo'))
-const CreateMisesId = getAsyncComponent(() => import(/* webpackChunkName: 'CreateMisesId' */ '@/view/CreateMisesId'))
 const Following = getAsyncComponent(() => import(/* webpackChunkName: 'Following' */ '@/view/Following'))
 const Post = getAsyncComponent(() => import(/* webpackChunkName: 'Post' */ '@/view/Post'))
 const Comment = getAsyncComponent(() => import(/* webpackChunkName: 'Comment' */ '@/view/Comment'))
 const MyPosts = getAsyncComponent(() => import(/* webpackChunkName: 'MyPost' */ '@/view/MyPosts'))
 const GreatePosts = getAsyncComponent(() => import(/* webpackChunkName: 'GreatePosts' */ '@/view/GreatePosts'))
 const Forward = getAsyncComponent(() => import(/* webpackChunkName: 'Forward' */ '@/view/Forward'))
-const Empty = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Empty'))
-
+const Notifications = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Notifications'))
+const ShareWith = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/ShareWith'))
 const routeConfig = [
 	{
 		path: '/home',
@@ -36,10 +39,6 @@ const routeConfig = [
 			{
 				path: '/me',
 				component: Me
-			},
-			{
-				path: '/createMisesId',
-				component: CreateMisesId
 			}
 		]
 	},
@@ -64,6 +63,10 @@ const routeConfig = [
 		component: MyPosts,
 	},
 	{
+		path: '/myLikes',
+		component: MyLikes,
+	},
+	{
 		path: '/createPosts',
 		component: GreatePosts,
 	},
@@ -72,8 +75,28 @@ const routeConfig = [
 		component: Forward,
 	},
 	{
-		path: '/empty',
-		component: Empty,
+		path: '/notifications',
+		component: Notifications,
+	},
+	{
+		path: '/shareWith',
+		component: ShareWith,
+	},
+	{
+		path: '/shareWith',
+		component: ShareWith,
+	},
+	{
+		path: '/blackList',
+		component: BlackList,
+	},
+	{
+		path: '/userDetail',
+		component: UserDetail,
+	},
+	{
+		path: '/userFollowPage',
+		component: UserFollowPage,
 	}
 ]
 

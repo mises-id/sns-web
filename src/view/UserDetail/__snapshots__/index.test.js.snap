@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetail should render correctly 1`] = `
+<div>
+  <div
+    className="app-container"
+  >
+    <div>
+      <img
+        alt="userbg"
+        className="user-bg"
+        src="user_bg.png"
+      />
+      <div
+        className="m-flex nav-box m-row-between"
+      >
+        <img
+          alt=""
+          className="nav-icon"
+          onClick={[Function]}
+          src="user_back.png"
+        />
+        <img
+          alt=""
+          className="nav-icon"
+          onClick={[Function]}
+          src="user_more.png"
+        />
+      </div>
+      <div
+        className="userinfo-box m-flex"
+      >
+        <div
+          className="avatar-box"
+        >
+          <Image
+            size={75}
+          />
+        </div>
+        <div
+          className="m-flex-1 user-info"
+        >
+          <div
+            className="m-flex m-row-between"
+          >
+            <span
+              className="username"
+            >
+              Anonymous
+            </span>
+            <MButton
+              backgroundColor="#FFFFFF"
+              borderColor="#FFFFFF"
+              height={25}
+              imgIcon="add.png"
+              onPress={[Function]}
+              txt="followTxt"
+              txtColor="#666"
+              width={70}
+            />
+          </div>
+          <div
+            className="follow-box m-flex"
+          >
+            <div
+              onClick={[Function]}
+            >
+              <span
+                className="follow-num"
+              />
+              <span
+                className="follow-name"
+              >
+                Following
+              </span>
+            </div>
+            <div
+              onClick={[Function]}
+            >
+              <span
+                className="follow-num"
+              />
+              <span
+                className="follow-name"
+              >
+                Followers
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ForwardRef(forwardRef)
+    actions={
+      Array [
+        Object {
+          "onClick": [Function],
+          "text": "Black",
+          "theme": "danger",
+        },
+      ]
+    }
+    onCancel={[Function]}
+    onMaskClick={[Function]}
+    spacing={true}
+    visible={false}
+  />
+</div>
+`;

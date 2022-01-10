@@ -1,13 +1,12 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2021-07-21 22:20:49
+ * @LastEditTime: 2022-01-07 10:43:29
  * @LastEditors: lmk
  * @Description: user request
  */
 
 import request from "@/utils/request"
-
 /**
 * @param {*} get user self info
 */
@@ -43,5 +42,38 @@ export function updateUser(data){
 export function getUserInfo(uid){
   return request({
     url:`/user/${uid}`
+  })
+}
+/**
+ * @description: Join the blacklist
+ * @param {Object} {uid:String}
+ * @return {*}
+ */
+export function JoinBlackList(data){
+  return request({
+    data,
+    url:'/user/blacklist',
+    method:'post',
+  })
+}
+/**
+ * @description: remove the blacklist
+ * @param {*}
+ * @return {*}
+ */
+export function removeBlackList(uid){
+  return request({
+    url:`/user/blacklist/${uid}`,
+    method:'delete',
+  })
+}
+/**
+ * @description: Get blacklist
+ * @param {*}
+ * @return {*}
+ */
+export function getBlackList(){
+  return request({
+    url:'/user/blacklist',
   })
 }

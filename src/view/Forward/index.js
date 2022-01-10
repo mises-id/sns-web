@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2021-08-29 16:21:42
+ * @LastEditTime: 2022-01-07 16:12:29
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -13,6 +13,7 @@ import UserHeader from '../Follows/UserHeader';
 import Link from '../Follows/Link';
 import { useBind, useRouteState } from '@/utils';
 import { createStatus, getStatusItem } from '@/api/status';
+import ImageList from '@/components/ImageList';
 const Forward = ({history={}})=>{
   const [item,setitem] = useState('')
   const {t} = useTranslation();
@@ -47,7 +48,7 @@ const Forward = ({history={}})=>{
   useEffect(() => {
     if(historyState) getPosts()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [historyState]);
+  }, []);
   return <div>
     <NavBar
       left={<span  onClick={() => window.history.back()} className="m-font16">{t('cancel')}</span>}
@@ -63,11 +64,16 @@ const Forward = ({history={}})=>{
           maxLength="4000"
           placeholder={`${t('forwardPlaceholder')}...`}
         />
-        {item&&<div className="m-bg-fff m-padding10 m-margin-top10">
-          <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>
-          {item.content&&<p className="itemContent m-font13 m-margin-tb10 item-eli">{item.content}</p>}
-          {!item.content&&<div className="m-margin-bottom10"></div>}
-          {item.status_type==='link'&&<Link theme="primary" item={item.link_meta}></Link>}
+        {item&&<div className="m-bg-fff m-margin-top10">
+          <div className='m-padding10'>
+            <UserHeader size={30} item={{...item.user,from_type:item.from_type,created_at:item.created_at}} btnType="empty"></UserHeader>
+            {item.content&&<p className="itemContent m-font13 m-margin-tb10 item-eli">{item.content}</p>}
+            {item.status_type==='link'&&<div>
+              {!item.content&&<div className="m-margin-bottom10"></div>}
+              <Link theme="primary" item={item.link_meta}></Link>
+            </div>}
+          </div>
+          {item.images.length>0&&<div className='m-padding5'><ImageList list={item.images} boxWidth={window.innerWidth - 10}></ImageList></div>}
         </div>}
       </div>
     </div>

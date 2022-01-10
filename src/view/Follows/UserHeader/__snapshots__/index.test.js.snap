@@ -8,6 +8,7 @@ exports[`UserHeader should render correctly 1`] = `
     className="m-flex"
   >
     <Image
+      onClick={[Function]}
       source=""
     />
     <div

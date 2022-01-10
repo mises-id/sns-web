@@ -16,42 +16,21 @@ exports[`Comment should render correctly 1`] = `
       renderView={[Function]}
     />
   </div>
-  <div
-    className="footer m-bg-fff"
-  >
-    <div
-      className="m-flex"
-    >
-      <Image
-        size={30}
-      />
-      <div
-        className="comment m-flex-1 m-flex m-padding-lr15"
-      >
-        <div
-          className="m-margin-right10"
-        >
-          <Image
-            shape="square"
-            size={16}
-            source="write.png"
-          />
-        </div>
-        <form
-          className="m-flex-1"
-          onSubmit={[Function]}
-        >
-          <Input
-            className="input"
-            clearable={false}
-            onChange={[Function]}
-            placeholder="Write a comment..."
-            type="text"
-            value=""
-          />
-        </form>
-      </div>
-    </div>
-  </div>
+  <CommentsPop
+    commentId=""
+    replyItem={[Function]}
+    setvisible={[Function]}
+    visible={false}
+  />
+  <ForwardRef(ReplyInput)
+    content={
+      Object {
+        "onChange": [Function],
+        "value": "",
+      }
+    }
+    placeholder=""
+    submit={[Function]}
+  />
 </div>
 `;

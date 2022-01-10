@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2021-08-29 23:38:22
+ * @LastEditTime: 2022-01-07 10:05:41
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -10,17 +10,19 @@ import liked from '@/images/liked.png'
 import like from '@/images/like.png'
 import comment from '@/images/comment.png'
 import forward from '@/images/forward.png'
+import shareTo from '@/images/shareto.png'
 import './index.scss'
 import { useLogin } from './common';
 import { useLoginModal } from '@/utils';
+import { Toast } from 'zarm';
 /**
  * @description: 
- * @param {*}forwardPress.type:function //click forward icon
- * @param {*}likePress.type:function //click like icon
- * @param {*}likePress.type:object //icon data
- * @return {*} element
+ * @param {Function}forwardPress.type click forward icon
+ * @param {Function}likePress.type click like icon
+ * @param {Object}likePress.type icon data
+ * @return {Element} element
  */
-const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage})=>{
+const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
   const {isLogin} = useLogin();
   const loginModal = useLoginModal()
   const hasLogin = (e,fn)=>{
@@ -33,18 +35,38 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage})=>{
   }
   const forwardPress = e=>hasLogin(e,forwardCallback)
   const likePress = e=>hasLogin(e,likeCallback)
+  const sharetoPress = e=>{
+    e.stopPropagation();
+    // Toast.show('shareTo')
+    console.log(navigator.share,'navigator.share')
+    console.log(window.navigator,'window.navigator')
+    if(!navigator.share){
+      Toast.show('Browser cannot share website')
+    }
+    navigator.share&&navigator.share({
+      text: 'share',
+      title: 'shareshareshare',
+      url: 'http://www.baidu.com',
+    })
+  }
+  const typeClassName = !type ? {fontClass:'m-font12',iconClass:'iconStyle'} : {fontClass:'m-font14',iconClass:'iconStyle1'}
   return  <div className="m-flex itemFunctionBox">
       <div className="m-flex"  onClick={likePress}>
-        <img src={item.is_liked ? liked : like}  className="iconStyle" alt="like"></img>
-        <span className={`m-font12 m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
+        <img src={item.is_liked ? liked : like}  className={typeClassName.iconClass} alt="like"></img>
+        <span className={`${typeClassName.fontClass} m-margin-left8 ${item.is_liked ? 'm-colors-FF3D62' : 'm-colors-333'}`}>{item.likes_count}</span>
       </div>
-      <div className="m-flex" onClick={commentPage}>
-        <img src={comment}  className="iconStyle" alt="comment"></img>
-        <span className="m-font12 m-colors-333 m-margin-left8">{item.comments_count}</span>
+      <div className="m-flex" onClick={(e)=>{
+        commentPage(e)
+      }}>
+        <img src={comment}  className={typeClassName.iconClass} alt="comment"></img>
+        <span className={`${typeClassName.fontClass} m-colors-333 m-margin-left8`}>{item.comments_count}</span>
       </div>
       <div className="m-flex" onClick={forwardPress}>
-        <img src={forward}  className="iconStyle" alt="forward" ></img>
-        <span className="m-font12 m-colors-333 m-margin-left8">{item.forwards_count}</span>
+        <img src={forward}  className={typeClassName.iconClass} alt="forward" ></img>
+        <span className={`${typeClassName.fontClass} m-colors-333 m-margin-left8`}>{item.forwards_count}</span>
+      </div>
+      <div className="m-flex" onClick={sharetoPress}>
+        <img src={shareTo}  className={typeClassName.iconClass} alt="forward" ></img>
       </div>
     </div>
 }

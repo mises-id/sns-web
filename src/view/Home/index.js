@@ -1,24 +1,24 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2021-08-30 21:59:34
+ * @LastEditTime: 2022-01-10 17:43:25
  * @LastEditors: lmk
  * @Description: 
  */
 import React, {  useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tabs } from 'zarm';
+import { Badge, Tabs } from 'zarm';
 import send from '@/images/send.png'
 import './index.scss'
 import Image from '@/components/Image';
 import { getUserSelfInfo, signin } from '@/api/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
-import urlToJson from '@/utils';
+import {urlToJson} from '@/utils';
 const {Panel} = Tabs;
 const Home = ({history,children=[]})=>{
   const {t} = useTranslation()
-  const [tab] = useState([{ path: '/home/', text:t('follow') },{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
+  const [tab,setTab] = useState([{ path: '/home/', text:t('follow') ,badge:0},{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
   const [value, setvalue] = useState(0)
   const dispatch = useDispatch()
   const setTabActive = ()=>{
@@ -43,44 +43,31 @@ const Home = ({history,children=[]})=>{
     }
   }
   const user = useSelector(state => state.user) || {}
-  const {auth,token} = user
+  const {auth,token,badge={}} = user
   useEffect(()=>{
-    if(auth&&!token){
-      signin({
-        "provider": "mises",
-        "user_authz": {auth}
-      }).then(data=>{
-        data.token&&dispatch(setUserToken(data.token))
-      })
-      // settab(t=>{
-      //   t[2].path = '/home/me'
-      //   return t;
-      // })
-      return false;
-    }
-    // if(!token){
-    //   settab(t=>{
-    //     t[2].path = '/home/createMisesId'
-    //     return t;
-    //   })
-    // }
-    if(token){
-      getUserSelfInfo().then(res=>{
-        dispatch(setLoginForm(res))
-      })
-    }
+    auth&&!token&&signin({
+      "provider": "mises",
+      "user_authz": {auth}
+    }).then(data=>{
+      data.token&&dispatch(setUserToken(data.token))
+    })
+    auth&&token&&getUserSelfInfo().then(res=>{
+      dispatch(setLoginForm(res))
+    })
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 
-    history.listen(location => {
-      setTabActive();
-    })
+    const listen = history.listen(setTabActive)
     return ()=>{
       document.body.style.overflow = 'auto';
+      listen()
     }
   },[]) // eslint-disable-line react-hooks/exhaustive-deps
-
+  useEffect(() => {
+    tab[0].badge = badge.total;
+    setTab(tab);
+  }, [badge.total]) // eslint-disable-line react-hooks/exhaustive-deps
   //change current and change route
   const getChange = val=>{
     setvalue(val)
@@ -90,11 +77,13 @@ const Home = ({history,children=[]})=>{
   const createPosts = ()=>{
     history.push({pathname:'/createPosts'})
   }
-  //show current path route page
+  //Show current route
   const showChild = path=>children.find(val=>val.key===path) || <div></div>
   return <div>
     <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={false}>
-      {tab.map((val,index)=>(<Panel key={val.path} title={<span className={value===index?'active':'unactive'}>{val.text}</span>}>
+      {tab.map((val,index)=>(<Panel key={val.path} title={
+        <><span className={value === index ? 'active' : 'unactive'}>{val.text}</span>{val.badge>0&&<Badge shape="circle" className='badge' text={val.badge} />}</>
+      }>
       {showChild(val.path)}
       </Panel>))}
     </Tabs>

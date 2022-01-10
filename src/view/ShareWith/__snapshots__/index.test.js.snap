@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shareWith should render correctly 1`] = `
+<div>
+  <NavBar
+    left={
+      <span
+        className="m-font16"
+        onClick={[Function]}
+      >
+        cancel
+      </span>
+    }
+    prefixCls="za-nav-bar"
+    right={
+      <span
+        className="m-colors-5c65f6 m-font16"
+        onClick={[Function]}
+      >
+        done
+      </span>
+    }
+  />
+  <div
+    className="m-flex m-flex-col m-layout"
+  >
+    <div
+      className="m-line-bottom radio-item"
+      key="0"
+    >
+      <RadioItem
+        change={[Function]}
+        label="Public"
+        name="public"
+      />
+    </div>
+    <div
+      className="m-line-bottom radio-item"
+      key="1"
+    >
+      <RadioItem
+        change={[Function]}
+        label="Private"
+        name="private"
+      />
+    </div>
+    <div
+      className="m-line-bottom radio-item"
+      key="2"
+    >
+      <RadioItem
+        change={[Function]}
+        label="Time Limited Post"
+        name="limited"
+      />
+    </div>
+  </div>
+  <ForwardRef(forwardRef)
+    dataSource={
+      Array [
+        Object {
+          "label": 0.5,
+          "value": 0.5,
+        },
+        Object {
+          "label": 1,
+          "value": 1,
+        },
+        Object {
+          "label": 2,
+          "value": 2,
+        },
+        Object {
+          "label": 3,
+          "value": 3,
+        },
+        Object {
+          "label": 4,
+          "value": 4,
+        },
+        Object {
+          "label": 5,
+          "value": 5,
+        },
+        Object {
+          "label": 6,
+          "value": 6,
+        },
+        Object {
+          "label": 7,
+          "value": 7,
+        },
+        Object {
+          "label": 8,
+          "value": 8,
+        },
+      ]
+    }
+    defaultValue={0.5}
+    onCancel={[Function]}
+    onOk={[Function]}
+    value={0.5}
+    visible={false}
+    wheelDefaultValue={0.5}
+  />
+</div>
+`;

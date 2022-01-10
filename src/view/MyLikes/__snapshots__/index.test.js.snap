@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyLikes should render correctly 1`] = `
+<div>
+  <Navbar
+    title="MyLikesPageTitle"
+  />
+  <PullList
+    data={Array []}
+    load={[Function]}
+    renderView={[Function]}
+  />
+</div>
+`;

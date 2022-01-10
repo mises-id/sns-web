@@ -28,6 +28,7 @@ exports[`PullList should render correctly 1`] = `
         "state": 0,
       }
     }
+    stayTime={300}
   />
 </Fragment>
 `;

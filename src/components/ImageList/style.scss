@@ -1,0 +1,14 @@
+.imageList{
+  img{
+    display: block;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}
+.img-box{
+  padding: 5px;
+}
+.image-max{
+  max-width: 200px;
+  max-height: 200px;
+}

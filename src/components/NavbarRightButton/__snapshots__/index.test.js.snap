@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateMisesId should render correctly 1`] = `
+<NavBar
+  left={
+    <span
+      className="m-font16"
+      onClick={[Function]}
+    />
+  }
+  prefixCls="za-nav-bar"
+  right={
+    <span
+      className="m-colors-5c65f6 m-font16"
+    />
+  }
+  title=""
+/>
+`;

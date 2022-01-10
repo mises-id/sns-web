@@ -1,9 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Post should render correctly 1`] = `
-<div>
+<div
+  className="post-detail"
+>
   <Navbar
     title="postPageTitle"
+  />
+  <CommentsPop
+    commentId=""
+    replyItem={[Function]}
+    setvisible={[Function]}
+    visible={false}
   />
 </div>
 `;

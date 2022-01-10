@@ -1,3 +1,7 @@
 body{
   background-color: #F8F8F8;
 }
+iframe{
+  background: red;
+  left: 9999999999px !important;
+}
