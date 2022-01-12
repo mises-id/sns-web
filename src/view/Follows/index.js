@@ -210,7 +210,7 @@ const Follow = ({ history = {} }) => {
     return renderView;
   };
   // route push to userDetail
-  const userDetail = ({uid,username,avatar,is_followed,misesid}) =>{
+  const userDetail = (uid,username,avatar,is_followed,misesid) =>{
     history.push({
       pathname:'/userDetail',
       search:objToUrl({uid,username,avatar,is_followed,misesid})

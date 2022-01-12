@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-12 18:44:55
+ * @LastEditTime: 2022-01-10 17:50:20
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button, Toast } from "zarm";
+import { ActivityIndicator, Badge, Button } from "zarm";
 import { useDispatch, useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { setUserAuth, setUserToken } from "@/actions/user";
@@ -39,17 +39,14 @@ const Myself = ({ history }) => {
         console.log(res.auth)
       }
     }).catch(err=>{
-      console.log(err,344)
+      console.log(err)
     })
-    // eslint-disable-next-line
-  }, [])
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     setLoginForm(selector.loginForm)
     settoken(selector.token)
-    list[1].isNew = !!selector.loginForm.new_fans_count;
-    list[1].badge = selector.loginForm.fans_count;
-    list[0].badge = selector.loginForm.followings_count;
-  }, [selector]) // eslint-disable-line react-hooks/exhaustive-deps
+    
+  }, [selector])
   const [flag, setflag] = useState(false);
   const [loading, setloading] = useState(true);
   //getData
@@ -65,37 +62,17 @@ const Myself = ({ history }) => {
       setloading(false);
     }
   };
-  let timer = null;
-  const cleartimer = ()=>{
-    clearTimeout(timer);
-    timer = null;
-  }
-  
-  useEffect(() => {
-    if(timer){
-      cleartimer()
-    }
-    // eslint-disable-next-line
-    timer = setTimeout(() => {
-      setflag(false);
-      setloading(false);
-    }, 50000);
-    return () => {
-      cleartimer()
-    }
-  }, [])
   useEffect(() => {
     getFlag();
   }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    console.log(selector.badge)
     list[2].badge = selector.badge.notifications_count;
+    list[1].isNew = !!selector.loginForm.new_fans_count;
     setTabList(list)
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
     window.mises.requestAccounts().catch(err=>{
-      console.log(err,'requestAccounts')
-      Toast.show(err.message)
+      
     })
   };
   const restore = () => window.mises.openRestore();

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-12 18:13:10
+ * @LastEditTime: 2022-01-10 15:26:37
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -36,8 +36,7 @@ const Following = ({ pageType,uid }) => {
       fan: fans,
       friend: friend,
     }[val.relation_type];
-    const setFollow = async e => {
-      e.stopPropagation()
+    const setFollow = async () => {
       const followFlag = val.relation_type === "fan"; // 为粉丝则没有互相关注
       try {
         if (followLoading) return false;
