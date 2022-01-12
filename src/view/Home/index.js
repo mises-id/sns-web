@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-10 17:43:25
+ * @LastEditTime: 2022-01-12 18:53:07
  * @LastEditors: lmk
  * @Description: 
  */
@@ -66,7 +66,7 @@ const Home = ({history,children=[]})=>{
   },[]) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     tab[0].badge = badge.total;
-    setTab(tab);
+    setTab([...tab]);
   }, [badge.total]) // eslint-disable-line react-hooks/exhaustive-deps
   //change current and change route
   const getChange = val=>{
