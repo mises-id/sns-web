@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-10 17:12:09
+ * @LastEditTime: 2022-01-12 18:38:03
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -16,9 +16,12 @@ import Image from "@/components/Image";
 import like from "@/images/like.png";
 import { getNotificationList, uploadNotificationState } from "@/api/notifications";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { setFollowingBadge } from "@/actions/user";
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState()
+  const selector = useSelector((state) => state.user) || {};
   const [fetchData, last_id, dataSource] = useList(getNotificationList, {
     last_id: lastId,
     limit: state.count || 20,
@@ -26,22 +29,24 @@ const Notifications = ({ history }) => {
   const format = (time) => time && dayjs(time).format("MM.DD");
   //getData
   const [isseting, setisseting] = useState(false)
+  const dispatch = useDispatch(null);
   useEffect(() => {
     setlastId(last_id);
-    return ()=>{
-      if(!isseting){
-        const getUnReadArr = dataSource.filter(val=>val.state ==='unread');
-        if(getUnReadArr.length>0){
-          const ids = getUnReadArr.map(val=>val.id)
-          uploadNotificationState({ids}).then(res=>{
-  
-          }).catch(error=>{
-          })
-        }
+    if(!isseting){
+      const getUnReadArr = dataSource.filter(val=>val.state ==='unread');
+      if(getUnReadArr.length>0){
+        const ids = getUnReadArr.map(val=>val.id)
+        uploadNotificationState({ids}).then(res=>{
+          dispatch(setFollowingBadge({
+            total:selector.badge.total - ids.length,
+            notifications_count:0
+          }))
+        }).catch(error=>{
+        })
         setisseting(true)
       }
     }
-  }, [dataSource]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
   const detail = val=>{

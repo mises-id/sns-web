@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-07 16:09:23
+ * @LastEditTime: 2022-01-11 11:03:01
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -33,7 +33,7 @@ const MyLikes = ({ history }) => {
   const renderView = (val = {}, index) => {
     return (
       <PostItem
-        val={val}
+        val={val.status}
         key={index}
         index={index}
         history={history}
