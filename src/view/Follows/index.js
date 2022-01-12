@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-11 11:07:23
+ * @LastEditTime: 2022-01-12 18:58:23
  * @LastEditors: lmk
  * @Description:
  */
@@ -74,11 +74,12 @@ const Follow = ({ history = {} }) => {
     const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1
     setisDiscover(isDiscoverFlag);
     setloading(false);
-    if(!isDiscoverFlag&&user.token){
-      // notice
-      
+    if(user.token){
       getNotifications().then(res=>{
-        setnotifitionObj(res)
+        setnotifitionObj({
+          ...res,
+          avatar: res.latest_message&&res.latest_message.user ? res.latest_message.user.avatar : {}
+        })
         dispatch(setFollowingBadge({
           total:res.total,
           notifications_count:res.notifications_count
@@ -86,6 +87,8 @@ const Follow = ({ history = {} }) => {
       }).catch(error=>{
         console.log(error)
       })
+    }
+    if(!isDiscoverFlag&&user.token){
       // follow latest user list
       followingLatest().then(res=>{
         setfollowingLatest(res || [])
@@ -222,10 +225,10 @@ const Follow = ({ history = {} }) => {
           <div className="scroll-view">{renderView}</div>
         )}
         {notifitionObj.notifications_count>0&&<div className="notification" onClick={notificationPage}>
-          {/* <Image
+          <Image
             size={30}
-            source={notifitionObj.firstMessage.avatar}
-          /> */}
+            source={notifitionObj.avatar&&notifitionObj.avatar.medium}
+          />
           <div className="notification-txt">{notifitionObj.notifications_count} Notification</div>
         </div>}
       </div>
