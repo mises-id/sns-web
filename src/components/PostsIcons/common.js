@@ -1,11 +1,12 @@
 import { follow, unfollow } from "@/api/fans";
 import { likeStatus, unLikeStatus } from "@/api/status";
 import { useSelector } from "react-redux";
+import { Toast } from "zarm";
 
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2022-01-07 15:23:52
+ * @LastEditTime: 2022-01-12 17:12:48
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -22,6 +23,7 @@ export async function liked(val){
   try {
     await fn(val.id);
   } catch (error) {
+    Toast.show('like error')
     val.liked = !val.liked;
     val.likes_count = val.is_liked ? val.likes_count+1 : val.likes_count-1;
   }
@@ -36,11 +38,13 @@ export async function followed(item={}){
   const val = item.user || item;
   const fetchFn = val.is_followed ? unfollow : follow;
   try {
-    await window.mises.isActive();
+    await window.mises.isActive().catch(err=>{console.log(err,'wwwww')});
     val.is_followed ? window.mises.userUnFollow(val.misesid) : window.mises.userFollow(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;
   } catch (error) {
+    console.log(error)
+    Toast.show('follow error')
     return Promise.reject(error)
   }
 }

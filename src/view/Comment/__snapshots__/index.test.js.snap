@@ -16,8 +16,9 @@ exports[`Comment should render correctly 1`] = `
       renderView={[Function]}
     />
   </div>
-  <CommentsPop
-    commentId=""
+  <ForwardRef(CommentsPop)
+    comment={Object {}}
+    likePress={[Function]}
     replyItem={[Function]}
     setvisible={[Function]}
     visible={false}
