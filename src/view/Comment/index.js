@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-12 18:23:07
+ * @LastEditTime: 2022-01-10 17:58:44
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Toast } from "zarm";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
-import { formatTime, useBind, useList, username, useRouteState } from "@/utils";
+import { useBind, useList, username, useRouteState } from "@/utils";
 import { getComment } from "@/api/status";
 import { createComment, likeComment, unlikeComment } from "@/api/comment";
 import { useSelector } from "react-redux";
@@ -44,10 +44,7 @@ const Comment = ({ history }) => {
       
     })
   }
-  const replyItem = (val,e)=>{
-    if(e){
-      e.stopPropagation();
-    }
+  const replyItem = val=>{
     commentContent.onChange('')
     val.username = username(val.user)
     setselectItem(val)
@@ -64,7 +61,7 @@ const Comment = ({ history }) => {
       >
         <Image
           size={30}
-          source={avatar&&avatar.medium}
+          source={avatar.medium}
         ></Image>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">
@@ -73,7 +70,7 @@ const Comment = ({ history }) => {
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
             <p className="comment-content">{val.content}</p>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTime((val.created_at))}</span>
+              <span className="m-colors-666 m-font12">15:43</span>
               <div className="right-icon m-flex">
                 <div className="m-flex like-box"  onClick={(e)=>likePress(e,val)}>
                   <img src={val.is_liked ? liked : like}  className='icon' alt="like"></img>
@@ -88,27 +85,27 @@ const Comment = ({ history }) => {
           </div>
           <div className="all-comment">
             {comments.map((item,i)=>{
-              const {user={},content,created_at} = item;
+              const {user={},content} = item;
               const {avatar={}} = user;
               return <div
                   key={i}
-                  className="m-flex m-col-top m-bg-fff m-padding-bottom15 right-content"
-                  onClick={(e)=>replyItem(item,e)}
+                  className="m-flex m-col-top m-bg-fff m-padding-bottom15"
+                  onClick={()=>replyItem(item)}
                 >
                   <Image
                     size={20}
-                    source={avatar&&avatar.medium}
+                    source={avatar.medium}
                   ></Image>
                   <div className="m-margin-left11 m-flex-1">
-                    <div className="m-padding-bottom10">
-                      <span className="commentNickname1">{username(user)}{item.opponent&&<span className="at-name">@{username(item.opponent)}</span>}:</span>
+                    <div className="m-flex m-padding-bottom10">
+                      <span className="commentNickname1">{username(user)}{item.opponent&&<span className="at-name">@{item.opponent.username}</span>}:</span>
                       <p className="comment-content1">{content}</p>
                     </div>
-                    <span className="m-colors-666 m-font12">{formatTime((created_at))}</span>
+                    <span className="m-colors-666 m-font12">15:43</span>
                   </div>
                 </div>
             })}
-            {val.comments_count>3&&<p className="more-comment-list" onClick={(e)=>showMoreComment(e,val)}>View all {val.comments_count - comments.length} comments</p>}
+            {val.comments_count>3&&<p className="more-comment-list" onClick={(e)=>showMoreComment(e,val.id)}>View all {val.comments_count - comments.length} comments</p>}
           </div>
         </div>
       </div>
@@ -127,7 +124,6 @@ const Comment = ({ history }) => {
     setlastId(last_id);
   }, [last_id]);
   const commentContent = useBind("");
-  const commentsPop = useRef('')
   const submit = (e) => {
     e.preventDefault();
     if (!user.token) {
@@ -152,10 +148,6 @@ const Comment = ({ history }) => {
               dataSource[findIndex] = selectItem;
             }
           }
-          // if popup is show flag
-          if(visible){
-            commentsPop.current.setData(res)
-          }
           selectItem.comments_count+=1;
           setselectItem('')
         }else{
@@ -169,13 +161,11 @@ const Comment = ({ history }) => {
       });
   };
   const [visible, setvisible] = useState(false)
-  const [commentPop, setcommentPop] = useState({})
-  const showMoreComment = (e,val)=>{
+  const [commentId, setcommentId] = useState('')
+  const showMoreComment = (e,id)=>{
     e.stopPropagation()
     setvisible(true)
-    setcommentPop(val)
-    val.username = username(val.user)
-    setselectItem(val)
+    setcommentId(id)
   }
   return (
     <div className="m-flex m-flex-col page">
@@ -192,7 +182,7 @@ const Comment = ({ history }) => {
           load={fetchData}
         ></PullList>
       </div>
-      <CommentsPop visible={visible} ref={commentsPop} setvisible={setvisible} comment={commentPop} replyItem={replyItem} likePress={likePress}></CommentsPop>
+      <CommentsPop visible={visible} setvisible={setvisible} commentId={commentId} replyItem={replyItem}></CommentsPop>
       <ReplyInput ref={input} submit={submit} content={commentContent} placeholder={selectItem&&selectItem.username ? `@${selectItem.username}` : ''}></ReplyInput>
     </div>
   );
