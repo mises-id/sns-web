@@ -1,5 +1,4 @@
 import { followed, liked } from "@/components/PostsIcons/common";
-import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -7,7 +6,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-11 11:13:16
+ * @LastEditTime: 2022-01-10 17:48:18
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -186,6 +185,3 @@ export function username(val){
   }
   return "Anonymous"
 }
-export function formatTime(time){
-  return time  ? dayjs(time).format("HH:mm") : '';
-};
