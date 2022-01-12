@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-12 18:35:45
+ * @LastEditTime: 2022-01-12 18:44:55
  * @LastEditors: lmk
  * @Description:
  */
@@ -91,7 +91,7 @@ const Myself = ({ history }) => {
     console.log(selector.badge)
     list[2].badge = selector.badge.notifications_count;
     setTabList(list)
-  }, [selector.badge.notifications_count]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
     window.mises.requestAccounts().catch(err=>{
       console.log(err,'requestAccounts')
