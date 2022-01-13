@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-05 15:51:32
- * @LastEditTime: 2022-01-07 16:43:10
+ * @LastEditTime: 2022-01-12 19:09:09
  * @LastEditors: lmk
  * @Description: user following and followers
  */
@@ -21,7 +21,7 @@ const UserFollowPage = (props)=>{
   useEffect(() => {
     // const {state} = window.history.state;
     setpageTitle(state.username)
-    setvalue(state.value || 0)
+    setvalue(Number(state.value) || 0)
     setuid(state.uid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

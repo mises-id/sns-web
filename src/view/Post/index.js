@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-10 18:00:47
+ * @LastEditTime: 2022-01-13 10:30:42
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -16,17 +16,17 @@ import commentIcon from "@/images/comment.png";
 import Navbar from "@/components/NavBar";
 import { getComment, getStatusItem } from "@/api/status";
 import {
+  formatTimeStr,
   objToUrl,
-  urlToJson,
   useBind,
   useChangePosts,
   username,
+  useRouteState,
 } from "@/utils";
 import { useSelector } from "react-redux";
 import { createComment, likeComment, unlikeComment } from "@/api/comment";
 import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
-import { useLocation } from "react-router-dom";
 import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
 const Post = ({ history = {} }) => {
@@ -67,6 +67,8 @@ const Post = ({ history = {} }) => {
     getStatusItem(id).then((res) => {
       setitem(res);
       Loading.hide();
+    }).catch(()=>{
+      Loading.hide();
     });
   };
   const [comment, setcomment] = useState([]);
@@ -79,14 +81,14 @@ const Post = ({ history = {} }) => {
   };
   const [id, setid] = useState("");
   const commentContent = useBind("");
-  const location = useLocation();
+  const state = useRouteState();
   useEffect(() => {
-    if (location.search) {
-      const historyState = urlToJson(location.search);
+    if (state) {
+      // const historyState = urlToJson(location.search);
       Loading.show();
-      setid(historyState.id);
-      getDetail(historyState.id);
-      getCommentList(historyState.id);
+      setid(state.id);
+      getDetail(state.id);
+      getCommentList(state.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -103,6 +105,7 @@ const Post = ({ history = {} }) => {
     createComment({
       content: commentContent.value,
       status_id: id,
+      parent_id:selectItem.id || '',
     })
       .then((res) => {
         if(selectItem.content){ // if has select item
@@ -129,12 +132,14 @@ const Post = ({ history = {} }) => {
   };
 
   const [visible, setvisible] = useState(false);
-  const [commentId, setcommentId] = useState("");
-  const showMoreComment = (e,id) => {
+  const [commentPop, setcommentPop] = useState({})
+  const showMoreComment = (e,val)=>{
     e.stopPropagation()
-    setvisible(true);
-    setcommentId(id);
-  };
+    setvisible(true)
+    setcommentPop(val)
+    val.username = username(val.user)
+    setselectItem(val)
+  }
   return (
     <div className="post-detail">
       <Navbar title={t("postPageTitle")} />
@@ -169,7 +174,7 @@ const Post = ({ history = {} }) => {
                       <div className="m-font15 m-colors-555 m-margin-top8  m-padding-bottom13">
                         <p>{val.content}</p>
                         <div className="m-flex m-row-between m-margin-top8">
-                          <span className="m-colors-666 m-font12">15:43</span>
+                          <span className="m-colors-666 m-font12">{formatTimeStr((val.created_at))}</span>
                           <div className="right-icon m-flex">
                             <div
                               className="m-flex like-box"
@@ -207,7 +212,7 @@ const Post = ({ history = {} }) => {
                       </div>
                       <div className="all-comment">
                         {comments.map((item, i) => {
-                          const { user = {}, content } = item;
+                          const { user = {}, content, created_at} = item;
                           const { avatar = {} } = user;
                           return (
                             <div
@@ -215,17 +220,15 @@ const Post = ({ history = {} }) => {
                               className="m-flex m-col-top m-bg-fff m-padding-bottom15"
                               onClick={() => replyItem(item)}
                             >
-                              <Image size={20} source={avatar.medium}></Image>
+                              <Image size={20} source={avatar&&avatar.medium}></Image>
                               <div className="m-margin-left11 m-flex-1">
-                                <div className="m-flex m-padding-bottom10">
+                                <div className="m-padding-bottom10">
                                   <span className="commentNickname1">
-                                    {username(user)}{item.opponent&&<span className="at-name">@{item.opponent.username}</span>}:
+                                    {username(user)}{item.opponent&&<span className="at-name">@{username(item.opponent)}</span>}:
                                   </span>
-                                  <p className="comment-content1">{content}</p>
+                                  <span className="comment-content1">{content}</span>
                                 </div>
-                                <span className="m-colors-666 m-font12">
-                                  15:43
-                                </span>
+                                <span className="m-colors-666 m-font12">{formatTimeStr((created_at))}</span>
                               </div>
                             </div>
                           );
@@ -233,7 +236,7 @@ const Post = ({ history = {} }) => {
                         {val.comments_count > 3 && (
                           <p
                             className="more-comment-list"
-                            onClick={(e) => showMoreComment(e,val.id)}
+                            onClick={(e) => showMoreComment(e,val)}
                           >
                             View all {val.comments_count - comments.length}{" "}
                             comments
@@ -270,8 +273,9 @@ const Post = ({ history = {} }) => {
       <CommentsPop
         visible={visible}
         setvisible={setvisible}
-        commentId={commentId}
+        comment={commentPop}
         replyItem={replyItem}
+        likePress={likePress}
       ></CommentsPop>
       {item&&<ReplyInput
         submit={submit}

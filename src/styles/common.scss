@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-01-05 16:01:30
+ * @LastEditTime: 2022-01-13 10:20:43
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -174,11 +174,11 @@ $align:center left right;
 }
 
 .Panel .m-layout{
-  height: calc(100vh - 60px)
+  height: calc(var(--window-height) - 60px)
 }
 .m-layout{
   overflow-y: auto;
-  height: calc(100vh - 45px)
+  height: calc(var(--window-height) - 45px)
 }
 body{
   .za-nav-bar{
@@ -187,7 +187,7 @@ body{
   }
 }
 .page{
-  height: 100vh;
+  height: var(--window-height);
 }
 .item-eli{
   display: -webkit-box;
@@ -226,4 +226,7 @@ body{
 .unactive{
   color: #666666;
   font-size: 15px;
+}
+.za-badge--circle .za-badge__content{
+  font-size: 11px;
 }

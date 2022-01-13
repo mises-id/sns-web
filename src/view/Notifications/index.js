@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-10 17:12:09
+ * @LastEditTime: 2022-01-13 10:23:18
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -11,40 +11,44 @@ import "@/styles/followPage.scss";
 import "./index.scss";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
-import { useList, username, useRouteState } from "@/utils";
+import { formatTimeStr, objToUrl, useList, username, useRouteState } from "@/utils";
 import Image from "@/components/Image";
 import like from "@/images/like.png";
 import { getNotificationList, uploadNotificationState } from "@/api/notifications";
-import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { setFollowingBadge } from "@/actions/user";
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState()
+  const selector = useSelector((state) => state.user) || {};
   const [fetchData, last_id, dataSource] = useList(getNotificationList, {
     last_id: lastId,
     limit: state.count || 20,
   });
-  const format = (time) => time && dayjs(time).format("MM.DD");
   //getData
   const [isseting, setisseting] = useState(false)
+  const dispatch = useDispatch(null);
   useEffect(() => {
     setlastId(last_id);
-    return ()=>{
-      if(!isseting){
-        const getUnReadArr = dataSource.filter(val=>val.state ==='unread');
-        if(getUnReadArr.length>0){
-          const ids = getUnReadArr.map(val=>val.id)
-          uploadNotificationState({ids}).then(res=>{
-  
-          }).catch(error=>{
-          })
-        }
+    if(!isseting){
+      const getUnReadArr = dataSource.filter(val=>val.state ==='unread');
+      if(getUnReadArr.length>0){
+        const ids = getUnReadArr.map(val=>val.id)
+        uploadNotificationState({ids}).then(res=>{
+          dispatch(setFollowingBadge({
+            total:selector.badge.total - ids.length,
+            notifications_count:0
+          }))
+        }).catch(error=>{
+        })
         setisseting(true)
       }
     }
-  }, [dataSource]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
   const detail = val=>{
+    history.push({ pathname: "/post", search: objToUrl({ id: val.id })});
   }
   //render item
   const renderView = (val = {}, index) => {
@@ -57,9 +61,8 @@ const Notifications = ({ history }) => {
           <p className="user-name m-colors-111">
             {username(user)}
           </p>
-          {notificationsType(val.message_type)}
-          {val.content && <p className="item-content">{val.content}</p>}
-          <p className="time-view">{format(val.created_at)}</p>
+          {notificationsType(val)}
+          <p className="time-view">{formatTimeStr(val.created_at)}</p>
         </div>
         {rightView(val)}
       </div>
@@ -77,32 +80,32 @@ const Notifications = ({ history }) => {
             source={val.image}
           ></Image>
         )}
-        {!metaData.image && <p className="post-content item-eli">{metaData.content}</p>}
+        {!metaData.image&&metaData.content && <p className="post-content item-eli">{metaData.content}</p>}
       </div>
     );
   };
-  const notificationsType = (type) => {
-    let typeView;
+  const notificationsType = (val) => {
+    const metaData = JSON.parse(val.meta_data);
     //type :new_comment, new_like, new_fans, new_forward
-    switch (type) {
+    switch (val.message_type) {
       case "new_like":
-        typeView = (
+        return (
           <div className="like-icon">
             <Image source={like} shape="square" size={16}></Image>
           </div>
         );
-        break;
-      case "new_forward":
-        return <p className="forward">Forward your post</p>;
+      case "new_fowards":
+        return <div>
+          <p className="forward">Forward your post</p>
+          <p className="item-content">{metaData.content}</p>
+        </div>;
       case "new_fans":
         return <p className="forward">new_fans</p>;
-      case "new_comment":
-        return <p className="forward">new_comment</p>;
+      case "new_comment": // 我评论了某人的评论需要返回某人的用户信息和评论这条数据的信息
+        return <div>{metaData.content && <p className="item-content">{metaData.content}</p>}</div>;
       default:
-        typeView = "";
-        break;
+        return ''
     }
-    return typeView;
   };
   return (
     <div>

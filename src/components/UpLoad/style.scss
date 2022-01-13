@@ -30,7 +30,7 @@
   }
 }
 .edit-image-box{
-  height: 100vh;
+  height: var(--window-height);
 }
 .img-object-fit{
   object-fit: cover;
