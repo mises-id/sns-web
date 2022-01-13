@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-13 15:13:43
+ * @LastEditTime: 2022-01-13 17:06:54
  * @LastEditors: lmk
  * @Description:
  */
@@ -29,18 +29,20 @@ const Myself = ({ history }) => {
   const dispatch = useDispatch()
   // If this page is displayed, the current user is updated
   useEffect(() => {
-    window.mises.getAuth().then(res=>{
-      const resAuth = urlToJson(`?${res.auth}`)
-      const selectorAuth = urlToJson(`?${selector.auth}`)
-      if(resAuth.mises_id!==selectorAuth.mises_id){
-        dispatch(setUserAuth(''))
-        dispatch(setUserToken(''))
-        dispatch(setUserAuth(res.auth))
-        console.log(res.auth)
-      }
-    }).catch(err=>{
-      console.log(err)
-    })
+    if(selector.token){
+      window.mises.getAuth().then(res=>{
+        const resAuth = urlToJson(`?${res.auth}`)
+        const selectorAuth = urlToJson(`?${selector.auth}`)
+        if(resAuth.mises_id!==selectorAuth.mises_id){
+          dispatch(setUserAuth(''))
+          dispatch(setUserToken(''))
+          dispatch(setUserAuth(res.auth))
+          console.log(res.auth)
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     setLoginForm(selector.loginForm)
@@ -91,6 +93,7 @@ const Myself = ({ history }) => {
     setTabList([...list])
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
+    console.log(2222)
     window.mises.requestAccounts().catch(err=>{
       Toast.show(err.message)
     })
