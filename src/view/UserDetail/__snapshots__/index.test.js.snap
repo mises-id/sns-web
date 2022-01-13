@@ -96,7 +96,7 @@ exports[`UserDetail should render correctly 1`] = `
       Array [
         Object {
           "onClick": [Function],
-          "text": "Black",
+          "text": "Block",
           "theme": "danger",
         },
       ]
