@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-10 12:33:17
+ * @LastEditTime: 2022-01-13 10:55:10
  * @LastEditors: lmk
  * @Description: 
  */
@@ -64,7 +64,7 @@ const enUS = {
     "createPostsLabel":'Share With',
     done:"Done",
     editPhoto:'Edit photo',
-    'blackListPageTitle':"Black List",
+    'blackListPageTitle':"Block List",
     "commentPlaceholder":"Write a comment...",
     'succcess':"Succeeded"
 

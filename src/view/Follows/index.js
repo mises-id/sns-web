@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-12 18:58:23
+ * @LastEditTime: 2022-01-13 11:33:59
  * @LastEditors: lmk
  * @Description:
  */
@@ -210,7 +210,8 @@ const Follow = ({ history = {} }) => {
     return renderView;
   };
   // route push to userDetail
-  const userDetail = (uid,username,avatar,is_followed,misesid) =>{
+  const userDetail = ({uid,username,avatar,is_followed,misesid}) =>{
+    console.log(objToUrl({uid,username,avatar,is_followed,misesid}))
     history.push({
       pathname:'/userDetail',
       search:objToUrl({uid,username,avatar,is_followed,misesid})

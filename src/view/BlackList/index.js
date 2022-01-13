@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-10 17:50:24
+ * @LastEditTime: 2022-01-13 10:58:12
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -40,7 +40,7 @@ const BlackList = ({ history }) => {
         key={index}
         icon={user.avatar ? user.avatar.medium : ""}
         rightChild={
-          <MButton onPress={()=>onPress(val,index)} txt="Unblack"  borderColor="#DDDDDD" txtColor="#666666" txtSize={12}></MButton>
+          <MButton onPress={()=>onPress(val,index)} txt="Unblock"  borderColor="#DDDDDD" txtColor="#666666" txtSize={12}></MButton>
         }
       ></Cell>
     );
