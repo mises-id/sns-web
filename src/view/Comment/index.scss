@@ -49,16 +49,32 @@
   font-size: 12px;
   line-height: 1;
 }
+@keyframes ratate {
+  form{
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(720deg);
+  }
+}
 .title-box{
   background: white;
   height: 50px;
   border-radius: 15px 15px 0px 0px;
-  .icon{
+  .pop-icon{
+    width: 18px;
+    height: 18px;
     margin: 17px;
     img{
       display: block;
       margin: 0 auto;
     }
+  }
+  .refresh{
+    animation-fill-mode:forwards;
+  }
+  .refresh-active{
+    animation: ratate 2s;
   }
   .pop-title{
     text-align: center;
@@ -72,11 +88,14 @@
   overflow-y:auto ;
   padding-bottom: 60px;
   background-color: white;
-}
-.more-comments{
-  background: #F8F8F8;
+  .m-layout{
+    height: calc(80vh - 60px);
+  }
 }
 .at-name{
   color: #475884;
   font-weight: 400;
+}
+.child-comment{
+  background: #F8F8F8;
 }

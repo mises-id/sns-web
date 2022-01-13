@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2022-01-07 10:05:41
+ * @LastEditTime: 2022-01-13 15:05:07
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -44,9 +44,8 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
       Toast.show('Browser cannot share website')
     }
     navigator.share&&navigator.share({
-      text: 'share',
-      title: 'shareshareshare',
-      url: 'http://www.baidu.com',
+      text: 'share post',
+      url: `${window.location.origin}/post?id=${item.id}`
     })
   }
   const typeClassName = !type ? {fontClass:'m-font12',iconClass:'iconStyle'} : {fontClass:'m-font14',iconClass:'iconStyle1'}

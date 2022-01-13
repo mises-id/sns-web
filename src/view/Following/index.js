@@ -36,7 +36,8 @@ const Following = ({ pageType,uid }) => {
       fan: fans,
       friend: friend,
     }[val.relation_type];
-    const setFollow = async () => {
+    const setFollow = async e => {
+      e.stopPropagation()
       const followFlag = val.relation_type === "fan"; // 为粉丝则没有互相关注
       try {
         if (followLoading) return false;
