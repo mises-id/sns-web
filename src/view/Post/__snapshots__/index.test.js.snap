@@ -7,8 +7,9 @@ exports[`Post should render correctly 1`] = `
   <Navbar
     title="postPageTitle"
   />
-  <CommentsPop
-    commentId=""
+  <ForwardRef(CommentsPop)
+    comment={Object {}}
+    likePress={[Function]}
     replyItem={[Function]}
     setvisible={[Function]}
     visible={false}
