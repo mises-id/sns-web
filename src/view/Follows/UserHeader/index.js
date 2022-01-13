@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-01-10 15:07:05
+ * @LastEditTime: 2022-01-13 10:44:52
  * @LastEditors: lmk
  * @Description:
  */
@@ -10,7 +10,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import deteleIcon from "@/images/arrow-down.png";
 import { useLogin } from "@/components/PostsIcons/common";
-import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { formatTimeStr, objToUrl, useLoginModal, username } from "@/utils";
 import MButton from "@/components/MButton";
