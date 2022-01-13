@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-10 15:00:42
+ * @LastEditTime: 2022-01-13 17:22:40
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -88,9 +88,9 @@ export default class MisesExtensionController{
   async requestAccounts(){
     try {
       const res = await this.getAuth();
-      const nonce = new Date().getTime();
-      const sign = res.mises_id+nonce;
-      await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop 
+      // const nonce = new Date().getTime();
+      // const sign = res.mises_id+nonce;
+      // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop 
       
       store.dispatch(setUserAuth(res.auth))
       return Promise.resolve()
