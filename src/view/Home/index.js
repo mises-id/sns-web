@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-12 18:53:07
+ * @LastEditTime: 2022-01-13 09:18:22
  * @LastEditors: lmk
  * @Description: 
  */
@@ -33,6 +33,7 @@ const Home = ({history,children=[]})=>{
         setvalue(1)
       break;
       default:
+        getUserInfo()
         setvalue(2)
       break;
     }
@@ -51,10 +52,13 @@ const Home = ({history,children=[]})=>{
     }).then(data=>{
       data.token&&dispatch(setUserToken(data.token))
     })
+    getUserInfo()
+  },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
+  const getUserInfo = ()=>{
     auth&&token&&getUserSelfInfo().then(res=>{
       dispatch(setLoginForm(res))
     })
-  },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
+  }
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 

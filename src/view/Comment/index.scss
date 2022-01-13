@@ -3,7 +3,7 @@
 }
 .commentBox{
   .m-layout{
-    height: calc(100vh - 45px - 60px);
+    height: calc(var(--window-height) - 45px - 60px);
   }
 }
 .commentNickname{

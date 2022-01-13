@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-12 18:08:15
+ * @LastEditTime: 2022-01-13 10:29:54
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,7 +11,7 @@ import replies_close from "@/images/replies_close.png";
 import replies_refresh from "@/images/replies_refresh.png";
 import { Popup } from "zarm";
 import Image from "@/components/Image";
-import { formatTime, useList, username, useRouteState } from "@/utils";
+import { formatTimeStr, useList, username, useRouteState } from "@/utils";
 import liked from "@/images/liked.png";
 import like from "@/images/like.png";
 import { getComment } from "@/api/status";
@@ -78,7 +78,7 @@ const CommentsPop = ({
               {val.content}
             </div>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTime(val.created_at)}</span>
+              <span className="m-colors-666 m-font12">{formatTimeStr(val.created_at)}</span>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ const CommentsPop = ({
           <div className="m-font15 m-colors-555 m-margin-top8   m-padding-bottom13">
             <p className="comment-content">{data.content}</p>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTime(data.created_at)}</span>
+              <span className="m-colors-666 m-font12">{formatTimeStr(data.created_at)}</span>
               <div className="right-icon m-flex">
                 <div
                   className="m-flex like-box"

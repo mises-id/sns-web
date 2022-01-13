@@ -12,7 +12,7 @@ import deteleIcon from "@/images/arrow-down.png";
 import { useLogin } from "@/components/PostsIcons/common";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { objToUrl, useLoginModal, username } from "@/utils";
+import { formatTimeStr, objToUrl, useLoginModal, username } from "@/utils";
 import MButton from "@/components/MButton";
 import addIcon from "@/images/add.png";
 import { useHistory } from "react-router-dom";
@@ -25,7 +25,6 @@ const UserHeader = ({
 }) => {
   const { t } = useTranslation();
   const { isLogin } = useLogin();
-  const format = (time) => time && dayjs(time).format("MM.DD");
   const { loginForm = {} } = useSelector((state) => state.user) || {};
   const isMe = loginForm.uid === item.uid;
   const loginModal = useLoginModal();
@@ -66,7 +65,7 @@ const UserHeader = ({
               !size ? "m-margin-top8 timeAndType" : "m-margin-top4 timeAndType"
             }
           >
-            {format(item.created_at)}
+            {formatTimeStr(item.created_at)}
             <span className="m-margin-left3">{item.from_type}</span>
           </div>
         </div>

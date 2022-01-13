@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-12 18:11:24
+ * @LastEditTime: 2022-01-13 10:30:42
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -16,7 +16,7 @@ import commentIcon from "@/images/comment.png";
 import Navbar from "@/components/NavBar";
 import { getComment, getStatusItem } from "@/api/status";
 import {
-  formatTime,
+  formatTimeStr,
   objToUrl,
   useBind,
   useChangePosts,
@@ -66,6 +66,8 @@ const Post = ({ history = {} }) => {
   const getDetail = (id) => {
     getStatusItem(id).then((res) => {
       setitem(res);
+      Loading.hide();
+    }).catch(()=>{
       Loading.hide();
     });
   };
@@ -172,7 +174,7 @@ const Post = ({ history = {} }) => {
                       <div className="m-font15 m-colors-555 m-margin-top8  m-padding-bottom13">
                         <p>{val.content}</p>
                         <div className="m-flex m-row-between m-margin-top8">
-                          <span className="m-colors-666 m-font12">{formatTime((val.created_at))}</span>
+                          <span className="m-colors-666 m-font12">{formatTimeStr((val.created_at))}</span>
                           <div className="right-icon m-flex">
                             <div
                               className="m-flex like-box"
@@ -218,7 +220,7 @@ const Post = ({ history = {} }) => {
                               className="m-flex m-col-top m-bg-fff m-padding-bottom15"
                               onClick={() => replyItem(item)}
                             >
-                              <Image size={20} source={avatar.medium}></Image>
+                              <Image size={20} source={avatar&&avatar.medium}></Image>
                               <div className="m-margin-left11 m-flex-1">
                                 <div className="m-padding-bottom10">
                                   <span className="commentNickname1">
@@ -226,7 +228,7 @@ const Post = ({ history = {} }) => {
                                   </span>
                                   <span className="comment-content1">{content}</span>
                                 </div>
-                                <span className="m-colors-666 m-font12">{formatTime((created_at))}</span>
+                                <span className="m-colors-666 m-font12">{formatTimeStr((created_at))}</span>
                               </div>
                             </div>
                           );

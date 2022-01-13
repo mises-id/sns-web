@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Toast } from "zarm";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
-import { formatTime, useBind, useList, username, useRouteState } from "@/utils";
+import { formatTimeStr, useBind, useList, username, useRouteState } from "@/utils";
 import { getComment } from "@/api/status";
 import { createComment, likeComment, unlikeComment } from "@/api/comment";
 import { useSelector } from "react-redux";
@@ -73,7 +73,7 @@ const Comment = ({ history }) => {
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
             <p className="comment-content">{val.content}</p>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTime((val.created_at))}</span>
+              <span className="m-colors-666 m-font12">{formatTimeStr((val.created_at))}</span>
               <div className="right-icon m-flex">
                 <div className="m-flex like-box"  onClick={(e)=>likePress(e,val)}>
                   <img src={val.is_liked ? liked : like}  className='icon' alt="like"></img>
@@ -104,7 +104,7 @@ const Comment = ({ history }) => {
                       <span className="commentNickname1">{username(user)}{item.opponent&&<span className="at-name">@{username(item.opponent)}</span>}:</span>
                       <p className="comment-content1">{content}</p>
                     </div>
-                    <span className="m-colors-666 m-font12">{formatTime((created_at))}</span>
+                    <span className="m-colors-666 m-font12">{formatTimeStr((created_at))}</span>
                   </div>
                 </div>
             })}

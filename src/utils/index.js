@@ -7,7 +7,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-11 11:13:16
+ * @LastEditTime: 2022-01-13 10:30:09
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -186,6 +186,15 @@ export function username(val){
   }
   return "Anonymous"
 }
-export function formatTime(time){
-  return time  ? dayjs(time).format("HH:mm") : '';
-};
+export function formatTimeStr(time) {
+  if(!time) return ''
+  const diff = dayjs().diff(dayjs(time)) 
+  console.log(diff,3600 * 24 * 1000)
+  if (diff < 3600 * 24 * 1000) {
+    return dayjs(time).format('HH:mm')
+  }
+  if (diff < 3600 * 24 * 2 * 1000) {
+    return dayjs(time).format('[Yesterday] HH:mm')
+  }
+  return dayjs(time).format('DD MMM HH:mm')
+}
