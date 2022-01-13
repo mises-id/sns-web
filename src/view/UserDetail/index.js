@@ -24,8 +24,6 @@ const UserDetail = (props) => {
     setUserInfo(state);
     getUserInfo(state.uid).then(res=>{
       setUserInfo(res);
-      const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
-      setbuttons(btnArr)
     })
     // eslint-disable-next-line
   }, []); 

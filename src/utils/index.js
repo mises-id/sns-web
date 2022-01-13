@@ -1,5 +1,4 @@
 import { followed, liked } from "@/components/PostsIcons/common";
-import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";

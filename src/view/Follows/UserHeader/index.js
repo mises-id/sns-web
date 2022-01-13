@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-01-12 18:41:19
+ * @LastEditTime: 2022-01-10 15:07:05
  * @LastEditors: lmk
  * @Description:
  */
@@ -40,7 +40,7 @@ const UserHeader = ({
   const onClick = (e) => {
     e.stopPropagation();
     if (!isMe) {
-      const avatar = item.avatar ? item.avatar.medium : "";
+      const avatar = item.avatar ? item.avatar.medium : "http://e1.mises.site/upload/2022/01/04/1641265284649089.png?5K2qjzX901BsFU1Hsf_itp2IKQ2hZW36bVB4OKn4kvI";
       history.push({
         pathname: "/userDetail",
         search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),

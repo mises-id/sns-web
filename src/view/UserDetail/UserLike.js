@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-05 11:26:57
- * @LastEditTime: 2022-01-11 12:40:29
+ * @LastEditTime: 2022-01-05 15:49:43
  * @LastEditors: lmk
  * @Description: user post list
  */
@@ -27,7 +27,7 @@ const UserPosts = (props) => {
   const renderView = (val = {}, index) => {
     return (
       <PostItem
-        val={val.status}
+        val={val}
         key={index}
         index={index}
         history={history}
