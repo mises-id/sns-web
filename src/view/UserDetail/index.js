@@ -31,7 +31,7 @@ const UserDetail = (props) => {
   // show assentSheet
   const [visible, setVisible] = useState(false)
   const joinBlackButton = [{ // Black user
-    text:'Black',
+    text:'Block',
     theme: 'danger',
     onClick: () => {
       blackUser()
@@ -40,7 +40,7 @@ const UserDetail = (props) => {
     }
   }]
   const removeBlackButton = [{ // Black user
-    text:'unBlack',
+    text:'unBlock',
     theme: 'danger',
     onClick: () => {
       removeBlackUser()
