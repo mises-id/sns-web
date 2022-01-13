@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-10 17:50:20
+ * @LastEditTime: 2022-01-13 15:13:43
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button } from "zarm";
+import { ActivityIndicator, Badge, Button, Toast } from "zarm";
 import { useDispatch, useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { setUserAuth, setUserToken } from "@/actions/user";
@@ -45,8 +45,10 @@ const Myself = ({ history }) => {
   useEffect(() => {
     setLoginForm(selector.loginForm)
     settoken(selector.token)
-    
-  }, [selector])
+    list[1].isNew = !!selector.loginForm.new_fans_count;
+    list[1].badge = selector.loginForm.fans_count;
+    list[0].badge = selector.loginForm.followings_count;
+  }, [selector]) // eslint-disable-line react-hooks/exhaustive-deps
   const [flag, setflag] = useState(false);
   const [loading, setloading] = useState(true);
   //getData
@@ -62,17 +64,35 @@ const Myself = ({ history }) => {
       setloading(false);
     }
   };
+  let timer = null;
+  const cleartimer = ()=>{
+    clearTimeout(timer);
+    timer = null;
+  }
+  
+  useEffect(() => {
+    if(timer){
+      cleartimer()
+    }
+    // eslint-disable-next-line
+    timer = setTimeout(() => {
+      setflag(false);
+      setloading(false);
+    }, 1000);
+    return () => {
+      cleartimer()
+    }
+  }, [])
   useEffect(() => {
     getFlag();
   }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     list[2].badge = selector.badge.notifications_count;
-    list[1].isNew = !!selector.loginForm.new_fans_count;
-    setTabList(list)
+    setTabList([...list])
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
     window.mises.requestAccounts().catch(err=>{
-      
+      Toast.show(err.message)
     })
   };
   const restore = () => window.mises.openRestore();
