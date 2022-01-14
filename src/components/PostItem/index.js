@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-07 15:57:33
+ * @LastEditTime: 2022-01-14 21:44:06
  * @LastEditors: lmk
  * @Description:
  */
@@ -49,6 +49,7 @@ const PostItem = ({
       <UserHeader
         item={{
           ...val.user,
+          is_public: val.is_public,
           from_type: val.from_type,
           created_at: val.created_at,
         }}
@@ -82,6 +83,7 @@ const PostItem = ({
           <UserHeader
             item={{
               ...val.parent_status.user,
+              is_public: val.parent_status.is_public,
               from_type: val.parent_status.from_type,
               created_at: val.parent_status.created_at,
             }}

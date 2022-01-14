@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-12 18:23:07
+ * @LastEditTime: 2022-01-14 21:32:31
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -102,7 +102,7 @@ const Comment = ({ history }) => {
                   <div className="m-margin-left11 m-flex-1">
                     <div className="m-padding-bottom10">
                       <span className="commentNickname1">{username(user)}{item.opponent&&<span className="at-name">@{username(item.opponent)}</span>}:</span>
-                      <p className="comment-content1">{content}</p>
+                      <span className="comment-content1">{content}</span>
                     </div>
                     <span className="m-colors-666 m-font12">{formatTimeStr((created_at))}</span>
                   </div>
