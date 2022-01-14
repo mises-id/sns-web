@@ -23,6 +23,7 @@ const UserDetail = (props) => {
   useEffect(() => {
     setUserInfo(state);
     getUserInfo(state.uid).then(res=>{
+      res.avatar = res.avatar ? res.avatar.medium : ''
       setUserInfo(res);
       const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
       setbuttons(btnArr)
