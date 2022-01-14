@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-13 17:06:54
+ * @LastEditTime: 2022-01-14 09:54:23
  * @LastEditors: lmk
  * @Description:
  */
@@ -58,12 +58,15 @@ const Myself = ({ history }) => {
     try {
       if (!token) {
         const count = await window.mises.getMisesAccounts();
+        console.log(count)
         setflag(count > 0);
       }
       setloading(false);
+      cleartimer()
     } catch (error) {
       setflag(false);
       setloading(false);
+      cleartimer()
     }
   };
   let timer = null;
@@ -93,7 +96,6 @@ const Myself = ({ history }) => {
     setTabList([...list])
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
-    console.log(2222)
     window.mises.requestAccounts().catch(err=>{
       Toast.show(err.message)
     })
