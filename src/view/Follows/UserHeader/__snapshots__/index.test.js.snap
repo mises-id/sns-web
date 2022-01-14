@@ -25,6 +25,16 @@ exports[`UserHeader should render correctly 1`] = `
         <span
           className="m-margin-left3"
         />
+        <img
+          alt=""
+          src="private.png"
+          style={
+            Object {
+              "marginLeft": "8px",
+            }
+          }
+          width="9px"
+        />
       </div>
     </div>
   </div>
