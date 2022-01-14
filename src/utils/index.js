@@ -7,7 +7,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-13 10:44:46
+ * @LastEditTime: 2022-01-14 14:28:08
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -179,12 +179,18 @@ export function getShareWithObj(value){
 
 export function username(val){
   if(val.username) return val.username;
-  if(val.misesid&&val.misesid.length>8){
-    const startNum = val.misesid.length - 8;
-    const str = val.misesid.substr(startNum)
-    return `misesid:${str}`
+  if(val.misesid&&val.misesid.length>26){
+    const name = `${shortenAddress(val.misesid)}`
+    return name.replace('did:mises:','')
   }
   return "Anonymous"
+}
+export function shortenAddress(
+  address = ''
+) {
+  return `${address.slice(0, 18)}...${address.slice(
+    -4,
+  )}`;
 }
 export function formatTimeStr(time) {
   if(!time) return ''

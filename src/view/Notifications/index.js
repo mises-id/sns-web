@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-14 10:57:02
+ * @LastEditTime: 2022-01-14 22:08:18
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -59,9 +59,11 @@ const Notifications = ({ history }) => {
   }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
-  const detail = ({meta_data}) => {
-    if(!meta_data.status_id) return false;
-    history.push({ pathname: "/post", search: objToUrl({ id: meta_data.status_id }) });
+  const detail = ({ status }) => {
+    status&&history.push({
+      pathname: "/post",
+      search: objToUrl({ id: status.id }),
+    });
   };
   //render item
   const renderView = (val = {}, index) => {
@@ -83,25 +85,41 @@ const Notifications = ({ history }) => {
       </div>
     );
   };
-  const rightView = (val) => {
-    const metaData = val.meta_data;
-    return (
+  const rightView = ({ status,meta_data={},message_type}) => {
+    const image = status&&message_type!=='new_like_comment'&&returnImage(status)
+    return status&&(
       <div className="right-view">
-        {metaData.status_image_path && (
-          <Image
-            size={60}
-            alt="image"
-            shape="square"
-            borderRadius="3px"
-            source={val.status_image_path}
-          ></Image>
-        )}
-        {!metaData.status_image_path && metaData.content_summary && (
-          <p className="post-content item-eli">{metaData.content_summary}</p>
-        )}
+        {image&&<Image
+          size={60}
+          alt="image"
+          shape="square"
+          borderRadius="3px"
+          source={image}
+        ></Image>}
+        {status.status_type === "text"&&!image&&<div>
+          <p className="post-content item-eli">{meta_data.content_summary || meta_data.comment_content || meta_data.status_content_summary || meta_data.status_content}</p>
+        </div>}
       </div>
     );
   };
+  const returnImage = (status={})=>{
+    switch (status.status_type) {
+      case 'image':
+        return status.thumb_images[0];
+      case 'text':
+        if(status.origin_status){
+          if(status.origin_status.status_type==='image'){
+            return status.origin_status.thumb_images[0];
+          }
+          if(status.origin_status.status_type==='link'){
+            return status.origin_status.link_meta.attachment_url;
+          }
+        } 
+        return ''
+      default:
+        return ''
+    }
+  }
   const notificationsType = (val) => {
     const metaData = val.meta_data;
     //type :new_comment, new_like, new_fans, new_forward
@@ -120,12 +138,21 @@ const Notifications = ({ history }) => {
             <p className="item-content">{metaData.forward_content}</p>
           </div>
         );
-      case "new_comment": // 我评论了某人的评论需要返回某人的用户信息和评论这条数据的信息
+      case "new_comment": 
+        const obj = {};
+        if(metaData.parent_username.indexOf('did:mises')>-1){
+          obj.misesid = metaData.parent_username
+        }else{
+          obj.username = metaData.parent_username
+        }
         return (
           <div>
             {metaData.content && (
               <p className="item-content">{metaData.content}</p>
             )}
+            {metaData.parent_content&&<div className="parent-content">
+              <span className="at">@{username(obj)}:</span> <span>{metaData.parent_content}</span>
+            </div>}
           </div>
         );
       default:

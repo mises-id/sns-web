@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-01-13 15:12:10
+ * @LastEditTime: 2022-01-14 21:40:04
  * @LastEditors: lmk
  * @Description:
  */
@@ -9,6 +9,7 @@ import Image from "@/components/Image/index";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import deteleIcon from "@/images/arrow-down.png";
+import privateIcon from "@/images/private.png";
 import { useLogin } from "@/components/PostsIcons/common";
 import { useSelector } from "react-redux";
 import { formatTimeStr, objToUrl, useLoginModal, username } from "@/utils";
@@ -66,6 +67,7 @@ const UserHeader = ({
           >
             {formatTimeStr(item.created_at)}
             <span className="m-margin-left3">{item.from_type}</span>
+            {!item.is_public&&<img src={privateIcon} alt="" width="9px" style={{marginLeft:'8px'}}/>}
           </div>
         </div>
       </div>
