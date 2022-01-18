@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-01-13 10:20:43
+ * @LastEditTime: 2022-01-18 11:51:05
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -11,7 +11,7 @@ $themeBg:#F8F8F8;
 p{
   margin: 0;
   padding: 0;
-  word-break: break-all;
+  word-break: keep-all;
   white-space: break-spaces;
   line-height:19px;
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-10 15:26:37
+ * @LastEditTime: 2022-01-18 17:59:34
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -19,6 +19,7 @@ import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
 import { objToUrl, useList, username, useRouteState } from "@/utils";
 import { followed } from "@/components/PostsIcons/common";
+import { dropByCacheKey, getCachingKeys } from 'react-router-cache-route'
 const Following = ({ pageType,uid }) => {
   const { t } = useTranslation();
   const state = useRouteState();
@@ -75,7 +76,10 @@ const Following = ({ pageType,uid }) => {
     const personDetail = item=>{
       history.push({
         pathname: "/userDetail",
-        search: objToUrl(item),
+        search: objToUrl({
+          ...item,
+          avatar: item.avatar ? item.avatar.large : ''
+        }),
       });
     }
     return (

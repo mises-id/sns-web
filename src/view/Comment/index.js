@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-14 21:32:31
+ * @LastEditTime: 2022-01-18 15:49:40
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -9,10 +9,9 @@
 import "./index.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Toast } from "zarm";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
-import { formatTimeStr, useBind, useList, username, useRouteState } from "@/utils";
+import { formatTimeStr, useBind, useList, useLoginModal, username, useRouteState } from "@/utils";
 import { getComment } from "@/api/status";
 import { createComment, likeComment, unlikeComment } from "@/api/comment";
 import { useSelector } from "react-redux";
@@ -51,6 +50,7 @@ const Comment = ({ history }) => {
     commentContent.onChange('')
     val.username = username(val.user)
     setselectItem(val)
+    console.log(val)
     input.current.focus()
   }
   const renderView = (val = {}, index) => {
@@ -128,12 +128,8 @@ const Comment = ({ history }) => {
   }, [last_id]);
   const commentContent = useBind("");
   const commentsPop = useRef('')
-  const submit = (e) => {
-    e.preventDefault();
-    if (!user.token) {
-      Toast.show(t("notLogin"));
-      return false;
-    }
+  const loginModal = useLoginModal()
+  const commitReply = ()=>{
     if (loading || !commentContent.value) {
       return false;
     }
@@ -145,18 +141,20 @@ const Comment = ({ history }) => {
     })
       .then((res) => {
         if(selectItem.content){ // if has select item
-          if(selectItem.comments_count<3){
-            selectItem.comments.push(res);
-            const findIndex = dataSource.findIndex(val=>val.id===selectItem.id)
-            if(findIndex>-1){
-              dataSource[findIndex] = selectItem;
-            }
+          const findTopic = dataSource.find(val=>val.id===(selectItem.topic_id || selectItem.id)) // find top comment
+          if(findTopic.comments_count<3){
+            findTopic.comments.push(res);
+            // findTopic.comments_count = findTopic.comments.length;
           }
           // if popup is show flag
           if(visible){
             commentsPop.current.setData(res)
           }
-          selectItem.comments_count+=1;
+          findTopic.comments_count+=1;
+          const findIndex = dataSource.findIndex(val=>val.id===findTopic.id)
+          if(findIndex>-1){
+            dataSource[findIndex] = findTopic;
+          }
           setselectItem('')
         }else{
           dataSource.unshift(res);
@@ -167,6 +165,15 @@ const Comment = ({ history }) => {
       .finally(() => {
         setloading(false);
       });
+  }
+  const submit = (e) => {
+    e.preventDefault();
+    if (!user.token) {
+      // Toast.show(t("notLogin"));
+      loginModal(commitReply)
+      return false;
+    }
+    commitReply()
   };
   const [visible, setvisible] = useState(false)
   const [commentPop, setcommentPop] = useState({})

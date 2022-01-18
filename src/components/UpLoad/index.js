@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-12-02 14:02:45
- * @LastEditTime: 2022-01-04 14:48:34
+ * @LastEditTime: 2022-01-17 16:21:50
  * @LastEditors: lmk
  * @Description:
  */
@@ -28,15 +28,16 @@ const Upload = ({imageList, setImageList}) => {
       Toast.show(t("upLoadFileWarning"));
       return false;
     }
-    const files = Array.from(e.target.files)
-      .slice(0, maxLength)
-      .map((val) => {
-        return {
-          url:window.URL.createObjectURL(val),
-          file:val
-        }
-      });
-    console.log(files);
+    const fileArr = Array.from(e.target.files).slice(0, maxLength)
+    const getFilterArr = fileArr.filter(val=>val.size<1024*1024*8); // 8M
+    const filterNum = fileArr.length - getFilterArr.length;
+    if(filterNum>0){
+      Toast.show(`${filterNum} pictures are too big`)
+    }
+    const files = getFilterArr.map((val) => ({
+      url:window.URL.createObjectURL(val),
+      file:val
+    }));
     const maxLen = maxLength - files.length || 0;
     setmaxLength(maxLen);
     imageList = [...imageList, ...files];
@@ -44,7 +45,6 @@ const Upload = ({imageList, setImageList}) => {
   };
   // remove image item
   const deleteImage = (index) => {
-    console.log(index)
     imageList.splice(index,1)
     setImageList(imageList);
     const len = 9 - imageList.length
@@ -58,8 +58,10 @@ const Upload = ({imageList, setImageList}) => {
     setvisible(true);
   };
   const send = (image,index) => {
-    imageList[index] = image;
-    setImageList(imageList);
+    imageList[index] = {
+      url:image
+    };
+    setImageList([...imageList]);
     closePop()
   };
   const closePop = () => {

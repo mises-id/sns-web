@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-13 10:30:42
+ * @LastEditTime: 2022-01-18 17:50:51
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Toast, Loading } from "zarm";
+import { Button, Loading } from "zarm";
 import look from "@/images/look.png";
 import "./index.scss";
 import liked from "@/images/liked.png";
@@ -20,6 +20,7 @@ import {
   objToUrl,
   useBind,
   useChangePosts,
+  useLoginModal,
   username,
   useRouteState,
 } from "@/utils";
@@ -91,13 +92,9 @@ const Post = ({ history = {} }) => {
       getCommentList(state.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const submit = (e) => {
-    e.preventDefault();
-    if (!user.token) {
-      Toast.show(t("notLogin"));
-      return false;
-    }
+  }, [state.id]);
+  const loginModal = useLoginModal()
+  const commitReply = ()=>{
     if (loading || !commentContent.value) {
       return false;
     }
@@ -109,14 +106,15 @@ const Post = ({ history = {} }) => {
     })
       .then((res) => {
         if(selectItem.content){ // if has select item
-          if(selectItem.comments_count<3){
-            selectItem.comments.push(res);
-            const findIndex = comment.findIndex(val=>val.id===selectItem.id)
-            if(findIndex>-1){
-              comment[findIndex] = selectItem;
-            }
+          const findTopic = comment.find(val=>val.id===(selectItem.topic_id || selectItem.id)) // find top comment
+          if(findTopic.comments_count<3){
+            findTopic.comments.push(res);
           }
-          selectItem.comments_count+=1;
+          findTopic.comments_count+=1;
+          const findIndex = comment.findIndex(val=>val.id===findTopic.id)
+          if(findIndex>-1){
+            comment[findIndex] = findTopic;
+          }
           setselectItem('')
         }else{
           comment.unshift(res);
@@ -129,6 +127,14 @@ const Post = ({ history = {} }) => {
       .finally(() => {
         setloading(false);
       });
+  }
+  const submit = (e) => {
+    e.preventDefault();
+    if (!user.token) {
+      loginModal(commitReply)
+      return false;
+    }
+    commitReply()
   };
 
   const [visible, setvisible] = useState(false);

@@ -6,13 +6,14 @@ import "./index.scss";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
 import MButton from "@/components/MButton";
-import { objToUrl, useChangePosts, useLoginModal, username, useRouteState } from "@/utils";
+import { objToUrl, urlToJson, useChangePosts, useLoginModal, username, useRouteState } from "@/utils";
 import { useLogin } from "@/components/PostsIcons/common";
 import addIcon from "@/images/add.png";
 import { ActionSheet, Panel, Tabs, Toast } from "zarm";
 import UserPosts from "./UserPost";
 import UserLikes from "./UserLike";
 import { useHistory } from "react-router-dom";
+import { useDidRecover } from 'react-router-cache-route'
 import { getUserInfo, JoinBlackList, removeBlackList } from "@/api/user";
 const UserDetail = (props) => {
   const [userInfo, setUserInfo] = useState({});
@@ -21,6 +22,14 @@ const UserDetail = (props) => {
   const [value, setvalue] = useState(0);
   const state = useRouteState();
   useEffect(() => {
+    setInfo(state)
+    // eslint-disable-next-line
+  }, []); 
+  useDidRecover(() => {
+    const historyState = urlToJson(window.location.search);
+    setInfo(historyState)
+  })
+  const setInfo = (state) =>{
     setUserInfo(state);
     getUserInfo(state.uid).then(res=>{
       res.avatar = res.avatar ? res.avatar.medium : ''
@@ -28,8 +37,7 @@ const UserDetail = (props) => {
       const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
       setbuttons(btnArr)
     })
-    // eslint-disable-next-line
-  }, []); 
+  }
   const history = useHistory();
   // show assentSheet
   const [visible, setVisible] = useState(false)

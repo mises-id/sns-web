@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-05 10:03:35
+ * @LastEditTime: 2022-01-18 17:44:59
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,6 +18,7 @@ import { persistor, store } from './stores';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import { hot } from 'react-hot-loader/root'
 import {setTheme} from '@/styles/setZarmTheme'
+import { CacheSwitch } from 'react-router-cache-route'
 const App = ()=> {
   useEffect(() => {
     setTheme()
@@ -27,10 +28,10 @@ const App = ()=> {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Router>
-            <Switch>
+            <CacheSwitch>
               {routes(routeConfig)}
-              <Redirect to="/home" />
-            </Switch>
+              <Redirect to="/home/discover" />
+            </CacheSwitch>
           </Router>
         </PersistGate>
       </Provider>

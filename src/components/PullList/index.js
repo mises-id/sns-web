@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-01-07 16:54:56
+ * @LastEditTime: 2022-01-18 17:13:38
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -87,7 +87,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
     return () => {
       setisOnceLoad(true);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps 
   return (
     <>
       {isOnceLoad && (

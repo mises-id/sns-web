@@ -1,20 +1,21 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-13 11:33:59
+ * @LastEditTime: 2022-01-18 17:48:25
  * @LastEditors: lmk
  * @Description:
  */
 import { useEffect, useState } from "react";
 import PullList from "@/components/PullList";
-import { following, followingLatest, recommend, recommendUser } from "@/api/status";
+import { following, followingLatest, recommend } from "@/api/status";
 import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator, Badge } from "zarm";
 import { useTranslation } from "react-i18next";
-import { objToUrl, useChangePosts, useList, username } from "@/utils";
+import { objToUrl, useChangePosts, useList, username, useSetDataSourceAction } from "@/utils";
 import PostItem from "@/components/PostItem";
 import emptyIcon from "@/images/nothing.png";
 import recommendationIcon from "@/images/recommendation.png";
+import { useDidRecover } from 'react-router-cache-route'
 import "./index.scss";
 // import { useLocation } from "react-router-dom";
 import Image from "@/components/Image";
@@ -29,45 +30,28 @@ const Follow = ({ history = {} }) => {
   const fn = isDiscoverPage.indexOf("discover") > -1 ? recommend : following;
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
+  const [isAuto] = useState(true);
   // get dataList
   const [fetchData,last_id, dataSource, setdataSource] = useList(fn, {
     uid: user.loginForm && user.loginForm.uid,
     limit: 10,
     last_id: lastId,
   });
-  console.log(last_id)
-  const [isAuto] = useState(true);
-  // const location = useLocation();
-  // useEffect(() => {
-  //   if (history.state) {
-  //     //  && history.state.dataSource.length
-  //     // setdataSource(history.state.dataSource);
-  //     // setlastId(history.state.last_id);
-  //     // setisAuto(false);
-  //     console.log(history.state)
-  //     // setTimeout(() => {
-  //     // const pull = document.querySelector('.za-pull.m-layout');
-  //     // pull.scrollTop = history.state.scrollTop
-  //     //   console.log(history.state,1233)
-  //     // }, 300);
-  //   }
-  // }, [location.pathname]);
-  // useEffect(() => {
-  //   setlastId(last_id);
-  //   history.state = {
-  //     ...history.state,
-  //     last_id,
-  //   };
-  // }, [last_id]);
-  // set discoverpage flag
-  // get notification total;
+  // useGetCachePageData('.za-pull.m-layout',setdataSource,setLastId,setIsAuto,()=>{
+
+  // })
+  useSetDataSourceAction(dataSource, setdataSource)
+  // useCachePageData('.za-pull.m-layout',dataSource,last_id)
+  useDidRecover(()=>{
+    console.log('List recovered',last_id)
+  })
   const [notifitionObj, setnotifitionObj] = useState({
     "total": 0,
     "notifications_count": 0,
     "users_count": 0
   })
   const dispatch = useDispatch(null);
-  const [userRecommend, setuserRecommend] = useState([])
+  const [userRecommend] = useState([])
   const [followingLatestArr, setfollowingLatest] = useState([])
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
@@ -88,6 +72,19 @@ const Follow = ({ history = {} }) => {
         console.log(error)
       })
     }
+    // getFollowingLatest()
+    // if(isDiscoverFlag){
+    //   // recommend user
+    //   recommendUser().then(res=>{
+    //     setuserRecommend(res || [])
+    //   }).catch(error=>{
+    //     console.log(error)
+    //   })
+    // }
+    // eslint-disable-next-line
+  }, [isDiscover]);
+  const getFollowingLatest = ()=>{
+    const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1
     if(!isDiscoverFlag&&user.token){
       // follow latest user list
       followingLatest().then(res=>{
@@ -96,16 +93,7 @@ const Follow = ({ history = {} }) => {
         console.log(error)
       })
     }
-    if(isDiscoverFlag){
-      // recommend user
-      recommendUser().then(res=>{
-        setuserRecommend(res || [])
-      }).catch(error=>{
-        console.log(error)
-      })
-    }
-    // eslint-disable-next-line
-  }, [isDiscover, isDiscoverPage]);
+  }
   const { setLike, followPress } = useChangePosts(setdataSource, dataSource);
   const renderView = (val = {}, index) => {
     return (
@@ -142,6 +130,7 @@ const Follow = ({ history = {} }) => {
       </div>
     );
   };
+  
   // Render top recommendations and concerns
   const otherView = () => {
     //&&user.token
@@ -211,7 +200,6 @@ const Follow = ({ history = {} }) => {
   };
   // route push to userDetail
   const userDetail = ({uid,username,avatar,is_followed,misesid}) =>{
-    console.log(objToUrl({uid,username,avatar,is_followed,misesid}))
     history.push({
       pathname:'/userDetail',
       search:objToUrl({uid,username,avatar,is_followed,misesid})
@@ -236,23 +224,26 @@ const Follow = ({ history = {} }) => {
     );
   };
   return (
-    <div>
-      {loading ? (
-        <div style={{ textAlign: "center", padding: "20px" }}>
-          <ActivityIndicator type="spinner" />
-        </div>
-      ) : !isDiscover && !user.token ? (
-        btnElement()
-      ) : (
-        <PullList
-          otherView={otherView}
-          isAuto={isAuto}
-          renderView={renderView}
-          data={dataSource}
-          load={fetchData}
-        ></PullList>
-      )}
-    </div>
+      <div>
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "20px" }}>
+            <ActivityIndicator type="spinner" />
+          </div>
+        ) : !isDiscover && !user.token ? (
+          btnElement()
+        ) : (
+            <PullList
+              otherView={otherView}
+              isAuto={isAuto}
+              renderView={renderView}
+              data={dataSource}
+              load={()=>{
+                getFollowingLatest()
+                return fetchData()
+              }}
+            />
+        )}
+      </div>
   );
 };
 export default Follow;

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-07 18:43:22
+ * @LastEditTime: 2022-01-18 11:35:07
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar, Button, Input, Toast } from "zarm";
 import "./index.scss";
-import { useBind } from "@/utils";
+import { hoursToSeconds, useBind } from "@/utils";
 import { createStatus } from "@/api/status";
 import UpLoad from "@/components/UpLoad";
 import Cell from "@/components/Cell";
@@ -42,25 +42,35 @@ const GreatePosts = ({ history = {} }) => {
     }
     if(selectShareWith==='limited'){
       form.is_private = false;
-      form.show_duration = selectHrs;
+      form.show_duration = hoursToSeconds(selectHrs);
     }
     setloading(true);
-    form.images = await upload()
-    if(form.images.length){
-      form.status_type = 'image';
+    try {
+      try {
+        form.images = await upload()
+      } catch (error) {
+        Toast.show(t('pictureError'))
+      }
+      if(form.images.length){
+        form.status_type = 'image';
+      }
+      createStatus(form)
+        .then((res) => {
+          Toast.show({
+            content: t("sendSuccess"),
+            stayTime: 1500,
+            afterClose: () => {
+              history.state = {}
+              window.history.back();
+              setloading(false);
+            },
+          });
+        })
+        .catch(() => setloading(false));
+    } catch (error) {
+      console.log(error)
+      setloading(false)
     }
-    createStatus(form)
-      .then((res) => {
-        Toast.show({
-          content: t("sendSuccess"),
-          stayTime: 1500,
-          afterClose: () => {
-            window.history.back();
-            setloading(false);
-          },
-        });
-      })
-      .catch(() => setloading(false));
   };
   // upload image 
   const upload = async ()=>{

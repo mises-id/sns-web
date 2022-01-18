@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-13 09:18:22
+ * @LastEditTime: 2022-01-18 17:44:21
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,15 +18,15 @@ import {urlToJson} from '@/utils';
 const {Panel} = Tabs;
 const Home = ({history,children=[]})=>{
   const {t} = useTranslation()
-  const [tab,setTab] = useState([{ path: '/home/', text:t('follow') ,badge:0},{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
+  const [tab,setTab] = useState([{ path: '/home/following', text:t('follow') ,badge:0},{ path: '/home/discover', text:t('discover') },{ path: '/home/me', text:t('me') }])
   const [value, setvalue] = useState(0)
   const dispatch = useDispatch()
   const setTabActive = ()=>{
     const {pathname} = window.location;
     //get hostname to set tabIndex
-    const path = pathname==='/home/'?'/home' :pathname;
-    switch (path) {
-      case '/home':
+    // const path = pathname;
+    switch (pathname) {
+      case '/home/following':
         setvalue(0)
       break;
       case '/home/discover':
@@ -59,6 +59,23 @@ const Home = ({history,children=[]})=>{
       dispatch(setLoginForm(res))
     })
   }
+  // If this page is displayed, the current user is updated
+  useEffect(() => {
+    if(user.token){
+      window.mises.getAuth().then(res=>{
+        console.log(111)
+        const resAuth = urlToJson(`?${res.auth}`)
+        const selectorAuth = urlToJson(`?${user.auth}`)
+        if(resAuth.mises_id!==selectorAuth.mises_id){
+          dispatch(setUserAuth(''))
+          dispatch(setUserToken(''))
+          dispatch(setUserAuth(res.auth))
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-05 11:26:57
- * @LastEditTime: 2022-01-13 14:55:34
+ * @LastEditTime: 2022-01-18 15:33:44
  * @LastEditors: lmk
  * @Description: user post list
  */
@@ -23,14 +23,16 @@ const UserPosts = (props) => {
   useEffect(() => {
     setlastId(last_id);
   }, [last_id]);
-  const { setLike } = useChangePosts(setdataSource, dataSource);
+  const { setLike,followPress } = useChangePosts(setdataSource, dataSource);
   const renderView = (val = {}, index) => {
     return (
       <PostItem
         val={val.status}
         key={index}
+        btnType="userDetail"
         index={index}
         history={history}
+        changeFollow={followPress}
         setLike={setLike}
       />
     );

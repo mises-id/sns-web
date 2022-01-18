@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-12-02 17:31:09
- * @LastEditTime: 2022-01-06 17:14:35
+ * @LastEditTime: 2022-01-17 12:05:38
  * @LastEditors: lmk
  * @Description:
  */
@@ -13,7 +13,7 @@ import wenben from "@/images/text.png";
 import rotate from "@/images/rotate.png";
 import txtActive from "@/images/text_select.png";
 import NavbarRightButton from "@/components/NavbarRightButton";
-import removeImage from "@/images/remove.png";
+import removeImage from "@/images/deleteImage.png";
 import "./styles.scss";
 import Konva from "konva";
 import { useTranslation } from "react-i18next";
@@ -104,6 +104,7 @@ const EditImage = ({ image, index, closePop, send }) => {
       x,
       y
     });
+    console.log(x,y)
     return img;
   };
   // let pointers = [], // 触摸点数组
@@ -290,6 +291,7 @@ const EditImage = ({ image, index, closePop, send }) => {
   // back uploadImage page
   const saveEdit = () => {
     send(editImage, index);
+    console.log(editImage);
   };
 
   const rotateImage = () => {
@@ -446,10 +448,35 @@ const EditImage = ({ image, index, closePop, send }) => {
     }
   };
   const showEditModel = () => {
+    resetImagePositon()
     setTextFlag(true);
-    textarea.current && textarea.current.focus();
+    focus()
   };
+  const resetImagePositon = ()=>{
+    console.log(stage)
+    const image = stage.find("Image").find((element) => element.parent.nodeType === "Layer");
+    // if(image){
+    //   image.
+    // }
+    // if(image){
+    //   image.setImage({
+    //     height:100,
+    //     width:100
+    //   })
+    // }
+    console.log(image)
+    // stage.scale({ x: window.innerWidth / textShowPosition.height, y: window.innerWidth / textShowPosition.height })
+    stage.position({
+      x:0,
+      y:0
+    })
+  }
+
+  const focus = ()=>{
+    textarea.current && textarea.current.focus();
+  }
   const showCropper = () => {
+    resetImagePositon()
     setCropperFlag(true);
     setisEdit(true);
     const dataURL = returnEditImage();
@@ -468,7 +495,7 @@ const EditImage = ({ image, index, closePop, send }) => {
         element.hide();
       }
     });
-    const dataURL = stage.toDataURL({ pixelRatio: 2 });
+    const dataURL = stage.toDataURL({ pixelRatio: 2,quality:1, });
     return dataURL;
   };
   return (
@@ -498,24 +525,26 @@ const EditImage = ({ image, index, closePop, send }) => {
       {/* cropped */}
       {isEdit && cropperFlag && (
         <div className={`m-flex m-flex-col edit-cropper-box`}>
-          <div className="m-flex-1" style={{ height: "0" }}>
-            <Cropper
-              src={cropperImage}
-              style={{ height: "100%", width: "100%" }}
-              onInitialized={setcropper}
-              viewMode={1}
-              dragMode="move"
-            />
-          </div>
-          <div className="m-padding-left10 u-padding-top10">
-            <img src={rotate} alt="" className="icon" onClick={rotateImage} />
-          </div>
           <NavbarRightButton
             rightTxt={t("Done")}
             leftTxt={t("cancel")}
             leftBtnClick={closeCropper}
             rightBtnClick={cropperSave}
           />
+          <div className="m-flex-1" style={{ height: "0" }}>
+            <Cropper
+              src={cropperImage}
+              background={false}
+              center={false}
+              style={{ height: "100%", width: "100%",backgroundColor:'#000000'}}
+              onInitialized={setcropper}
+              viewMode={3}
+              dragMode="move"
+            />
+          </div>
+          <div className="rotate">
+            <img src={rotate} alt="" className="icon" onClick={rotateImage} />
+          </div>
         </div>
       )}
       {/* add Text */}
@@ -523,11 +552,11 @@ const EditImage = ({ image, index, closePop, send }) => {
         <div className={`m-flex m-flex-col edit-text-container`}>
           <NavbarRightButton
             rightTxt={t("send")}
-            leftTxt={t("cancel")}
+            leftTxt={<span className="m-colors-fff">{t("cancel")}</span>}
             leftBtnClick={closeTxt}
             rightBtnClick={TxtSave}
           />
-          <div className={`m-flex-1 m-flex content-editable`}>
+          <div className={`m-flex-1 m-flex content-editable`} onClick={focus}>
             <div
               contentEditable
               className={`content-textarea`}
