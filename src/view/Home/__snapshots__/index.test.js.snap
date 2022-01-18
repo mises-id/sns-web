@@ -13,7 +13,7 @@ exports[`Home should render correctly 1`] = `
     value={0}
   >
     <TabPanel
-      key="/home/"
+      key="/home/following"
       prefixCls="za-tabs"
       title={
         <React.Fragment>

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:02:30
- * @LastEditTime: 2022-01-10 17:46:02
+ * @LastEditTime: 2022-01-18 18:18:18
  * @LastEditors: lmk
  * @Description: 
  */
@@ -23,10 +23,15 @@ jest.mock('react-router-dom', () => ({
   useHistory: () => ({
     push: jest.fn(),
   }),
+  
 }));
 jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockReturnValue({
    loginForm:{}
   }),
   useDispatch:jest.fn()
+}));
+
+jest.mock('react-router-cache-route', () => ({
+  useDidRecover: jest.fn()
 }));

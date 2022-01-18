@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-18 17:44:59
+ * @LastEditTime: 2022-01-18 18:13:33
  * @LastEditors: lmk
  * @Description: 
  */
 import React, { useEffect } from 'react';
 import './styles/App.css';
 import { ConfigProvider} from 'zarm';
-import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import enUS from 'zarm/lib/config-provider/locale/en_US';
 import 'zarm/dist/zarm.css';
 import routeConfig from './router';

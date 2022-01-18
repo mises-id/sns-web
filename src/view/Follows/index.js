@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-18 17:48:25
+ * @LastEditTime: 2022-01-18 18:16:15
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,6 @@ import { objToUrl, useChangePosts, useList, username, useSetDataSourceAction } f
 import PostItem from "@/components/PostItem";
 import emptyIcon from "@/images/nothing.png";
 import recommendationIcon from "@/images/recommendation.png";
-import { useDidRecover } from 'react-router-cache-route'
 import "./index.scss";
 // import { useLocation } from "react-router-dom";
 import Image from "@/components/Image";
@@ -42,9 +41,6 @@ const Follow = ({ history = {} }) => {
   // })
   useSetDataSourceAction(dataSource, setdataSource)
   // useCachePageData('.za-pull.m-layout',dataSource,last_id)
-  useDidRecover(()=>{
-    console.log('List recovered',last_id)
-  })
   const [notifitionObj, setnotifitionObj] = useState({
     "total": 0,
     "notifications_count": 0,

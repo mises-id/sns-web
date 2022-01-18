@@ -9,7 +9,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-18 17:49:32
+ * @LastEditTime: 2022-01-18 18:15:55
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -215,7 +215,7 @@ export function formatTimeStr(time) {
  * @return {*}
  */
 export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user) || {userActions:{}}
   useEffect(() => {
     if(user.userActions.uid){
       const arr  = dataSource.map(val=>{

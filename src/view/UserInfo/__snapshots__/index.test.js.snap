@@ -37,7 +37,7 @@ exports[`UserInfo should render correctly 1`] = `
         rightChild={
           <Input
             clearable={false}
-            disabled={false}
+            maxLength={25}
             onChange={[Function]}
             placeholder="placeholder"
             type="text"
