@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-07 16:01:59
+ * @LastEditTime: 2022-01-17 14:42:47
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -16,7 +16,7 @@ import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
 import { useSelector } from "react-redux";
 import { ActionSheet, Toast } from "zarm";
-import { objToUrl, useChangePosts, useList } from "@/utils";
+import { useChangePosts, useList } from "@/utils";
 import PostItem from "@/components/PostItem";
 const MyPosts = ({ history }) => {
   const user = useSelector((state) => state.user) || {};
@@ -75,8 +75,8 @@ const MyPosts = ({ history }) => {
     setlastId(last_id);
   }, [last_id]);
   const { setLike, followPress } = useChangePosts(setdataSource, dataSource);
-  const createPosts = (query) => {
-    history.push({ pathname: "/createPosts",search:objToUrl(query) })
+  const createPosts = () => {
+    history.push({ pathname: "/createPosts"})
   };
   const { t } = useTranslation();
   //render item

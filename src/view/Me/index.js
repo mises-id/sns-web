@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-14 09:54:23
+ * @LastEditTime: 2022-01-18 15:35:05
  * @LastEditors: lmk
  * @Description:
  */
@@ -16,34 +16,15 @@ import me_5 from "@/images/me_5.png";
 import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
 import { ActivityIndicator, Badge, Button, Toast } from "zarm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
-import { setUserAuth, setUserToken } from "@/actions/user";
-import { objToUrl, urlToJson, username } from "@/utils";
+import { objToUrl, username } from "@/utils";
 const Myself = ({ history }) => {
   const { t } = useTranslation();
   const [loginForm,setLoginForm] = useState({});
   const [token, settoken] = useState('')
    // eslint-disable-next-line
   const selector = useSelector((state) => state.user) || {};
-  const dispatch = useDispatch()
-  // If this page is displayed, the current user is updated
-  useEffect(() => {
-    if(selector.token){
-      window.mises.getAuth().then(res=>{
-        const resAuth = urlToJson(`?${res.auth}`)
-        const selectorAuth = urlToJson(`?${selector.auth}`)
-        if(resAuth.mises_id!==selectorAuth.mises_id){
-          dispatch(setUserAuth(''))
-          dispatch(setUserToken(''))
-          dispatch(setUserAuth(res.auth))
-          console.log(res.auth)
-        }
-      }).catch(err=>{
-        console.log(err)
-      })
-    }
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     setLoginForm(selector.loginForm)
     settoken(selector.token)
@@ -58,7 +39,6 @@ const Myself = ({ history }) => {
     try {
       if (!token) {
         const count = await window.mises.getMisesAccounts();
-        console.log(count)
         setflag(count > 0);
       }
       setloading(false);
@@ -156,7 +136,7 @@ const Myself = ({ history }) => {
           <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
             <Cell
               iconSize={60}
-              icon={loginForm.avatar && loginForm.avatar.large}
+              icon={loginForm.avatar && loginForm.avatar.medium}
               label={username(loginForm)}
               labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
               onPress={userInfo}

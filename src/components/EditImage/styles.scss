@@ -65,3 +65,18 @@ body{
   border-radius: 10px;
   padding: 10px;
 }
+.rotate{
+  background: #000;
+  padding: 40px 0;
+  text-align: center;
+}
+.cropper-view-box{
+  outline: 1px solid white;
+}
+.cropper-point{
+  background-color: white;
+}
+.cropper-dashed{
+  border-style: solid;
+  opacity: 0.25;
+}

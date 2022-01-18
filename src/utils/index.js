@@ -1,13 +1,15 @@
+import { setUserSetting } from "@/actions/user";
 import { followed, liked } from "@/components/PostsIcons/common";
+import { store } from "@/stores";
 import dayjs from "dayjs";
-import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-14 14:28:08
+ * @LastEditTime: 2022-01-18 18:15:55
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -49,7 +51,6 @@ export function urlToJson(url = window.location.href) {
 export function objToUrl(object){
   if(JSON.stringify(object).indexOf("{")>-1&&JSON.stringify(object).indexOf("}")>-1){
     let query = '';
-    console.log(object)
     for (const key in object) {
       const element = object[key];
       if(element) query+=`${query==='' ? '?' : '&'}${key}=${element}`
@@ -125,6 +126,7 @@ export function useChangePosts(setdataSource,dataSource){
   const followPress = async (val,flag)=>{
     try {
       const item = flag ? val.parent_status : val;
+      console.log(followLoading)
       if(followLoading) return false;
       setfollowLoading(true)
       await followed(item)
@@ -132,10 +134,10 @@ export function useChangePosts(setdataSource,dataSource){
       success()
     } catch (error) {
       console.log(error)
-      error==='not found active user'&&loginModal(()=>{
+      setfollowLoading(false)
+      error==='Wallet not activated'&&loginModal(()=>{
         followPress(val,flag)
       })
-      setfollowLoading(false)
       return Promise.reject()
     }
   }
@@ -143,21 +145,21 @@ export function useChangePosts(setdataSource,dataSource){
 }
 
 export function useLoginModal(){
-  const {t} = useTranslation()
   const loginModal = async (cb)=>{
     try {
-      const count = await window.mises.getMisesAccounts();
-      const flag = count > 0;
-      const content = flag ? t('notLogin') : t('notRegister') ;
+      // const count = await window.mises.getMisesAccounts();
+      // const flag = count > 0;
+      // const content = flag ? t('notLogin') : t('notRegister') ;
       Modal.confirm({
         title: 'Message',
-        content,
+        content:'Please activate the user first',
         onCancel: () => {},
         onOk: () => {
           window.mises.requestAccounts().then(cb);
         },
       });
     } catch (error) {
+      console.log(error)
       return Promise.reject(error)
     }
   }
@@ -194,12 +196,103 @@ export function shortenAddress(
 }
 export function formatTimeStr(time) {
   if(!time) return ''
-  const diff = dayjs().diff(dayjs(time)) 
-  if (diff < 3600 * 24 * 1000) {
+  const yesterday = dayjs().subtract(1,'days').format('YYYYMMDD')
+  const timeFormat = dayjs(time).format('YYYYMMDD')
+  const now = dayjs().format('YYYYMMDD')
+  if (now===timeFormat) {
     return dayjs(time).format('HH:mm')
   }
-  if (diff < 3600 * 24 * 2 * 1000) {
+  if (yesterday===timeFormat) {
     return dayjs(time).format('[Yesterday] HH:mm')
   }
   return dayjs(time).format('DD MMM HH:mm')
+}
+/**
+ * @description: set user list follow action
+ * @param {Object} dataSource list 
+ * @param {Function} setdataSource set list 
+ * @param {String} keyStr key
+ * @return {*}
+ */
+export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
+  const user = useSelector(state => state.user) || {userActions:{}}
+  useEffect(() => {
+    if(user.userActions.uid){
+      const arr  = dataSource.map(val=>{
+        let item = keyStr ? val[keyStr] : val;
+        item = setFollowAction(item,user)
+        if(item.parent_status){
+          item.parent_status = setFollowAction(item.parent_status,user)
+        }
+        keyStr ? val[keyStr] = item  : val = item
+        return val;
+      })
+      store.dispatch(setUserSetting({
+        uid:'',
+        actionType: ''
+      }))
+      setdataSource([...arr])
+    }
+     // eslint-disable-next-line
+  }, [user.userActions.uid])
+  const setFollowAction = val=>{
+    const {uid,actionType} = user.userActions;
+    if(uid===val.user.uid) val.user.is_followed = actionType==='following'
+    return val;
+  }
+}
+/**
+ * @description: 
+ * @param {*} element class or id element
+ * @param {*} dataSource list
+ * @param {*} lastid 
+ * @return {*}
+ */
+const storageKey = 'storageCache';
+export function useCachePageData(element,dataSource,lastid){
+  const pull = document.querySelector(element);
+  const [isSetListener, setisSetListener] = useState(false)
+  const location = useLocation();
+  const scroll = e=>{
+    const {scrollTop} = e.target;
+    console.log(scrollTop)
+    cachePageData(scrollTop)
+  }
+  useEffect(() => {
+    if(pull&&!isSetListener){
+      setisSetListener(true)
+      pull.addEventListener('scroll',scroll)
+      console.log(pull)
+    }
+    return ()=>{
+      pull&&pull.removeEventListener('scroll',scroll)
+    }
+    // eslint-disable-next-line
+  }, [pull])
+  sessionStorage.setItem(storageKey,JSON.stringify({
+    [location.pathname]:{
+      dataSource,
+      lastid,
+    }
+  }));
+  // const storageCache = sessionStorage.getItem(storageKey);
+  const cachePageData = scrollTop=>{
+    // console.log(obj)
+    let storageCache = sessionStorage.getItem(storageKey);
+    if(storageCache){
+      storageCache = JSON.parse(storageCache);
+      storageCache[location.pathname].scrollTop = scrollTop
+      sessionStorage.setItem(storageKey,JSON.stringify(storageCache));
+    }
+  }
+}
+
+/**
+ * @description: hours to  seconds
+ * @param {string | number} hour  
+ * @return {Number } seconds
+ */
+export function hoursToSeconds(hour){
+  if(!hour) return 0;
+  return Number(hour)*60*60
 }

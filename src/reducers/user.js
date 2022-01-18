@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 22:26:09
- * @LastEditTime: 2022-01-06 13:39:08
+ * @LastEditTime: 2022-01-17 16:04:42
  * @LastEditors: lmk
  * @Description: 
  */
@@ -14,6 +14,10 @@ const initialState = {
   badge:{
     total:0,
     notifications_count:0
+  },
+  userActions:{
+    actionType:"", // follow following 
+    uid:'' // set user uid
   }
 };
 const userReducers = (state = initialState, action) => {
@@ -42,6 +46,11 @@ const userReducers = (state = initialState, action) => {
       return {
         ...state,
         badge: action.data,
+      };  
+    case 'SET_USER_SETTING': // Set user actions
+      return {
+        ...state,
+        userActions: action.data,
       };
     default:
       return state;

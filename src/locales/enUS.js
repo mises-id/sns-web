@@ -66,8 +66,8 @@ const enUS = {
     editPhoto:'Edit photo',
     'blackListPageTitle':"Block List",
     "commentPlaceholder":"Write a comment...",
-    'succcess':"Succeeded"
-
+    'succcess':"Succeeded",
+    "pictureError":"Picture upload failed, please try again"
   }
 }
 export default enUS

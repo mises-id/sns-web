@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-13 14:47:34
+ * @LastEditTime: 2022-01-17 17:06:13
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -13,7 +13,7 @@ import { likesData } from "@/api/status";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
 import { useSelector } from "react-redux";
-import { useChangePosts, useList } from "@/utils";
+import { useChangePosts, useList, useSetDataSourceAction } from "@/utils";
 import PostItem from "@/components/PostItem";
 const MyLikes = ({ history }) => {
   const user = useSelector((state) => state.user) || {};
@@ -23,6 +23,7 @@ const MyLikes = ({ history }) => {
     limit: 20,
     last_id: lastId,
   });
+  useSetDataSourceAction(dataSource, setdataSource,'status')
   //getData
   useEffect(() => {
     setlastId(last_id);

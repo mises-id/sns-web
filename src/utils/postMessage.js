@@ -1,15 +1,16 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-13 17:22:40
+ * @LastEditTime: 2022-01-18 16:18:39
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
+import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
 import { store } from "@/stores";
+import { signin } from '@/api/user';
 export default class MisesExtensionController{
   web3;
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
@@ -54,16 +55,31 @@ export default class MisesExtensionController{
         call: 'mises_connect',
         params: 1,
 		    inputFormatter: [null]
+      },{
+        name:'disconnect',
+        call: 'mises_disconnect',
+        params: 1,
+		    inputFormatter: [null]
+      },{
+        name:'getAddressToMisesId',
+        call: 'mises_getAddressToMisesId',
+        params: 1,
+		    inputFormatter: [null]
       }]
     })
     if(window.ethereum){
       window.ethereum.on('accountsChanged',async res=>{
         if(res.length){
+          const misesid = await this.web3.misesWeb3.getAddressToMisesId(res[0]);
+          const {loginForm} = store.getState().user
+          if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
+            this.disconnect(loginForm.uid);
+            this.resetUser()
+            this.requestAccounts()
+          }
         }
         if(res.length===0) {
-          await store.dispatch(setLoginForm({}))
-          await store.dispatch(setUserAuth(''))
-          await store.dispatch(setUserToken(''))
+          this.resetUser()
           // const accountRes = await this.web3.misesWeb3.requestAccounts();
           // store.dispatch(setUserAuth(accountRes.auth))
         }
@@ -73,6 +89,15 @@ export default class MisesExtensionController{
       })
     }
     
+  }
+  resetUser(){
+    store.dispatch(setUserAuth(''))
+    store.dispatch(setUserToken(''))
+    store.dispatch(setLoginForm({}))
+    store.dispatch(setFollowingBadge({
+      total:0,
+      notifications_count:0
+    }))
   }
   connect(userid){
     return this.web3.misesWeb3.connect({
@@ -91,8 +116,12 @@ export default class MisesExtensionController{
       // const nonce = new Date().getTime();
       // const sign = res.mises_id+nonce;
       // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop 
-      
       store.dispatch(setUserAuth(res.auth))
+      const data = await signin({
+        "provider": "mises",
+        "user_authz": {auth:res.auth}
+      })
+      data.token&&store.dispatch(setUserToken(data.token))
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -101,8 +130,7 @@ export default class MisesExtensionController{
   async getAuth(){
     const res = await this.web3.misesWeb3.requestAccounts();
     const {mises_id} = urlToJson(`?${res.auth}`);
-    const connect = await this.connect(mises_id)
-    console.log(connect,'wqeweee')
+    await this.connect(mises_id)
     return {
       ...res,
       mises_id
@@ -132,11 +160,16 @@ export default class MisesExtensionController{
       return count
     } catch (error) {
       // this.requestAccounts()
-      return Promise.reject()
+      return Promise.reject(error)
     }
   }
   async isActive(){
-    const flag = await this.web3.misesWeb3.getActive();
-    return flag ? Promise.resolve(true) : Promise.reject('not found active user')
+    try {
+      const flag = await this.web3.misesWeb3.getActive();
+      return flag ? Promise.resolve(true) : Promise.reject('Wallet not activated')
+    } catch (error) {
+      console.log(error,'isActive')
+      Promise.reject('Wallet not activated')
+    }
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-10 15:26:37
+ * @LastEditTime: 2022-01-18 18:13:28
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -75,7 +75,10 @@ const Following = ({ pageType,uid }) => {
     const personDetail = item=>{
       history.push({
         pathname: "/userDetail",
-        search: objToUrl(item),
+        search: objToUrl({
+          ...item,
+          avatar: item.avatar ? item.avatar.large : ''
+        }),
       });
     }
     return (

@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-05 15:00:07
+ * @LastEditTime: 2022-01-17 14:42:40
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useState } from "react";
 import "@/styles/common.scss";
 import "./style.scss";
-import { ImagePreview } from "zarm";
+import WxImageViewer from 'react-wx-images-viewer';
 import Image from "../Image";
 const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
   let [style, setstyle] = useState({
@@ -79,15 +79,18 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
   return (
     <div className="imageList">
       {list.length === 1 && firstImage()}
-      {list.length > 1 && list.length < 5 && secondImageMode()}
-      {list.length > 4 && thirdImageMode()}
-      <ImagePreview
+      {list.length > 1 && list.length !==3 && list.length < 5 && secondImageMode()}
+      {(list.length > 4 || list.length ===3) && thirdImageMode()}
+      {
+          visibleState ? <WxImageViewer onClose={() => setvisibleState(false)} urls={list} index={pictureIndex}/> : ""
+        }
+      {/* <ImagePreview
         visible={visibleState}
         images={list}
         activeIndex={pictureIndex}
         onClose={() => setvisibleState(false)}
         maxScale={10}
-      />
+      /> */}
     </div>
   );
 };

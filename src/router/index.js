@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-01-10 09:23:56
+ * @LastEditTime: 2022-01-18 17:43:41
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -28,7 +28,7 @@ const routeConfig = [
 		component: Home,
 		routes: [
 			{
-				path: '/',
+				path: '/following',
 				component: Follows,
 				exact: true
 			},
@@ -77,10 +77,6 @@ const routeConfig = [
 	{
 		path: '/notifications',
 		component: Notifications,
-	},
-	{
-		path: '/shareWith',
-		component: ShareWith,
 	},
 	{
 		path: '/shareWith',
