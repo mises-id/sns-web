@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-18 18:16:15
+ * @LastEditTime: 2022-01-19 11:48:20
  * @LastEditors: lmk
  * @Description:
  */
@@ -31,7 +31,7 @@ const Follow = ({ history = {} }) => {
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
   // get dataList
-  const [fetchData,last_id, dataSource, setdataSource] = useList(fn, {
+  const [fetchData, dataSource, setdataSource] = useList(fn, {
     uid: user.loginForm && user.loginForm.uid,
     limit: 10,
     last_id: lastId,
