@@ -18,6 +18,7 @@ exports[`Comment should render correctly 1`] = `
   </div>
   <ForwardRef(CommentsPop)
     comment={Object {}}
+    deleteCommentData={[Function]}
     likePress={[Function]}
     replyItem={[Function]}
     setvisible={[Function]}

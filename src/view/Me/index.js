@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-18 15:35:05
+ * @LastEditTime: 2022-01-19 17:48:05
  * @LastEditors: lmk
  * @Description:
  */
@@ -37,10 +37,10 @@ const Myself = ({ history }) => {
   //getData
   const getFlag = async () => {
     try {
-      if (!token) {
-        const count = await window.mises.getMisesAccounts();
-        setflag(count > 0);
-      }
+      // if (!token) {
+      //   const count = await window.mises.getMisesAccounts();
+      //   setflag(count > 0);
+      // }
       setloading(false);
       cleartimer()
     } catch (error) {

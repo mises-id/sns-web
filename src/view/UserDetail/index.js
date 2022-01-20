@@ -27,8 +27,12 @@ const UserDetail = (props) => {
   }, []); 
   useDidRecover(() => {
     const historyState = urlToJson(window.location.search);
+    console.log(historyState)
     setInfo(historyState)
-  })
+    if(JSON.stringify(historyState)!==JSON.stringify(state)){
+      window.refreshByCacheKey("/userDetail")
+    }
+  },[state])
   const setInfo = (state) =>{
     setUserInfo(state);
     getUserInfo(state.uid).then(res=>{

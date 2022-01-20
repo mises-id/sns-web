@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-18 16:18:39
+ * @LastEditTime: 2022-01-20 10:06:46
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -11,6 +11,11 @@ import {urlToJson} from "./";
 import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
+import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
+window.clearCache = clearCache;
+window.dropByCacheKey = dropByCacheKey;
+window.getCachingKeys = getCachingKeys;
+window.refreshByCacheKey = refreshByCacheKey;
 export default class MisesExtensionController{
   web3;
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
@@ -75,7 +80,9 @@ export default class MisesExtensionController{
           if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
             this.disconnect(loginForm.uid);
             this.resetUser()
-            this.requestAccounts()
+            await this.requestAccounts()
+            console.log(window.location.pathname)
+            refreshByCacheKey(window.location.pathname)
           }
         }
         if(res.length===0) {
@@ -98,8 +105,13 @@ export default class MisesExtensionController{
       total:0,
       notifications_count:0
     }))
+    clearCache()
+    // dropByCacheKey('/home/discover')
+    // dropByCacheKey('/home/following')
+    console.log('resetUser')
   }
   connect(userid){
+    console.log('connect')
     return this.web3.misesWeb3.connect({
       domain: 'mises.site', //
       appid:this.appid,
@@ -108,9 +120,11 @@ export default class MisesExtensionController{
     })
   }
   disconnect(userid){
+    console.log('disconnect')
     return this.web3.misesWeb3.disconnect({appid:this.appid,userid})
   }
   async requestAccounts(){
+    console.log('requestAccounts')
     try {
       const res = await this.getAuth();
       // const nonce = new Date().getTime();
@@ -128,6 +142,7 @@ export default class MisesExtensionController{
     }
   }
   async getAuth(){
+    console.log('getAuth')
     const res = await this.web3.misesWeb3.requestAccounts();
     const {mises_id} = urlToJson(`?${res.auth}`);
     await this.connect(mises_id)
@@ -137,6 +152,7 @@ export default class MisesExtensionController{
     }
   }
   async setUserInfo(data){
+    console.log('setUserInfo')
     try {
       await this.isActive()
       await this.web3.misesWeb3.setUserInfo(data)
@@ -145,15 +161,19 @@ export default class MisesExtensionController{
     }
   }
   async userFollow(data){
+    console.log('userFollow')
     this.web3.misesWeb3.userFollow(data)
   }
   async userUnFollow(data){
+    console.log('userUnFollow')
     this.web3.misesWeb3.userUnFollow(data)
   }
   openRestore(){
+    console.log('openRestore')
     this.web3.misesWeb3.openRestore()
   }
   async getMisesAccounts(){
+    console.log('getMisesAccounts')
     try {
       await this.isActive()
       const count = await this.web3.misesWeb3.getMisesAccounts()
@@ -164,6 +184,7 @@ export default class MisesExtensionController{
     }
   }
   async isActive(){
+    console.log('isActive')
     try {
       const flag = await this.web3.misesWeb3.getActive();
       return flag ? Promise.resolve(true) : Promise.reject('Wallet not activated')

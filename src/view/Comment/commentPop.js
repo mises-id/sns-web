@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-13 10:37:54
+ * @LastEditTime: 2022-01-20 09:53:43
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,18 +11,22 @@ import replies_close from "@/images/replies_close.png";
 import replies_refresh from "@/images/replies_refresh.png";
 import { Popup } from "zarm";
 import Image from "@/components/Image";
-import { formatTimeStr, useList, username, useRouteState } from "@/utils";
+import { formatTimeStr, isMe, useList, username, useRouteState } from "@/utils";
 import liked from "@/images/liked.png";
 import like from "@/images/like.png";
 import { getComment } from "@/api/status";
 import PullList from "@/components/PullList";
+import deleteComment from "@/images/deleteComment.png";
 const CommentsPop = ({
   setvisible,
   visible,
-  comment: data,
+  comment: data={},
   replyItem,
-  likePress
+  likePress,
+  createdUserId,
+  deleteCommentData
 },ref) => {
+  console.log(data)
   // const [data, setdata] = useState({
   //   user: {},
   //   comments:[]
@@ -78,7 +82,10 @@ const CommentsPop = ({
               {val.content}
             </div>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTimeStr(val.created_at)}</span>
+              <div className="m-flex m-row-center">
+                <span className="m-colors-666 m-font12 m-margin-right8">{formatTimeStr(val.created_at)}</span>
+                {isMe(val.user,createdUserId)&&<img src={deleteComment} alt="" width={12} onClick={e=>deleteCommentData(e,val)}/>}
+              </div>
             </div>
           </div>
         </div>
@@ -98,7 +105,10 @@ const CommentsPop = ({
           <div className="m-font15 m-colors-555 m-margin-top8   m-padding-bottom13">
             <p className="comment-content">{data.content}</p>
             <div className="m-flex m-row-between m-margin-top8">
-              <span className="m-colors-666 m-font12">{formatTimeStr(data.created_at)}</span>
+              <div className="m-flex m-row-center">
+                <span className="m-colors-666 m-font12 m-margin-right8">{formatTimeStr(data.created_at)}</span>
+                {isMe(data.user,createdUserId)&&<img src={deleteComment} alt="" width={12} onClick={e=>deleteCommentData(e,data)}/>}
+              </div>
               <div className="right-icon m-flex">
                 <div
                   className="m-flex like-box"

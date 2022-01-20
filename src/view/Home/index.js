@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-18 17:44:21
+ * @LastEditTime: 2022-01-19 18:15:34
  * @LastEditors: lmk
  * @Description: 
  */
@@ -63,12 +63,10 @@ const Home = ({history,children=[]})=>{
   useEffect(() => {
     if(user.token){
       window.mises.getAuth().then(res=>{
-        console.log(111)
         const resAuth = urlToJson(`?${res.auth}`)
         const selectorAuth = urlToJson(`?${user.auth}`)
         if(resAuth.mises_id!==selectorAuth.mises_id){
-          dispatch(setUserAuth(''))
-          dispatch(setUserToken(''))
+          window.mises.resetUser()
           dispatch(setUserAuth(res.auth))
         }
       }).catch(err=>{

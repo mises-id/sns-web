@@ -1,12 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 22:26:09
- * @LastEditTime: 2022-01-17 16:04:42
+ * @LastEditTime: 2022-01-19 13:55:01
  * @LastEditors: lmk
  * @Description: 
  */
 import {REHYDRATE} from 'redux-persist';
-
 const initialState = {
   loginForm:{},
   auth:'',

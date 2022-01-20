@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-19 13:42:01
+ * @LastEditTime: 2022-01-19 18:44:09
  * @LastEditors: lmk
  * @Description:
  */
@@ -21,6 +21,7 @@ import Image from "@/components/Image";
 import { getNotifications } from "@/api/notifications";
 import { setFollowingBadge } from "@/actions/user";
 import { useLocation } from "react-router-dom";
+import { useDidRecover } from 'react-router-cache-route'
 const Follow = ({ history = {} }) => {
   const user = useSelector((state) => state.user) || {};
   const location = useLocation() || {}
@@ -34,14 +35,10 @@ const Follow = ({ history = {} }) => {
   const [fetchData,last_id, dataSource, setdataSource] = useList(fn, {
     uid: user.loginForm && user.loginForm.uid,
     limit: 10,
-    last_id: lastId,
-  });
-  // useGetCachePageData('.za-pull.m-layout',setdataSource,setLastId,setIsAuto,()=>{
-
-  // })
+    last_id: lastId
+  },{type:isDiscover ? 'refreshList' : 'refresh'});
   console.log(last_id)
   useSetDataSourceAction(dataSource, setdataSource)
-  // useCachePageData('.za-pull.m-layout',dataSource,last_id)
   const [notifitionObj, setnotifitionObj] = useState({
     "total": 0,
     "notifications_count": 0,
@@ -55,20 +52,7 @@ const Follow = ({ history = {} }) => {
     const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1
     setisDiscover(isDiscoverFlag);
     setloading(false);
-    if(user.token){
-      getNotifications().then(res=>{
-        setnotifitionObj({
-          ...res,
-          avatar: res.latest_message&&res.latest_message.user ? res.latest_message.user.avatar : {}
-        })
-        dispatch(setFollowingBadge({
-          total:res.total,
-          notifications_count:res.notifications_count
-        }))
-      }).catch(error=>{
-        console.log(error)
-      })
-    }
+    
     // getFollowingLatest()
     // if(isDiscoverFlag){
     //   // recommend user
@@ -80,12 +64,29 @@ const Follow = ({ history = {} }) => {
     // }
     // eslint-disable-next-line
   }, [isDiscover]);
+  useDidRecover(()=>{
+    getFollowingLatest()
+  })
   const getFollowingLatest = ()=>{
     const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1
     if(!isDiscoverFlag&&user.token){
       // follow latest user list
       followingLatest().then(res=>{
         setfollowingLatest(res || [])
+      }).catch(error=>{
+        console.log(error)
+      })
+    }
+    if(user.token){
+      getNotifications().then(res=>{
+        setnotifitionObj({
+          ...res,
+          avatar: res.latest_message&&res.latest_message.user ? res.latest_message.user.avatar : {}
+        })
+        dispatch(setFollowingBadge({
+          total:res.total,
+          notifications_count:res.notifications_count
+        }))
       }).catch(error=>{
         console.log(error)
       })
@@ -143,7 +144,7 @@ const Follow = ({ history = {} }) => {
           <div className="user-avatar">
             <div className="circle">
               <Image
-                size={60}
+                size={50}
                 source={avatarStr}
               />
             </div>
@@ -177,11 +178,19 @@ const Follow = ({ history = {} }) => {
       const {avatar={},usernameStr=username(val.user),uid,is_followed,misesid} = val.user;
       const avatarStr = avatar&&avatar.medium ? avatar.medium : ''
       return (
-        <div key={index} className="user-item" onClick={()=>userDetail({username:usernameStr,uid,is_followed,avatar:avatarStr,misesid})}>
+        <div key={index} className="user-item" onClick={()=>{
+          val.unread = false;
+          setfollowingLatest([...followingLatestArr])
+          dispatch(setFollowingBadge({
+            total:notifitionObj.total - 1,
+            notifications_count:notifitionObj.notifications_count
+          }))
+          userDetail({username:usernameStr,uid,is_followed,avatar:avatarStr,misesid})}
+        }>
           <div className="user-avatar">
             <div className="circle">
               <Image
-                size={60}
+                size={50}
                 source={avatarStr}
               />
             </div>
@@ -202,23 +211,27 @@ const Follow = ({ history = {} }) => {
       search:objToUrl({uid,username,avatar,is_followed,misesid})
     })
   }
-  const notificationPage = () => history.push({ pathname: "/notifications",search:objToUrl({count: notifitionObj.notifications_count})});
+  const notificationPage = () => {
+    setnotifitionObj({
+      notifications_count:0
+    })
+    history.push({ pathname: "/notifications",search:objToUrl({count: notifitionObj.notifications_count})});
+  }
   const followers = () => {
     const renderView = renderFollowersView();
-    return (
-      <div className="follower-view">
-        {renderView.length > 0 && (
-          <div className="scroll-view">{renderView}</div>
-        )}
-        {notifitionObj.notifications_count>0&&<div className="notification" onClick={notificationPage}>
-          <Image
-            size={30}
-            source={notifitionObj.avatar&&notifitionObj.avatar.medium}
-          />
-          <div className="notification-txt">{notifitionObj.notifications_count} Notification</div>
-        </div>}
-      </div>
-    );
+    return (renderView.length > 0 || notifitionObj.notifications_count>0)&&<div className="follower-view">
+      {renderView.length > 0 && (
+        <div className="scroll-view">{renderView}</div>
+      )}
+      {notifitionObj.notifications_count>0&&<div className="notification" onClick={notificationPage}>
+        <Image
+          size={30}
+          source={notifitionObj.avatar&&notifitionObj.avatar.medium}
+        />
+        <div className="notification-txt">{notifitionObj.notifications_count} Notification</div>
+      </div>}
+    </div>
+    ;
   };
   return (
       <div>
@@ -234,9 +247,9 @@ const Follow = ({ history = {} }) => {
               isAuto={isAuto}
               renderView={renderView}
               data={dataSource}
-              load={()=>{
+              load={e=>{
                 getFollowingLatest()
-                return fetchData()
+                return fetchData(e)
               }}
             />
         )}

@@ -174,11 +174,11 @@ $align:center left right;
 }
 
 .Panel .m-layout{
-  height: calc(var(--window-height) - 60px)
+  height: calc(100vh - 60px)
 }
 .m-layout{
   overflow-y: auto;
-  height: calc(var(--window-height) - 45px)
+  height: calc(100vh - 45px)
 }
 body{
   .za-nav-bar{
@@ -187,7 +187,7 @@ body{
   }
 }
 .page{
-  height: var(--window-height);
+  height: 100vh;
 }
 .item-eli{
   display: -webkit-box;

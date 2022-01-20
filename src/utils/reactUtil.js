@@ -1,33 +1,51 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import CacheRoute from 'react-router-cache-route'
+import React from "react";
+import { Route } from "react-router-dom";
+import CacheRoute from "react-router-cache-route";
 /**
  * The corresponding route is generated according to the route configuration
  * @param {array} routeConfig route config
  * @param {string} parentPath parent Path
  */
-export function routes(routeConfig, parentPath = '') {
-    if (!routeConfig || routeConfig.length === 0) {
-        return null
+export function routes(routeConfig, parentPath = "") {
+  if (!routeConfig || routeConfig.length === 0) {
+    return null;
+  }
+  return routeConfig.map((route) => {
+    if (["/post", "/createPosts", "/shareWith",'/comment'].includes(route.path)) {
+      return (
+        <Route
+          path={parentPath + route.path}
+          key={parentPath + route.path}
+          exact={route.exact}
+          render={(props) => {
+            return (
+              <route.component {...props}>
+                {/* The nested route can be added through this.props.children in the parent route*/}
+                {routes(route.routes, parentPath + route.path)}
+              </route.component>
+            );
+          }}
+        />
+      );
     }
     return (
-        routeConfig.map(route => {
-            if(['/post','/createPosts','/shareWith'].includes(route.path)){
-                return <Route path={parentPath + route.path} key={parentPath + route.path} exact={route.exact} render={(props) => {
-                    return <route.component {...props}>
-                        {/* The nested route can be added through this.props.children in the parent route*/}
-                        {routes(route.routes, parentPath + route.path)}
-                    </route.component>
-                }} />
-            }
-            return <CacheRoute path={parentPath + route.path} key={parentPath + route.path} cacheKey={parentPath + route.path} exact={route.exact} render={(props) => {
-                return <route.component {...props}>
-                    {/* The nested route can be added through this.props.children in the parent route*/}
-                    {routes(route.routes, parentPath + route.path)}
-                </route.component>
-            }} />
-        })
-    )
+      <CacheRoute
+        path={parentPath + route.path}
+        key={parentPath + route.path}
+        cacheKey={parentPath + route.path}
+        exact={route.exact}
+        when='always'
+        render={(props) => {
+          return (
+            <route.component {...props}>
+              {/* The nested route can be added through this.props.children in the parent route*/}
+              {routes(route.routes, parentPath + route.path)}
+            </route.component>
+          );
+        }}
+      />
+    );
+  });
 }
 
 /**
@@ -51,66 +69,66 @@ export function routes(routeConfig, parentPath = '') {
     }
  */
 export function callAPIMiddleware({ dispatch, getState }) {
-    return next => action => {
-        const {
-            types,
-            callAPI,
-            shouldCallAPI = () => true,
-            payload = {}
-        } = action
+  return (next) => (action) => {
+    const { types, callAPI, shouldCallAPI = () => true, payload = {} } = action;
 
-        if (!types) {
-            // Normal action: pass it on
-            return next(action)
-        }
-        
-        if (types.toString() !== '[object Object]' || types.successType === undefined) {
-            throw new Error('Expected an object or property success undefined')
-        }
-
-        if (typeof callAPI !== 'function') {
-            throw new Error('Expected callAPI to be a function.')
-        }
-
-        if (!shouldCallAPI(getState())) {
-            return
-        }
-
-        const { requestType, successType, failureType } = types
-
-        requestType && dispatch(
-            Object.assign({}, payload, {
-                type: requestType
-            })
-        )
-
-        return callAPI().then(
-            response =>
-                dispatch(
-                    Object.assign({}, payload, {
-                        response: response.data, // 简化数据结构层次
-                        type: successType
-                    })
-                ),
-            error =>
-                failureType && dispatch(
-                    Object.assign({}, payload, {
-                        error,
-                        type: failureType
-                    })
-                )
-        )
+    if (!types) {
+      // Normal action: pass it on
+      return next(action);
     }
+
+    if (
+      types.toString() !== "[object Object]" ||
+      types.successType === undefined
+    ) {
+      throw new Error("Expected an object or property success undefined");
+    }
+
+    if (typeof callAPI !== "function") {
+      throw new Error("Expected callAPI to be a function.");
+    }
+
+    if (!shouldCallAPI(getState())) {
+      return;
+    }
+
+    const { requestType, successType, failureType } = types;
+
+    requestType &&
+      dispatch(
+        Object.assign({}, payload, {
+          type: requestType,
+        })
+      );
+
+    return callAPI().then(
+      (response) =>
+        dispatch(
+          Object.assign({}, payload, {
+            response: response.data, // 简化数据结构层次
+            type: successType,
+          })
+        ),
+      (error) =>
+        failureType &&
+        dispatch(
+          Object.assign({}, payload, {
+            error,
+            type: failureType,
+          })
+        )
+    );
+  };
 }
 
 export function createReducer(initialState, handlers) {
-    return function reducer(state = initialState, action) {
-        if (handlers.hasOwnProperty(action.type)) {
-            return handlers[action.type](state, action)
-        } else {
-            return state
-        }
+  return function reducer(state = initialState, action) {
+    if (handlers.hasOwnProperty(action.type)) {
+      return handlers[action.type](state, action);
+    } else {
+      return state;
     }
+  };
 }
 
 /**
@@ -119,19 +137,19 @@ export function createReducer(initialState, handlers) {
  * @returns {AsyncComponent} Returns a HOC component that encapsulates the component that needs to be loaded asynchronously
  */
 export function getAsyncComponent(load) {
-    return class AsyncComponent extends React.Component {
-        componentDidMount() {
-            load().then(({ default: component }) => {
-                this.setState({
-                    Component: component
-                })
-            })
-        }
-
-        render() {
-            const { Component } = this.state || {}
-
-            return Component ? <Component {...this.props} /> : null
-        }
+  return class AsyncComponent extends React.Component {
+    componentDidMount() {
+      load().then(({ default: component }) => {
+        this.setState({
+          Component: component,
+        });
+      });
     }
+
+    render() {
+      const { Component } = this.state || {};
+
+      return Component ? <Component {...this.props} /> : null;
+    }
+  };
 }
