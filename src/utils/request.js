@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-01-10 12:01:11
+ * @LastEditTime: 2022-01-19 14:06:39
  * @LastEditors: lmk
  * @Description: common request
  */
 import axios from 'axios'
 import { store } from "@/stores";
 import { Toast } from 'zarm';
-import { setLoginForm, setUserToken } from '@/actions/user';
+// import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://apiv2.mises.site/api/v1/'
 // export const baseURL = 'http://192.168.1.10:8080/api/v1/'
@@ -65,7 +65,7 @@ request.interceptors.response.use(
     return Promise.reject(error.message)
   }
 )
-const {dispatch} = store
+// const {dispatch} = store
 const reject = ({code,message})=>{
   if(code===403002){
     invalidToken()
@@ -73,8 +73,7 @@ const reject = ({code,message})=>{
   Toast.show({content:message|| 'error'})
 }
 const invalidToken = ()=>{
-  dispatch(setLoginForm({}))
-  dispatch(setUserToken(''))
+  window.mises.resetUser()
   // getAuth().then((res={})=>{
   //   const auth = store.getState().user.auth;
   //   console.log(res.data,auth)

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-01-18 17:13:38
+ * @LastEditTime: 2022-01-19 16:54:09
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -47,6 +47,9 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
     return load(type)
       .then((res) => {
         if (res) {
+          if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
+            return false;
+          }
           const last_id = res.pagination.last_id;
           setlastId(last_id);
           //!last_id&&setLoading(LOAD_STATE.complete)

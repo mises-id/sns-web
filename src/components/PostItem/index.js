@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-14 21:44:06
+ * @LastEditTime: 2022-01-19 19:15:47
  * @LastEditors: lmk
  * @Description:
  */
@@ -38,7 +38,7 @@ const PostItem = ({
   };
   const commentPage = e => {
     e.stopPropagation();
-    history.push({ pathname: "/comment", search: objToUrl({ id: val.id }) });
+    history.push({ pathname: "/comment", search: objToUrl({ id: val.id,createdUserId:val.user.uid }) });
   };
   return (
     <div

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-17 14:42:47
+ * @LastEditTime: 2022-01-19 17:58:10
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -58,6 +58,7 @@ const MyPosts = ({ history }) => {
     onClick: () => {
       deleteItem(acitve.val,acitve.index)
       setVisible(false)
+      window.dropByCacheKey('/home/following')
     }
   }]
   const showCheckItem = (val,index)=>{

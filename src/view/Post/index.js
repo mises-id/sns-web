@@ -1,22 +1,24 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-18 17:50:51
+ * @LastEditTime: 2022-01-20 09:53:01
  * @LastEditors: lmk
  * @Description: post detail
  */
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Loading } from "zarm";
+import { Button, Loading, Modal } from "zarm";
 import look from "@/images/look.png";
 import "./index.scss";
 import liked from "@/images/liked.png";
 import like from "@/images/like.png";
+import deleteComment from "@/images/deleteComment.png";
 import commentIcon from "@/images/comment.png";
 import Navbar from "@/components/NavBar";
 import { getComment, getStatusItem } from "@/api/status";
 import {
   formatTimeStr,
+  isMe,
   objToUrl,
   useBind,
   useChangePosts,
@@ -25,7 +27,7 @@ import {
   useRouteState,
 } from "@/utils";
 import { useSelector } from "react-redux";
-import { createComment, likeComment, unlikeComment } from "@/api/comment";
+import { createComment, likeComment, removeComment, unlikeComment } from "@/api/comment";
 import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
 import CommentsPop from "../Comment/commentPop";
@@ -62,7 +64,7 @@ const Post = ({ history = {} }) => {
     input.current && input.current.focus();
   };
   const goComment = () => {
-    history.push({ pathname: "/comment", search: objToUrl({ id }) });
+    history.push({ pathname: "/comment", search: objToUrl({ id,createdUserId:item.user.uid }) });
   };
   const getDetail = (id) => {
     getStatusItem(id).then((res) => {
@@ -146,6 +148,29 @@ const Post = ({ history = {} }) => {
     val.username = username(val.user)
     setselectItem(val)
   }
+  const deleteCommentData = (e,val)=>{
+    e.stopPropagation()
+    Modal.confirm({
+      title: 'Message',
+      content: 'Are you sure to delete this comment?',
+      onCancel: () => {
+      },
+      onOk: () => {
+        // if(val.parent_id){ // top comment
+        //   const index = 
+        // }
+        getCommentList(state.id);
+        if(visible&&!val.topic_id){  // If the pop is displayed and the first level comment is deleted
+          setvisible(false)
+          setcommentPop({})
+        }
+        removeComment(val.id).then(res=>{
+          getCommentList(state.id);
+        })
+      },
+    });
+    console.log(val)
+  }
   return (
     <div className="post-detail">
       <Navbar title={t("postPageTitle")} />
@@ -180,7 +205,10 @@ const Post = ({ history = {} }) => {
                       <div className="m-font15 m-colors-555 m-margin-top8  m-padding-bottom13">
                         <p>{val.content}</p>
                         <div className="m-flex m-row-between m-margin-top8">
-                          <span className="m-colors-666 m-font12">{formatTimeStr((val.created_at))}</span>
+                          <div className="m-flex m-row-center">
+                            <span className="m-colors-666 m-font12 m-margin-right8">{formatTimeStr((val.created_at))}</span>
+                            {isMe(val.user,item.user.uid)&&<img src={deleteComment} alt="" width={12} onClick={e=>deleteCommentData(e,val)}/>}
+                          </div>
                           <div className="right-icon m-flex">
                             <div
                               className="m-flex like-box"
@@ -234,7 +262,10 @@ const Post = ({ history = {} }) => {
                                   </span>
                                   <span className="comment-content1">{content}</span>
                                 </div>
-                                <span className="m-colors-666 m-font12">{formatTimeStr((created_at))}</span>
+                                <div>
+                                  <span className="m-colors-666 m-font12 m-margin-right8">{formatTimeStr(created_at)}</span>
+                                  {isMe(user,item.user.uid)&&<img src={deleteComment} alt="" width={12} onClick={e=>deleteCommentData(e,item)}/>}
+                                </div>
                               </div>
                             </div>
                           );
@@ -282,6 +313,8 @@ const Post = ({ history = {} }) => {
         comment={commentPop}
         replyItem={replyItem}
         likePress={likePress}
+        createdUserId={item.user ? item.user.uid : ''}
+        deleteCommentData={deleteCommentData}
       ></CommentsPop>
       {item&&<ReplyInput
         submit={submit}

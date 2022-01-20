@@ -9,7 +9,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-18 18:15:55
+ * @LastEditTime: 2022-01-20 10:26:29
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -67,24 +67,47 @@ export function objToUrl(object){
  * @return {*}
  */
 
-export function useList(fn,params={}){
+/**
+ * @description: 
+ * @param {*} fn getdatalist
+ * @param {*} Get data list using parameters
+ * @param {*} type Judge how to add data according to the type
+ * @return {*}
+ */
+export function useList(fn,params={},listType={type:'refresh'}){
   let [last_id, setlast_id] = useState('');
+  const [downRefreshLastId, setdownRefreshLastId] = useState('')
   let [dataSource, setdataSource] = useState([]);
   const fetchData = async type=>{
     try {
       const isRefresh = type==='refresh';
-      if(isRefresh){
+      const isRefreshList = listType.type==='refreshList';
+      if(isRefresh&&!isRefreshList){
         last_id = '';
         setlast_id(last_id);
       }
-      const res = await fn({...params,last_id});
+      const res = await fn({...params,last_id:isRefreshList&&isRefresh ? downRefreshLastId : last_id});
       const {last_id:lastId} = res.pagination;
-      setlast_id(lastId);
-      if(isRefresh){
+      if(isRefresh&&listType.type==='refresh'){
         dataSource = []
       }
-      setdataSource([...dataSource,...res.data]);
-      return Promise.resolve(res)
+      if(isRefresh&&isRefreshList){
+        res.data.reverse()
+        res.data.forEach(val=>dataSource.unshift(val))
+        setdataSource(dataSource.slice(0,200)) // max length
+        lastId&&setdownRefreshLastId(lastId)
+        lastId&&setlast_id(lastId)
+      }else{
+        if(res.data.length!==0){
+          setdownRefreshLastId(lastId)
+        }
+        setlast_id(lastId);
+        setdataSource([...dataSource,...res.data]);
+      }
+      return Promise.resolve({
+        ...res,
+        listType,
+      })
     } catch (error) {
       return Promise.reject(error)
     }
@@ -179,7 +202,7 @@ export function getShareWithObj(value){
   return shareWith.find(val=>val.value===value) || {}
 }
 
-export function username(val){
+export function username(val={}){
   if(val.username) return val.username;
   if(val.misesid&&val.misesid.length>26){
     const name = `${shortenAddress(val.misesid)}`
@@ -241,51 +264,6 @@ export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
     return val;
   }
 }
-/**
- * @description: 
- * @param {*} element class or id element
- * @param {*} dataSource list
- * @param {*} lastid 
- * @return {*}
- */
-const storageKey = 'storageCache';
-export function useCachePageData(element,dataSource,lastid){
-  const pull = document.querySelector(element);
-  const [isSetListener, setisSetListener] = useState(false)
-  const location = useLocation();
-  const scroll = e=>{
-    const {scrollTop} = e.target;
-    console.log(scrollTop)
-    cachePageData(scrollTop)
-  }
-  useEffect(() => {
-    if(pull&&!isSetListener){
-      setisSetListener(true)
-      pull.addEventListener('scroll',scroll)
-      console.log(pull)
-    }
-    return ()=>{
-      pull&&pull.removeEventListener('scroll',scroll)
-    }
-    // eslint-disable-next-line
-  }, [pull])
-  sessionStorage.setItem(storageKey,JSON.stringify({
-    [location.pathname]:{
-      dataSource,
-      lastid,
-    }
-  }));
-  // const storageCache = sessionStorage.getItem(storageKey);
-  const cachePageData = scrollTop=>{
-    // console.log(obj)
-    let storageCache = sessionStorage.getItem(storageKey);
-    if(storageCache){
-      storageCache = JSON.parse(storageCache);
-      storageCache[location.pathname].scrollTop = scrollTop
-      sessionStorage.setItem(storageKey,JSON.stringify(storageCache));
-    }
-  }
-}
 
 /**
  * @description: hours to  seconds
@@ -295,4 +273,13 @@ export function useCachePageData(element,dataSource,lastid){
 export function hoursToSeconds(hour){
   if(!hour) return 0;
   return Number(hour)*60*60
+}
+/**
+* @param {*} 
+*/
+export function isMe(user,createdUserId){
+  return false;
+  if(!user || !createdUserId) return false;
+  const {loginForm={}} = store.getState().user;
+  return Number((user.uid || createdUserId))===Number(loginForm.uid)
 }

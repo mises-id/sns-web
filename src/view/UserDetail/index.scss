@@ -88,11 +88,11 @@
 }
 .user-post-content{
   .m-layout{
-    height: calc(var(--window-height) - 90px - 132px);
+    height: calc(100vh - 90px - 132px);
   }
 }
 .user-follow-page{
   .m-layout{
-    height: calc(var(--window-height) - 90px);
+    height: calc(100vh - 90px);
   }
 }

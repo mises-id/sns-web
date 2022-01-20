@@ -9,6 +9,8 @@ exports[`Post should render correctly 1`] = `
   />
   <ForwardRef(CommentsPop)
     comment={Object {}}
+    createdUserId=""
+    deleteCommentData={[Function]}
     likePress={[Function]}
     replyItem={[Function]}
     setvisible={[Function]}
