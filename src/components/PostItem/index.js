@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-19 19:15:47
+ * @LastEditTime: 2022-01-21 18:44:04
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,9 @@ import { objToUrl } from "@/utils";
 // import LazyLoad from 'react-lazyload';
 // import ImageList from '../ImageList';
 const PostItem = ({
-  val = {},
+  val = {
+    user:{}
+  },
   index,
   history,
   changeFollow,
@@ -40,7 +42,7 @@ const PostItem = ({
     e.stopPropagation();
     history.push({ pathname: "/comment", search: objToUrl({ id: val.id,createdUserId:val.user.uid }) });
   };
-  return (
+  return val&&(
     <div
       key={index}
       className="m-padding15 m-bg-fff m-line-bottom"

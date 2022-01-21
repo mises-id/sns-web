@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-21 11:12:19
+ * @LastEditTime: 2022-01-21 19:22:15
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -14,6 +14,7 @@ import Navbar from "@/components/NavBar";
 import {
   formatTimeStr,
   isMe,
+  objToUrl,
   useBind,
   useList,
   useLoginModal,
@@ -56,11 +57,11 @@ const Comment = ({ history }) => {
     e.stopPropagation();
     if (!user.token) {
       loginModal(()=>{
-        selectReplyItem(likeFn)
+        selectReplyItem(()=>likeFn(val))
       })
       return false;
     }
-    likeFn()
+    likeFn(val)
   };
   const selectReplyItem = val=>{
     commentContent.onChange('')
@@ -117,6 +118,17 @@ const Comment = ({ history }) => {
       },
     });
   }
+  const userDetail = (e,{user:item})=>{
+    e.stopPropagation();
+    const isMe = user.loginForm.uid === item.uid;
+    if (!isMe) {
+      const avatar = item.avatar ? item.avatar.medium : "";
+      history.push({
+        pathname: "/userDetail",
+        search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),
+      });
+    }
+  }
   const renderView = (val = {}, index) => {
     const { user = {}, comments = [] } = val;
     const { avatar = {} } = user;
@@ -126,7 +138,7 @@ const Comment = ({ history }) => {
         className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15"
         onClick={() => replyItem(val)}
       >
-        <Image size={30} source={avatar && avatar.medium}></Image>
+        <Image size={30} source={avatar && avatar.medium} onClick={(e)=>userDetail(e,val)}></Image>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -145,11 +157,11 @@ const Comment = ({ history }) => {
                 >
                   <img
                     src={val.is_liked ? liked : like}
-                    className="icon"
+                    width={13}
                     alt="like"
                   ></img>
                   <span
-                    className={`m-font14 m-margin-left8 ${
+                    className={`m-font11 m-margin-left8 ${
                       val.is_liked ? "m-colors-FF3D62" : "m-colors-333"
                     }`}
                   >
@@ -157,8 +169,8 @@ const Comment = ({ history }) => {
                   </span>
                 </div>
                 <div className="m-flex icon-box">
-                  <img src={commentIcon} className="icon" alt="comment"></img>
-                  <span className={`m-font14 m-colors-333 m-margin-left8`}>
+                  <img src={commentIcon} width={13} alt="comment"></img>
+                  <span className={`m-font11 m-colors-333 m-margin-left8`}>
                     {val.comments_count || 0}
                   </span>
                 </div>
@@ -175,7 +187,7 @@ const Comment = ({ history }) => {
                   className="m-flex m-col-top m-bg-fff m-padding-bottom15 right-content"
                   onClick={(e) => replyItem(item, e)}
                 >
-                  <Image size={20} source={avatar && avatar.medium}></Image>
+                  <Image size={20} source={avatar && avatar.medium}  onClick={(e)=>userDetail(e,item)}></Image>
                   <div className="m-margin-left11 m-flex-1">
                     <div className="m-padding-bottom10">
                       <span className="commentNickname1">

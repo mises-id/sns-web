@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-21 10:27:23
+ * @LastEditTime: 2022-01-21 19:15:27
  * @LastEditors: lmk
  * @Description: 
  */
@@ -52,6 +52,7 @@ const Home = ({history,children=[]})=>{
       "user_authz": {auth}
     }).then(data=>{
       data.token&&dispatch(setUserToken(data.token))
+      localStorage.setItem('setAccount',true)
     })
     getUserInfo()
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
@@ -67,22 +68,24 @@ const Home = ({history,children=[]})=>{
     window.refreshByCacheKey('/myPosts')
     window.refreshByCacheKey('/blackList')
     window.refreshByCacheKey('/userFollowPage')
+    window.refreshByCacheKey('/post')
+    window.refreshByCacheKey('/comment')
   })
   // If this page is displayed, the current user is updated
-  useEffect(() => {
-    if(user.token){
-      window.mises.getAuth().then(res=>{
-        const resAuth = urlToJson(`?${res.auth}`)
-        const selectorAuth = urlToJson(`?${user.auth}`)
-        if(resAuth.mises_id!==selectorAuth.mises_id){
-          window.mises.resetUser()
-          dispatch(setUserAuth(res.auth))
-        }
-      }).catch(err=>{
-        console.log(err)
-      })
-    }
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   if(user.token){
+  //     window.mises.getAuth().then(res=>{
+  //       const resAuth = urlToJson(`?${res.auth}`)
+  //       const selectorAuth = urlToJson(`?${user.auth}`)
+  //       if(resAuth.mises_id!==selectorAuth.mises_id){
+  //         window.mises.resetUser()
+  //         dispatch(setUserAuth(res.auth))
+  //       }
+  //     }).catch(err=>{
+  //       console.log(err)
+  //     })
+  //   }
+  // }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 

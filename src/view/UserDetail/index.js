@@ -23,8 +23,9 @@ const UserDetail = (props) => {
   const state = useRouteState();
   useEffect(() => {
     setInfo(state)
+    setvalue(0)
     // eslint-disable-next-line
-  }, []); 
+  }, [state.uid]); 
   useDidRecover(() => {
     const historyState = urlToJson(window.location.search);
     console.log(historyState)
@@ -33,10 +34,15 @@ const UserDetail = (props) => {
       window.refreshByCacheKey("/userDetail")
     }
     window.refreshByCacheKey("/userFollowPage")
+    window.refreshByCacheKey("/comment")
+    window.refreshByCacheKey("/post")
   },[state])
+  
   const setInfo = (state) =>{
+    const uid = state.uid
+    state.uid = ''
     setUserInfo(state);
-    getUserInfo(state.uid).then(res=>{
+    getUserInfo(uid).then(res=>{
       res.avatar = res.avatar ? res.avatar.medium : ''
       setUserInfo(res);
       const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
@@ -143,11 +149,11 @@ const UserDetail = (props) => {
               </div>
               <div className="follow-box m-flex">
                 <div onClick={() => getFollow(0)}>
-                  <span className="follow-num">{userInfo.followings_count}</span>
+                  <span className="follow-num">{userInfo.followings_count || 0}</span>
                   <span className="follow-name">Following</span>
                 </div>
                 <div onClick={() => getFollow(1)}>
-                  <span className="follow-num">{userInfo.fans_count}</span>
+                  <span className="follow-num">{userInfo.fans_count || 0}</span>
                   <span className="follow-name">Followers</span>
                 </div>
               </div>

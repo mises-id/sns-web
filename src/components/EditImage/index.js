@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-12-02 17:31:09
- * @LastEditTime: 2022-01-17 12:05:38
+ * @LastEditTime: 2022-01-21 19:18:38
  * @LastEditors: lmk
  * @Description:
  */
@@ -517,7 +517,7 @@ const EditImage = ({ image, index, closePop, send }) => {
           style={{ height: "0" }}
         ></div>
         {/* show Edit button icon*/}
-        <div className="icon-box">
+        <div className="icon-box-edit">
           <img src={jieping} alt="" className="icon" onClick={showCropper} />
           <img src={wenben} alt="" className="icon" onClick={showEditModel} />
         </div>

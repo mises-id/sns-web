@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-21 12:23:26
+ * @LastEditTime: 2022-01-21 21:19:15
  * @LastEditors: lmk
  * @Description:
  */
@@ -19,6 +19,7 @@ import { ActivityIndicator, Badge, Button } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
+
 const Myself = ({ history }) => {
   const { t } = useTranslation();
   const [loginForm,setLoginForm] = useState({});
@@ -37,10 +38,6 @@ const Myself = ({ history }) => {
   //getData
   const getFlag = async () => {
     try {
-      // if (!token) {
-      //   const count = await window.mises.getMisesAccounts();
-      //   setflag(count > 0);
-      // }
       setloading(false);
       cleartimer()
     } catch (error) {
@@ -56,9 +53,7 @@ const Myself = ({ history }) => {
   }
   useEffect(() => {
     window.mises.getAddAccountFlag().then(res=>{
-      if(res){
-
-      }
+      setflag(!!res)
     })
     if(timer){
       cleartimer()
@@ -134,6 +129,65 @@ const Myself = ({ history }) => {
   //click global cell
   const cellClick = (val) =>
     history.push({ pathname: val.url, search: objToUrl({ pageType: val.pageType }) });
+  const connectView = ()=>{
+    return <div>
+      <div>
+        <p className="tips-title m-margin-top15 m-colors-333">
+          {t("aboutId")}
+        </p>
+        <p className="m-font15 m-colors-333  m-tips me-tips">
+          {t("connectMisesIdTips")}
+        </p>
+      </div>
+      <div className="m-margin-lr40  m-margin-top10 m-margin-bottom20">
+        <Button
+          block
+          shape="round"
+          theme="primary"
+          onClick={onclick}
+        >
+          <span className="btn-txt">{t("loginUser")}</span>
+        </Button>
+      </div>
+    </div>
+  }
+  const created = ()=>{
+    return <div>
+      <div>
+        <p className="tips-title m-margin-top15 m-colors-333">
+          {t("aboutId")}
+        </p>
+        <p className="m-font15 m-colors-333 m-tips me-tips">
+          {t("connectMisesIdTips")}
+        </p>
+        <p className="tips-title m-margin-top15 m-colors-333">
+          {t("restoreTitle")}
+        </p>
+        <p className="m-font15 m-colors-333 me-tips m-tips">
+          {t("resoreMisesIdTips")}
+        </p>
+      </div>
+      <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
+        <Button
+          block
+          shape="round"
+          theme="primary"
+          ghost
+          onClick={restore}
+        >
+          <span className="btn-txt">{t("restore")}</span>
+        </Button>
+      </div>
+      <p className="m-font15 m-colors-333 me-tips m-tipss">
+        {t("createMisesIdTips")}
+      </p>
+      <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
+        <Button block shape="round" theme="primary" onClick={onclick}>
+          <span className="btn-txt">{t("createId")}</span>
+        </Button>
+      </div>
+    </div>
+  }
   return (
     <div>
       {loading ? (
@@ -171,32 +225,7 @@ const Myself = ({ history }) => {
       ) : (
         <div className=" m-layout m-bg-fff">
           <img alt="bg" src={bg} className="bg" />
-          <div className="m-margin-left15 m-margin-bottom25">
-            <p className="nickname m-margin-top15 m-margin-bottom20 m-colors-333">
-              {t("aboutId")}
-            </p>
-            <p className="m-font15 m-colors-333 m-margin-top8 m-padding-right24 m-tips">
-              {t("createMisesIdTips")}{" "}
-            </p>
-          </div>
-          <div className="m-margin-lr40">
-            <div className="m-padding-top25">
-              <Button block shape="round" theme="primary" onClick={onclick}>
-                {t(flag ? "loginUser" : "createId")}
-              </Button>
-            </div>
-            <div className="m-padding-top25">
-              <Button
-                block
-                shape="round"
-                theme="primary"
-                ghost
-                onClick={restore}
-              >
-                {t("restore")}
-              </Button>
-            </div>
-          </div>
+          {flag ? connectView() : created()}
         </div>
       )}
     </div>

@@ -11,7 +11,7 @@ export function routes(routeConfig, parentPath = "") {
     return null;
   }
   return routeConfig.map((route) => {
-    if (["/post", "/createPosts", "/shareWith",'/comment'].includes(route.path)) {
+    if (["/createPosts", "/forward"].includes(route.path)) {
       return (
         <Route
           path={parentPath + route.path}

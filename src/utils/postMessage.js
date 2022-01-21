@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-21 11:55:09
+ * @LastEditTime: 2022-01-21 18:26:26
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
+import { setFollowingBadge, setUserAuth, setUserToken } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -33,7 +33,7 @@ export default class MisesExtensionController{
       this.clear()
       return false;
     }
-    if(Web3.givenProvider){
+    if(Web3.givenProvider&&Web3.givenProvider.chainId){
       this.init()
       this.clear()
       return false
@@ -95,44 +95,48 @@ export default class MisesExtensionController{
         call: 'mises_getAddressToMisesId',
         params: 1,
         inputFormatter: [null]
-      },{
-        name:'getAddAccountFlag',
-        call: 'mises_getAddAccountFlag'
       }]
     })
     if(window.ethereum){
       window.ethereum.on('accountsChanged',async res=>{
         if(res.length){
-          const misesid = await this.web3.misesWeb3.getAddressToMisesId(res[0]);
-          const {loginForm} = store.getState().user
-          if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
-            this.disconnect(loginForm.uid);
-            this.resetUser()
-            await this.requestAccounts()
-            console.log(window.location.pathname)
-            refreshByCacheKey(window.location.pathname)
-          }
+          this.resetAccount(res[0])
         }
         if(res.length===0) {
           this.resetUser()
-          // const accountRes = await this.web3.misesWeb3.requestAccounts();
-          // store.dispatch(setUserAuth(accountRes.auth))
         }
       })
       window.ethereum.on('chainChanged',res=>{
         console.log(res)
       })
+      window.ethereum.on('restoreAccount',res=>{
+        console.log(res,'restoreAccount')
+      })
     }
-    
+    // If the initialization is completed, the currently selected account will be obtained
+    const {selectedAddress} = this.web3.currentProvider
+    selectedAddress&&this.resetAccount(selectedAddress)
+  }
+  async resetAccount(res){
+    const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
+    const {loginForm} = store.getState().user
+    console.log(loginForm.misesid,misesid,'misesidmisesidmisesid');
+    if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
+      this.disconnect(loginForm.uid);
+      this.resetUser()
+      await this.requestAccounts()
+      console.log(window.location.pathname)
+      refreshByCacheKey(window.location.pathname)
+    }
   }
   async isInitMetaMask(){
-    console.log(Boolean(Web3.givenProvider&&Web3.givenProvider.chainId));
-    return Boolean(Web3.givenProvider) ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
+    console.log(Boolean(Web3.givenProvider&&Web3.givenProvider.chainId),Web3.givenProvider);
+    return Boolean(Web3.givenProvider&&Web3.givenProvider.chainId) ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
   }
   resetUser(){
-    store.dispatch(setUserAuth(''))
-    store.dispatch(setUserToken(''))
-    store.dispatch(setLoginForm({}))
+    // store.dispatch(setUserAuth(''))
+    // store.dispatch(setUserToken(''))
+    // store.dispatch(setLoginForm({}))
     store.dispatch(setFollowingBadge({
       total:0,
       notifications_count:0
@@ -221,7 +225,7 @@ export default class MisesExtensionController{
     console.log('isActive')
     try {
       await this.isInitMetaMask()
-      const flag = await this.web3.misesWeb3.getActive();
+      const flag = Boolean(this.web3.currentProvider.selectedAddress);
       return flag ? Promise.resolve(true) : Promise.reject('Wallet not activated')
     } catch (error) {
       console.log(error,'isActive')
@@ -229,8 +233,7 @@ export default class MisesExtensionController{
     }
   }
   async getAddAccountFlag(){
-    const flag = this.web3.misesWeb3.getAddAccountFlag();
-    console.log(flag);
+    const flag = localStorage.getItem('setAccount')
     return flag;
   }
 }

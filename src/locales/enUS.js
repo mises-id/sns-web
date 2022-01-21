@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-13 10:55:10
+ * @LastEditTime: 2022-01-21 21:12:52
  * @LastEditors: lmk
  * @Description: 
  */
@@ -13,11 +13,12 @@ const enUS = {
     me:'Me',
     followTxt:'follow',
     followedTxt:'following',
-    createId:"Create misesid",
-    loginUser:"Log in misesid",
-    restoreId:'Restore misesid',
-    aboutId:'About misesid',
-    restore:"Restore misesid",
+    createId:"Create Mises ID",
+    loginUser:"Connect Mises ID",
+    restoreId:'Restore Mises ID',
+    aboutId:'About Mises',
+    restoreTitle:'How to get Mises ID',
+    restore:"Restore Mises ID",
     restoreTips:'Misesid is restored by entering a mnemonic.',
     following:"Following",
     followers:"Followers",
@@ -43,9 +44,11 @@ const enUS = {
     updataUserInfoSuccess:'Update success',
     sendSuccess:"Send success",
     deleteSuccess:"Delete success",
-    notLogin:'Do you want to log in?',
+    notLogin:'Do you want to Connect?',
     notRegister:'Do you want to register?',
-    createMisesIdTips:"Misesid is a decentralized network, user can create his misesid account which stores his personal information and social relations, the account is totally owned by user himself, it can not be banned by any persons or orgnizations.",
+    createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
+    connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
+    resoreMisesIdTips:"If you already have metamask account, just use mnemonics to restore your metamask account, the Enhanced metamask plugin will create misesid the same as your metamask account. If you created Misesid before, use mnemonics to restore your misesid & metamask account",
     createPostsPlaceholder:'Please enter the contents',
     createPostsTips:"Please enter contents or upload pictures",
     forwardPlaceholder:'Please enter the contents',
