@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-21 09:12:55
+ * @LastEditTime: 2022-01-21 20:31:15
  * @LastEditors: lmk
  * @Description:
  */
@@ -19,6 +19,7 @@ import Image from "@/components/Image";
 import {
   formatTimeStr,
   isMe,
+  objToUrl,
   useBind,
   useList,
   useLoginModal,
@@ -34,6 +35,7 @@ import ReplyInput from "@/components/ReplyInput";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { createComment } from "@/api/comment";
+import { useHistory } from "react-router-dom";
 const CommentsPop = (
   {
     setvisible,
@@ -56,6 +58,7 @@ const CommentsPop = (
   const [lastId, setlastId] = useState("");
   const status_id = state.id;
   const [data, setdata] = useState(comment);
+  console.log(comment);
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
     status_id: state.id || comment.state_id,
     topic_id: comment.id,
@@ -119,7 +122,7 @@ const CommentsPop = (
     commentContent.onChange("");
     val.username = username(val.user);
     setselectItem(val);
-    setParentSelectItem(val);
+    setParentSelectItem&&setParentSelectItem(val);
     input.current && input.current.focus();
   };
   const user = useSelector((state) => state.user) || {};
@@ -137,6 +140,18 @@ const CommentsPop = (
   const input = useRef();
   const [selectItem, setselectItem] = useState(data);
   const { avatar = {} } = data.user || {};
+  const history = useHistory()
+  const userDetail = (e,{user:item})=>{
+    e.stopPropagation();
+    const isMe = user.loginForm.uid === item.uid;
+    if (!isMe) {
+      const avatar = item.avatar ? item.avatar.medium : "";
+      history.push({
+        pathname: "/userDetail",
+        search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),
+      });
+    }
+  }
   const renderView = (val, index) => {
     const valAvatar = val.user.avatar || {}
     return (
@@ -145,7 +160,7 @@ const CommentsPop = (
         key={index}
         onClick={() => replyItem(val)}
       >
-        <Image size={30} source={valAvatar.medium} key={val.id}></Image>
+        <Image size={30} source={valAvatar.medium} key={val.id} onClick={e=>userDetail(e,val)}></Image>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(val.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -185,7 +200,7 @@ const CommentsPop = (
         className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15"
         onClick={() => replyItem(data)}
       >
-        <Image size={30} source={avatar && avatar.medium}></Image>
+        <Image size={30} source={avatar && avatar.medium} onClick={e=>userDetail(e,data)}></Image>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(data.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8   m-padding-bottom13">
@@ -211,11 +226,11 @@ const CommentsPop = (
                 >
                   <img
                     src={data.is_liked ? liked : like}
-                    className="icon"
+                    width={13}
                     alt="like"
                   ></img>
                   <span
-                    className={`m-font14 m-margin-left8 ${
+                    className={`m-font11 m-margin-left8 ${
                       data.is_liked ? "m-colors-FF3D62" : "m-colors-333"
                     }`}
                   >

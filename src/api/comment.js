@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:51:20
- * @LastEditTime: 2022-01-07 18:22:33
+ * @LastEditTime: 2022-01-21 14:11:07
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -15,6 +15,11 @@ export function comment(params){
   return request({
     url:'/comment',
     params
+  })
+}
+export function getCommentId(id){
+  return request({
+    url:`/comment/${id}`
   })
 }
 /**

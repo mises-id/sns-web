@@ -3,6 +3,7 @@ import { followed, liked } from "@/components/PostsIcons/common";
 import { store } from "@/stores";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Modal } from "zarm";
@@ -168,15 +169,16 @@ export function useChangePosts(setdataSource,dataSource){
 }
 
 export function useLoginModal(){
+  const { t } = useTranslation();
   const loginModal = async (cb)=>{
     try {
       await window.mises.isInitMetaMask()
-      // const count = await window.mises.getMisesAccounts();
+      const flag = await window.mises.getAddAccountFlag();
       // const flag = count > 0;
-      // const content = flag ? t('notLogin') : t('notRegister') ;
+      const content = flag ? t('notLogin') : t('notRegister') ;
       Modal.confirm({
         title: 'Message',
-        content:'Please activate the user first',
+        content,
         onCancel: () => {},
         onOk: () => {
           window.mises.requestAccounts().then(cb);

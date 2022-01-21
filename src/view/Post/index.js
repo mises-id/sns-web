@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-21 11:14:06
+ * @LastEditTime: 2022-01-21 19:46:19
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -32,6 +32,7 @@ import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
 import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
+import { dropByCacheKey, useDidCache } from "react-router-cache-route";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState("");
@@ -60,11 +61,11 @@ const Post = ({ history = {} }) => {
     e.stopPropagation();
     if (!user.token) {
       loginModal(()=>{
-        selectReplyItem(likeFn)
+        selectReplyItem(()=>likeFn(val))
       })
       return false;
     }
-    likeFn()
+    likeFn(val)
   };
   const selectReplyItem = val=>{
     commentContent.onChange('')
@@ -201,6 +202,21 @@ const Post = ({ history = {} }) => {
       },
     });
   }
+  const userDetail = (e,{user:item})=>{
+    e.stopPropagation();
+    const isMe = user.loginForm.uid === item.uid;
+    if (!isMe) {
+      const avatar = item.avatar ? item.avatar.medium : "";
+      history.push({
+        pathname: "/userDetail",
+        search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),
+      });
+    }
+  }
+  useDidCache(()=>{
+    console.log(1);
+    dropByCacheKey('/comment')
+  })
   return (
     <div className="post-detail">
       <Navbar title={t("postPageTitle")} />
@@ -226,6 +242,7 @@ const Post = ({ history = {} }) => {
                     onClick={() => replyItem(val)}>
                     <Image
                       size={30}
+                      onClick={(e)=>userDetail(e,val)}
                       source={val.user.avatar ? val.user.avatar.medium : ""}
                     ></Image>
                     <div className="m-margin-left11 m-line-bottom m-flex-1">
@@ -246,11 +263,11 @@ const Post = ({ history = {} }) => {
                             >
                               <img
                                 src={val.is_liked ? liked : like}
-                                className="icon"
                                 alt="like"
+                                width={13}
                               ></img>
                               <span
-                                className={`m-font14 m-margin-left8 ${
+                                className={`m-font11 m-margin-left8 ${
                                   val.is_liked
                                     ? "m-colors-FF3D62"
                                     : "m-colors-333"
@@ -262,11 +279,11 @@ const Post = ({ history = {} }) => {
                             <div className="m-flex icon-box">
                               <img
                                 src={commentIcon}
-                                className="icon"
                                 alt="comment"
+                                width={13}
                               ></img>
                               <span
-                                className={`m-font14 m-colors-333 m-margin-left8`}
+                                className={`m-font11 m-colors-333 m-margin-left8`}
                               >
                                 {val.comments_count || 0}
                               </span>
@@ -287,7 +304,7 @@ const Post = ({ history = {} }) => {
                                 replyItem(item)
                               }}
                             >
-                              <Image size={20} source={avatar&&avatar.medium}></Image>
+                              <Image size={20} source={avatar&&avatar.medium} onClick={(e)=>userDetail(e,val)}></Image>
                               <div className="m-margin-left11 m-flex-1">
                                 <div className="m-padding-bottom10">
                                   <span className="commentNickname1">

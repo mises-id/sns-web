@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-21 09:21:48
+ * @LastEditTime: 2022-01-21 20:37:46
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -28,6 +28,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setFollowingBadge } from "@/actions/user";
 import { useRef } from "react";
+import { getCommentId, likeComment, removeComment, unlikeComment } from "@/api/comment";
+import { Modal } from "zarm";
+import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState();
@@ -62,16 +65,25 @@ const Notifications = ({ history }) => {
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
   const commentsPopRef = useRef();
-  const detail = ({ status,message_type,user,meta_data,created_at }) => {
+  const goDetail = ({ status}) => {
+    status&&history.push({
+      pathname: "/post",
+      search: objToUrl({ id: status.id }),
+    });
+  };
+  const detail = async val => {
+    const { status,message_type,user,meta_data,created_at } = val
     if(message_type!=='new_comment'){
-      status&&history.push({
-        pathname: "/post",
-        search: objToUrl({ id: status.id }),
-      });
+      goDetail(val)
     }else{
+      const topic_id = meta_data.group_id || meta_data.comment_id
+      const res = await getCommentId(topic_id)
+      res.username = username(res.user);
+      console.log(res);
       setcommentPop({
         state_id:status.id,
-        id:meta_data.group_id || meta_data.comment_id
+        id:topic_id,
+        ...res
       })
       if(meta_data.group_id){// child comment
         const opponentUser = {};
@@ -86,23 +98,71 @@ const Notifications = ({ history }) => {
         commentsPopRef.current.setData(obj)
         commentsPopRef.current.setTopCommentId(meta_data.comment_id)
       }
-      replyItem({
-        user,
-        content:meta_data.content,
-        id:meta_data.comment_id,
-        topic_id:meta_data.group_id
-      })
+      // replyItem({
+      //   user,
+      //   content:meta_data.content,
+      //   id:meta_data.comment_id,
+      //   topic_id:res.id
+      // })
       setvisible(true)
     }
   };
 
   const [visible, setvisible] = useState(false);
   const [commentPop, setcommentPop] = useState({});
-  const [, setselectItem] = useState({});
-  const replyItem = (val) => {
-    val.username = username(val.user);
-    setselectItem(val);
-  };
+  // const [, setselectItem] = useState({});
+  // const replyItem = (val) => {
+  //   val.username = username(val.user);
+  //   console.log(val,'qwww');
+  //   // setselectItem(val);
+  // };
+  const likePress = (e,val) =>{
+    e.stopPropagation();
+    const fn = val.is_liked ? unlikeComment : likeComment;
+    fn(val.id)
+      .then((res) => {
+        val.is_liked = !val.is_liked;
+        val.likes_count = val.is_liked ? ++val.likes_count : --val.likes_count;
+        setcommentPop({...val})
+      })
+      .catch((res) => {});
+  }
+  const deleteCommentData = (e,val)=>{
+    e.stopPropagation()
+    Modal.confirm({
+      title: 'Message',
+      content: 'Are you sure to delete this comment?',
+      onCancel: () => {
+      },
+      onOk: () => {
+        removeComment(val.id).then(res=>{
+          // getCommentList(state.id);
+          if(visible){  // If the pop is displayed and the first level comment is deleted
+            if(!val.topic_id){ // top comment
+              setvisible(false)
+              setcommentPop('')
+              return false;
+            }
+            if(val.topic_id){ // next comment
+              commentsPopRef.current.removeItem(val.id)
+            }
+          }
+          // const findItemIndex = dataSource.findIndex(item=>item.id===(val.topic_id || val.id));
+          // if(val.topic_id){
+          //   const findChildIndex = dataSource[findItemIndex].comments.findIndex(item=>item.id===val.id);
+          //   dataSource[findItemIndex].comments.splice(findChildIndex,1)
+          //   dataSource[findItemIndex].comments_count-=1
+          // }
+          // if(!val.topic_id){
+          //   dataSource.splice(findItemIndex,1)
+          // }
+          // setdataSource([...dataSource])
+        }).catch(error=>{
+          console.log(error,23213);
+        })
+      },
+    });
+  }
   //render item
   const renderView = (val = {}, index) => {
     const user = val.user || {};
@@ -119,7 +179,12 @@ const Notifications = ({ history }) => {
           {notificationsType(val)}
           <p className="time-view">{formatTimeStr(val.created_at)}</p>
         </div>
-        {rightView(val)}
+        <div onClick={e=>{
+          e.stopPropagation()
+          goDetail(val)
+        }}>
+          {rightView(val)}
+        </div>
       </div>
     );
   };
@@ -197,6 +262,9 @@ const Notifications = ({ history }) => {
         return "";
     }
   };
+  useDidRecover(()=>{
+    dropByCacheKey('/post')
+  })
   return (
     <div>
       <Navbar title={t("NotificationsPageTitle")} />
@@ -209,12 +277,10 @@ const Notifications = ({ history }) => {
         visible={visible}
         setvisible={setvisible}
         comment={commentPop}
-        replyItem={replyItem}
-        setParentSelectItem={setselectItem}
-        // likePress={likePress}
+        likePress={likePress}
         createdUserId={state.createdUserId}
         ref={commentsPopRef}
-        // deleteCommentData={deleteCommentData}
+        deleteCommentData={deleteCommentData}
       ></CommentsPop>
     </div>
   );
