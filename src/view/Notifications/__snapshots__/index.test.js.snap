@@ -10,5 +10,12 @@ exports[`Notifications should render correctly 1`] = `
     load={[Function]}
     renderView={[Function]}
   />
+  <ForwardRef(CommentsPop)
+    comment={Object {}}
+    replyItem={[Function]}
+    setParentSelectItem={[Function]}
+    setvisible={[Function]}
+    visible={false}
+  />
 </div>
 `;

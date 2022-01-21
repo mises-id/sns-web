@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-19 18:15:34
+ * @LastEditTime: 2022-01-21 10:13:24
  * @LastEditors: lmk
  * @Description: 
  */
@@ -15,6 +15,7 @@ import { getUserSelfInfo, signin } from '@/api/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
 import {urlToJson} from '@/utils';
+import { useDidRecover } from 'react-router-cache-route';
 const {Panel} = Tabs;
 const Home = ({history,children=[]})=>{
   const {t} = useTranslation()
@@ -59,6 +60,13 @@ const Home = ({history,children=[]})=>{
       dispatch(setLoginForm(res))
     })
   }
+  useDidRecover(()=>{
+    window.refreshByCacheKey('/follow')
+    window.refreshByCacheKey('/notifications')
+    window.refreshByCacheKey('/myLikes')
+    window.refreshByCacheKey('/myPosts')
+    window.refreshByCacheKey('/blackList')
+  })
   // If this page is displayed, the current user is updated
   useEffect(() => {
     if(user.token){

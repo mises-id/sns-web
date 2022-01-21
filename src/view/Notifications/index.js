@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-14 22:08:18
+ * @LastEditTime: 2022-01-21 09:21:48
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -20,12 +20,14 @@ import {
 } from "@/utils";
 import Image from "@/components/Image";
 import like from "@/images/like.png";
+import CommentsPop from "@/view/Comment/commentPop";
 import {
   getNotificationList,
   uploadNotificationState,
 } from "@/api/notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setFollowingBadge } from "@/actions/user";
+import { useRef } from "react";
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState();
@@ -59,11 +61,47 @@ const Notifications = ({ history }) => {
   }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
-  const detail = ({ status }) => {
-    status&&history.push({
-      pathname: "/post",
-      search: objToUrl({ id: status.id }),
-    });
+  const commentsPopRef = useRef();
+  const detail = ({ status,message_type,user,meta_data,created_at }) => {
+    if(message_type!=='new_comment'){
+      status&&history.push({
+        pathname: "/post",
+        search: objToUrl({ id: status.id }),
+      });
+    }else{
+      setcommentPop({
+        state_id:status.id,
+        id:meta_data.group_id || meta_data.comment_id
+      })
+      if(meta_data.group_id){// child comment
+        const opponentUser = {};
+        meta_data.parent_username.indexOf('did:mises')===-1 ? opponentUser.username = meta_data.parent_username : opponentUser.misesid = meta_data.parent_username
+        const obj = {
+          user,
+          content:meta_data.content,
+          created_at,
+          opponent:opponentUser,
+          id:meta_data.comment_id
+        }
+        commentsPopRef.current.setData(obj)
+        commentsPopRef.current.setTopCommentId(meta_data.comment_id)
+      }
+      replyItem({
+        user,
+        content:meta_data.content,
+        id:meta_data.comment_id,
+        topic_id:meta_data.group_id
+      })
+      setvisible(true)
+    }
+  };
+
+  const [visible, setvisible] = useState(false);
+  const [commentPop, setcommentPop] = useState({});
+  const [, setselectItem] = useState({});
+  const replyItem = (val) => {
+    val.username = username(val.user);
+    setselectItem(val);
   };
   //render item
   const renderView = (val = {}, index) => {
@@ -76,7 +114,7 @@ const Notifications = ({ history }) => {
         onClick={() => detail(val)}
       >
         <Image size={40} source={avatar}></Image>
-        <div className="avatar-item m-flex-1">
+        <div className="avatar-item m-flex-1" style={{width:0}}>
           <p className="user-name m-colors-111">{username(user)}</p>
           {notificationsType(val)}
           <p className="time-view">{formatTimeStr(val.created_at)}</p>
@@ -167,6 +205,17 @@ const Notifications = ({ history }) => {
         data={dataSource}
         load={fetchData}
       ></PullList>
+      <CommentsPop
+        visible={visible}
+        setvisible={setvisible}
+        comment={commentPop}
+        replyItem={replyItem}
+        setParentSelectItem={setselectItem}
+        // likePress={likePress}
+        createdUserId={state.createdUserId}
+        ref={commentsPopRef}
+        // deleteCommentData={deleteCommentData}
+      ></CommentsPop>
     </div>
   );
 };

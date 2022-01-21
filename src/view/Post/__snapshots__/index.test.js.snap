@@ -11,9 +11,17 @@ exports[`Post should render correctly 1`] = `
     comment={Object {}}
     createdUserId=""
     deleteCommentData={[Function]}
+    inputContent={
+      Object {
+        "onChange": [Function],
+        "value": "",
+      }
+    }
     likePress={[Function]}
     replyItem={[Function]}
+    setParentSelectItem={[Function]}
     setvisible={[Function]}
+    submit={[Function]}
     visible={false}
   />
 </div>

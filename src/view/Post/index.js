@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-20 09:53:01
+ * @LastEditTime: 2022-01-20 20:55:27
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -57,11 +57,20 @@ const Post = ({ history = {} }) => {
       })
       .catch((res) => {});
   };
-  const replyItem = (val) => {
+  const selectReplyItem = val=>{
     commentContent.onChange('')
     val.username = username(val.user)
     setselectItem(val);
     input.current && input.current.focus();
+  }
+  const replyItem = (val) => {
+    if (!user.token) {
+      loginModal(()=>{
+        selectReplyItem(val)
+      })
+      return false;
+    }
+    selectReplyItem(val)
   };
   const goComment = () => {
     history.push({ pathname: "/comment", search: objToUrl({ id,createdUserId:item.user.uid }) });
@@ -132,10 +141,6 @@ const Post = ({ history = {} }) => {
   }
   const submit = (e) => {
     e.preventDefault();
-    if (!user.token) {
-      loginModal(commitReply)
-      return false;
-    }
     commitReply()
   };
 
@@ -148,6 +153,7 @@ const Post = ({ history = {} }) => {
     val.username = username(val.user)
     setselectItem(val)
   }
+  const commentsPopRef = useRef();
   const deleteCommentData = (e,val)=>{
     e.stopPropagation()
     Modal.confirm({
@@ -156,20 +162,35 @@ const Post = ({ history = {} }) => {
       onCancel: () => {
       },
       onOk: () => {
-        // if(val.parent_id){ // top comment
-        //   const index = 
-        // }
-        getCommentList(state.id);
-        if(visible&&!val.topic_id){  // If the pop is displayed and the first level comment is deleted
-          setvisible(false)
-          setcommentPop({})
-        }
         removeComment(val.id).then(res=>{
           getCommentList(state.id);
+          if(visible){  // If the pop is displayed and the first level comment is deleted
+            if(!val.topic_id){ // top comment
+              setvisible(false)
+              setcommentPop({})
+              return false;
+            }
+            if(val.topic_id){ // next comment
+              commentsPopRef.current.removeItem(val.id)
+            }
+          }
+          const findItemIndex = comment.findIndex(item=>item.id===(val.topic_id || val.id));
+          if(val.topic_id){
+            const findChildIndex = comment[findItemIndex].comments.findIndex(item=>item.id===val.id);
+            comment[findItemIndex].comments.splice(findChildIndex,1)
+            comment[findItemIndex].comments_count-=1
+          }
+          if(!val.topic_id){
+            comment.splice(findItemIndex,1)
+            item.comments_count-=1
+            setitem({...item})
+          }
+          setcomment([...comment])
+        }).catch(error=>{
+          console.log(error,23213);
         })
       },
     });
-    console.log(val)
   }
   return (
     <div className="post-detail">
@@ -252,7 +273,10 @@ const Post = ({ history = {} }) => {
                             <div
                               key={i}
                               className="m-flex m-col-top m-bg-fff m-padding-bottom15"
-                              onClick={() => replyItem(item)}
+                              onClick={e => {
+                                e.stopPropagation()
+                                replyItem(item)
+                              }}
                             >
                               <Image size={20} source={avatar&&avatar.medium}></Image>
                               <div className="m-margin-left11 m-flex-1">
@@ -312,13 +336,19 @@ const Post = ({ history = {} }) => {
         setvisible={setvisible}
         comment={commentPop}
         replyItem={replyItem}
+        setParentSelectItem={setselectItem}
+        inputContent={commentContent}
         likePress={likePress}
         createdUserId={item.user ? item.user.uid : ''}
         deleteCommentData={deleteCommentData}
+        submit={submit}
+        ref={commentsPopRef}
       ></CommentsPop>
       {item&&<ReplyInput
         submit={submit}
         content={commentContent}
+        ref={input}
+        setselectItem={setselectItem}
         placeholder={
           selectItem && selectItem.username ? `@${selectItem.username}` : ""
         }

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-20 10:06:46
+ * @LastEditTime: 2022-01-20 18:51:19
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -12,6 +12,7 @@ import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/ac
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
+import { Toast } from 'zarm';
 window.clearCache = clearCache;
 window.dropByCacheKey = dropByCacheKey;
 window.getCachingKeys = getCachingKeys;
@@ -26,6 +27,7 @@ export default class MisesExtensionController{
   }
   init (){
     this.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+    console.log(Web3.givenProvider)
     this.web3.extend({
       property: 'misesWeb3',
       methods:[{
@@ -97,6 +99,10 @@ export default class MisesExtensionController{
     }
     
   }
+  async isInitMetaMask(){
+    console.log(Web3.givenProvider);
+    return !!Web3.givenProvider&&Web3.givenProvider.chainId ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
+  }
   resetUser(){
     store.dispatch(setUserAuth(''))
     store.dispatch(setUserToken(''))
@@ -143,6 +149,7 @@ export default class MisesExtensionController{
   }
   async getAuth(){
     console.log('getAuth')
+    await this.isInitMetaMask()
     const res = await this.web3.misesWeb3.requestAccounts();
     const {mises_id} = urlToJson(`?${res.auth}`);
     await this.connect(mises_id)
@@ -168,8 +175,9 @@ export default class MisesExtensionController{
     console.log('userUnFollow')
     this.web3.misesWeb3.userUnFollow(data)
   }
-  openRestore(){
+  async openRestore(){
     console.log('openRestore')
+    await this.isInitMetaMask()
     this.web3.misesWeb3.openRestore()
   }
   async getMisesAccounts(){
@@ -186,11 +194,12 @@ export default class MisesExtensionController{
   async isActive(){
     console.log('isActive')
     try {
+      await this.isInitMetaMask()
       const flag = await this.web3.misesWeb3.getActive();
       return flag ? Promise.resolve(true) : Promise.reject('Wallet not activated')
     } catch (error) {
       console.log(error,'isActive')
-      Promise.reject('Wallet not activated')
+      return Promise.reject(error || 'Wallet not activated')
     }
   }
 }

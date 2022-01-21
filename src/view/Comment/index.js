@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-19 19:17:34
+ * @LastEditTime: 2022-01-20 20:55:18
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -60,10 +60,10 @@ const Comment = ({ history }) => {
     commentContent.onChange("");
     val.username = username(val.user);
     setselectItem(val);
-    console.log(val);
     input.current.focus();
   };
 
+  const commentsPopRef = useRef();
   const deleteCommentData = (e,val)=>{
     e.stopPropagation()
     Modal.confirm({
@@ -72,15 +72,33 @@ const Comment = ({ history }) => {
       onCancel: () => {
       },
       onOk: () => {
-        // if(val.parent_id){ // top comment
-        //   const index = 
-        // }
         removeComment(val.id).then(res=>{
           // getCommentList(state.id);
+          if(visible){  // If the pop is displayed and the first level comment is deleted
+            if(!val.topic_id){ // top comment
+              setvisible(false)
+              setcommentPop({})
+              return false;
+            }
+            if(val.topic_id){ // next comment
+              commentsPopRef.current.removeItem(val.id)
+            }
+          }
+          const findItemIndex = dataSource.findIndex(item=>item.id===(val.topic_id || val.id));
+          if(val.topic_id){
+            const findChildIndex = dataSource[findItemIndex].comments.findIndex(item=>item.id===val.id);
+            dataSource[findItemIndex].comments.splice(findChildIndex,1)
+            dataSource[findItemIndex].comments_count-=1
+          }
+          if(!val.topic_id){
+            dataSource.splice(findItemIndex,1)
+          }
+          setdataSource([...dataSource])
+        }).catch(error=>{
+          console.log(error,23213);
         })
       },
     });
-    console.log(val)
   }
   const renderView = (val = {}, index) => {
     const { user = {}, comments = [] } = val;
@@ -192,7 +210,6 @@ const Comment = ({ history }) => {
     setlastId(last_id);
   }, [last_id]);
   const commentContent = useBind("");
-  const commentsPop = useRef("");
   const loginModal = useLoginModal();
   const commitReply = () => {
     if (loading || !commentContent.value) {
@@ -212,11 +229,6 @@ const Comment = ({ history }) => {
           ); // find top comment
           if (findTopic.comments_count < 3) {
             findTopic.comments.push(res);
-            // findTopic.comments_count = findTopic.comments.length;
-          }
-          // if popup is show flag
-          if (visible) {
-            commentsPop.current.setData(res);
           }
           findTopic.comments_count += 1;
           const findIndex = dataSource.findIndex(
@@ -271,18 +283,22 @@ const Comment = ({ history }) => {
       </div>
       <CommentsPop
         visible={visible}
-        ref={commentsPop}
         setvisible={setvisible}
         comment={commentPop}
         replyItem={replyItem}
+        setParentSelectItem={setselectItem}
+        inputContent={commentContent}
         likePress={likePress}
         createdUserId={state.createdUserId}
         deleteCommentData={deleteCommentData}
+        submit={submit}
+        ref={commentsPopRef}
       ></CommentsPop>
       <ReplyInput
         ref={input}
         submit={submit}
         content={commentContent}
+        setselectItem={setselectItem}
         placeholder={
           selectItem && selectItem.username ? `@${selectItem.username}` : ""
         }
