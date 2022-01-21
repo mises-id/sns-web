@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-21 19:46:19
+ * @LastEditTime: 2022-01-21 21:33:43
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -32,7 +32,7 @@ import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
 import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
-import { dropByCacheKey, useDidCache } from "react-router-cache-route";
+import { dropByCacheKey, useDidCache, useDidRecover } from "react-router-cache-route";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState("");
@@ -213,7 +213,7 @@ const Post = ({ history = {} }) => {
       });
     }
   }
-  useDidCache(()=>{
+  useDidRecover(()=>{
     console.log(1);
     dropByCacheKey('/comment')
   })

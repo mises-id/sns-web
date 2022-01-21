@@ -67,7 +67,9 @@ exports[`UserDetail should render correctly 1`] = `
             >
               <span
                 className="follow-num"
-              />
+              >
+                0
+              </span>
               <span
                 className="follow-name"
               >
@@ -79,7 +81,9 @@ exports[`UserDetail should render correctly 1`] = `
             >
               <span
                 className="follow-num"
-              />
+              >
+                0
+              </span>
               <span
                 className="follow-name"
               >

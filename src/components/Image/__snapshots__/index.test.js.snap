@@ -4,6 +4,7 @@ exports[`Image should render correctly 1`] = `
 <img
   alt="avatar"
   className="border-circle"
+  key="0.8621059678036651"
   onError={[Function]}
   src="head.png"
   style={
