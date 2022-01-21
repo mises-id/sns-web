@@ -21,7 +21,11 @@ exports[`CreateMisesId should render correctly 1`] = `
   <PostsIcons
     commentPage={[Function]}
     forwardCallback={[Function]}
-    item={Object {}}
+    item={
+      Object {
+        "user": Object {},
+      }
+    }
     likeCallback={[Function]}
   />
 </div>

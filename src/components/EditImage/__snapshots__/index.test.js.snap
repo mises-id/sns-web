@@ -21,7 +21,7 @@ exports[`EditImage should render correctly 1`] = `
       }
     />
     <div
-      className="icon-box"
+      className="icon-box-edit"
     >
       <img
         alt=""

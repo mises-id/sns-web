@@ -12,8 +12,8 @@ exports[`Notifications should render correctly 1`] = `
   />
   <ForwardRef(CommentsPop)
     comment={Object {}}
-    replyItem={[Function]}
-    setParentSelectItem={[Function]}
+    deleteCommentData={[Function]}
+    likePress={[Function]}
     setvisible={[Function]}
     visible={false}
   />
