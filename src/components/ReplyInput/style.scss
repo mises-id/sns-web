@@ -4,9 +4,22 @@
   left: 0;
   right: 0;
   width: 100vw;
-  background: white;
+  background: transparent;
+  z-index: 111;
+  transition: all .3s;
+}
+.reply-input{
   padding: 10px 15px;
-  z-index: 1111;
+  background: white;
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+.focus-box{
+  top: 0;
+  background: rgba($color: #000000, $alpha: .25);
 }
 .input{
   height: 40px;

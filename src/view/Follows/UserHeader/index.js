@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-01-14 21:40:04
+ * @LastEditTime: 2022-01-20 18:46:47
  * @LastEditors: lmk
  * @Description:
  */
@@ -31,6 +31,7 @@ const UserHeader = ({
   const history = useHistory();
   const hasLogin = (e, fn) => {
     e.stopPropagation();
+    console.log(1111);
     if (!isLogin) {
       loginModal(fn, { type: "isLogin" });
       return false;

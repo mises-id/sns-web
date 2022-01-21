@@ -9,7 +9,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-20 10:26:29
+ * @LastEditTime: 2022-01-20 18:54:12
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -170,6 +170,7 @@ export function useChangePosts(setdataSource,dataSource){
 export function useLoginModal(){
   const loginModal = async (cb)=>{
     try {
+      await window.mises.isInitMetaMask()
       // const count = await window.mises.getMisesAccounts();
       // const flag = count > 0;
       // const content = flag ? t('notLogin') : t('notRegister') ;
@@ -278,7 +279,6 @@ export function hoursToSeconds(hour){
 * @param {*} 
 */
 export function isMe(user,createdUserId){
-  return false;
   if(!user || !createdUserId) return false;
   const {loginForm={}} = store.getState().user;
   return Number((user.uid || createdUserId))===Number(loginForm.uid)

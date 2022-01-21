@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-19 17:48:05
+ * @LastEditTime: 2022-01-21 10:11:54
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button, Toast } from "zarm";
+import { ActivityIndicator, Badge, Button } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -54,8 +54,8 @@ const Myself = ({ history }) => {
     clearTimeout(timer);
     timer = null;
   }
-  
   useEffect(() => {
+    
     if(timer){
       cleartimer()
     }
@@ -77,10 +77,15 @@ const Myself = ({ history }) => {
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
     window.mises.requestAccounts().catch(err=>{
-      Toast.show(err.message)
+      // Toast.show(err||err.message)
+      
     })
   };
-  const restore = () => window.mises.openRestore();
+  const restore = () => {
+    window.mises.openRestore().catch(err=>{
+      // Toast.show(err||err.message)
+    });
+  }
   const [list,setTabList] = useState([
     {
       label: t("following"),

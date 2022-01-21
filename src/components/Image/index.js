@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-05 15:12:08
+ * @LastEditTime: 2022-01-21 10:03:44
  * @LastEditors: lmk
  * @Description: 
  */
@@ -23,6 +23,7 @@ const Image = ({source=head,size='lg',shape='circle',alt="avatar",onClick,border
   borderRadius = shape==='circle' ? '50%' : borderRadius;
   useEffect(() => {
     source&&setsrc(source)
+    console.log(source);
   }, [source])
   const imgSize = typeof size ==='string' ? {
     md:'60px',

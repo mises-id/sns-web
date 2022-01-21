@@ -19,9 +19,17 @@ exports[`Comment should render correctly 1`] = `
   <ForwardRef(CommentsPop)
     comment={Object {}}
     deleteCommentData={[Function]}
+    inputContent={
+      Object {
+        "onChange": [Function],
+        "value": "",
+      }
+    }
     likePress={[Function]}
     replyItem={[Function]}
+    setParentSelectItem={[Function]}
     setvisible={[Function]}
+    submit={[Function]}
     visible={false}
   />
   <ForwardRef(ReplyInput)
@@ -32,6 +40,7 @@ exports[`Comment should render correctly 1`] = `
       }
     }
     placeholder=""
+    setselectItem={[Function]}
     submit={[Function]}
   />
 </div>

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-01-19 16:54:09
+ * @LastEditTime: 2022-01-21 09:56:12
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -40,27 +40,45 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
   const [loading, setLoading] = useState(LOAD_STATE.normal);
   const [isOnceLoad, setisOnceLoad] = useState(true);
   const [lastId, setlastId] = useState("");
-  const fetchData = (type) => {
+  const fetchData = async (type) => {
     const flag =
       loading === LOAD_STATE.loading || refreshing === REFRESH_STATE.loading;
     if (flag) return false;
-    return load(type)
-      .then((res) => {
-        if (res) {
-          if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
-            return false;
-          }
-          const last_id = res.pagination.last_id;
-          setlastId(last_id);
-          //!last_id&&setLoading(LOAD_STATE.complete)
+    try {
+      const res = await load(type);
+      if (res) {
+        if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
+          return false;
         }
-      })
-      .catch((err) => {
-        console.log(LOAD_STATE.failure)
-        !isOnceLoad && setLoading(LOAD_STATE.failure);
-        setRefreshing(REFRESH_STATE.normal);
-      })
-      .finally(() => setisOnceLoad(false)); //if once loading
+        const last_id = res.pagination.last_id;
+        setlastId(last_id);
+        //!last_id&&setLoading(LOAD_STATE.complete)
+        setisOnceLoad(false)
+        return Promise.resolve(true)
+      }
+    } catch (error) {
+      !isOnceLoad && setLoading(LOAD_STATE.failure);
+      setRefreshing(REFRESH_STATE.normal);
+      setisOnceLoad(false)
+      return Promise.reject(error)
+    }
+    // load(type)
+    //   .then((res) => {
+    //     if (res) {
+    //       if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
+    //         return false;
+    //       }
+    //       const last_id = res.pagination.last_id;
+    //       setlastId(last_id);
+    //       //!last_id&&setLoading(LOAD_STATE.complete)
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(LOAD_STATE.failure)
+    //     !isOnceLoad && setLoading(LOAD_STATE.failure);
+    //     setRefreshing(REFRESH_STATE.normal);
+    //   })
+    //   .finally(() => setisOnceLoad(false)); //if once loading
   };
   // refresh
   const refreshData = async () => {
