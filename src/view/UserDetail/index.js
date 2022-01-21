@@ -32,6 +32,7 @@ const UserDetail = (props) => {
     if(JSON.stringify(historyState)!==JSON.stringify(state)){
       window.refreshByCacheKey("/userDetail")
     }
+    window.refreshByCacheKey("/userFollowPage")
   },[state])
   const setInfo = (state) =>{
     setUserInfo(state);

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-20 20:55:27
+ * @LastEditTime: 2022-01-21 11:14:06
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -41,8 +41,7 @@ const Post = ({ history = {} }) => {
 
   const [selectItem, setselectItem] = useState({});
   const input = useRef();
-  const likePress = (e, val) => {
-    e.stopPropagation();
+  const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
     fn(val.id)
       .then((res) => {
@@ -56,6 +55,16 @@ const Post = ({ history = {} }) => {
         }
       })
       .catch((res) => {});
+  }
+  const likePress = (e, val) => {
+    e.stopPropagation();
+    if (!user.token) {
+      loginModal(()=>{
+        selectReplyItem(likeFn)
+      })
+      return false;
+    }
+    likeFn()
   };
   const selectReplyItem = val=>{
     commentContent.onChange('')

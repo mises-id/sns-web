@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-21 10:13:24
+ * @LastEditTime: 2022-01-21 10:27:23
  * @LastEditors: lmk
  * @Description: 
  */
@@ -66,6 +66,7 @@ const Home = ({history,children=[]})=>{
     window.refreshByCacheKey('/myLikes')
     window.refreshByCacheKey('/myPosts')
     window.refreshByCacheKey('/blackList')
+    window.refreshByCacheKey('/userFollowPage')
   })
   // If this page is displayed, the current user is updated
   useEffect(() => {

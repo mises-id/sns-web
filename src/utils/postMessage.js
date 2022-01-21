@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-20 18:51:19
+ * @LastEditTime: 2022-01-21 11:55:09
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -20,12 +20,35 @@ window.refreshByCacheKey = refreshByCacheKey;
 export default class MisesExtensionController{
   web3;
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
+  timer;
+  getMax = 50;
+  getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
-    this.init()
-    console.log('init')
+    this.getProvider()
+  }
+  getProvider(){
+    console.log(this.getNum,Web3.givenProvider);
+    if(this.getNum===this.getMax){
+      this.clear()
+      return false;
+    }
+    if(Web3.givenProvider){
+      this.init()
+      this.clear()
+      return false
+    }
+    this.getNum++
+    this.timer = setTimeout(() => {
+      this.getProvider()
+    }, 300);
+  }
+  clear(){
+    clearTimeout(this.timer)
+    this.timer = null;
   }
   init (){
+    console.log('init')
     this.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
     console.log(Web3.givenProvider)
     this.web3.extend({
@@ -37,17 +60,17 @@ export default class MisesExtensionController{
         name:'setUserInfo',
         call: 'mises_setUserInfo',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
       },{
         name:'userFollow',
         call: 'mises_userFollow',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
       },{
         name:'userUnFollow',
         call: 'mises_userUnFollow',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
       },{
         name:'getMisesAccounts',
         call: 'mises_getMisesAccount'
@@ -61,17 +84,20 @@ export default class MisesExtensionController{
         name:'connect',
         call: 'mises_connect',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
       },{
         name:'disconnect',
         call: 'mises_disconnect',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
       },{
         name:'getAddressToMisesId',
         call: 'mises_getAddressToMisesId',
         params: 1,
-		    inputFormatter: [null]
+        inputFormatter: [null]
+      },{
+        name:'getAddAccountFlag',
+        call: 'mises_getAddAccountFlag'
       }]
     })
     if(window.ethereum){
@@ -100,8 +126,8 @@ export default class MisesExtensionController{
     
   }
   async isInitMetaMask(){
-    console.log(Web3.givenProvider);
-    return !!Web3.givenProvider&&Web3.givenProvider.chainId ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
+    console.log(Boolean(Web3.givenProvider&&Web3.givenProvider.chainId));
+    return Boolean(Web3.givenProvider) ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
   }
   resetUser(){
     store.dispatch(setUserAuth(''))
@@ -201,5 +227,10 @@ export default class MisesExtensionController{
       console.log(error,'isActive')
       return Promise.reject(error || 'Wallet not activated')
     }
+  }
+  async getAddAccountFlag(){
+    const flag = this.web3.misesWeb3.getAddAccountFlag();
+    console.log(flag);
+    return flag;
   }
 }
