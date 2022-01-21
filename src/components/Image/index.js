@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-21 20:50:30
+ * @LastEditTime: 2022-01-21 21:46:34
  * @LastEditors: lmk
  * @Description:
  */
@@ -47,7 +47,6 @@ const Image = ({
       <img
         onError={error.bind(this)}
         src={src}
-        key={Math.random()}
         style={{
           height: height || imgSize,
           width: imgSize,
