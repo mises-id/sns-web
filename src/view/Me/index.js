@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-21 10:11:54
+ * @LastEditTime: 2022-01-21 12:23:26
  * @LastEditors: lmk
  * @Description:
  */
@@ -55,7 +55,11 @@ const Myself = ({ history }) => {
     timer = null;
   }
   useEffect(() => {
-    
+    window.mises.getAddAccountFlag().then(res=>{
+      if(res){
+
+      }
+    })
     if(timer){
       cleartimer()
     }

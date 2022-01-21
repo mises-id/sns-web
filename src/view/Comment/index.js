@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-20 20:55:18
+ * @LastEditTime: 2022-01-21 11:12:19
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -37,8 +37,7 @@ const Comment = ({ history }) => {
   const state = useRouteState();
   const [selectItem, setselectItem] = useState({});
   const input = useRef();
-  const likePress = (e, val) => {
-    e.stopPropagation();
+  const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
     fn(val.id)
       .then((res) => {
@@ -52,17 +51,35 @@ const Comment = ({ history }) => {
         }
       })
       .catch((res) => {});
+  }
+  const likePress = (e, val) => {
+    e.stopPropagation();
+    if (!user.token) {
+      loginModal(()=>{
+        selectReplyItem(likeFn)
+      })
+      return false;
+    }
+    likeFn()
   };
-  const replyItem = (val, e) => {
+  const selectReplyItem = val=>{
+    commentContent.onChange('')
+    val.username = username(val.user)
+    setselectItem(val);
+    input.current && input.current.focus();
+  }
+  const replyItem = (val,e) => {
     if (e) {
       e.stopPropagation();
     }
-    commentContent.onChange("");
-    val.username = username(val.user);
-    setselectItem(val);
-    input.current.focus();
+    if (!user.token) {
+      loginModal(()=>{
+        selectReplyItem(val)
+      })
+      return false;
+    }
+    selectReplyItem(val)
   };
-
   const commentsPopRef = useRef();
   const deleteCommentData = (e,val)=>{
     e.stopPropagation()
