@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-21 10:10:52
+ * @LastEditTime: 2022-01-24 15:59:17
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -29,6 +29,7 @@ const Following = ({ pageType,uid }) => {
   const [followLoading, setfollowLoading] = useState(false);
   const [propUid, setPropUid] = useState(uid)
   const history = useHistory()
+  const {loginForm={}} = user;
   const renderView = (val = {}, index) => {
     const user = val.user;
     const icon = {
@@ -81,6 +82,7 @@ const Following = ({ pageType,uid }) => {
         }),
       });
     }
+    const isMe = loginForm.uid===val.user.uid
     return (
       <Cell
         iconSize={35}
@@ -91,7 +93,7 @@ const Following = ({ pageType,uid }) => {
         onPress={()=>personDetail(user)}
         icon={user.avatar ? user.avatar.medium : ""}
         rightChild={
-          <img
+          isMe ? '':<img
             onClick={setFollow}
             className="followedIcon"
             src={icon}

@@ -9,7 +9,7 @@
 .app-container{
   position: relative;
   // min-height: 100vh;
-  z-index: 11111;
+  // z-index: 11111;
   background: white;
 }
 .nav-icon{
@@ -70,9 +70,6 @@
 .unactive{
   color: #666666;
   font-size: 15px;
-}
-.tab-content{
-  // margin-top: 20px;
 }
 .za-tabs{
   .za-tabs__header{

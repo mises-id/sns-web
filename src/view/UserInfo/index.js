@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-01-18 09:51:29
+ * @LastEditTime: 2022-01-24 16:13:52
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -108,13 +108,17 @@ const UserInfo = (props) => {
     };
     if (by === "info") {
       const reg = /^[A-Za-z0-9]+(_?)+([A-Za-z0-9]+)$/
-      if(!loginForm.username&&username.value&&!reg.test(username.value)){
-        Toast.show('Incorrect username')
+      if(username.value&&!reg.test(username.value)){
+        // Toast.show('Incorrect username')
+        Modal.alert({
+          title:'Message',
+          content:t('usernameError')
+        })
         return false;
       }
       setsaveLoading(true);
       const promise = [submit(form, "profile")];
-      if (!loginForm.username&&username.value) {
+      if (username.value) {
         promise.push(submit(form, "username"));
       }
       Promise.all(promise).then(() => {
