@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-21 18:26:26
+ * @LastEditTime: 2022-01-24 20:41:21
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -12,7 +12,7 @@ import { setFollowingBadge, setUserAuth, setUserToken } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
-import { Toast } from 'zarm';
+import { Modal } from 'zarm';
 window.clearCache = clearCache;
 window.dropByCacheKey = dropByCacheKey;
 window.getCachingKeys = getCachingKeys;
@@ -20,33 +20,34 @@ window.refreshByCacheKey = refreshByCacheKey;
 export default class MisesExtensionController{
   web3;
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
-  timer;
-  getMax = 50;
-  getNum = 0;
+  // timer;
+  // getMax = 3;
+  // getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
-    this.getProvider()
+    this.init()
   }
-  getProvider(){
-    console.log(this.getNum,Web3.givenProvider);
-    if(this.getNum===this.getMax){
-      this.clear()
-      return false;
-    }
-    if(Web3.givenProvider&&Web3.givenProvider.chainId){
-      this.init()
-      this.clear()
-      return false
-    }
-    this.getNum++
-    this.timer = setTimeout(() => {
-      this.getProvider()
-    }, 300);
-  }
-  clear(){
-    clearTimeout(this.timer)
-    this.timer = null;
-  }
+  // getProvider(){
+  //   console.log(this.getNum,Web3.givenProvider);
+  //   if(this.getNum===this.getMax){
+  //     this.clear()
+  //     return false;
+  //   }
+  //   if(Web3.givenProvider&&Web3.givenProvider.chainId){
+  //     this.init()
+  //     this.clear()
+  //     return false
+  //   }
+  //   this.getNum++
+  //   this.timer = setTimeout(() => {
+  //     this.getProvider()
+  //   }, 300);
+  // }
+  // clear(){
+  //   clearTimeout(this.timer)
+  //   this.timer = null;
+  //   this.getNum = 0;
+  // }
   init (){
     console.log('init')
     this.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
@@ -129,9 +130,20 @@ export default class MisesExtensionController{
       refreshByCacheKey(window.location.pathname)
     }
   }
-  async isInitMetaMask(){
+  async isInitMetaMask(showToast=true){
     console.log(Boolean(Web3.givenProvider&&Web3.givenProvider.chainId),Web3.givenProvider);
-    return Boolean(Web3.givenProvider&&Web3.givenProvider.chainId) ? Promise.resolve(true) : (Toast.show('cannot find metamask'),Promise.reject('cannot find metamask'))
+    return Boolean(Web3.givenProvider&&Web3.givenProvider.chainId) ? Promise.resolve(true) : (this.isUnInitMetaMask())
+  }
+  isUnInitMetaMask(){
+    Modal.confirm({
+      title: 'Message',
+      content:'Failed to connect with metamask, request to refresh again',
+      onCancel: () => {},
+      onOk: () => {
+        window.location.reload()
+      },
+    });
+    return Promise.resolve(false)
   }
   resetUser(){
     // store.dispatch(setUserAuth(''))
@@ -174,12 +186,14 @@ export default class MisesExtensionController{
       data.token&&store.dispatch(setUserToken(data.token))
       return Promise.resolve()
     } catch (error) {
+      console.log(error);
       return Promise.reject(error)
     }
   }
   async getAuth(){
     console.log('getAuth')
-    await this.isInitMetaMask()
+    const flag = await this.isInitMetaMask();
+    if(!flag) return Promise.reject()
     const res = await this.web3.misesWeb3.requestAccounts();
     const {mises_id} = urlToJson(`?${res.auth}`);
     await this.connect(mises_id)
@@ -207,7 +221,8 @@ export default class MisesExtensionController{
   }
   async openRestore(){
     console.log('openRestore')
-    await this.isInitMetaMask()
+    const flag = await this.isInitMetaMask();
+    if(!flag) return Promise.reject()
     this.web3.misesWeb3.openRestore()
   }
   async getMisesAccounts(){
@@ -224,9 +239,11 @@ export default class MisesExtensionController{
   async isActive(){
     console.log('isActive')
     try {
-      await this.isInitMetaMask()
-      const flag = Boolean(this.web3.currentProvider.selectedAddress);
-      return flag ? Promise.resolve(true) : Promise.reject('Wallet not activated')
+      const flag = await this.isInitMetaMask();
+      if(!flag) return Promise.reject()
+      const getActive = await this.web3.misesWeb3.getActive();
+      // const selectedAddress = Boolean(this.web3.currentProvider.selectedAddress);
+      return getActive ? Promise.resolve(true) : Promise.reject('Wallet not activated')
     } catch (error) {
       console.log(error,'isActive')
       return Promise.reject(error || 'Wallet not activated')
