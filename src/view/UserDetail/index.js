@@ -13,8 +13,9 @@ import { ActionSheet, Panel, Tabs, Toast } from "zarm";
 import UserPosts from "./UserPost";
 import UserLikes from "./UserLike";
 import { useHistory } from "react-router-dom";
-import { useDidRecover } from 'react-router-cache-route'
+import { clearCache, useDidRecover } from 'react-router-cache-route'
 import { getUserInfo, JoinBlackList, removeBlackList } from "@/api/user";
+import block from '@/images/block.png';
 const UserDetail = (props) => {
   const [userInfo, setUserInfo] = useState({});
   const { t } = useTranslation();
@@ -45,43 +46,37 @@ const UserDetail = (props) => {
     getUserInfo(uid).then(res=>{
       res.avatar = res.avatar ? res.avatar.medium : ''
       setUserInfo(res);
+      state.uid = res.uid;
       const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
       setbuttons(btnArr)
     })
   }
   const history = useHistory();
   // show assentSheet
+  const successBlock = ()=>{
+    setInfo(state)
+    Toast.show(t('succcess'))
+    clearCache()
+  }
   const [visible, setVisible] = useState(false)
   const joinBlackButton = [{ // Black user
     text:'Block',
     theme: 'danger',
-    onClick: () => {
-      blackUser()
+    onClick: ()=>{
+      JoinBlackList({uid:Number(state.uid)}).then(successBlock)
       setVisible(false)
-      Toast.show(t('succcess'))
     }
   }]
   const removeBlackButton = [{ // Black user
     text:'unBlock',
     theme: 'danger',
     onClick: () => {
-      removeBlackUser()
+      removeBlackList(state.uid).then(successBlock)
       setVisible(false)
-      Toast.show(t('succcess'))
     }
   }]
   // Judge the display content according to the status
   const [buttons, setbuttons] = useState(joinBlackButton)
-  const blackUser = ()=>{
-    JoinBlackList({uid:Number(state.uid)}).then(res=>{
-      setbuttons(removeBlackButton)
-    })
-  }
-  const removeBlackUser = ()=>{
-    removeBlackList(state.uid).then(res=>{
-      setbuttons(joinBlackButton)
-    })
-  }
   const showCheckItem = ()=> setVisible(true)
   const back = () => {
     window.history.back();
@@ -108,7 +103,7 @@ const UserDetail = (props) => {
   const isFollow = userInfo.is_followed ? "followedTxt" : "followTxt";
   return (
     <div>
-      <div className="app-container">
+      <div className="app-container user-detail">
         <div>
           {/* header */}
           <img src={userBg} className="user-bg" alt="userbg"></img>
@@ -129,7 +124,7 @@ const UserDetail = (props) => {
             <div className="m-flex-1 user-info">
               <div className="m-flex m-row-between">
                 <span className="username">{username(userInfo)}</span>
-                <MButton
+                {userInfo.is_blocked ? '' : <MButton
                   txt={t(isFollow)}
                   onPress={followedItem}
                   {...(userInfo.is_followed
@@ -145,7 +140,7 @@ const UserDetail = (props) => {
                   imgIcon={!userInfo.is_followed ? addIcon : ""}
                   width={70}
                   height={25}
-                />
+                />}
               </div>
               <div className="follow-box m-flex">
                 <div onClick={() => getFollow(0)}>
@@ -161,7 +156,7 @@ const UserDetail = (props) => {
           </div>
         </div>
         {/* tab content */}
-        {userInfo.uid && (
+        {userInfo.uid && !userInfo.is_blocked &&(
           <div className="tab-content">
             <div className="tab-header">
               <Tabs swipeable lineWidth={10} value={value} onChange={setvalue}>
@@ -187,6 +182,10 @@ const UserDetail = (props) => {
             </div>
           </div>
         )}
+        {userInfo.uid && userInfo.is_blocked&& <div className="blockStatus m-flex m-row-center m-margin-tb15 block-box">
+          <img src={block} alt="" width={20}/>
+          <span className="delete-txt">{t('postBlock')}</span>
+        </div>}
       </div>
       <ActionSheet
         spacing

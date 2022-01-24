@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-21 18:44:04
+ * @LastEditTime: 2022-01-24 19:23:30
  * @LastEditors: lmk
  * @Description:
  */
@@ -12,6 +12,10 @@ import PostsIcons from "../PostsIcons";
 import "@/styles/followPage.scss";
 import ImageList from "../ImageList";
 import { objToUrl } from "@/utils";
+import cry from '@/images/cry.png';
+import block from '@/images/block.png';
+import { useTranslation } from "react-i18next";
+
 // import LazyLoad from 'react-lazyload';
 // import ImageList from '../ImageList';
 const PostItem = ({
@@ -32,7 +36,9 @@ const PostItem = ({
   };
   const forwardDetail = (e, item) => {
     e.stopPropagation();
-    history.push({ pathname: "/post", search: objToUrl({ id: item.id }) });
+    if(!val.parent_ststus_is_black){
+      history.push({ pathname: "/post", search: objToUrl({ id: item.id }) });
+    }
   };
   const forwardPress = () => {
     const id = val.parent_status ? val.parent_status.id : val.id;
@@ -42,6 +48,7 @@ const PostItem = ({
     e.stopPropagation();
     history.push({ pathname: "/comment", search: objToUrl({ id: val.id,createdUserId:val.user.uid }) });
   };
+  const {t} = useTranslation()
   return val&&(
     <div
       key={index}
@@ -90,28 +97,46 @@ const PostItem = ({
               created_at: val.parent_status.created_at,
             }}
             size={30}
+            btnType={val.parent_ststus_is_black ? 'block' : btnType}
             followed={() => changeFollow(val, !!val.parent_status)}
           />
-          {val.parent_status.content && (
-            <p className="itemContent m-font13 m-margin-tb5">
-              {val.parent_status.content}
-            </p>
+          {/* User is hacked */}
+          {val.parent_ststus_is_black && (
+            <div className="blockStatus m-flex m-row-center m-margin-tb15">
+              <img src={block} alt="" width={20}/>
+              <span className="delete-txt">{t('postBlock')}</span>
+            </div>
           )}
-          {!val.parent_status.content && (
-            <div className="m-margin-bottom10"></div>
-          )}
-          {val.parent_status.status_type === "link" && (
-            <Link theme="white" item={val.parent_status.link_meta} />
-          )}
-          {val.parent_status.status_type === "image" && (
-            <ImageList list={val.parent_status.images} boxWidth={window.innerWidth - 20}></ImageList>
-          )}
-          
-          <p className="forwardPostsData">
-            like {val.parent_status.likes_count} · comment{" "}
-            {val.parent_status.comments_count} · foward{" "}
-            {val.parent_status.forwards_count}
-          </p>
+          {
+            !val.parent_ststus_is_black && <div>
+              { val.parent_status.content && (
+                <p className="itemContent m-font13 m-margin-tb5">
+                  {val.parent_status.content}
+                </p>
+              )}
+              {!val.parent_status.content && (
+                <div className="m-margin-bottom10"></div>
+              )}
+              {val.parent_status.status_type === "link" && (
+                <Link theme="white" item={val.parent_status.link_meta} />
+              )}
+              {val.parent_status.status_type === "image" && (
+                <ImageList list={val.parent_status.images} boxWidth={window.innerWidth - 20}></ImageList>
+              )}
+              <p className="forwardPostsData">
+                like {val.parent_status.likes_count} · comment{" "}
+                {val.parent_status.comments_count} · foward{" "}
+                {val.parent_status.forwards_count}
+              </p>
+            </div>
+          }
+        </div>
+      )}
+      {/* The post was deleted */}
+      {val.parent_ststus_is_deleted && (
+        <div className="deleteStatus m-flex m-row-center">
+          <img src={cry} alt="" width={20}/>
+          <span className="delete-txt">{t('postDelete')}</span>
         </div>
       )}
       {val.status_type === "image" && (

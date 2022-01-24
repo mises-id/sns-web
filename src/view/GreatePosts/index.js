@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-19 18:01:49
+ * @LastEditTime: 2022-01-24 15:53:45
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -61,6 +61,7 @@ const GreatePosts = ({ history = {} }) => {
             stayTime: 1500,
             afterClose: () => {
               window.refreshByCacheKey('/home/following')
+              window.refreshByCacheKey('/myPosts')
               history.state = {}
               window.history.back();
               setloading(false);

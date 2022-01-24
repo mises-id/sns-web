@@ -3,7 +3,7 @@
 exports[`UserDetail should render correctly 1`] = `
 <div>
   <div
-    className="app-container"
+    className="app-container user-detail"
   >
     <div>
       <img

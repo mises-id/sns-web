@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-21 21:46:34
+ * @LastEditTime: 2022-01-24 18:18:24
  * @LastEditors: lmk
  * @Description:
  */
@@ -17,7 +17,7 @@ import image from "@/images/image.png";
  * @return {*} element
  */
 const Image = ({
-  source = head,
+  source,
   size = "lg",
   shape = "circle",
   alt = "avatar",
@@ -25,28 +25,12 @@ const Image = ({
   borderRadius = "1px",
   height,
 }) => {
-  //shape:circle square
+  const [status, setstatus] = useState('loading'); // loading success error
   const normal = alt === "avatar" ? head : image;
-  const [src, setsrc] = useState(normal);
-  borderRadius = shape === "circle" ? "50%" : borderRadius;
-  useEffect(() => {
-    setsrc(source || head);
-  }, [source]);
-  const imgSize =
-    typeof size === "string"
-      ? {
-          md: "60px",
-          lg: "40px",
-          sm: "28px",
-          xs: "15px",
-        }[size] || size
-      : `${size}px`;
-  const error = (e) => setsrc(normal);
-  return (
-    src && (
-      <img
-        onError={error.bind(this)}
-        src={src}
+  const renderImageStatus = {
+    loading:()=>{
+      return <img
+        src={normal}
         style={{
           height: height || imgSize,
           width: imgSize,
@@ -57,7 +41,60 @@ const Image = ({
         alt={alt}
         onClick={onClick}
       />
-    )
-  );
+    },
+    success:()=>{
+      if(!source){
+        setstatus('error')
+        return '';
+      }
+      return <img
+        onError={error.bind(this)}
+        src={source}
+        style={{
+          height: height || imgSize,
+          width: imgSize,
+          objectFit: "cover",
+          borderRadius,
+        }}
+        className={`border-${shape}`}
+        alt={alt}
+        onClick={onClick}
+      />
+    },
+    error:()=>{
+      console.log('error image');
+      return <img
+        src={normal}
+        style={{
+          height: height || imgSize,
+          width: imgSize,
+          objectFit: "cover",
+          borderRadius,
+        }}
+        className={`border-${shape}`}
+        alt={alt}
+        onClick={onClick}
+      />
+    }
+  }
+  //shape:circle square
+  borderRadius = shape === "circle" ? "50%" : borderRadius;
+  useEffect(() => {
+    // setsrc(source || head);
+    source&&setstatus('success')
+  }, [source]);
+  const imgSize =
+    typeof size === "string"
+      ? {
+          md: "60px",
+          lg: "40px",
+          sm: "28px",
+          xs: "15px",
+        }[size] || size
+      : `${size}px`;
+  const error = (e) => {
+    setstatus('error')
+  };
+  return renderImageStatus[status]();
 };
 export default Image;

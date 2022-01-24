@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-21 20:31:15
+ * @LastEditTime: 2022-01-24 20:14:45
  * @LastEditors: lmk
  * @Description:
  */
@@ -145,13 +145,17 @@ const CommentsPop = (
     e.stopPropagation();
     const isMe = user.loginForm.uid === item.uid;
     if (!isMe) {
-      const avatar = item.avatar ? item.avatar.medium : "";
-      history.push({
-        pathname: "/userDetail",
-        search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),
-      });
+      setvisible(false)
+      setTimeout(() => {
+        const avatar = item.avatar ? item.avatar.medium : "";
+        history.push({
+          pathname: "/userDetail",
+          search: objToUrl({ uid: item.uid, username: item.username, avatar,is_followed: item.is_followed,misesid:item.misesid }),
+        });
+      }, 10);
     }
   }
+  
   const renderView = (val, index) => {
     const valAvatar = val.user.avatar || {}
     return (

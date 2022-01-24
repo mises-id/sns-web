@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-21 21:33:43
+ * @LastEditTime: 2022-01-24 16:20:02
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -32,7 +32,7 @@ import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
 import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
-import { dropByCacheKey, useDidCache, useDidRecover } from "react-router-cache-route";
+import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState("");

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-21 20:37:46
+ * @LastEditTime: 2022-01-24 16:34:26
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -73,9 +73,10 @@ const Notifications = ({ history }) => {
   };
   const detail = async val => {
     const { status,message_type,user,meta_data,created_at } = val
-    if(message_type!=='new_comment'){
+    if(!['new_comment','new_like_comment'].includes(message_type)){
       goDetail(val)
     }else{
+      if(!status) return false;
       const topic_id = meta_data.group_id || meta_data.comment_id
       const res = await getCommentId(topic_id)
       res.username = username(res.user);
@@ -210,12 +211,12 @@ const Notifications = ({ history }) => {
       case 'image':
         return status.thumb_images[0];
       case 'text':
-        if(status.origin_status){
-          if(status.origin_status.status_type==='image'){
-            return status.origin_status.thumb_images[0];
+        if(status.parent_status){
+          if(status.parent_status.status_type==='image'){
+            return status.parent_status.thumb_images[0];
           }
-          if(status.origin_status.status_type==='link'){
-            return status.origin_status.link_meta.attachment_url;
+          if(status.parent_status.status_type==='link'){
+            return status.parent_status.link_meta.attachment_url;
           }
         } 
         return ''

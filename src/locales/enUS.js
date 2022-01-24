@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-21 21:12:52
+ * @LastEditTime: 2022-01-24 18:23:19
  * @LastEditors: lmk
  * @Description: 
  */
@@ -44,8 +44,8 @@ const enUS = {
     updataUserInfoSuccess:'Update success',
     sendSuccess:"Send success",
     deleteSuccess:"Delete success",
-    notLogin:'Do you want to Connect?',
-    notRegister:'Do you want to register?',
+    notLogin:'Go to create your connect ID',
+    notRegister:'Go to create your Mises ID',
     createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
     connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
     resoreMisesIdTips:"If you already have metamask account, just use mnemonics to restore your metamask account, the Enhanced metamask plugin will create misesid the same as your metamask account. If you created Misesid before, use mnemonics to restore your misesid & metamask account",
@@ -70,7 +70,10 @@ const enUS = {
     'blackListPageTitle':"Block List",
     "commentPlaceholder":"Write a comment...",
     'succcess':"Succeeded",
-    "pictureError":"Picture upload failed, please try again"
+    "pictureError":"Picture upload failed, please try again",
+    "postDelete":"Sorry, This content has been delete",
+    "postBlock":"This user has been blocked by you",
+    "usernameError":'The user name is illegal. Only letters, numbers, underscores and no more than 25 characters can be used'
   }
 }
 export default enUS
