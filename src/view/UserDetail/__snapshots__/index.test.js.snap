@@ -20,12 +20,6 @@ exports[`UserDetail should render correctly 1`] = `
           onClick={[Function]}
           src="user_back.png"
         />
-        <img
-          alt=""
-          className="nav-icon"
-          onClick={[Function]}
-          src="user_more.png"
-        />
       </div>
       <div
         className="userinfo-box m-flex"
