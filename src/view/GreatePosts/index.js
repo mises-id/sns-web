@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-24 15:53:45
+ * @LastEditTime: 2022-01-25 10:48:38
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -14,6 +14,7 @@ import { createStatus } from "@/api/status";
 import UpLoad from "@/components/UpLoad";
 import Cell from "@/components/Cell";
 import { attachment } from "@/api/updata";
+import { useHistory } from "react-router-dom";
 const GreatePosts = ({ history = {} }) => {
   const { t } = useTranslation();
   const postsContent = useBind("");
@@ -21,6 +22,7 @@ const GreatePosts = ({ history = {} }) => {
   let [imageList, setImageList] = useState([]);
   const [selectShareWith, setselectShareWith] = useState("public");
   const [selectHrs, setselectHrs] = useState(0)
+  const historyHooks = useHistory()
   //create
   const send = async () => {
     if (postsContent.value === "" && imageList.length===0) {
@@ -61,9 +63,10 @@ const GreatePosts = ({ history = {} }) => {
             stayTime: 1500,
             afterClose: () => {
               window.refreshByCacheKey('/home/following')
-              window.refreshByCacheKey('/myPosts')
               history.state = {}
-              window.history.back();
+              historyHooks.replace('/home/following')
+              // window.history.back();
+
               setloading(false);
             },
           });

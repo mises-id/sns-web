@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import userBg from "@/images/user_bg.png";
 import userBack from "@/images/user_back.png";
-import userMore from "@/images/user_more.png";
+// import userMore from "@/images/user_more.png";
 import "./index.scss";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
@@ -77,7 +77,7 @@ const UserDetail = (props) => {
   }]
   // Judge the display content according to the status
   const [buttons, setbuttons] = useState(joinBlackButton)
-  const showCheckItem = ()=> setVisible(true)
+  // const showCheckItem = ()=> setVisible(true)
   const back = () => {
     window.history.back();
   };
@@ -114,7 +114,7 @@ const UserDetail = (props) => {
               alt=""
               onClick={back}
             ></img>
-            <img src={userMore} className="nav-icon" alt="" onClick={showCheckItem}></img>
+            {/* <img src={userMore} className="nav-icon" alt="" onClick={showCheckItem}></img> */}
           </div>
           {/* userinfo */}
           <div className="userinfo-box m-flex">
