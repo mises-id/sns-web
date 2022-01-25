@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-25 13:26:34
+ * @LastEditTime: 2022-01-25 23:52:06
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -26,6 +26,7 @@ export default class MisesExtensionController{
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
     this.init()
+    this.listen()
   }
   // getProvider(){
   //   console.log(this.getNum,Web3.givenProvider);
@@ -49,7 +50,7 @@ export default class MisesExtensionController{
   //   this.getNum = 0;
   // }
   init (){
-    if(!window.web3) {
+    if(!window.ethereum) {
       console.log('unInit')
       return Promise.reject();
     }
@@ -57,8 +58,8 @@ export default class MisesExtensionController{
       return Promise.resolve()
     }
     console.log('init')
-    this.web3 = new Web3(window.web3.currentProvider || "ws://localhost:8545");
-    console.log(window.web3.currentProvider)
+    this.web3 = new Web3(window.ethereum || "ws://localhost:8545");
+    console.log(window.ethereum)
     this.web3.extend({
       property: 'misesWeb3',
       methods:[{
@@ -105,40 +106,71 @@ export default class MisesExtensionController{
         inputFormatter: [null]
       }]
     })
-    if(window.ethereum){
-      window.ethereum.on('accountsChanged',async res=>{
-        if(res.length){
-          this.resetAccount(res[0])
-        }
-        if(res.length===0) {
-          console.log(res);
-          store.dispatch(setUserAuth(''))
-          store.dispatch(setUserToken(''))
-          store.dispatch(setLoginForm({}))
-          this.resetUser()
-        }
-      })
-      window.ethereum.on('chainChanged',res=>{
-        console.log(res)
-      })
-      window.ethereum.on('restoreAccount',res=>{
-        console.log(res,'restoreAccount')
-      })
-    }
+    
     // If the initialization is completed, the currently selected account will be obtained
-    const {selectedAddress} = this.web3.currentProvider
-    selectedAddress&&this.resetAccount(selectedAddress)
+    setTimeout(() => {
+      const {selectedAddress} = window.ethereum
+      if(selectedAddress){
+        this.resetAccount(selectedAddress)
+        return false;
+      }
+      if(!selectedAddress){
+        console.log('not find selectedAddress');
+        this.resetApp()
+      }
+    }, 150);
     return Promise.resolve()
+  }
+  listen(){
+    if(!window.ethereum){
+      return false;
+    }
+    window.ethereum.on('accountsChanged',async res=>{
+      console.log(res);
+      if(res.length){
+        this.resetAccount(res[0])
+      }
+      if(res.length===0) {
+        this.resetApp()
+      }
+    })
+    window.ethereum.request({ method: 'eth_accounts' }).then(res=>{
+      console.log(313123333,res);
+      if(res.length===0){
+        this.resetApp()
+      }
+    })
+    window.ethereum.on('chainChanged',res=>{
+      console.log(res)
+    })
+    window.ethereum.on('restoreAccount',res=>{
+      console.log(res,'restoreAccount')
+    })
+  }
+  resetApp(){
+    console.log('resetApp')
+    setTimeout(() => {
+      store.dispatch(setUserAuth(''))
+      this.resetUser()
+      store.dispatch(setUserToken(''))
+      store.dispatch(setLoginForm({}))  
+    }, 0);
   }
   async resetAccount(res){
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
     const {loginForm} = store.getState().user
-    console.log(loginForm.misesid,misesid,'misesidmisesidmisesid');
+    console.log(misesid,res);
+    // If the selected user is different from the current user
     if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
       this.disconnect(loginForm.uid);
       this.resetUser()
       await this.requestAccounts()
       console.log(window.location.pathname)
+      refreshByCacheKey(window.location.pathname)
+      return false
+    }
+    if(!loginForm.misesid){
+      await this.requestAccounts()
       refreshByCacheKey(window.location.pathname)
     }
   }
@@ -146,6 +178,7 @@ export default class MisesExtensionController{
     if(!window.ethereum){
       return this.isUnInitMetaMask()
     }
+    console.log(window.ethereum);
     return Boolean(window.ethereum) ? Promise.resolve(true) : (this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
@@ -218,7 +251,7 @@ export default class MisesExtensionController{
         mises_id
       }
     } catch (error) {
-      
+      return Promise.reject(error)
     }
   }
   async setUserInfo(data){
@@ -248,7 +281,9 @@ export default class MisesExtensionController{
   async getMisesAccounts(){
     console.log('getMisesAccounts')
     try {
-      await this.isActive()
+      // const flag = await this.isInitMetaMask();
+      // if(!flag) return Promise.reject()
+      if(!this.web3) return Promise.reject('uninit')
       const count = await this.web3.misesWeb3.getMisesAccounts()
       return count
     } catch (error) {
@@ -269,9 +304,5 @@ export default class MisesExtensionController{
       console.log(error,'isActive')
       return Promise.reject(error || 'Wallet not activated')
     }
-  }
-  async getAddAccountFlag(){
-    const flag = localStorage.getItem('setAccount')
-    return flag;
   }
 }

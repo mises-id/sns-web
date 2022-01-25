@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-21 19:15:27
+ * @LastEditTime: 2022-01-25 23:34:02
  * @LastEditors: lmk
  * @Description: 
  */
@@ -57,9 +57,11 @@ const Home = ({history,children=[]})=>{
     getUserInfo()
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = ()=>{
-    auth&&token&&getUserSelfInfo().then(res=>{
-      dispatch(setLoginForm(res))
-    })
+    if(auth&&token){
+      getUserSelfInfo().then(res=>{
+        dispatch(setLoginForm(res))
+      })
+    }
   }
   useDidRecover(()=>{
     window.refreshByCacheKey('/follow')

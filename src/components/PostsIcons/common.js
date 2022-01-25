@@ -8,7 +8,7 @@ import { Toast } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2022-01-18 11:06:30
+ * @LastEditTime: 2022-01-25 14:46:34
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -41,7 +41,7 @@ export async function followed(item={}){
   const fetchFn = val.is_followed ? unfollow : follow;
   try {
     await window.mises.isActive();
-    console.log(1111)
+    console.log('followed')
     val.is_followed ? window.mises.userUnFollow(val.misesid) : window.mises.userFollow(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;

@@ -173,7 +173,7 @@ export function useLoginModal(){
   const loginModal = async (cb)=>{
     try {
       await window.mises.isInitMetaMask()
-      const flag = await window.mises.getAddAccountFlag();
+      const flag = await window.mises.getMisesAccounts();
       // const flag = count > 0;
       const content = flag ? t('notLogin') : t('notRegister') ;
       Modal.confirm({
