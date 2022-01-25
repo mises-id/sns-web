@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-24 20:41:21
+ * @LastEditTime: 2022-01-25 13:26:34
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setUserAuth, setUserToken } from '@/actions/user';
+import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -49,9 +49,16 @@ export default class MisesExtensionController{
   //   this.getNum = 0;
   // }
   init (){
+    if(!window.web3) {
+      console.log('unInit')
+      return Promise.reject();
+    }
+    if(this.web3){
+      return Promise.resolve()
+    }
     console.log('init')
-    this.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-    console.log(Web3.givenProvider)
+    this.web3 = new Web3(window.web3.currentProvider || "ws://localhost:8545");
+    console.log(window.web3.currentProvider)
     this.web3.extend({
       property: 'misesWeb3',
       methods:[{
@@ -104,6 +111,10 @@ export default class MisesExtensionController{
           this.resetAccount(res[0])
         }
         if(res.length===0) {
+          console.log(res);
+          store.dispatch(setUserAuth(''))
+          store.dispatch(setUserToken(''))
+          store.dispatch(setLoginForm({}))
           this.resetUser()
         }
       })
@@ -117,6 +128,7 @@ export default class MisesExtensionController{
     // If the initialization is completed, the currently selected account will be obtained
     const {selectedAddress} = this.web3.currentProvider
     selectedAddress&&this.resetAccount(selectedAddress)
+    return Promise.resolve()
   }
   async resetAccount(res){
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
@@ -131,8 +143,10 @@ export default class MisesExtensionController{
     }
   }
   async isInitMetaMask(showToast=true){
-    console.log(Boolean(Web3.givenProvider&&Web3.givenProvider.chainId),Web3.givenProvider);
-    return Boolean(Web3.givenProvider&&Web3.givenProvider.chainId) ? Promise.resolve(true) : (this.isUnInitMetaMask())
+    if(!window.ethereum){
+      return this.isUnInitMetaMask()
+    }
+    return Boolean(window.ethereum) ? Promise.resolve(true) : (this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
     Modal.confirm({
@@ -192,14 +206,19 @@ export default class MisesExtensionController{
   }
   async getAuth(){
     console.log('getAuth')
-    const flag = await this.isInitMetaMask();
-    if(!flag) return Promise.reject()
-    const res = await this.web3.misesWeb3.requestAccounts();
-    const {mises_id} = urlToJson(`?${res.auth}`);
-    await this.connect(mises_id)
-    return {
-      ...res,
-      mises_id
+    try {
+      const flag = await this.isInitMetaMask();
+      if(!flag) return Promise.reject()
+      await this.init()
+      const res = await this.web3.misesWeb3.requestAccounts();
+      const {mises_id} = urlToJson(`?${res.auth}`);
+      await this.connect(mises_id)
+      return {
+        ...res,
+        mises_id
+      }
+    } catch (error) {
+      
     }
   }
   async setUserInfo(data){
@@ -223,6 +242,7 @@ export default class MisesExtensionController{
     console.log('openRestore')
     const flag = await this.isInitMetaMask();
     if(!flag) return Promise.reject()
+    await this.init()
     this.web3.misesWeb3.openRestore()
   }
   async getMisesAccounts(){
@@ -241,6 +261,7 @@ export default class MisesExtensionController{
     try {
       const flag = await this.isInitMetaMask();
       if(!flag) return Promise.reject()
+      await this.init()
       const getActive = await this.web3.misesWeb3.getActive();
       // const selectedAddress = Boolean(this.web3.currentProvider.selectedAddress);
       return getActive ? Promise.resolve(true) : Promise.reject('Wallet not activated')

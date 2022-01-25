@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-18 10:20:47
+ * @LastEditTime: 2022-01-25 10:48:54
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -14,9 +14,11 @@ import Link from "../Follows/Link";
 import { useBind, useRouteState } from "@/utils";
 import { createStatus, getStatusItem } from "@/api/status";
 import ImageList from "@/components/ImageList";
+import { useHistory } from "react-router-dom";
 const Forward = ({ history = {} }) => {
   const [item, setitem] = useState("");
   const { t } = useTranslation();
+  const historyHooks = useHistory()
   const historyState = useRouteState(history);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getPosts = useCallback(() => {
@@ -40,7 +42,8 @@ const Forward = ({ history = {} }) => {
           content: t("sendSuccess"),
           stayTime: 1500,
           afterClose: () => {
-            window.history.back();
+            window.refreshByCacheKey('/home/following')
+            historyHooks.replace('/home/following')
             setloading(false);
           },
         });

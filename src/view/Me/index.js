@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-21 21:19:15
+ * @LastEditTime: 2022-01-25 10:24:08
  * @LastEditors: lmk
  * @Description:
  */
@@ -13,7 +13,7 @@ import me_2 from "@/images/me_2.png";
 import me_3 from "@/images/me_3.png";
 import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
-import me_6 from "@/images/me_6.png";
+// import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
 import { ActivityIndicator, Badge, Button } from "zarm";
 import { useSelector } from "react-redux";
@@ -117,13 +117,15 @@ const Myself = ({ history }) => {
       label: t("posts"),
       icon: me_5,
       url: "/myPosts",
-    },
+    }
+  ]);
+  /* 
+  ,
     {
       label: t("blackListPageTitle"),
       icon: me_6,
       url: "/blackList",
-    }
-  ]);
+    } */
   //router to userInfo
   const userInfo = () => history.push("/userInfo");
   //click global cell
