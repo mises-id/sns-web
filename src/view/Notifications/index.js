@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-24 16:34:26
+ * @LastEditTime: 2022-01-25 14:23:12
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -21,6 +21,7 @@ import {
 import Image from "@/components/Image";
 import like from "@/images/like.png";
 import CommentsPop from "@/view/Comment/commentPop";
+import cry from '@/images/cry.png';
 import {
   getNotificationList,
   uploadNotificationState,
@@ -72,11 +73,11 @@ const Notifications = ({ history }) => {
     });
   };
   const detail = async val => {
-    const { status,message_type,user,meta_data,created_at } = val
+    const { status,message_type,user,meta_data,created_at,comment_is_deleted } = val
     if(!['new_comment','new_like_comment'].includes(message_type)){
       goDetail(val)
     }else{
-      if(!status) return false;
+      if(!status || comment_is_deleted) return false; // If the comment is deleted or the post is deleted
       const topic_id = meta_data.group_id || meta_data.comment_id
       const res = await getCommentId(topic_id)
       res.username = username(res.user);
@@ -251,9 +252,16 @@ const Notifications = ({ history }) => {
         }
         return (
           <div>
-            {metaData.content && (
+            {metaData.content && !val.comment_is_deleted &&(
               <p className="item-content">{metaData.content}</p>
             )}
+            {val.comment_is_deleted &&(
+              <div className="deleteStatus notification-delete m-flex m-row-center">
+                <img src={cry} alt="" width={13}/>
+                <span className="delete-txt">{t('notificationPostDelete')}</span>
+              </div>
+            )}
+            
             {metaData.parent_content&&<div className="parent-content">
               <span className="at">@{username(obj)}:</span> <span>{metaData.parent_content}</span>
             </div>}

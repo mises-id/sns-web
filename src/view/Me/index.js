@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-25 10:24:08
+ * @LastEditTime: 2022-01-26 00:03:26
  * @LastEditors: lmk
  * @Description:
  */
@@ -38,7 +38,15 @@ const Myself = ({ history }) => {
   //getData
   const getFlag = async () => {
     try {
-      setloading(false);
+      if(!token){
+        await window.mises.getMisesAccounts().then(res=>{
+          setflag(!!res)
+          setloading(false);
+        })
+      }else{
+        setflag(false);
+        setloading(false);
+      }
       cleartimer()
     } catch (error) {
       setflag(false);
@@ -52,9 +60,6 @@ const Myself = ({ history }) => {
     timer = null;
   }
   useEffect(() => {
-    window.mises.getAddAccountFlag().then(res=>{
-      setflag(!!res)
-    })
     if(timer){
       cleartimer()
     }
@@ -75,16 +80,20 @@ const Myself = ({ history }) => {
     setTabList([...list])
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
-    window.mises.requestAccounts().catch(err=>{
+    window.mises.requestAccounts().then(res=>{
+      setTimeout(() => { // Delay refreshing the page to reset Web3
+        window.location.reload()
+      }, 4000);
+    }).catch(err=>{
       // Toast.show(err||err.message)
       
     })
   };
-  const restore = () => {
-    window.mises.openRestore().catch(err=>{
-      // Toast.show(err||err.message)
-    });
-  }
+  // const restore = () => {
+  //   window.mises.openRestore().catch(err=>{
+  //     // Toast.show(err||err.message)
+  //   });
+  // }
   const [list,setTabList] = useState([
     {
       label: t("following"),
@@ -170,24 +179,18 @@ const Myself = ({ history }) => {
         </p>
       </div>
       <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
-        <Button
-          block
-          shape="round"
-          theme="primary"
-          ghost
-          onClick={restore}
-        >
-          <span className="btn-txt">{t("restore")}</span>
+        <Button block shape="round" theme="primary" onClick={onclick}>
+          <span className="btn-txt">{t("createId")}</span>
         </Button>
       </div>
-      <p className="m-font15 m-colors-333 me-tips m-tipss">
+      {/* <p className="m-font15 m-colors-333 me-tips m-tipss">
         {t("createMisesIdTips")}
       </p>
       <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
         <Button block shape="round" theme="primary" onClick={onclick}>
           <span className="btn-txt">{t("createId")}</span>
         </Button>
-      </div>
+      </div> */}
     </div>
   }
   return (

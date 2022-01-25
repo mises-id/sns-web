@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-24 18:23:19
+ * @LastEditTime: 2022-01-25 18:38:02
  * @LastEditors: lmk
  * @Description: 
  */
@@ -13,7 +13,7 @@ const enUS = {
     me:'Me',
     followTxt:'follow',
     followedTxt:'following',
-    createId:"Create Mises ID",
+    createId:"Create/Restore Mises ID",
     loginUser:"Connect Mises ID",
     restoreId:'Restore Mises ID',
     aboutId:'About Mises',
@@ -48,7 +48,7 @@ const enUS = {
     notRegister:'Go to create your Mises ID',
     createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
     connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
-    resoreMisesIdTips:"If you already have metamask account, just use mnemonics to restore your metamask account, the Enhanced metamask plugin will create misesid the same as your metamask account. If you created Misesid before, use mnemonics to restore your misesid & metamask account",
+    resoreMisesIdTips:"You can get your Mises ID via a Metamask account.",
     createPostsPlaceholder:'Please enter the contents',
     createPostsTips:"Please enter contents or upload pictures",
     forwardPlaceholder:'Please enter the contents',
@@ -72,6 +72,7 @@ const enUS = {
     'succcess':"Succeeded",
     "pictureError":"Picture upload failed, please try again",
     "postDelete":"Sorry, This content has been delete",
+    "notificationPostDelete":"This content has been delete",
     "postBlock":"This user has been blocked by you",
     "usernameError":'The user name is illegal. Only letters, numbers, underscores and no more than 25 characters can be used'
   }

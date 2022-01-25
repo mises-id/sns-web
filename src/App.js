@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-18 18:13:33
+ * @LastEditTime: 2022-01-25 23:44:46
  * @LastEditors: lmk
  * @Description: 
  */
@@ -19,9 +19,12 @@ import {PersistGate} from 'redux-persist/lib/integration/react';
 import { hot } from 'react-hot-loader/root'
 import {setTheme} from '@/styles/setZarmTheme'
 import { CacheSwitch } from 'react-router-cache-route'
+import { useState } from 'react';
 const App = ()=> {
+  const [hasToken, sethasToken] = useState('');
   useEffect(() => {
     setTheme()
+    sethasToken(store.getState().user.token)
   }, [])
   return (
     <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
@@ -30,7 +33,7 @@ const App = ()=> {
           <Router>
             <CacheSwitch>
               {routes(routeConfig)}
-              <Redirect to="/home/discover" />
+              <Redirect to={hasToken ? "/home/discover" : "/home/me"} />
             </CacheSwitch>
           </Router>
         </PersistGate>

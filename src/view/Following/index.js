@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-24 15:59:17
+ * @LastEditTime: 2022-01-25 23:13:53
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -19,6 +19,7 @@ import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
 import { objToUrl, useList, username, useRouteState } from "@/utils";
 import { followed } from "@/components/PostsIcons/common";
+import { refreshByCacheKey } from "react-router-cache-route";
 const Following = ({ pageType,uid }) => {
   const { t } = useTranslation();
   const state = useRouteState();
@@ -117,6 +118,10 @@ const Following = ({ pageType,uid }) => {
   useEffect(() => {
     setlastId(last_id);
   }, [last_id]);
+  useEffect(() => {
+    refreshByCacheKey('/home/me')
+  }, []);
+  
   return (
     <div>
       {/* If the page has a pagetype value, it is a component reference; otherwise, it is a routing page */}
