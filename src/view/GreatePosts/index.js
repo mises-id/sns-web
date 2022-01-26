@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-25 10:48:38
+ * @LastEditTime: 2022-01-26 15:44:43
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -43,7 +43,7 @@ const GreatePosts = ({ history = {} }) => {
       form.show_duration = 0;
     }
     if(selectShareWith==='limited'){
-      form.is_private = false;
+      form.is_private = true;
       form.show_duration = hoursToSeconds(selectHrs);
     }
     setloading(true);
