@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-25 23:52:06
+ * @LastEditTime: 2022-01-26 22:41:51
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -108,17 +108,10 @@ export default class MisesExtensionController{
     })
     
     // If the initialization is completed, the currently selected account will be obtained
-    setTimeout(() => {
-      const {selectedAddress} = window.ethereum
-      if(selectedAddress){
-        this.resetAccount(selectedAddress)
-        return false;
-      }
-      if(!selectedAddress){
-        console.log('not find selectedAddress');
-        this.resetApp()
-      }
-    }, 150);
+    // setTimeout(() => {
+    //   const {selectedAddress} = window.ethereum
+      
+    // }, 150);
     return Promise.resolve()
   }
   listen(){
@@ -136,7 +129,12 @@ export default class MisesExtensionController{
     })
     window.ethereum.request({ method: 'eth_accounts' }).then(res=>{
       console.log(313123333,res);
+      if(res.length>0){
+        this.resetAccount(res[0])
+        return false;
+      }
       if(res.length===0){
+        console.log('not find selectedAddress');
         this.resetApp()
       }
     })
@@ -172,7 +170,9 @@ export default class MisesExtensionController{
     if(!loginForm.misesid){
       await this.requestAccounts()
       refreshByCacheKey(window.location.pathname)
+      return false;
     }
+    this.connect(loginForm.misesid)
   }
   async isInitMetaMask(showToast=true){
     if(!window.ethereum){
@@ -233,6 +233,9 @@ export default class MisesExtensionController{
       data.token&&store.dispatch(setUserToken(data.token))
       return Promise.resolve()
     } catch (error) {
+      if(error&&error.code===4001){
+        window.location.reload()
+      }
       console.log(error);
       return Promise.reject(error)
     }
