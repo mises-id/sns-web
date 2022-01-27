@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-01-20 18:59:23
+ * @LastEditTime: 2022-01-27 18:04:11
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -228,4 +228,33 @@ body{
 }
 .za-badge--circle .za-badge__content{
   font-size: 11px;
+}
+.za-confirm__button{
+  width: 140px;
+  height: 44px;
+  background: #EEEEEE;
+  border-radius: 22px;
+  font-weight:600;
+  color: #666666;
+  &.za-confirm__button--ok{
+    background-color: var(--theme-primary);
+    color: white;
+  }
+}
+.za-confirm .za-modal__footer{
+  padding: 20px 20px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.za-modal__header{
+  padding-top: 30px;
+  font-weight:bold;
+}
+.za-modal__body{
+  font-size: 17px;
+  color: #666;
+  padding: 25px 25px 20px;
+}
+.za-modal--radius .za-popup{
+  border-radius: 15px;
 }

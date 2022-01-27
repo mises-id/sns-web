@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-24 19:23:30
+ * @LastEditTime: 2022-01-27 13:29:59
  * @LastEditors: lmk
  * @Description:
  */
@@ -107,8 +107,14 @@ const PostItem = ({
               <span className="delete-txt">{t('postBlock')}</span>
             </div>
           )}
+          {!val.parent_status.is_public && (
+            <div className="blockStatus m-flex m-row-center m-margin-tb15">
+              <img src={block} alt="" width={20}/>
+              <span className="delete-txt">{t('postPrivate')}</span>
+            </div>
+          )}
           {
-            !val.parent_ststus_is_black && <div>
+            !val.parent_ststus_is_black && val.parent_status.is_public && <div>
               { val.parent_status.content && (
                 <p className="itemContent m-font13 m-margin-tb5">
                   {val.parent_status.content}

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-26 22:41:51
+ * @LastEditTime: 2022-01-27 16:41:34
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -20,7 +20,8 @@ window.refreshByCacheKey = refreshByCacheKey;
 export default class MisesExtensionController{
   web3;
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
-  // timer;
+  timer;
+  startNum = 10000;
   // getMax = 3;
   // getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
@@ -44,14 +45,15 @@ export default class MisesExtensionController{
   //     this.getProvider()
   //   }, 300);
   // }
-  // clear(){
-  //   clearTimeout(this.timer)
-  //   this.timer = null;
-  //   this.getNum = 0;
-  // }
+  clear(){
+    clearTimeout(this.timer)
+    this.timer = null;
+    this.startNum = 10000;
+  }
   init (){
     if(!window.ethereum) {
       console.log('unInit')
+      this.resetApp()
       return Promise.reject();
     }
     if(this.web3){
@@ -149,8 +151,8 @@ export default class MisesExtensionController{
     console.log('resetApp')
     setTimeout(() => {
       store.dispatch(setUserAuth(''))
-      this.resetUser()
       store.dispatch(setUserToken(''))
+      this.resetUser()
       store.dispatch(setLoginForm({}))  
     }, 0);
   }
@@ -201,8 +203,7 @@ export default class MisesExtensionController{
       notifications_count:0
     }))
     clearCache()
-    // dropByCacheKey('/home/discover')
-    // dropByCacheKey('/home/following')
+    refreshByCacheKey('/home')
     console.log('resetUser')
   }
   connect(userid){

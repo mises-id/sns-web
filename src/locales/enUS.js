@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-25 18:38:02
+ * @LastEditTime: 2022-01-27 18:00:40
  * @LastEditors: lmk
  * @Description: 
  */
@@ -44,7 +44,7 @@ const enUS = {
     updataUserInfoSuccess:'Update success',
     sendSuccess:"Send success",
     deleteSuccess:"Delete success",
-    notLogin:'Go to create your connect ID',
+    notLogin:'Your Mises ID is not connected. Please connect your account.',
     notRegister:'Go to create your Mises ID',
     createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
     connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
@@ -74,6 +74,7 @@ const enUS = {
     "postDelete":"Sorry, This content has been delete",
     "notificationPostDelete":"This content has been delete",
     "postBlock":"This user has been blocked by you",
+    "postPrivate":"This is a private post",
     "usernameError":'The user name is illegal. Only letters, numbers, underscores and no more than 25 characters can be used'
   }
 }
