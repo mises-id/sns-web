@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-01-25 11:33:03
+ * @LastEditTime: 2022-01-27 14:10:43
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -63,7 +63,8 @@ request.interceptors.response.use(
   error => {
     error.response&&reject(error.response.data)
     console.log('err' + error.message) // for debug
-    return Promise.reject(error.message)
+    const message = error.response ? error.response.data.message : error.message
+    return Promise.reject(message)
   }
 )
 // const {dispatch} = store
@@ -71,7 +72,8 @@ const reject = ({code,message})=>{
   if(code===403002){
     invalidToken()
   }
-  Toast.show({content:message|| 'error'})
+  console.log(message);
+  Toast.show(message|| 'error')
 }
 const invalidToken = ()=>{
   window.mises.resetUser()

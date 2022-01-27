@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-21 11:10:56
+ * @LastEditTime: 2022-01-27 18:03:09
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -179,7 +179,9 @@ export function useLoginModal(){
       Modal.confirm({
         title: 'Message',
         content,
+        width:'90%',
         onCancel: () => {},
+        okText:flag ? 'Connect' : 'Create',
         onOk: () => {
           window.mises.requestAccounts().then(cb);
         },

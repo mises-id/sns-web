@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-26 00:03:26
+ * @LastEditTime: 2022-01-27 09:13:24
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 // import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button } from "zarm";
+import { ActivityIndicator, Badge, Button, Toast } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -81,12 +81,13 @@ const Myself = ({ history }) => {
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
   const onclick = () => {
     window.mises.requestAccounts().then(res=>{
-      setTimeout(() => { // Delay refreshing the page to reset Web3
-        window.location.reload()
-      }, 4000);
+      window.location.reload()
     }).catch(err=>{
+      console.log(err);
+      if(err&&err.code===-32002){
+        Toast.show('Please authorize')
+      }
       // Toast.show(err||err.message)
-      
     })
   };
   // const restore = () => {
