@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-27 16:41:34
+ * @LastEditTime: 2022-01-29 02:29:15
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -125,9 +125,9 @@ export default class MisesExtensionController{
       if(res.length){
         this.resetAccount(res[0])
       }
-      if(res.length===0) {
-        this.resetApp()
-      }
+      // if(res.length===0) {
+      //   this.resetApp()
+      // }
     })
     window.ethereum.request({ method: 'eth_accounts' }).then(res=>{
       console.log(313123333,res);
@@ -176,16 +176,17 @@ export default class MisesExtensionController{
     }
     this.connect(loginForm.misesid)
   }
-  async isInitMetaMask(showToast=true){
-    if(!window.ethereum){
+  async isInitMetaMask(hideModal){
+    if(!window.ethereum&&!hideModal){
       return this.isUnInitMetaMask()
     }
     console.log(window.ethereum);
-    return Boolean(window.ethereum) ? Promise.resolve(true) : (this.isUnInitMetaMask())
+    return Boolean(window.ethereum) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
     Modal.confirm({
       title: 'Message',
+      width:'90%',
       content:'Failed to connect with metamask, request to refresh again',
       onCancel: () => {},
       onOk: () => {
@@ -268,12 +269,26 @@ export default class MisesExtensionController{
     }
   }
   async userFollow(data){
-    console.log('userFollow')
-    this.web3.misesWeb3.userFollow(data)
+    try {
+      console.log('userFollow')
+      const flag = await this.isInitMetaMask();
+      if(!flag) return Promise.reject()
+      await this.init()
+      this.web3.misesWeb3.userFollow(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
   async userUnFollow(data){
+   try {
     console.log('userUnFollow')
+    const flag = await this.isInitMetaMask();
+    if(!flag) return Promise.reject()
+    await this.init()
     this.web3.misesWeb3.userUnFollow(data)
+   } catch (error) {
+    return Promise.reject(error)
+   }
   }
   async openRestore(){
     console.log('openRestore')
@@ -282,12 +297,15 @@ export default class MisesExtensionController{
     await this.init()
     this.web3.misesWeb3.openRestore()
   }
-  async getMisesAccounts(){
+  async getMisesAccounts(showModal){
     console.log('getMisesAccounts')
     try {
       // const flag = await this.isInitMetaMask();
       // if(!flag) return Promise.reject()
-      if(!this.web3) return Promise.reject('uninit')
+      const flag = await this.isInitMetaMask(showModal);
+      console.log(flag,'flag',showModal);
+      if(!flag) return Promise.reject()
+      await this.init()
       const count = await this.web3.misesWeb3.getMisesAccounts()
       return count
     } catch (error) {
@@ -301,8 +319,7 @@ export default class MisesExtensionController{
       const flag = await this.isInitMetaMask();
       if(!flag) return Promise.reject()
       await this.init()
-      const getActive = await this.web3.misesWeb3.getActive();
-      // const selectedAddress = Boolean(this.web3.currentProvider.selectedAddress);
+      const getActive = window.ethereum._state.isUnlocked;
       return getActive ? Promise.resolve(true) : Promise.reject('Wallet not activated')
     } catch (error) {
       console.log(error,'isActive')

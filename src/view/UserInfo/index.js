@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-01-24 16:13:52
+ * @LastEditTime: 2022-01-28 14:16:56
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -112,6 +112,7 @@ const UserInfo = (props) => {
         // Toast.show('Incorrect username')
         Modal.alert({
           title:'Message',
+          width:'90%',
           content:t('usernameError')
         })
         return false;

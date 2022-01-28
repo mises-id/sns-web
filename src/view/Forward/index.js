@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-25 10:48:54
+ * @LastEditTime: 2022-01-28 21:47:22
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -15,6 +15,8 @@ import { useBind, useRouteState } from "@/utils";
 import { createStatus, getStatusItem } from "@/api/status";
 import ImageList from "@/components/ImageList";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserSetting } from "@/actions/user";
 const Forward = ({ history = {} }) => {
   const [item, setitem] = useState("");
   const { t } = useTranslation();
@@ -27,6 +29,7 @@ const Forward = ({ history = {} }) => {
     });
   });
   const content = useBind("");
+  const dispatch = useDispatch()
   const [loading, setloading] = useState(false);
   const submit = () => {
     const form = {
@@ -45,6 +48,11 @@ const Forward = ({ history = {} }) => {
             window.refreshByCacheKey('/home/following')
             historyHooks.replace('/home/following')
             setloading(false);
+            dispatch(setUserSetting({
+              postId:historyState.id,
+              data:item.forwards_count+1,
+              actionType: 'forward'
+            }))
           },
         });
       })

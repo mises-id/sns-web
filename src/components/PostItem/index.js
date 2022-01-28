@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-27 13:29:59
+ * @LastEditTime: 2022-01-28 21:52:31
  * @LastEditors: lmk
  * @Description:
  */
@@ -36,17 +36,21 @@ const PostItem = ({
   };
   const forwardDetail = (e, item) => {
     e.stopPropagation();
-    if(!val.parent_ststus_is_black){
+    if(!val.parent_ststus_is_black && val.parent_status.is_public){
       history.push({ pathname: "/post", search: objToUrl({ id: item.id }) });
     }
   };
   const forwardPress = () => {
     const id = val.parent_status ? val.parent_status.id : val.id;
+    if(val.parent_status&&!val.parent_status.is_public){
+      // Toast.show('This is a private post')
+      return false;
+    }
     history.push({ pathname: "/forward", search: objToUrl({ id }) });
   };
   const commentPage = e => {
     e.stopPropagation();
-    history.push({ pathname: "/comment", search: objToUrl({ id: val.id,createdUserId:val.user.uid }) });
+    history.push({ pathname: "/comment", search: objToUrl({ id: val.id,createdUserId:val.user.uid,count:val.comments_count }) });
   };
   const {t} = useTranslation()
   return val&&(

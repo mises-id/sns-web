@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-24 16:20:02
+ * @LastEditTime: 2022-01-28 21:38:41
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -26,22 +26,24 @@ import {
   username,
   useRouteState,
 } from "@/utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createComment, likeComment, removeComment, unlikeComment } from "@/api/comment";
 import PostItem from "@/components/PostItem";
 import ReplyInput from "@/components/ReplyInput";
 import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
 import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
+import { setUserSetting } from "@/actions/user";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
-  const [item, setitem] = useState("");
-  const user = useSelector((state) => state.user) || {};
-  const [loading, setloading] = useState(false);
-  const { setLike, followPress } = useChangePosts(setitem, item);
+  const [item, setitem] = useState(""); // post data 
+  const user = useSelector((state) => state.user) || {}; // userinfo 
+  const [loading, setloading] = useState(false); // loading flag
+  const { setLike, followPress } = useChangePosts(setitem, item); // like and follow function hooks
 
-  const [selectItem, setselectItem] = useState({});
+  const [selectItem, setselectItem] = useState({}); // select comment user
   const input = useRef();
+  // like function 
   const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
     fn(val.id)
@@ -51,12 +53,12 @@ const Post = ({ history = {} }) => {
         val.likes_count = val.is_liked ? ++val.likes_count : --val.likes_count;
         if (findIndex > -1) {
           comment[findIndex] = val;
-          console.log(comment);
           setcomment([...comment]);
         }
       })
       .catch((res) => {});
   }
+  // click like icon button
   const likePress = (e, val) => {
     e.stopPropagation();
     if (!user.token) {
@@ -67,12 +69,14 @@ const Post = ({ history = {} }) => {
     }
     likeFn(val)
   };
+  // click comment user
   const selectReplyItem = val=>{
     commentContent.onChange('')
     val.username = username(val.user)
     setselectItem(val);
     input.current && input.current.focus();
   }
+  // commit reply
   const replyItem = (val) => {
     if (!user.token) {
       loginModal(()=>{
@@ -82,17 +86,18 @@ const Post = ({ history = {} }) => {
     }
     selectReplyItem(val)
   };
+  // get more comment
   const goComment = () => {
-    history.push({ pathname: "/comment", search: objToUrl({ id,createdUserId:item.user.uid }) });
+    history.push({ pathname: "/comment", search: objToUrl({ id,createdUserId:item.user.uid,count:item.comments_count }) });
   };
-  const getDetail = (id) => {
-    getStatusItem(id).then((res) => {
-      setitem(res);
-      Loading.hide();
-    }).catch(()=>{
-      Loading.hide();
-    });
+  // get this post detail 
+  const getDetail = async (id) => {
+    const res = await getStatusItem(id)
+    setitem(res);
+    Loading.hide();
+    return res;
   };
+  // get this post three comment  data
   const [comment, setcomment] = useState([]);
   const [showMore, setshowMore] = useState(false);
   const getCommentList = (id) => {
@@ -104,6 +109,7 @@ const Post = ({ history = {} }) => {
   const [id, setid] = useState("");
   const commentContent = useBind("");
   const state = useRouteState();
+  // start loading 
   useEffect(() => {
     if (state) {
       // const historyState = urlToJson(location.search);
@@ -115,39 +121,40 @@ const Post = ({ history = {} }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.id]);
   const loginModal = useLoginModal()
-  const commitReply = ()=>{
+  const commitReply = async ()=>{
     if (loading || !commentContent.value) {
       return false;
     }
     setloading(true);
-    createComment({
-      content: commentContent.value,
-      status_id: id,
-      parent_id:selectItem.id || '',
-    })
-      .then((res) => {
-        if(selectItem.content){ // if has select item
-          const findTopic = comment.find(val=>val.id===(selectItem.topic_id || selectItem.id)) // find top comment
-          if(findTopic.comments_count<3){
-            findTopic.comments.push(res);
-          }
-          findTopic.comments_count+=1;
-          const findIndex = comment.findIndex(val=>val.id===findTopic.id)
-          if(findIndex>-1){
-            comment[findIndex] = findTopic;
-          }
-          setselectItem('')
-        }else{
-          comment.unshift(res);
-        }
-        setcomment(comment.slice(0, 3));
-        comment.length > 3 && setshowMore(true);
-        commentContent.onChange("");
-
+    try {
+      const res = await createComment({
+        content: commentContent.value,
+        status_id: id,
+        parent_id:selectItem.id || '',
       })
-      .finally(() => {
-        setloading(false);
-      });
+      if(selectItem.content){ // if has select item
+        const findTopic = comment.find(val=>val.id===(selectItem.topic_id || selectItem.id)) // find top comment
+        if(findTopic.comments_count<3){
+          findTopic.comments.push(res);
+        }
+        findTopic.comments_count+=1;
+        const findIndex = comment.findIndex(val=>val.id===findTopic.id)
+        if(findIndex>-1){
+          comment[findIndex] = findTopic;
+        }
+        setselectItem('')
+      }else{
+        comment.unshift(res);
+      }
+      setcomment(comment.slice(0, 3));
+      comment.length > 3 && setshowMore(true);
+      commentContent.onChange("");
+      setloading(false);
+      const postItem = await getDetail(state.id);
+      uploadPostDataList(state.id,postItem.comments_count,'comment');
+    } catch (error) {
+      setloading(false);
+    }
   }
   const submit = (e) => {
     e.preventDefault();
@@ -168,6 +175,7 @@ const Post = ({ history = {} }) => {
     e.stopPropagation()
     Modal.confirm({
       title: 'Message',
+      width:'90%',
       content: 'Are you sure to delete this comment?',
       onCancel: () => {
       },
@@ -192,15 +200,33 @@ const Post = ({ history = {} }) => {
           }
           if(!val.topic_id){
             comment.splice(findItemIndex,1)
-            item.comments_count-=1
-            setitem({...item})
+            
           }
-          setcomment([...comment])
+          item.comments_count-=1
+          setitem({...item})
+          // setcomment([...comment])
+          uploadPostDataList(state.id,item.comments_count,'comment')
+
         }).catch(error=>{
           console.log(error,23213);
         })
       },
     });
+  }
+  const dispatch = useDispatch()
+  /**
+   * @description: upload global list 
+   * @param {string} upload postId
+   * @param {string} upload data 
+   * @param {string} actionType
+   * @return {*}
+   */
+  const uploadPostDataList = (postId,data,type)=>{
+    dispatch(setUserSetting({
+      postId,
+      data,
+      actionType: type
+    }))
   }
   const userDetail = (e,{user:item})=>{
     e.stopPropagation();
@@ -214,7 +240,6 @@ const Post = ({ history = {} }) => {
     }
   }
   useDidRecover(()=>{
-    console.log(1);
     dropByCacheKey('/comment')
   })
   return (

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-17 17:06:13
+ * @LastEditTime: 2022-01-28 22:02:15
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -15,6 +15,7 @@ import Navbar from "@/components/NavBar";
 import { useSelector } from "react-redux";
 import { useChangePosts, useList, useSetDataSourceAction } from "@/utils";
 import PostItem from "@/components/PostItem";
+import { refreshByCacheKey } from "react-router-cache-route";
 const MyLikes = ({ history }) => {
   const user = useSelector((state) => state.user) || {};
   const [lastId, setlastId] = useState("");
@@ -43,6 +44,11 @@ const MyLikes = ({ history }) => {
       />
     );
   };
+  useEffect(() => {
+    refreshByCacheKey('/home/following')
+    refreshByCacheKey('/home/discover')
+  }, []);
+  
   return (
     <div>
       <Navbar title={t("MyLikesPageTitle")} />

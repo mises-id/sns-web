@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-19 17:58:10
+ * @LastEditTime: 2022-01-28 22:03:17
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { ActionSheet, Toast } from "zarm";
 import { useChangePosts, useList } from "@/utils";
 import PostItem from "@/components/PostItem";
+import { refreshByCacheKey } from "react-router-cache-route";
 const MyPosts = ({ history }) => {
   const user = useSelector((state) => state.user) || {};
   const [deleteLoading, setdeleteLoading] = useState(false);
@@ -95,6 +96,11 @@ const MyPosts = ({ history }) => {
       />
     );
   };
+
+  useEffect(() => {
+    refreshByCacheKey('/home/following')
+    refreshByCacheKey('/home/discover')
+  }, []);
   return (
     <div>
       <Navbar title={t("myPostPageTitle")} />

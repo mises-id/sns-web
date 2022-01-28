@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-21 19:22:15
+ * @LastEditTime: 2022-01-29 02:32:34
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -32,11 +32,13 @@ import Image from "@/components/Image";
 import CommentsPop from "./commentPop";
 import deleteComment from "@/images/deleteComment.png";
 import { Modal } from "zarm";
+// import { setUserSetting } from "@/actions/user";
 
 const Comment = ({ history }) => {
   const { t } = useTranslation();
   const state = useRouteState();
   const [selectItem, setselectItem] = useState({});
+  const [count] = useState(state.count);
   const input = useRef();
   const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
@@ -86,6 +88,7 @@ const Comment = ({ history }) => {
     e.stopPropagation()
     Modal.confirm({
       title: 'Message',
+      width:'90%',
       content: 'Are you sure to delete this comment?',
       onCancel: () => {
       },
@@ -295,12 +298,20 @@ const Comment = ({ history }) => {
     val.username = username(val.user);
     setselectItem(val);
   };
+  // const dispatch = useDispatch()
+  // const uploadPostDataList = (postId,item)=>{
+  //   dispatch(setUserSetting({
+  //     postId,
+  //     data:item.comments_count,
+  //     actionType: 'comment'
+  //   }))
+  // }
+  const countStr = count>0 ? `(${count})` : ''
   return (
     <div className="m-flex m-flex-col page">
       <Navbar
         title={
-          t("commentPageTitle") +
-          (dataSource.length ? `(${dataSource.length})` : "")
+          `${t("commentPageTitle")}${countStr}`
         }
       />
       <div className="m-flex-1 commentBox">

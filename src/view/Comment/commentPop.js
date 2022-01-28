@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-24 20:14:45
+ * @LastEditTime: 2022-01-28 22:06:27
  * @LastEditors: lmk
  * @Description:
  */
@@ -58,7 +58,6 @@ const CommentsPop = (
   const [lastId, setlastId] = useState("");
   const status_id = state.id;
   const [data, setdata] = useState(comment);
-  console.log(comment);
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
     status_id: state.id || comment.state_id,
     topic_id: comment.id,
@@ -84,7 +83,7 @@ const CommentsPop = (
         }
       },
       removeItem(valId){
-        const valIndex = dataSource.find(val=>val.id===valId)
+        const valIndex = dataSource.findIndex(val=>val.id===valId)
         dataSource.splice(valIndex,1)
         dataSource.length===0 ? fetchData('refresh') : setdataSource([...dataSource])
       },
