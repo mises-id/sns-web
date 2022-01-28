@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-01-27 18:04:11
+ * @LastEditTime: 2022-01-28 09:15:02
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -239,6 +239,10 @@ body{
   &.za-confirm__button--ok{
     background-color: var(--theme-primary);
     color: white;
+  }
+  &::after,&:not(:first-of-type):after{
+    width: 0;
+    height: 0;
   }
 }
 .za-confirm .za-modal__footer{

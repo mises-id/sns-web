@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-25 23:34:02
+ * @LastEditTime: 2022-01-28 15:23:12
  * @LastEditors: lmk
  * @Description: 
  */
@@ -72,6 +72,7 @@ const Home = ({history,children=[]})=>{
     window.refreshByCacheKey('/userFollowPage')
     window.refreshByCacheKey('/post')
     window.refreshByCacheKey('/comment')
+    window.refreshByCacheKey('/userInfo')
   })
   // If this page is displayed, the current user is updated
   // useEffect(() => {

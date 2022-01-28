@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-25 14:23:12
+ * @LastEditTime: 2022-01-28 14:16:48
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -133,6 +133,7 @@ const Notifications = ({ history }) => {
     e.stopPropagation()
     Modal.confirm({
       title: 'Message',
+      width:'90%',
       content: 'Are you sure to delete this comment?',
       onCancel: () => {
       },

@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-27 18:03:09
+ * @LastEditTime: 2022-01-28 21:59:13
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -131,6 +131,7 @@ export function useChangePosts(setdataSource,dataSource){
   const success = ()=>{
     const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
     setdataSource(data)
+   
   }
   const [likeLoading, setlikeLoading] = useState(false)
   const setLike = async val=>{
@@ -140,6 +141,13 @@ export function useChangePosts(setdataSource,dataSource){
       await liked(val)
       success()
       setlikeLoading(false)
+      // updata like flag
+      store.dispatch(setUserSetting({
+        postId:val.id,
+        data:val.likes_count,
+        actionType: val.is_liked ? 'like' : 'unlike'
+      }))
+      console.log(val.is_liked ? 'like' : 'unlike');
     } catch (error) {
       setlikeLoading(false)
       return Promise.reject()
@@ -172,7 +180,7 @@ export function useLoginModal(){
   const { t } = useTranslation();
   const loginModal = async (cb)=>{
     try {
-      await window.mises.isInitMetaMask()
+      // await window.mises.isInitMetaMask()
       const flag = await window.mises.getMisesAccounts();
       // const flag = count > 0;
       const content = flag ? t('notLogin') : t('notRegister') ;
@@ -244,28 +252,75 @@ export function formatTimeStr(time) {
  */
 export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
   const user = useSelector(state => state.user) || {userActions:{}}
+  const {uid,postId,actionType} = user.userActions
   useEffect(() => {
-    if(user.userActions.uid){
+    if(uid||postId){
       const arr  = dataSource.map(val=>{
         let item = keyStr ? val[keyStr] : val;
-        item = setFollowAction(item,user)
-        if(item.parent_status){
-          item.parent_status = setFollowAction(item.parent_status,user)
+        if(actionType==='comment'){
+          item = setCommentCountAction(item,user)
+          if(item.parent_status){
+            item.parent_status = setCommentCountAction(item.parent_status,user)
+          }
         }
+        if(actionType==='forward'){
+          item = setForwardCountAction(item,user)
+          if(item.parent_status){
+            item.parent_status = setForwardCountAction(item.parent_status,user)
+          }
+        }
+        if(['like','unlike'].includes(actionType)){
+          item = setLikeCountAction(item,user)
+          if(item.parent_status){
+            item.parent_status = setLikeCountAction(item.parent_status,user)
+          }
+        }
+        if(['follow','following'].includes(actionType)){
+          item = setFollowAction(item,user)
+          if(item.parent_status){
+            item.parent_status = setFollowAction(item.parent_status,user)
+          }
+        }
+        
         keyStr ? val[keyStr] = item  : val = item
         return val;
       })
       store.dispatch(setUserSetting({
         uid:'',
+        postId:'',
+        data: '',
         actionType: ''
       }))
       setdataSource([...arr])
     }
      // eslint-disable-next-line
-  }, [user.userActions.uid])
+  }, [uid,postId])
+  // follow
   const setFollowAction = val=>{
     const {uid,actionType} = user.userActions;
     if(uid===val.user.uid) val.user.is_followed = actionType==='following'
+    return val;
+  }
+  // comment
+  const setCommentCountAction = val=>{
+    const {postId,data} = user.userActions;
+    if(postId===val.id) val.comments_count = data
+    return val;
+  }
+  // forward
+  const setForwardCountAction = val=>{
+    const {postId,data} = user.userActions;
+    if(postId===val.id) val.forwards_count = data
+    return val;
+  }
+  // like
+  const setLikeCountAction = val=>{
+    const {postId,data} = user.userActions;
+    console.log(postId,val.id);
+    if(postId===val.id) {
+      val.likes_count = data
+      val.is_liked = actionType==='like'
+    }
     return val;
   }
 }

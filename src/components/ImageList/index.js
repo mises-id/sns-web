@@ -1,15 +1,17 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-17 14:42:40
+ * @LastEditTime: 2022-01-28 22:49:44
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useState } from "react";
 import "@/styles/common.scss";
 import "./style.scss";
-import WxImageViewer from 'react-wx-images-viewer';
-import Image from "../Image";
+// import WxImageViewer from 'react-wx-images-viewer';
+import { ImageViewer,Image } from 'antd-mobile'
+
+// import Image from "../Image";
 const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
   let [style, setstyle] = useState({
     width: "auto",
@@ -43,8 +45,7 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
         style={style}
         onClick={e=>{
           e.stopPropagation()
-          setpictureIndex(0)
-          setvisibleState(true)
+          ImageViewer.show({ image: list[0]})
         }}
       />
     );
@@ -60,18 +61,19 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
             className="img-box"
             onClick={e=>{
               e.stopPropagation()
-              setpictureIndex(index)
-              setvisibleState(true)
+              // setpictureIndex(index)
+              // setvisibleState(true)
+              ImageViewer.Multi.show({ images: list,defaultIndex:index })
             }}
           >
-            <Image source={val} shape="square" alt="image" borderRadius="4px" size="100%" height={`${width - 10}px`} />
+            <Image src={val} fit="cover" lazy style={{ borderRadius: 4 }}  size="100%" width={width - 10} height={width - 10} />
           </div>
         ))}
       </div>
     );
   };
-  const [visibleState, setvisibleState] = useState(false)
-  const [pictureIndex, setpictureIndex] = useState(0)
+  // const [visibleState, setvisibleState] = useState(false)
+  // const [pictureIndex, setpictureIndex] = useState(0)
   // second mode 2*2 layout
   const secondImageMode = () => drawImageList(2);
   // third mode 3*3 layout
@@ -81,16 +83,6 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
       {list.length === 1 && firstImage()}
       {list.length > 1 && list.length !==3 && list.length < 5 && secondImageMode()}
       {(list.length > 4 || list.length ===3) && thirdImageMode()}
-      {
-          visibleState ? <WxImageViewer onClose={() => setvisibleState(false)} urls={list} index={pictureIndex}/> : ""
-        }
-      {/* <ImagePreview
-        visible={visibleState}
-        images={list}
-        activeIndex={pictureIndex}
-        onClose={() => setvisibleState(false)}
-        maxScale={10}
-      /> */}
     </div>
   );
 };
