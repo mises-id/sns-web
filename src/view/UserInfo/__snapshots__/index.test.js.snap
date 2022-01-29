@@ -175,7 +175,7 @@ exports[`UserInfo should render correctly 1`] = `
     prefixCls="za-modal"
     shape="radius"
     visible={false}
-    width="90%"
+    width="83%"
   >
     <ForwardRef
       aspectRatio={1}

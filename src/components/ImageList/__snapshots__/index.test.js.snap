@@ -9,7 +9,6 @@ exports[`ImageList should render correctly 1`] = `
     className="image-max"
     onClick={[Function]}
     onLoad={[Function]}
-    src="https://home.mises.site/upload/attachment/2021/11/18/10/avatar12.png"
     style={
       Object {
         "height": "auto",
