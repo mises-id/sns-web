@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-25 23:32:55
+ * @LastEditTime: 2022-01-29 18:00:06
  * @LastEditors: lmk
  * @Description:
  */
@@ -30,14 +30,37 @@ const Follow = ({ history = {} }) => {
   const fn = isDiscoverPage.indexOf("discover") > -1 ? recommend : following;
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
-  const [isAuto] = useState(true);
+  const [isAuto,setIsAuto] = useState(true);
   // get dataList
-  const [fetchData,last_id, dataSource, setdataSource] = useList(fn, {
+  
+  const [fetchData,last_id, dataSource, setdataSource,downRefreshLastId, setdownRefreshLastId,setlast_id] = useList(fn, {
     uid: user.loginForm && user.loginForm.uid,
     limit: 10,
     last_id: lastId
   },{type:isDiscover ? 'refreshList' : 'refresh'});
-  console.log(last_id)
+  useEffect(() => {
+    let cache = localStorage.getItem('discoverPageCache')
+    if(isDiscoverPage.indexOf("discover") > -1&&cache){
+      const {dataSource,downRefreshLastId,last_id} = JSON.parse(cache);
+      if(dataSource.length>0){
+        setIsAuto(false)
+      }
+      setdataSource(dataSource)
+      setdownRefreshLastId(downRefreshLastId)
+      setlast_id(last_id)
+    }
+  }, []);
+  useEffect(()=>{
+    if(isDiscover){
+      localStorage.setItem('discoverPageCache',JSON.stringify({
+        last_id,
+        downRefreshLastId,
+        dataSource
+      }))
+    }
+    // eslint-disable-next-line
+  },[dataSource.length,last_id])
+  // console.log(last_id)
   useSetDataSourceAction(dataSource, setdataSource)
   const [notifitionObj, setnotifitionObj] = useState({
     "total": 0,

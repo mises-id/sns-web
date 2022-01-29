@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-01-21 09:56:12
+ * @LastEditTime: 2022-01-29 18:19:35
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -93,7 +93,8 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
   };
   // load more
   const loadData = async () => {
-    if (!mounted || !lastId) return;
+    console.log(!mounted,!lastId);
+    if (lastId) return;
     setLoading(LOAD_STATE.loading);
     try {
       await fetchData("load");
@@ -116,26 +117,25 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
           <ActivityIndicator type="spinner"></ActivityIndicator>
         </div>
       )}
-      {
-        <Pull
-          ref={pullRef}
-          className="m-layout"
-          stayTime={300}
-          refresh={{
-            state: refreshing,
-            handler: refreshData,
-          }}
-          load={{
-            state: loading,
-            distance: 200,
-            handler: loadData,
-          }}
-        >
-          {loading !== 2 && !isOnceLoad && otherView && otherView()}
-          {data.map(renderView)}
-          {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty></Empty>}
-        </Pull>
-      }
+      <Pull
+        ref={pullRef}
+        className="m-layout"
+        stayTime={300}
+        refresh={{
+          state: refreshing,
+          handler: refreshData,
+        }}
+        load={{
+          state: loading,
+          distance: 200,
+          handler: loadData,
+        }}
+      >
+        {loading !== 2 && !isOnceLoad && otherView && otherView()}
+        {data.map(renderView)}
+        {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty></Empty>}
+        {loading===3&&data.length >0&&<div className="pull-empty">-- No more data --</div>}
+      </Pull>
     </>
   );
 };

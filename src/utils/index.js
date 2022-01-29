@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-28 21:59:13
+ * @LastEditTime: 2022-01-29 17:49:57
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -113,7 +113,7 @@ export function useList(fn,params={},listType={type:'refresh'}){
       return Promise.reject(error)
     }
   }
-  return [fetchData,last_id,dataSource,setdataSource]
+  return [fetchData,last_id,dataSource,setdataSource,downRefreshLastId, setdownRefreshLastId,setlast_id]
 }
 /**
 * @param {*} 
@@ -187,11 +187,20 @@ export function useLoginModal(){
       Modal.confirm({
         title: 'Message',
         content,
-        width:'90%',
+        width:'83%',
         onCancel: () => {},
         okText:flag ? 'Connect' : 'Create',
         onOk: () => {
-          window.mises.requestAccounts().then(cb);
+          window.mises.requestAccounts().then(cb).catch(err=>{
+            if(err&&err.code===-32002){
+              Modal.alert({
+                content:"Please switch to the UNLOCK TAB to unlock your account",
+                width:'77%',
+                title:"Message",
+              })
+              // Toast.show('Please authorize')
+            }
+          });
         },
       });
     } catch (error) {
