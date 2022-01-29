@@ -124,6 +124,7 @@ const Forward = ({ history = {} }) => {
               {item.images.length > 0 && (
                 <div className="m-padding5">
                   <ImageList
+                    thumbImages={item.thumb_images}
                     list={item.images}
                     boxWidth={window.innerWidth - 10}
                   ></ImageList>

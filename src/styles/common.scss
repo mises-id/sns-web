@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-01-28 09:15:02
+ * @LastEditTime: 2022-01-29 15:54:39
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -261,4 +261,10 @@ body{
 }
 .za-modal--radius .za-popup{
   border-radius: 15px;
+}
+.pull-empty{
+  line-height: 40px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
 }

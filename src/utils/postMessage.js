@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-29 02:29:15
+ * @LastEditTime: 2022-01-29 18:37:48
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -61,7 +61,6 @@ export default class MisesExtensionController{
     }
     console.log('init')
     this.web3 = new Web3(window.ethereum || "ws://localhost:8545");
-    console.log(window.ethereum)
     this.web3.extend({
       property: 'misesWeb3',
       methods:[{
@@ -159,7 +158,6 @@ export default class MisesExtensionController{
   async resetAccount(res){
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
     const {loginForm} = store.getState().user
-    console.log(misesid,res);
     // If the selected user is different from the current user
     if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
       this.disconnect(loginForm.uid);
@@ -180,13 +178,12 @@ export default class MisesExtensionController{
     if(!window.ethereum&&!hideModal){
       return this.isUnInitMetaMask()
     }
-    console.log(window.ethereum);
     return Boolean(window.ethereum) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
     Modal.confirm({
       title: 'Message',
-      width:'90%',
+      width:'83%',
       content:'Failed to connect with metamask, request to refresh again',
       onCancel: () => {},
       onOk: () => {
@@ -265,7 +262,9 @@ export default class MisesExtensionController{
       await this.isActive()
       await this.web3.misesWeb3.setUserInfo(data)
     } catch (error) {
-      this.requestAccounts()
+      // this.requestAccounts().then(()=>{
+      //   this.setUserInfo(data)
+      // })
     }
   }
   async userFollow(data){
@@ -303,7 +302,6 @@ export default class MisesExtensionController{
       // const flag = await this.isInitMetaMask();
       // if(!flag) return Promise.reject()
       const flag = await this.isInitMetaMask(showModal);
-      console.log(flag,'flag',showModal);
       if(!flag) return Promise.reject()
       await this.init()
       const count = await this.web3.misesWeb3.getMisesAccounts()

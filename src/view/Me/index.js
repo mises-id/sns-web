@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-29 02:29:53
+ * @LastEditTime: 2022-01-29 17:51:59
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 // import me_6 from "@/images/me_6.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button, Toast } from "zarm";
+import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -85,7 +85,12 @@ const Myself = ({ history }) => {
     }).catch(err=>{
       console.log(err);
       if(err&&err.code===-32002){
-        Toast.show('Please authorize')
+        Modal.alert({
+          content:"Please switch to the unlock tab to unlock your account",
+          width:'77%',
+          title:"Message",
+        })
+        // Toast.show('Please authorize')
       }
       // Toast.show(err||err.message)
     })

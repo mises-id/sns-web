@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-28 21:52:31
+ * @LastEditTime: 2022-01-29 14:38:18
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,6 +15,7 @@ import { objToUrl } from "@/utils";
 import cry from '@/images/cry.png';
 import block from '@/images/block.png';
 import { useTranslation } from "react-i18next";
+import { Toast } from "zarm";
 
 // import LazyLoad from 'react-lazyload';
 // import ImageList from '../ImageList';
@@ -43,7 +44,7 @@ const PostItem = ({
   const forwardPress = () => {
     const id = val.parent_status ? val.parent_status.id : val.id;
     if(val.parent_status&&!val.parent_status.is_public){
-      // Toast.show('This is a private post')
+      Toast.show('You cannot forward a private post')
       return false;
     }
     history.push({ pathname: "/forward", search: objToUrl({ id }) });
@@ -131,7 +132,7 @@ const PostItem = ({
                 <Link theme="white" item={val.parent_status.link_meta} />
               )}
               {val.parent_status.status_type === "image" && (
-                <ImageList list={val.parent_status.images} boxWidth={window.innerWidth - 20}></ImageList>
+                <ImageList thumbImages={val.parent_status.thumb_images} list={val.parent_status.images} boxWidth={window.innerWidth - 20}></ImageList>
               )}
               <p className="forwardPostsData">
                 like {val.parent_status.likes_count} · comment{" "}
@@ -150,7 +151,7 @@ const PostItem = ({
         </div>
       )}
       {val.status_type === "image" && (
-        <ImageList list={val.images}></ImageList>
+        <ImageList list={val.images} thumbImages={val.thumb_images}></ImageList>
       )}
       <PostsIcons
         likeCallback={() => setLike(val)}

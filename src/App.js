@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-25 23:44:46
+ * @LastEditTime: 2022-01-29 17:51:55
  * @LastEditors: lmk
  * @Description: 
  */
@@ -22,9 +22,17 @@ import { CacheSwitch } from 'react-router-cache-route'
 import { useState } from 'react';
 const App = ()=> {
   const [hasToken, sethasToken] = useState('');
+  // const history = useHistory()
   useEffect(() => {
     setTheme()
-    sethasToken(store.getState().user.token)
+    const token = store.getState().user.token
+    sethasToken(token)
+    // const whiteList = ['/','/home/following','/home/discover','/home/me']
+    // const pathname = window.location.pathname
+    // if(!token&&!whiteList.includes(pathname)){
+    //   console.log(pathname);
+    //   window.location.replace('/')
+    // }
   }, [])
   return (
     <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-28 22:49:44
+ * @LastEditTime: 2022-01-29 17:45:02
  * @LastEditors: lmk
  * @Description:
  */
@@ -12,7 +12,7 @@ import "./style.scss";
 import { ImageViewer,Image } from 'antd-mobile'
 
 // import Image from "../Image";
-const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
+const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) => {
   let [style, setstyle] = useState({
     width: "auto",
     height: "auto",
@@ -38,7 +38,7 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
   const firstImage = () => {
     return (
       <img
-        src={list[0]}
+        src={thumbImages[0]}
         alt=""
         className="image-max"
         onLoad={imageLoad}
@@ -54,7 +54,7 @@ const ImageList = ({ list = [], boxWidth = window.innerWidth }) => {
     const width = (boxWidth - 30) / size;
     return (
       <div className={`m-flex m-flex-warp`}>
-        {list.map((val, index) => (
+        {thumbImages.map((val, index) => (
           <div
             style={{ width: `${width}px`, height: `${width}px` }}
             key={index}

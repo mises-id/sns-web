@@ -89,7 +89,7 @@ const Comment = ({ history }) => {
     e.stopPropagation()
     Modal.confirm({
       title: 'Message',
-      width:'90%',
+      width:'83%',
       content: 'Are you sure to delete this comment?',
       onCancel: () => {
       },

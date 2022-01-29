@@ -112,7 +112,7 @@ const UserInfo = (props) => {
         // Toast.show('Incorrect username')
         Modal.alert({
           title:'Message',
-          width:'90%',
+          width:'83%',
           content:t('usernameError')
         })
         return false;
@@ -274,7 +274,7 @@ const UserInfo = (props) => {
       </div>
       <Modal
         visible={visible}
-        width="90%"
+        width="83%"
         hasFooter={true}
         animationType="slideUp"
         footer={
