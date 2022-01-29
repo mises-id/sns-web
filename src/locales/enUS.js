@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-29 10:53:08
+ * @LastEditTime: 2022-01-27 18:00:40
  * @LastEditors: lmk
  * @Description: 
  */
@@ -17,7 +17,7 @@ const enUS = {
     loginUser:"Connect Mises ID",
     restoreId:'Restore Mises ID',
     aboutId:'About Mises',
-    restoreTitle:'Get your Mises ID via a Metamask account',
+    restoreTitle:'How to get Mises ID',
     restore:"Restore Mises ID",
     restoreTips:'Misesid is restored by entering a mnemonic.',
     following:"Following",
@@ -48,7 +48,7 @@ const enUS = {
     notRegister:'Go to create your Mises ID',
     createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
     connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
-    resoreMisesIdTips:"Mises ID is a decentralized personal account. You can get your Mises ID via a Metamask account.",
+    resoreMisesIdTips:"You can get your Mises ID via a Metamask account.",
     createPostsPlaceholder:'Please enter the contents',
     createPostsTips:"Please enter contents or upload pictures",
     forwardPlaceholder:'Please enter the contents',

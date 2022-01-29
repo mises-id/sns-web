@@ -15,7 +15,6 @@
 }
 .me-tips{
   padding: 20px 16px;
-  line-height: 21px;
 }
 .right-badge{
   font-size: 14px;
@@ -23,13 +22,9 @@
 }
 .tips-title{
   padding-left: 16px;
-  padding-right: 50px;
-  line-height: 30px;
-  word-break:keep-all;
   @include title(25)
 }
 .btn-txt{
   @include title(17);
-
   font-weight: 600;
 }
