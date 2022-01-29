@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-29 02:32:34
+ * @LastEditTime: 2022-01-29 11:04:52
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -23,7 +23,7 @@ import {
 } from "@/utils";
 import { getComment } from "@/api/status";
 import { createComment, likeComment, removeComment, unlikeComment } from "@/api/comment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import liked from "@/images/liked.png";
 import like from "@/images/like.png";
 import commentIcon from "@/images/comment.png";
@@ -32,13 +32,14 @@ import Image from "@/components/Image";
 import CommentsPop from "./commentPop";
 import deleteComment from "@/images/deleteComment.png";
 import { Modal } from "zarm";
+import { setUserSetting } from "@/actions/user";
 // import { setUserSetting } from "@/actions/user";
 
 const Comment = ({ history }) => {
   const { t } = useTranslation();
   const state = useRouteState();
   const [selectItem, setselectItem] = useState({});
-  const [count] = useState(state.count);
+  const [count,setCount] = useState(state.count || 0);
   const input = useRef();
   const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
@@ -99,21 +100,27 @@ const Comment = ({ history }) => {
             if(!val.topic_id){ // top comment
               setvisible(false)
               setcommentPop({})
-              return false;
             }
-            if(val.topic_id){ // next comment
+            if(val.topic_id){ // child comment
               commentsPopRef.current.removeItem(val.id)
             }
           }
           const findItemIndex = dataSource.findIndex(item=>item.id===(val.topic_id || val.id));
+          console.log(findItemIndex);
           if(val.topic_id){
             const findChildIndex = dataSource[findItemIndex].comments.findIndex(item=>item.id===val.id);
             dataSource[findItemIndex].comments.splice(findChildIndex,1)
             dataSource[findItemIndex].comments_count-=1
           }
+          let deleteCount = 1;
           if(!val.topic_id){
+            console.log(val.comments_count);
+            deleteCount+=val.comments_count
             dataSource.splice(findItemIndex,1)
           }
+          const commentCount =Number(count) - deleteCount
+          setCount(commentCount)
+          uploadPostDataList(commentCount)
           setdataSource([...dataSource])
         }).catch(error=>{
           console.log(error,23213);
@@ -273,6 +280,9 @@ const Comment = ({ history }) => {
         } else {
           dataSource.unshift(res);
         }
+        const commentCount = Number(count)+1
+        setCount(commentCount)
+        uploadPostDataList(commentCount)
         setdataSource([...dataSource]);
         commentContent.onChange("");
       })
@@ -298,14 +308,14 @@ const Comment = ({ history }) => {
     val.username = username(val.user);
     setselectItem(val);
   };
-  // const dispatch = useDispatch()
-  // const uploadPostDataList = (postId,item)=>{
-  //   dispatch(setUserSetting({
-  //     postId,
-  //     data:item.comments_count,
-  //     actionType: 'comment'
-  //   }))
-  // }
+  const dispatch = useDispatch()
+  const uploadPostDataList = (countNum)=>{
+    dispatch(setUserSetting({
+      postId: state.id,
+      data:countNum,
+      actionType: 'comment'
+    }))
+  }
   const countStr = count>0 ? `(${count})` : ''
   return (
     <div className="m-flex m-flex-col page">
