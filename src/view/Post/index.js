@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-01-28 21:38:41
+ * @LastEditTime: 2022-02-07 11:37:16
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -158,7 +158,12 @@ const Post = ({ history = {} }) => {
   }
   const submit = (e) => {
     e.preventDefault();
-    commitReply()
+    if (!user.token) {
+      // Toast.show(t("notLogin"));
+      loginModal(commitReply);
+      return false;
+    }
+    commitReply();
   };
 
   const [visible, setvisible] = useState(false);

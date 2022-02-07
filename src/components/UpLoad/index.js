@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-12-02 14:02:45
- * @LastEditTime: 2022-01-17 16:21:50
+ * @LastEditTime: 2022-02-07 16:38:41
  * @LastEditors: lmk
  * @Description:
  */
@@ -29,12 +29,12 @@ const Upload = ({imageList, setImageList}) => {
       return false;
     }
     const fileArr = Array.from(e.target.files).slice(0, maxLength)
-    const getFilterArr = fileArr.filter(val=>val.size<1024*1024*8); // 8M
-    const filterNum = fileArr.length - getFilterArr.length;
+    const getFilterSizeArr = fileArr.filter(val=>val.size<1024*1024*8); // 8M
+    const filterNum = fileArr.length - getFilterSizeArr.length;
     if(filterNum>0){
       Toast.show(`${filterNum} pictures are too big`)
     }
-    const files = getFilterArr.map((val) => ({
+    const files = getFilterSizeArr.map((val) => ({
       url:window.URL.createObjectURL(val),
       file:val
     }));
@@ -42,6 +42,7 @@ const Upload = ({imageList, setImageList}) => {
     setmaxLength(maxLen);
     imageList = [...imageList, ...files];
     setImageList(imageList);
+    e.target.value= ''
   };
   // remove image item
   const deleteImage = (index) => {
@@ -59,7 +60,8 @@ const Upload = ({imageList, setImageList}) => {
   };
   const send = (image,index) => {
     imageList[index] = {
-      url:image
+      url:image.url,
+      file:image.file
     };
     setImageList([...imageList]);
     closePop()
