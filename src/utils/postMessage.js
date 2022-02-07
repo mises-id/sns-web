@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-01-29 18:37:48
+ * @LastEditTime: 2022-02-07 17:01:12
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -178,7 +178,10 @@ export default class MisesExtensionController{
     if(!window.ethereum&&!hideModal){
       return this.isUnInitMetaMask()
     }
-    return Boolean(window.ethereum) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
+    if(window.ethereum&&!window.ethereum.chainId&&!hideModal){
+      return this.isUnInitMetaMask()
+    }
+    return Boolean(window.ethereum.chainId) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
     Modal.confirm({

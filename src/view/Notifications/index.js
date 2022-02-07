@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-01-28 14:16:48
+ * @LastEditTime: 2022-02-07 16:21:09
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -176,7 +176,7 @@ const Notifications = ({ history }) => {
         key={index}
         onClick={() => detail(val)}
       >
-        <Image size={40} source={avatar}></Image>
+        <Image size={40} source={avatar} onClick={e=>userDetail(e,user)}></Image>
         <div className="avatar-item m-flex-1" style={{width:0}}>
           <p className="user-name m-colors-111">{username(user)}</p>
           {notificationsType(val)}
@@ -191,6 +191,15 @@ const Notifications = ({ history }) => {
       </div>
     );
   };
+  const userDetail = (e,user)=>{
+    e.stopPropagation()
+    console.log(user);
+    const avatar = user.avatar ? user.avatar.medium : "";
+    history.push({
+      pathname: "/userDetail",
+      search: objToUrl({ uid: user.uid, username: user.username, avatar,is_followed: user.is_followed,misesid:user.misesid }),
+    });
+  }
   const rightView = ({ status,meta_data={},message_type}) => {
     const image = status&&message_type!=='new_like_comment'&&returnImage(status)
     return status&&(

@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EditImage should render correctly 1`] = `
-<div>
+<div
+  style={
+    Object {
+      "--window-height": "768px",
+    }
+  }
+>
   <div
     className="m-flex m-flex-col edit-image-box"
   >

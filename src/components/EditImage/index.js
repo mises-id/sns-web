@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-12-02 17:31:09
- * @LastEditTime: 2022-01-21 19:18:38
+ * @LastEditTime: 2022-02-07 16:16:48
  * @LastEditors: lmk
  * @Description:
  */
@@ -75,13 +75,14 @@ const EditImage = ({ image, index, closePop, send }) => {
       container: "#image-container",
       width: window.innerWidth,
       height: window.innerHeight - 44 - 73,
-      draggable: true,
+      draggable:true
     });
-    setstage(stage);
     const layer = new Konva.Layer();
     const img = addImage(imageObj); // return image content
     layer.add(img);
     stage.add(layer);
+    stage.setHeight(img.attrs.height)
+    setstage(stage);
     setlayer(layer);
   };
   // return image content
@@ -89,7 +90,7 @@ const EditImage = ({ image, index, closePop, send }) => {
     const imageAspectRatio = imageObj.height / imageObj.width;
     const imageWidth = window.innerWidth;
     const imageHeight = imageWidth * imageAspectRatio;
-    const y = window.innerHeight > imageHeight ? (window.innerHeight - imageHeight) * 0.5 : 0;
+    const y = 0;
     const x = 0;
     const img = new Konva.Image({
       image: imageObj,
@@ -104,7 +105,6 @@ const EditImage = ({ image, index, closePop, send }) => {
       x,
       y
     });
-    console.log(x,y)
     return img;
   };
   // let pointers = [], // 触摸点数组
@@ -288,10 +288,28 @@ const EditImage = ({ image, index, closePop, send }) => {
     setCropperFlag(false);
     setisEdit(false);
   };
-  // back uploadImage page
+  const dataURLtoFile = (dataurl, fileName)=>{
+    let arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const theBlob =  new Blob([u8arr], { type: mime });
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return {
+      file:theBlob,
+      url: window.URL.createObjectURL(theBlob)
+    };
+  }
+  // save edits
   const saveEdit = () => {
-    send(editImage, index);
-    console.log(editImage);
+    const image = dataURLtoFile(returnEditImage(),`image${index}.png`);
+    send(image, index);
+    console.log(image);
   };
 
   const rotateImage = () => {
@@ -448,35 +466,16 @@ const EditImage = ({ image, index, closePop, send }) => {
     }
   };
   const showEditModel = () => {
-    resetImagePositon()
+    // resetImagePositon()
     setTextFlag(true);
     focus()
   };
-  const resetImagePositon = ()=>{
-    console.log(stage)
-    const image = stage.find("Image").find((element) => element.parent.nodeType === "Layer");
-    // if(image){
-    //   image.
-    // }
-    // if(image){
-    //   image.setImage({
-    //     height:100,
-    //     width:100
-    //   })
-    // }
-    console.log(image)
-    // stage.scale({ x: window.innerWidth / textShowPosition.height, y: window.innerWidth / textShowPosition.height })
-    stage.position({
-      x:0,
-      y:0
-    })
-  }
 
   const focus = ()=>{
     textarea.current && textarea.current.focus();
   }
   const showCropper = () => {
-    resetImagePositon()
+    // resetImagePositon()
     setCropperFlag(true);
     setisEdit(true);
     const dataURL = returnEditImage();
@@ -490,16 +489,17 @@ const EditImage = ({ image, index, closePop, send }) => {
   };
   const returnEditImage = () => {
     //before open set hide element
+    // let imageWidth, imageHeight;
     stage.find("Image").forEach((element) => {
       if (element.parent.nodeType === "Group") {
         element.hide();
       }
     });
-    const dataURL = stage.toDataURL({ pixelRatio: 2,quality:1, });
+    const dataURL = stage.toDataURL({ pixelRatio: 2,quality:1});
     return dataURL;
   };
   return (
-    <div>
+    <div style={{'--window-height':`${window.innerHeight}px`}}>
       {/* Show edit photo */}
       <div className={`m-flex m-flex-col edit-image-box`}>
         {!textFlag && (
@@ -538,7 +538,7 @@ const EditImage = ({ image, index, closePop, send }) => {
               center={false}
               style={{ height: "100%", width: "100%",backgroundColor:'#000000'}}
               onInitialized={setcropper}
-              viewMode={3}
+              viewMode={2}
               dragMode="move"
             />
           </div>

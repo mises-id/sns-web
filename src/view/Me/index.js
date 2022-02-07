@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-01-29 17:51:59
+ * @LastEditTime: 2022-02-07 09:24:57
  * @LastEditors: lmk
  * @Description:
  */
@@ -39,10 +39,9 @@ const Myself = ({ history }) => {
   const getFlag = async () => {
     try {
       if(!token){
-        await window.mises.getMisesAccounts(true).then(res=>{
-          setflag(!!res)
-          setloading(false);
-        })
+        const res = await window.mises.getMisesAccounts(true)
+        setflag(!!res)
+        setloading(false);
       }else{
         setflag(false);
         setloading(false);
