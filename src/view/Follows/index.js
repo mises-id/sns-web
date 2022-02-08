@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-01-29 18:00:06
+ * @LastEditTime: 2022-02-08 09:02:27
  * @LastEditors: lmk
  * @Description:
  */
@@ -49,6 +49,7 @@ const Follow = ({ history = {} }) => {
       setdownRefreshLastId(downRefreshLastId)
       setlast_id(last_id)
     }
+    // eslint-disable-next-line
   }, []);
   useEffect(()=>{
     if(isDiscover){
