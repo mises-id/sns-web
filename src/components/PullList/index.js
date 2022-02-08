@@ -1,12 +1,12 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-01-29 18:19:35
+ * @LastEditTime: 2022-02-08 18:04:24
  * @LastEditors: lmk
  * @Description: global pull list
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Pull, ActivityIndicator } from "zarm";
+import { Pull } from "zarm";
 import "@/styles/followPage.scss";
 import Empty from "@/components/Empty";
 const REFRESH_STATE = {
@@ -50,9 +50,14 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
         if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
           return false;
         }
+
         const last_id = res.pagination.last_id;
-        setlastId(last_id);
-        //!last_id&&setLoading(LOAD_STATE.complete)
+        if(res.data.length<10){
+          setLoading(LOAD_STATE.complete)
+          setlastId('');
+        }else{
+          setlastId(last_id);
+        }
         setisOnceLoad(false)
         return Promise.resolve(true)
       }
@@ -62,23 +67,6 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
       setisOnceLoad(false)
       return Promise.reject(error)
     }
-    // load(type)
-    //   .then((res) => {
-    //     if (res) {
-    //       if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
-    //         return false;
-    //       }
-    //       const last_id = res.pagination.last_id;
-    //       setlastId(last_id);
-    //       //!last_id&&setLoading(LOAD_STATE.complete)
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(LOAD_STATE.failure)
-    //     !isOnceLoad && setLoading(LOAD_STATE.failure);
-    //     setRefreshing(REFRESH_STATE.normal);
-    //   })
-    //   .finally(() => setisOnceLoad(false)); //if once loading
   };
   // refresh
   const refreshData = async () => {
@@ -93,8 +81,8 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
   };
   // load more
   const loadData = async () => {
-    console.log(!mounted,!lastId);
-    if (lastId) return;
+    // if (lastId) return;
+    if(!lastId&&data.length>0) return false;
     setLoading(LOAD_STATE.loading);
     try {
       await fetchData("load");
@@ -104,7 +92,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
     }
   };
   useEffect(() => {
-    isAuto && fetchData("load");
+    isAuto && refreshData();
     if (!isAuto) setisOnceLoad(false);
     return () => {
       setisOnceLoad(true);
@@ -112,11 +100,11 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps 
   return (
     <>
-      {isOnceLoad && (
+      {/* {isOnceLoad && (
         <div className="m-flex m-row-center m-padding20">
           <ActivityIndicator type="spinner"></ActivityIndicator>
         </div>
-      )}
+      )} */}
       <Pull
         ref={pullRef}
         className="m-layout"
@@ -134,7 +122,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
         {loading !== 2 && !isOnceLoad && otherView && otherView()}
         {data.map(renderView)}
         {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty></Empty>}
-        {loading===3&&data.length >0&&<div className="pull-empty">-- No more data --</div>}
+        {/* {loading===3&&data.length >0&&<div className="pull-empty">-- No more data --</div>} */}
       </Pull>
     </>
   );

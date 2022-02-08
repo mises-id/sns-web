@@ -1,12 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-02-08 09:18:40
+ * @LastEditTime: 2022-02-08 17:44:52
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useEffect, useState } from "react";
 import "./index.scss";
+import { UndoOutline } from 'antd-mobile-icons'
 import { useTranslation } from "react-i18next";
 import me_1 from "@/images/me_1.png";
 import me_2 from "@/images/me_2.png";
@@ -22,114 +23,87 @@ import { objToUrl, username } from "@/utils";
 
 const Myself = ({ history }) => {
   const { t } = useTranslation();
-  const [loginForm,setLoginForm] = useState({});
-  const [token, settoken] = useState('')
-   // eslint-disable-next-line
+  const [loginForm, setLoginForm] = useState({});
+  const [token, settoken] = useState("");
+  // eslint-disable-next-line
   const selector = useSelector((state) => state.user) || {};
   useEffect(() => {
-    setLoginForm(selector.loginForm)
-    settoken(selector.token)
+    setLoginForm(selector.loginForm);
+    settoken(selector.token);
     list[1].isNew = !!selector.loginForm.new_fans_count;
     list[1].badge = selector.loginForm.fans_count;
     list[0].badge = selector.loginForm.followings_count;
-  }, [selector]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selector]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [flag, setflag] = useState(false);
   const [loading, setloading] = useState(true);
-  //getData
-  const getFlag = async () => {
-    try {
-      if(!token){
-        const res = await window.mises.getMisesAccounts(true)
-        setflag(!!res)
-        setloading(false);
-      }else{
-        setflag(false);
-        setloading(false);
-      }
-      cleartimer()
-    } catch (error) {
-      setflag(false);
-      setloading(false);
-      cleartimer()
+  const [misesLoading, setmisesLoading] = useState(true);
+  const getMisesAccountFlag = () => {
+    if (selector.web3Status && !selector.token) {
+      window.mises &&
+        window.mises.getMisesAccounts(true).then((res) => {
+          setflag(!!res);
+          setmisesLoading(false);
+        });
+    } else {
+      // setflag(false)
+      setmisesLoading(true);
     }
   };
-  let timer = null;
-  const cleartimer = ()=>{
-    clearTimeout(timer);
-    timer = null;
-  }
+
   useEffect(() => {
-    if(timer){
-      cleartimer()
-    }
+    if (token) setloading(false);
+  }, [token]);
+  useEffect(() => {
+    getMisesAccountFlag();
+    setloading(false);
     // eslint-disable-next-line
-    timer = setTimeout(() => {
-      setflag(false);
-      setloading(false);
-    }, 1000);
-    return () => {
-      cleartimer()
-    }
-  }, [])
-  useEffect(() => {
-    if(selector.web3Status){
-      window.mises&&window.mises.getMisesAccounts(true).then(res=>{
-        setflag(!!res)
-      })
-    }else{
-      setflag(false)
-    }
   }, [selector.web3Status]);
-  useEffect(() => {
-    getFlag();
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     list[2].badge = selector.badge.notifications_count;
-    setTabList([...list])
+    setTabList([...list]);
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onclick = () => {
-    window.mises.requestAccounts().then(res=>{
-      window.location.reload()
-    }).catch(err=>{
-      console.log(err);
-      if(err&&err.code===-32002){
-        Modal.alert({
-          content:"Please switch to the unlock tab to unlock your account",
-          width:'77%',
-          title:"Message",
-        })
-        // Toast.show('Please authorize')
-      }
-      // Toast.show(err||err.message)
-    })
+    window.mises
+      .requestAccounts()
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err && err.code === -32002) {
+          Modal.alert({
+            content: "Please switch to the unlock tab to unlock your account",
+            width: "77%",
+            title: "Message",
+          });
+        }
+      });
   };
-  // const restore = () => {
-  //   window.mises.openRestore().catch(err=>{
-  //     // Toast.show(err||err.message)
-  //   });
-  // }
-  const [list,setTabList] = useState([
+  const [list, setTabList] = useState([
     {
       label: t("following"),
       icon: me_1,
       url: "/follow",
       pageType: "following",
-      badge:loginForm.followings_count
+      badge: loginForm.followings_count,
     },
     {
       label: t("followers"),
       icon: me_2,
       url: "/follow",
       pageType: "fans",
-      badge:loginForm.fans_count,
-      isNew:false // If this item is updated
+      badge: loginForm.fans_count,
+      isNew: false, // If this item is updated
     },
     {
       label: t("NotificationsPageTitle"),
       icon: me_3,
       url: "/notifications",
-      badge:0,
-      isBg:true // has backgroundcolor
+      badge: 0,
+      isBg: true, // has backgroundcolor
     },
     {
       label: t("MyLikesPageTitle"),
@@ -140,7 +114,7 @@ const Myself = ({ history }) => {
       label: t("posts"),
       icon: me_5,
       url: "/myPosts",
-    }
+    },
   ]);
   /* 
   ,
@@ -153,51 +127,52 @@ const Myself = ({ history }) => {
   const userInfo = () => history.push("/userInfo");
   //click global cell
   const cellClick = (val) =>
-    history.push({ pathname: val.url, search: objToUrl({ pageType: val.pageType }) });
-  const connectView = ()=>{
-    return <div>
+    history.push({
+      pathname: val.url,
+      search: objToUrl({ pageType: val.pageType }),
+    });
+  const connectView = () => {
+    return (
       <div>
-        <p className="tips-title m-margin-top15 m-colors-333">
-          {t("aboutId")}
-        </p>
-        <p className="m-font15 m-colors-333  m-tips me-tips">
-          {t("connectMisesIdTips")}
-        </p>
+        <div>
+          <p className="tips-title m-margin-top15 m-colors-333">
+            {t("aboutId")}
+          </p>
+          <p className="m-font15 m-colors-333  m-tips me-tips">
+            {t("connectMisesIdTips")}
+          </p>
+        </div>
+        <div className="m-margin-lr40  m-margin-top10 m-margin-bottom20">
+          <Button block shape="round" theme="primary" onClick={onclick}>
+            <span className="btn-txt">{t("loginUser")}</span>
+          </Button>
+        </div>
       </div>
-      <div className="m-margin-lr40  m-margin-top10 m-margin-bottom20">
-        <Button
-          block
-          shape="round"
-          theme="primary"
-          onClick={onclick}
-        >
-          <span className="btn-txt">{t("loginUser")}</span>
-        </Button>
-      </div>
-    </div>
-  }
-  const created = ()=>{
-    return <div>
+    );
+  };
+  const created = () => {
+    return (
       <div>
-        <p className="tips-title m-margin-top15 m-colors-333">
-          {t("aboutId")}
-        </p>
-        <p className="m-font15 m-colors-333 m-tips me-tips">
-          {t("connectMisesIdTips")}
-        </p>
-        <p className="tips-title m-margin-top15 m-colors-333">
-          {t("restoreTitle")}
-        </p>
-        <p className="m-font15 m-colors-333 me-tips m-tips">
-          {t("resoreMisesIdTips")}
-        </p>
-      </div>
-      <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
-        <Button block shape="round" theme="primary" onClick={onclick}>
-          <span className="btn-txt">{t("createId")}</span>
-        </Button>
-      </div>
-      {/* <p className="m-font15 m-colors-333 me-tips m-tipss">
+        <div>
+          <p className="tips-title m-margin-top15 m-colors-333">
+            {t("aboutId")}
+          </p>
+          <p className="m-font15 m-colors-333 m-tips me-tips">
+            {t("connectMisesIdTips")}
+          </p>
+          <p className="tips-title m-margin-top15 m-colors-333">
+            {t("restoreTitle")}
+          </p>
+          <p className="m-font15 m-colors-333 me-tips m-tips">
+            {t("resoreMisesIdTips")}
+          </p>
+        </div>
+        <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
+          <Button block shape="round" theme="primary" onClick={onclick}>
+            <span className="btn-txt">{t("createId")}</span>
+          </Button>
+        </div>
+        {/* <p className="m-font15 m-colors-333 me-tips m-tipss">
         {t("createMisesIdTips")}
       </p>
       <div className="m-margin-lr40 m-margin-top10 m-margin-bottom20">
@@ -205,8 +180,65 @@ const Myself = ({ history }) => {
           <span className="btn-txt">{t("createId")}</span>
         </Button>
       </div> */}
-    </div>
+      </div>
+    );
+  };
+  const misesLoadingView = () => {
+    return <div>
+      <div className="loadingMises">Loading Mises</div>
+      <div className="loadingProgress">
+        <div className="progressStatus"></div>
+      </div>
+      <div className={`refreshBtn ${!selector.web3ProviderFlag ? 'showRefresh' : ''}`} onClick={refreshBtn}>
+        <UndoOutline />
+        <span className="refreshBtnTxt">Refresh</span>
+      </div>
+    </div>;
+  };
+  const refreshBtn = ()=>{
+    if(!selector.web3ProviderFlag){
+      window.location.reload()
+    }
   }
+  const myselfView = () => {
+    return (
+      <div className="m-layout">
+        <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
+          <Cell
+            iconSize={60}
+            icon={loginForm.avatar && loginForm.avatar.medium}
+            label={username(loginForm)}
+            labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
+            onPress={userInfo}
+          />
+          {list.map((val, index) => (
+            <Cell
+              shape="square"
+              showLine={false}
+              icon={val.icon}
+              iconSize={20}
+              key={index}
+              label={
+                val.isNew ? <Badge shape="dot">{val.label}</Badge> : val.label
+              }
+              rightChild={
+                val.badge ? (
+                  val.isBg ? (
+                    <Badge shape="round" text={val.badge}></Badge>
+                  ) : (
+                    <span className="right-badge">{val.badge}</span>
+                  )
+                ) : (
+                  <span></span>
+                )
+              }
+              onPress={() => cellClick(val)}
+            ></Cell>
+          ))}
+        </div>
+      </div>
+    );
+  };
   return (
     <div>
       {loading ? (
@@ -214,37 +246,11 @@ const Myself = ({ history }) => {
           <ActivityIndicator type="spinner" />
         </div>
       ) : token ? (
-        <div className="m-layout">
-          <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
-            <Cell
-              iconSize={60}
-              icon={loginForm.avatar && loginForm.avatar.medium}
-              label={username(loginForm)}
-              labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
-              onPress={userInfo}
-            />
-            {list.map((val, index) => (
-              <Cell
-                shape="square"
-                showLine={false}
-                icon={val.icon}
-                iconSize={20}
-                key={index}
-                label={
-                  val.isNew ? <Badge shape="dot">{val.label}</Badge> : val.label
-                }
-                rightChild={
-                  val.badge ? (val.isBg ? <Badge shape="round" text={val.badge}></Badge> : <span className="right-badge">{val.badge}</span>) : <span></span>
-                }
-                onPress={() => cellClick(val)}
-              ></Cell>
-            ))}
-          </div>
-        </div>
+        myselfView()
       ) : (
-        <div className=" m-layout m-bg-fff">
+        <div className="m-layout m-bg-fff">
           <img alt="bg" src={bg} className="bg" />
-          {flag ? connectView() : created()}
+          {misesLoading ? misesLoadingView() : flag ? connectView() : created()}
         </div>
       )}
     </div>

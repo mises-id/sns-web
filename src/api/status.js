@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2022-01-07 16:30:05
+ * @LastEditTime: 2022-02-08 15:01:15
  * @LastEditors: lmk
  * @Description: status
  */
@@ -131,5 +131,15 @@ export function recommendUser(){
 export function followingLatest(){
   return request({
     url:'/user/following/latest'
+  })
+}
+/**
+* @param {*} discover data
+*/
+export function refreshStatus(ids){
+  return request({
+    url:'/status/list',
+    method:'post',
+    data:{ids}
   })
 }
