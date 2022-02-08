@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 22:26:09
- * @LastEditTime: 2022-01-19 13:55:01
+ * @LastEditTime: 2022-02-08 17:31:33
  * @LastEditors: lmk
  * @Description: 
  */
@@ -18,12 +18,15 @@ const initialState = {
     actionType:"", // follow following 
     uid:'' // set user uid
   },
-  web3Status:false
+  web3Status:false,
+  web3ProviderFlag:true
 };
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
     case REHYDRATE:
       if (action.payload && action.payload.user) {
+        action.payload.user.web3Status = false;
+        action.payload.user.web3ProviderFlag = true;
         return {...state, ...action.payload.user};
       }
       return state;
@@ -52,10 +55,15 @@ const userReducers = (state = initialState, action) => {
         ...state,
         userActions: action.data,
       };
-    case 'SET_WEB3_INIT': // Set user actions
+    case 'SET_WEB3_INIT': // Set web3 actions
       return {
         ...state,
         web3Status: action.data,
+      };
+    case 'SET_WEB3_PROVIDER_FLAG': // Set web3 provider actions
+      return {
+        ...state,
+        web3ProviderFlag: action.data,
       };
     default:
       return state;

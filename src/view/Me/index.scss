@@ -33,3 +33,57 @@
 
   font-weight: 600;
 }
+.loadingMises{
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #dedede;
+  margin-top: 100px;
+}
+.loadingProgress{
+  width: 80vw;
+  height: 10px;
+  border-radius: 30px;
+  background-color: #dedede;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  .progressStatus{
+    width: 30px;
+    height: 10px;
+    border-radius: 30px;
+    background: var(--theme-primary);
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: move 1.5s infinite;
+  }
+}
+@keyframes move {
+  0%{
+    left: 0;
+  }
+  100%{
+    left: 100%;
+  }
+}
+.refreshBtn{
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 300ms;
+  background-color:var(--theme-primary);
+  color: #fff;
+  width: 90px;
+  line-height: 35px;
+  margin: 20px auto;
+  border-radius: 5px;
+  &.showRefresh{
+    opacity: 1;
+  }
+  .refreshBtnTxt{
+    display: inline-block;
+    margin-left: 5px;
+  }
+}

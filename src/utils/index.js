@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-01-29 17:49:57
+ * @LastEditTime: 2022-02-08 11:55:40
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -266,31 +266,37 @@ export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
     if(uid||postId){
       const arr  = dataSource.map(val=>{
         let item = keyStr ? val[keyStr] : val;
-        if(actionType==='comment'){
-          item = setCommentCountAction(item,user)
-          if(item.parent_status){
-            item.parent_status = setCommentCountAction(item.parent_status,user)
-          }
-        }
-        if(actionType==='forward'){
-          item = setForwardCountAction(item,user)
-          if(item.parent_status){
-            item.parent_status = setForwardCountAction(item.parent_status,user)
-          }
-        }
-        if(['like','unlike'].includes(actionType)){
-          item = setLikeCountAction(item,user)
-          if(item.parent_status){
-            item.parent_status = setLikeCountAction(item.parent_status,user)
-          }
-        }
-        if(['follow','following'].includes(actionType)){
-          item = setFollowAction(item,user)
-          if(item.parent_status){
-            item.parent_status = setFollowAction(item.parent_status,user)
-          }
-        }
+        switch (actionType) {
+          case 'comment':
+            item = setCommentCountAction(item,user)
+            if(item.parent_status){
+              item.parent_status = setCommentCountAction(item.parent_status,user)
+            }
+          break;
+          case 'forward':
+            item = setForwardCountAction(item,user)
+            if(item.parent_status){
+              item.parent_status = setForwardCountAction(item.parent_status,user)
+            }
+          break;
+          case 'like':
+          case 'unlike':
+            item = setLikeCountAction(item,user)
+            if(item.parent_status){
+              item.parent_status = setLikeCountAction(item.parent_status,user)
+            }
+          break;
+          case 'follow':
+          case 'following':
+            item = setFollowAction(item,user)
+            if(item.parent_status){
+              item.parent_status = setFollowAction(item.parent_status,user)
+            }
+          break;
         
+          default:
+            break;
+        }
         keyStr ? val[keyStr] = item  : val = item
         return val;
       })
@@ -325,7 +331,6 @@ export function useSetDataSourceAction(dataSource,setdataSource,keyStr=""){
   // like
   const setLikeCountAction = val=>{
     const {postId,data} = user.userActions;
-    console.log(postId,val.id);
     if(postId===val.id) {
       val.likes_count = data
       val.is_liked = actionType==='like'

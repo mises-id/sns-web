@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-02-08 09:20:33
+ * @LastEditTime: 2022-02-08 17:01:14
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3Init } from '@/actions/user';
+import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -22,16 +22,19 @@ export default class MisesExtensionController{
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
   timer;
   startNum = 10000;
-  getMax = 30;
+  getMax = 10;
   getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
-    this.getProvider()
+    setTimeout(() => {
+      this.getProvider()
+    }, 10);
   }
   getProvider(){
     console.log(this.getNum,window.ethereum);
     if(this.getNum===this.getMax){
       this.clear()
+      store.dispatch(setWeb3ProviderMaxFlag(false))
       return false;
     }
     if(window.ethereum&&window.ethereum.chainId){
@@ -43,7 +46,7 @@ export default class MisesExtensionController{
     this.getNum++
     this.timer = setTimeout(() => {
       this.getProvider()
-    }, 300);
+    }, 500);
   }
   clear(){
     clearTimeout(this.timer)
@@ -56,8 +59,8 @@ export default class MisesExtensionController{
       this.resetApp()
       return Promise.reject();
     }
-    store.dispatch(setWeb3Init(true))
     if(this.web3){
+      store.dispatch(setWeb3Init(true))
       return Promise.resolve()
     }
     console.log('init')
@@ -108,6 +111,7 @@ export default class MisesExtensionController{
         inputFormatter: [null]
       }]
     })
+    store.dispatch(setWeb3Init(true))
     
     // If the initialization is completed, the currently selected account will be obtained
     // setTimeout(() => {
@@ -130,7 +134,6 @@ export default class MisesExtensionController{
       // }
     })
     window.ethereum.request({ method: 'eth_accounts' }).then(res=>{
-      console.log(313123333,res);
       if(res.length>0){
         this.resetAccount(res[0])
         return false;
@@ -148,13 +151,17 @@ export default class MisesExtensionController{
     })
   }
   resetApp(){
-    console.log('resetApp')
-    setTimeout(() => {
-      store.dispatch(setUserAuth(''))
-      store.dispatch(setUserToken(''))
-      this.resetUser()
-      store.dispatch(setLoginForm({}))  
-    }, 0);
+    const {loginForm} = store.getState().user
+    if(loginForm.misesid){
+      console.log('resetApp')
+      setTimeout(() => {
+        store.dispatch(setUserAuth(''))
+        store.dispatch(setUserToken(''))
+        this.resetUser()
+        store.dispatch(setLoginForm({})) 
+        localStorage.removeItem('discoverPageCache')
+      }, 0);
+    }
   }
   async resetAccount(res){
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);

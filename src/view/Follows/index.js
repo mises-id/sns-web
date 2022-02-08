@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-02-08 09:02:27
+ * @LastEditTime: 2022-02-08 18:04:34
  * @LastEditors: lmk
  * @Description:
  */
@@ -30,7 +30,7 @@ const Follow = ({ history = {} }) => {
   const fn = isDiscoverPage.indexOf("discover") > -1 ? recommend : following;
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
-  const [isAuto,setIsAuto] = useState(true);
+  const [isAuto] = useState(true);
   // get dataList
   
   const [fetchData,last_id, dataSource, setdataSource,downRefreshLastId, setdownRefreshLastId,setlast_id] = useList(fn, {
@@ -42,9 +42,9 @@ const Follow = ({ history = {} }) => {
     let cache = localStorage.getItem('discoverPageCache')
     if(isDiscoverPage.indexOf("discover") > -1&&cache){
       const {dataSource,downRefreshLastId,last_id} = JSON.parse(cache);
-      if(dataSource.length>0){
-        setIsAuto(false)
-      }
+      // if(dataSource.length>0){
+      //   setIsAuto(false)
+      // }
       setdataSource(dataSource)
       setdownRefreshLastId(downRefreshLastId)
       setlast_id(last_id)
@@ -53,15 +53,20 @@ const Follow = ({ history = {} }) => {
   }, []);
   useEffect(()=>{
     if(isDiscover){
+      let start = 0;
+      const maxCacheCount = 200;
+      if(dataSource.length>maxCacheCount){
+        start = dataSource.length - maxCacheCount
+      }
+      const data = dataSource.slice(start,maxCacheCount)
       localStorage.setItem('discoverPageCache',JSON.stringify({
         last_id,
         downRefreshLastId,
-        dataSource
+        dataSource:data
       }))
     }
     // eslint-disable-next-line
   },[dataSource.length,last_id])
-  // console.log(last_id)
   useSetDataSourceAction(dataSource, setdataSource)
   const [notifitionObj, setnotifitionObj] = useState({
     "total": 0,
@@ -271,9 +276,10 @@ const Follow = ({ history = {} }) => {
               isAuto={isAuto}
               renderView={renderView}
               data={dataSource}
-              load={e=>{
+              load={async e=>{
                 getFollowingLatest()
-                return fetchData(e)
+                const res = await fetchData(e)
+                return res;
               }}
             />
         )}

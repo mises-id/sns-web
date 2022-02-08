@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 22:14:52
- * @LastEditTime: 2022-01-17 16:03:03
+ * @LastEditTime: 2022-02-08 17:23:57
  * @LastEditors: lmk
  * @Description: user actions
  */
@@ -44,6 +44,13 @@ export function setUserSetting(data){
 export function setWeb3Init(data){
   return {
     type: 'SET_WEB3_INIT',
+    data
+  };
+}
+// Set web3 actions
+export function setWeb3ProviderMaxFlag(data){
+  return {
+    type: 'SET_WEB3_PROVIDER_FLAG',
     data
   };
 }
