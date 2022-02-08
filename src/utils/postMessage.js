@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-02-07 17:01:12
+ * @LastEditTime: 2022-02-08 09:20:33
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken } from '@/actions/user';
+import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3Init } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -22,29 +22,29 @@ export default class MisesExtensionController{
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
   timer;
   startNum = 10000;
-  // getMax = 3;
-  // getNum = 0;
+  getMax = 30;
+  getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
-    this.init()
-    this.listen()
+    this.getProvider()
   }
-  // getProvider(){
-  //   console.log(this.getNum,Web3.givenProvider);
-  //   if(this.getNum===this.getMax){
-  //     this.clear()
-  //     return false;
-  //   }
-  //   if(Web3.givenProvider&&Web3.givenProvider.chainId){
-  //     this.init()
-  //     this.clear()
-  //     return false
-  //   }
-  //   this.getNum++
-  //   this.timer = setTimeout(() => {
-  //     this.getProvider()
-  //   }, 300);
-  // }
+  getProvider(){
+    console.log(this.getNum,window.ethereum);
+    if(this.getNum===this.getMax){
+      this.clear()
+      return false;
+    }
+    if(window.ethereum&&window.ethereum.chainId){
+      this.init()
+      this.listen()
+      this.clear()
+      return false
+    }
+    this.getNum++
+    this.timer = setTimeout(() => {
+      this.getProvider()
+    }, 300);
+  }
   clear(){
     clearTimeout(this.timer)
     this.timer = null;
@@ -56,6 +56,7 @@ export default class MisesExtensionController{
       this.resetApp()
       return Promise.reject();
     }
+    store.dispatch(setWeb3Init(true))
     if(this.web3){
       return Promise.resolve()
     }
@@ -163,7 +164,6 @@ export default class MisesExtensionController{
       this.disconnect(loginForm.uid);
       this.resetUser()
       await this.requestAccounts()
-      console.log(window.location.pathname)
       refreshByCacheKey(window.location.pathname)
       return false
     }
@@ -181,7 +181,7 @@ export default class MisesExtensionController{
     if(window.ethereum&&!window.ethereum.chainId&&!hideModal){
       return this.isUnInitMetaMask()
     }
-    return Boolean(window.ethereum.chainId) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
+    return window.ethereum&&Boolean(window.ethereum.chainId) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
     Modal.confirm({
@@ -310,7 +310,6 @@ export default class MisesExtensionController{
       const count = await this.web3.misesWeb3.getMisesAccounts()
       return count
     } catch (error) {
-      // this.requestAccounts()
       return Promise.reject(error)
     }
   }

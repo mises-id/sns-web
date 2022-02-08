@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-02-07 17:38:57
+ * @LastEditTime: 2022-02-08 09:39:16
  * @LastEditors: lmk
  * @Description: 
  */
@@ -13,9 +13,7 @@ import reportWebVitals from './reportWebVitals';
 import './locales'
 // import VConsole from 'vconsole';
 import MisesExtensionController from  './utils/postMessage'
-window.onload  = ()=>{
-  window.mises = new MisesExtensionController()
-}
+window.mises = new MisesExtensionController()
 render(
   <React.StrictMode>
     <App />

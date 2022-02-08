@@ -40,3 +40,10 @@ export function setUserSetting(data){
     data
   };
 }
+// Set web3 actions
+export function setWeb3Init(data){
+  return {
+    type: 'SET_WEB3_INIT',
+    data
+  };
+}

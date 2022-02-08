@@ -17,7 +17,8 @@ const initialState = {
   userActions:{
     actionType:"", // follow following 
     uid:'' // set user uid
-  }
+  },
+  web3Status:false
 };
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -50,6 +51,11 @@ const userReducers = (state = initialState, action) => {
       return {
         ...state,
         userActions: action.data,
+      };
+    case 'SET_WEB3_INIT': // Set user actions
+      return {
+        ...state,
+        web3Status: action.data,
       };
     default:
       return state;
