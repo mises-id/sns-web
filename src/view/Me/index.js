@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-02-07 09:24:57
+ * @LastEditTime: 2022-02-08 09:18:40
  * @LastEditors: lmk
  * @Description:
  */
@@ -72,8 +72,17 @@ const Myself = ({ history }) => {
     }
   }, [])
   useEffect(() => {
+    if(selector.web3Status){
+      window.mises&&window.mises.getMisesAccounts(true).then(res=>{
+        setflag(!!res)
+      })
+    }else{
+      setflag(false)
+    }
+  }, [selector.web3Status]);
+  useEffect(() => {
     getFlag();
-  }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     list[2].badge = selector.badge.notifications_count;
     setTabList([...list])
