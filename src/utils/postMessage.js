@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-02-08 17:01:14
+ * @LastEditTime: 2022-02-09 14:48:50
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -22,7 +22,7 @@ export default class MisesExtensionController{
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
   timer;
   startNum = 10000;
-  getMax = 10;
+  getMax = 20;
   getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
@@ -271,10 +271,9 @@ export default class MisesExtensionController{
     try {
       await this.isActive()
       await this.web3.misesWeb3.setUserInfo(data)
+      return true
     } catch (error) {
-      // this.requestAccounts().then(()=>{
-      //   this.setUserInfo(data)
-      // })
+      return Promise.reject(error)
     }
   }
   async userFollow(data){
