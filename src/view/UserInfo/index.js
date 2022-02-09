@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-01-28 14:16:56
+ * @LastEditTime: 2022-02-09 11:21:20
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -19,6 +19,7 @@ import { attachment } from "@/api/updata";
 import { updateUser } from "@/api/user";
 import { setLoginForm } from "@/actions/user";
 import Navbar from "@/components/NavBar";
+import { useEffect } from "react";
 const genderList = [
   { value: "female", label: "female" },
   { value: "male", label: "male" },
@@ -119,7 +120,7 @@ const UserInfo = (props) => {
       }
       setsaveLoading(true);
       const promise = [submit(form, "profile")];
-      if (username.value) {
+      if (username.value && username.value!==loginForm.username) {
         promise.push(submit(form, "username"));
       }
       Promise.all(promise).then(() => {
@@ -132,6 +133,7 @@ const UserInfo = (props) => {
       Toast.show(t("updataUserInfoSuccess"));
     });
   };
+  // const loginModal = useLoginModal()
   const submit = async (form, by) => {
     const byForm = { by };
     byForm[by] = form[by];
@@ -146,7 +148,7 @@ const UserInfo = (props) => {
         avatarUrl,
         homePageUrl:'homePageUrl',
         intro:'intro'
-      });
+      })
       const res = await updateUser(byForm);
       if (res) {
         dispatch(setLoginForm(res));
@@ -163,6 +165,12 @@ const UserInfo = (props) => {
     setsaveLoading(false);
     return Promise.reject(error);
   };
+  useEffect(() => {
+    if(!loginForm.misesid){
+      window.location.replace('/home/me')
+    }
+  }, [loginForm.misesid]);
+  
   return (
     <div>
       <Navbar title={t("userInfoPageTitle")} />
