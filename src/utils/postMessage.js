@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-02-09 14:48:50
+ * @LastEditTime: 2022-02-10 17:59:12
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
+import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -127,7 +127,9 @@ export default class MisesExtensionController{
     window.ethereum.on('accountsChanged',async res=>{
       console.log(res);
       if(res.length){
-        this.resetAccount(res[0])
+        store.dispatch(setWeb3AccountChanged(true))
+        await this.resetAccount(res[0])
+        store.dispatch(setWeb3AccountChanged(false))
       }
       // if(res.length===0) {
       //   this.resetApp()
@@ -138,10 +140,17 @@ export default class MisesExtensionController{
         this.resetAccount(res[0])
         return false;
       }
-      if(res.length===0){
+      /**
+       * @description: 
+          Case 1: if the connected account list is empty and unlocked, it means that no account is connected to the website, and the existing local user data needs to be cleared
+
+          Case 2: if the list of connected accounts in the locked state is empty, the existing local user data will not be processed
+       */
+     
+      res.length===0&&this.isActive().then(res=>{
         console.log('not find selectedAddress');
         this.resetApp()
-      }
+      })
     })
     window.ethereum.on('chainChanged',res=>{
       console.log(res)
@@ -170,16 +179,10 @@ export default class MisesExtensionController{
     if(loginForm.misesid&&loginForm.misesid.indexOf(misesid)===-1){
       this.disconnect(loginForm.uid);
       this.resetUser()
-      await this.requestAccounts()
-      refreshByCacheKey(window.location.pathname)
-      return false
     }
-    if(!loginForm.misesid){
-      await this.requestAccounts()
-      refreshByCacheKey(window.location.pathname)
-      return false;
-    }
-    this.connect(loginForm.misesid)
+    return this.requestAccounts()
+    // refreshByCacheKey(window.location.pathname)
+    // this.connect(loginForm.misesid)
   }
   async isInitMetaMask(hideModal){
     if(!window.ethereum&&!hideModal){
