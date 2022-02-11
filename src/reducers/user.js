@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 22:26:09
- * @LastEditTime: 2022-02-08 17:31:33
+ * @LastEditTime: 2022-02-10 18:12:54
  * @LastEditors: lmk
  * @Description: 
  */
@@ -19,7 +19,8 @@ const initialState = {
     uid:'' // set user uid
   },
   web3Status:false,
-  web3ProviderFlag:true
+  web3ProviderFlag:true,
+  accountsChanged: false
 };
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -60,11 +61,16 @@ const userReducers = (state = initialState, action) => {
         ...state,
         web3Status: action.data,
       };
-    case 'SET_WEB3_PROVIDER_FLAG': // Set web3 provider actions
-      return {
-        ...state,
-        web3ProviderFlag: action.data,
-      };
+      case 'SET_WEB3_PROVIDER_FLAG': // Set web3 provider actions
+        return {
+          ...state,
+          web3ProviderFlag: action.data,
+        };
+      case 'SET_WEB3_ACCOUNTCHANGED': // Set web3 account changed
+        return {
+          ...state,
+          accountsChanged: action.data,
+        };
     default:
       return state;
   }

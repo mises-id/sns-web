@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-01-28 15:23:12
+ * @LastEditTime: 2022-02-10 17:27:20
  * @LastEditors: lmk
  * @Description: 
  */
@@ -52,11 +52,13 @@ const Home = ({history,children=[]})=>{
       "user_authz": {auth}
     }).then(data=>{
       data.token&&dispatch(setUserToken(data.token))
-      localStorage.setItem('setAccount',true)
+      // localStorage.setItem('setAccount',true)
     })
     getUserInfo()
+    console.log(auth,'--------------------',token)
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = ()=>{
+    console.log(11111)
     if(auth&&token){
       getUserSelfInfo().then(res=>{
         dispatch(setLoginForm(res))
@@ -74,21 +76,6 @@ const Home = ({history,children=[]})=>{
     window.refreshByCacheKey('/comment')
     window.refreshByCacheKey('/userInfo')
   })
-  // If this page is displayed, the current user is updated
-  // useEffect(() => {
-  //   if(user.token){
-  //     window.mises.getAuth().then(res=>{
-  //       const resAuth = urlToJson(`?${res.auth}`)
-  //       const selectorAuth = urlToJson(`?${user.auth}`)
-  //       if(resAuth.mises_id!==selectorAuth.mises_id){
-  //         window.mises.resetUser()
-  //         dispatch(setUserAuth(res.auth))
-  //       }
-  //     }).catch(err=>{
-  //       console.log(err)
-  //     })
-  //   }
-  // }, [])// eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     document.body.style.overflow = 'hidden'
     setTabActive(); 

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-02-09 11:21:20
+ * @LastEditTime: 2022-02-10 18:16:51
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -16,7 +16,7 @@ import "./index.scss";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { attachment } from "@/api/updata";
-import { updateUser } from "@/api/user";
+import { getUserSelfInfo, updateUser } from "@/api/user";
 import { setLoginForm } from "@/actions/user";
 import Navbar from "@/components/NavBar";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ const genderList = [
 ];
 const UserInfo = (props) => {
   const { t } = useTranslation();
-  const { loginForm = {} } = useSelector((state) => state.user) || {};
+  const { loginForm = {},accountsChanged} = useSelector((state) => state.user) || {};
   const [user, setuser] = useState(loginForm);
   const username = useBind(user.username);
   const phone = useBind(user.mobile);
@@ -54,6 +54,19 @@ const UserInfo = (props) => {
       };
     }
   };
+  useEffect(() => {
+    if(!accountsChanged){
+      getUserSelfInfo().then(res=>{
+        setuser({...res})
+        username.onChange(res.username)
+        phone.onChange(res.mobile)
+        mail.onChange(res.email)
+        address.onChange(res.address)
+      })
+    }
+    // eslint-disable-next-line
+  }, [accountsChanged])
+  
   //send avatar
   const sendAvatar = () => {
     const option = {

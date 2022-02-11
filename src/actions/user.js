@@ -54,3 +54,10 @@ export function setWeb3ProviderMaxFlag(data){
     data
   };
 }
+// Set web3 actions
+export function setWeb3AccountChanged(data){
+  return {
+    type: 'SET_WEB3_ACCOUNTCHANGED',
+    data
+  };
+}
