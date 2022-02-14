@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-02-10 17:27:20
+ * @LastEditTime: 2022-02-11 14:26:22
  * @LastEditors: lmk
  * @Description: 
  */
@@ -58,7 +58,6 @@ const Home = ({history,children=[]})=>{
     console.log(auth,'--------------------',token)
   },[auth,token])// eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = ()=>{
-    console.log(11111)
     if(auth&&token){
       getUserSelfInfo().then(res=>{
         dispatch(setLoginForm(res))
