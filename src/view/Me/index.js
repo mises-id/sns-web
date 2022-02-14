@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-02-09 09:16:50
+ * @LastEditTime: 2022-02-11 14:22:54
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useEffect, useState } from "react";
 import "./index.scss";
-import { UndoOutline } from 'antd-mobile-icons'
+import { UndoOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
 import me_1 from "@/images/me_1.png";
 import me_2 from "@/images/me_2.png";
@@ -38,16 +38,27 @@ const Myself = ({ history }) => {
   const [flag, setflag] = useState(false);
   const [loading, setloading] = useState(true);
   const [misesLoading, setmisesLoading] = useState(true);
+  const [loadingMisesTxt, setloadingMisesTxt] = useState("Loading Mises");
+
+  let timer;
   const getMisesAccountFlag = () => {
     if (selector.web3Status && !selector.token) {
       window.mises &&
         window.mises.getMisesAccounts(true).then((res) => {
           setflag(!!res);
           setmisesLoading(false);
+          setloadingMisesTxt("Loading Mises")
+          clearTimeout(timer);
+          timer = null;
         });
     } else {
       // setflag(false)
       setmisesLoading(true);
+      if(!timer){
+        timer = setTimeout(() => {
+          setloadingMisesTxt('Injecting Meatmask')
+        }, 2000);
+      }
     }
   };
 
@@ -184,22 +195,38 @@ const Myself = ({ history }) => {
     );
   };
   const misesLoadingView = () => {
-    return <div>
-      <div className="loadingMises">Loading Mises</div>
-      <div className="loadingProgress">
-        <div className="progressStatus"></div>
-      </div>
-      <div className={`refreshBtn ${!selector.web3ProviderFlag ? 'showRefresh' : ''}`} onClick={refreshBtn}>
-        <UndoOutline />
-        <span className="refreshBtnTxt">Refresh</span>
-      </div>
-    </div>;
+    return (
+      selector.web3ProviderFlag ? (
+        <div>
+          <div className="loadingMises">{loadingMisesTxt}</div>
+          <div className="loadingProgress">
+            <div className="progressStatus"></div>
+          </div>
+        </div>
+      ) : (
+        <div className={`refreshBox ${
+          !selector.web3ProviderFlag ? "showRefresh" : ""
+        }`}>
+          <div className="loadingMises">
+            <p>Loading timed out</p>
+            <p className="loadingMises-refreshTxt">Please try again later</p>
+          </div>
+          <div
+            className="refreshBtn"
+            onClick={refreshBtn}
+          >
+            <UndoOutline />
+            <span className="refreshBtnTxt">Refresh</span>
+          </div>
+        </div>
+      )
+    );
   };
-  const refreshBtn = ()=>{
-    if(!selector.web3ProviderFlag){
-      window.location.reload()
+  const refreshBtn = () => {
+    if (!selector.web3ProviderFlag) {
+      window.location.reload();
     }
-  }
+  };
   const myselfView = () => {
     return (
       <div className="m-layout">

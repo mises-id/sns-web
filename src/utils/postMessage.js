@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-02-10 17:59:12
+ * @LastEditTime: 2022-02-11 14:01:38
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -22,7 +22,7 @@ export default class MisesExtensionController{
   appid = "did:misesapp:mises1v49dju9vdqy09zx7hlsksf0u7ag5mj4579mtsk"; // prod
   timer;
   startNum = 10000;
-  getMax = 20;
+  getMax = 10;
   getNum = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
