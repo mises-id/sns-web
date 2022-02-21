@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-02-07 11:37:16
+ * @LastEditTime: 2022-02-21 17:59:56
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -40,9 +40,30 @@ const Post = ({ history = {} }) => {
   const user = useSelector((state) => state.user) || {}; // userinfo 
   const [loading, setloading] = useState(false); // loading flag
   const { setLike, followPress } = useChangePosts(setitem, item); // like and follow function hooks
-
+  const dispatch = useDispatch()
+  const [visible, setvisible] = useState(false);
+  const [commentPop, setcommentPop] = useState({})
+  const [id, setid] = useState("");
+  const commentContent = useBind("");
+  const commentsPopRef = useRef();
+  const state = useRouteState();
+  const loginModal = useLoginModal()
+  // get this post three comment  data
+  const [comment, setcomment] = useState([]);
+  const [showMore, setshowMore] = useState(false);
   const [selectItem, setselectItem] = useState({}); // select comment user
   const input = useRef();
+  // start loading 
+  useEffect(() => {
+    if (state) {
+      // const historyState = urlToJson(location.search);
+      Loading.show();
+      setid(state.id);
+      getDetail(state.id);
+      getCommentList(state.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.id]);
   // like function 
   const likeFn = val=>{
     const fn = val.is_liked ? unlikeComment : likeComment;
@@ -94,33 +115,19 @@ const Post = ({ history = {} }) => {
   const getDetail = async (id) => {
     const res = await getStatusItem(id)
     setitem(res);
+    window.$misesShare = {
+      url:window.location.href,
+      images:res.thumb_images&&res.thumb_images[0] ? res.thumb_images[0] : 'https://home.mises.site/logo192.png'
+    };
     Loading.hide();
     return res;
   };
-  // get this post three comment  data
-  const [comment, setcomment] = useState([]);
-  const [showMore, setshowMore] = useState(false);
   const getCommentList = (id) => {
     getComment({ status_id: id, limit: 3 }).then((res) => {
       setcomment(res.data);
       setshowMore(!!res.pagination.last_id);
     });
   };
-  const [id, setid] = useState("");
-  const commentContent = useBind("");
-  const state = useRouteState();
-  // start loading 
-  useEffect(() => {
-    if (state) {
-      // const historyState = urlToJson(location.search);
-      Loading.show();
-      setid(state.id);
-      getDetail(state.id);
-      getCommentList(state.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.id]);
-  const loginModal = useLoginModal()
   const commitReply = async ()=>{
     if (loading || !commentContent.value) {
       return false;
@@ -166,8 +173,6 @@ const Post = ({ history = {} }) => {
     commitReply();
   };
 
-  const [visible, setvisible] = useState(false);
-  const [commentPop, setcommentPop] = useState({})
   const showMoreComment = (e,val)=>{
     e.stopPropagation()
     setvisible(true)
@@ -175,7 +180,6 @@ const Post = ({ history = {} }) => {
     val.username = username(val.user)
     setselectItem(val)
   }
-  const commentsPopRef = useRef();
   const deleteCommentData = (e,val)=>{
     e.stopPropagation()
     Modal.confirm({
@@ -218,7 +222,6 @@ const Post = ({ history = {} }) => {
       },
     });
   }
-  const dispatch = useDispatch()
   /**
    * @description: upload global list 
    * @param {string} upload postId
@@ -247,6 +250,12 @@ const Post = ({ history = {} }) => {
   useDidRecover(()=>{
     dropByCacheKey('/comment')
   })
+  useEffect(() => {
+    return () => {
+      window.$misesShare = ''
+    }
+  }, [])
+  
   return (
     <div className="post-detail">
       <Navbar title={t("postPageTitle")} />

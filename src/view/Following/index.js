@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-25 23:13:53
+ * @LastEditTime: 2022-02-14 10:04:54
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -30,7 +30,14 @@ const Following = ({ pageType,uid }) => {
   const [followLoading, setfollowLoading] = useState(false);
   const [propUid, setPropUid] = useState(uid)
   const history = useHistory()
+  const [lastId, setlastId] = useState("");
   const {loginForm={}} = user;
+  const [fetchData, last_id, dataSource, setdataSource] = useList(friendShip, {
+    uid: propUid || (user.loginForm && user.loginForm.uid),
+    relation_type: type==='fans' ? 'fan' : type,
+    limit: 20,
+    last_id: lastId,
+  });
   const renderView = (val = {}, index) => {
     const user = val.user;
     const icon = {
@@ -104,20 +111,14 @@ const Following = ({ pageType,uid }) => {
       ></Cell>
     );
   };
-  const [lastId, setlastId] = useState("");
   useEffect(() => {
     setPropUid(uid)
   }, [uid])
-  const [fetchData, last_id, dataSource, setdataSource] = useList(friendShip, {
-    uid: propUid || (user.loginForm && user.loginForm.uid),
-    relation_type: type==='fans' ? 'fan' : type,
-    limit: 20,
-    last_id: lastId,
-  });
-  //getData
+  //set last id
   useEffect(() => {
     setlastId(last_id);
   }, [last_id]);
+  // refresh home page
   useEffect(() => {
     refreshByCacheKey('/home/me')
   }, []);

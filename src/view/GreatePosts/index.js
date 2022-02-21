@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-26 15:44:43
+ * @LastEditTime: 2022-02-14 10:28:55
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -23,6 +23,23 @@ const GreatePosts = ({ history = {} }) => {
   const [selectShareWith, setselectShareWith] = useState("public");
   const [selectHrs, setselectHrs] = useState(0)
   const historyHooks = useHistory()
+  // Return the private status of this post
+  const formPrivate = ()=>{
+    const privateForm = {};
+    if(selectShareWith==='public'){
+      privateForm.is_private = false;
+      privateForm.show_duration = 0;
+    }
+    if(selectShareWith==='private'){
+      privateForm.is_private = true;
+      privateForm.show_duration = 0;
+    }
+    if(selectShareWith==='limited'){
+      privateForm.is_private = true;
+      privateForm.show_duration = hoursToSeconds(selectHrs);
+    }
+    return privateForm;
+  }
   //create
   const send = async () => {
     if (postsContent.value === "" && imageList.length===0) {
@@ -33,19 +50,9 @@ const GreatePosts = ({ history = {} }) => {
       status_type: "text",
       form_type: "status",
       content: postsContent.value,
+      ...formPrivate()
     };
-    if(selectShareWith==='public'){
-      form.is_private = false;
-      form.show_duration = 0;
-    }
-    if(selectShareWith==='private'){
-      form.is_private = true;
-      form.show_duration = 0;
-    }
-    if(selectShareWith==='limited'){
-      form.is_private = true;
-      form.show_duration = hoursToSeconds(selectHrs);
-    }
+    
     setloading(true);
     try {
       try {

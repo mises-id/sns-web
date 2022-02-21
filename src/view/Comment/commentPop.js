@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-01-28 22:06:27
+ * @LastEditTime: 2022-02-14 10:04:06
  * @LastEditors: lmk
  * @Description:
  */
@@ -50,14 +50,19 @@ const CommentsPop = (
   },
   ref
 ) => {
-  // const [data, setdata] = useState({
-  //   user: {},
-  //   comments:[]
-  // });
-  const state = useRouteState();
+  const state = useRouteState(); // get router a query
   const [lastId, setlastId] = useState("");
   const status_id = state.id;
-  const [data, setdata] = useState(comment);
+  const [data, setdata] = useState(comment);// comment data
+  const [isSetTop, setisSetTop] = useState(false); // Has the first level evaluation been set
+  const user = useSelector((state) => state.user) || {};
+  const commentContent = useBind("");
+  const input = useRef();
+  const [selectItem, setselectItem] = useState(data); // select a comment item
+  const { avatar = {} } = data.user || {};
+  const [setrefreshFlag, setrefresh] = useState(false); // refresh status
+  const loginModal = useLoginModal();
+  const history = useHistory()
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
     status_id: state.id || comment.state_id,
     topic_id: comment.id,
@@ -92,7 +97,7 @@ const CommentsPop = (
       }
     };
   });
-  const [isSetTop, setisSetTop] = useState(false);
+  // Prepare datalist
   useEffect(()=>{
     if(dataSource.length>0&&!isSetTop){
       const first = dataSource[0];
@@ -107,6 +112,7 @@ const CommentsPop = (
       }
     }
   },[dataSource.length])
+  // Monitor pop-up status
   useEffect(() => {
     return () => {
       if (visible) {
@@ -116,7 +122,7 @@ const CommentsPop = (
     };
     // eslint-disable-next-line
   }, [visible]);
-
+  // Select the content to reply to
   const selectReplyItem = (val) => {
     commentContent.onChange("");
     val.username = username(val.user);
@@ -124,8 +130,7 @@ const CommentsPop = (
     setParentSelectItem&&setParentSelectItem(val);
     input.current && input.current.focus();
   };
-  const user = useSelector((state) => state.user) || {};
-  const loginModal = useLoginModal();
+  // click item
   const replyItem = (val) => {
     if (!user.token) {
       loginModal(() => {
@@ -135,11 +140,7 @@ const CommentsPop = (
     }
     selectReplyItem(val);
   };
-  const commentContent = useBind("");
-  const input = useRef();
-  const [selectItem, setselectItem] = useState(data);
-  const { avatar = {} } = data.user || {};
-  const history = useHistory()
+  // route to user detail
   const userDetail = (e,{user:item})=>{
     e.stopPropagation();
     const isMe = user.loginForm.uid === item.uid;
@@ -154,7 +155,7 @@ const CommentsPop = (
       }, 10);
     }
   }
-  
+  // render data
   const renderView = (val, index) => {
     const valAvatar = val.user.avatar || {}
     return (
@@ -247,7 +248,7 @@ const CommentsPop = (
       </div>
     );
   };
-  const [setrefreshFlag, setrefresh] = useState(false);
+  // refresh data list
   const refresh = () => {
     if (!setrefreshFlag) {
       fetchData("refresh");
@@ -255,12 +256,14 @@ const CommentsPop = (
       setTimeout(() => setrefresh(false), 2500);
     }
   };
+  // close this pop
   const closePop = () => {
     setvisible(false);
     commentContent.onChange("");
     setselectItem("");
     setisSetTop(false)
   };
+  // click submit button
   const submitItem = (e) => {
     inputContent&&inputContent.onChange(commentContent.value);
     submit&&submit(e);
