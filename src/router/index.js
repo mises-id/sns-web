@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-01-18 17:43:41
+ * @LastEditTime: 2022-02-15 15:04:01
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -43,16 +43,16 @@ const routeConfig = [
 		]
 	},
 	{
+		path: '/post',
+		component: Post,
+	},
+	{
 		path: '/userInfo',
 		component: UserInfo,
 	},
 	{
 		path: '/follow',
 		component: Following,
-	},
-	{
-		path: '/post',
-		component: Post,
 	},
 	{
 		path: '/comment',
@@ -97,3 +97,31 @@ const routeConfig = [
 ]
 
 export default routeConfig
+//  If the user is not logged in
+export const unAuthRoute = [{
+	path: '/home',
+	component: Home,
+	routes: [
+		{
+			path: '/following',
+			component: Follows,
+			exact: true
+		},
+		{
+			path: '/discover',
+			component: Follows
+		},
+		{
+			path: '/me',
+			component: Me
+		}
+	]
+},
+{
+	path: '/post',
+	component: Post,
+},
+{
+	path: '/comment',
+	component: Comment,
+}]

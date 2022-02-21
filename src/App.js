@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-29 17:51:55
+ * @LastEditTime: 2022-02-15 14:56:50
  * @LastEditors: lmk
  * @Description: 
  */
@@ -40,7 +40,7 @@ const App = ()=> {
         <PersistGate persistor={persistor}>
           <Router>
             <CacheSwitch>
-              {routes(routeConfig)}
+              {routes(routeConfig,'',hasToken)}
               <Redirect to={hasToken ? "/home/discover" : "/home/me"} />
             </CacheSwitch>
           </Router>
