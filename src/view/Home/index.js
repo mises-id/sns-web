@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-02-14 10:34:42
+ * @LastEditTime: 2022-03-01 14:36:14
  * @LastEditors: lmk
  * @Description:
  */
@@ -67,6 +67,7 @@ const Home = ({ history, children = [] }) => {
     if (auth && token) {
       getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
+        console.log(res)
       });
     }
   };
