@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-02-10 18:16:51
+ * @LastEditTime: 2022-03-03 14:13:42
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
 import Cell from "@/components/Cell";
 import Image from "@/components/Image";
-import { useBind } from "@/utils";
+import { useBind, useLoginModal } from "@/utils";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,6 +108,26 @@ const UserInfo = (props) => {
     }
     setpickerVisible(false);
   };
+  const loginModal = useLoginModal()
+  const saveMisesInfo = ()=>{
+    const avatarUrl =
+        user.avatar && user.avatar.large ? user.avatar.large : "";
+    window.mises.setUserInfo({
+      name: username.value,
+      gender: user.gender,
+      telephones: [phone.value].filter(val=>val),
+      emails: [mail.value].filter(val=>val),
+      avatarUrl,
+      homePageUrl:'homePageUrl',
+      intro:'intro'
+    }).catch(err=>{
+      if(err==='Wallet not activated'){
+        loginModal(()=>{
+          saveMisesInfo()
+        })
+      }
+    })
+  }
   const saveInfo = (by = "info") => {
     const form = {
       username: {
@@ -138,6 +158,7 @@ const UserInfo = (props) => {
       }
       Promise.all(promise).then(() => {
         Toast.show(t("updataUserInfoSuccess"));
+        saveMisesInfo()
       });
     }
   };
@@ -151,17 +172,6 @@ const UserInfo = (props) => {
     const byForm = { by };
     byForm[by] = form[by];
     try {
-      const avatarUrl =
-        user.avatar && user.avatar.large ? user.avatar.large : "";
-      window.mises.setUserInfo({
-        name: username.value,
-        gender: user.gender,
-        telephones: [phone.value].filter(val=>val),
-        emails: [mail.value].filter(val=>val),
-        avatarUrl,
-        homePageUrl:'homePageUrl',
-        intro:'intro'
-      })
       const res = await updateUser(byForm);
       if (res) {
         dispatch(setLoginForm(res));
