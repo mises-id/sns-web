@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-02-14 10:28:55
+ * @LastEditTime: 2022-03-04 17:26:59
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -42,7 +42,7 @@ const GreatePosts = ({ history = {} }) => {
   }
   //create
   const send = async () => {
-    if (postsContent.value === "" && imageList.length===0) {
+    if (!postsContent.value && imageList.length===0) {
       Toast.show(t("createPostsTips"));
       return false;
     }
