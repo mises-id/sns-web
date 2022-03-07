@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-01 14:36:14
+ * @LastEditTime: 2022-03-07 14:53:31
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,9 +11,9 @@ import { Badge, Tabs } from "zarm";
 import send from "@/images/send.png";
 import "./index.scss";
 import Image from "@/components/Image";
-import { getUserSelfInfo, signin } from "@/api/user";
+import { getUserSelfInfo } from "@/api/user";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginForm, setUserAuth, setUserToken } from "@/actions/user";
+import { setLoginForm, setUserAuth } from "@/actions/user";
 import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 const { Panel } = Tabs;
@@ -49,27 +49,34 @@ const Home = ({ history, children = [] }) => {
     }
   };
   const user = useSelector((state) => state.user) || {};
-  const { auth, token, badge = {} } = user;
+  const { auth, token, badge = {},isFistLogin,loginForm } = user;
+  // useEffect(() => {
+  //   auth &&
+  //     !token &&
+  //     signin({
+  //       provider: "mises",
+  //       user_authz: { auth },
+  //     }).then((data) => {
+  //       data.token && dispatch(setUserToken(data.token));
+  //       // localStorage.setItem('setAccount',true)
+  //     });
+    
+  //   console.log(auth, "--------------------", token);
+  // }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    auth &&
-      !token &&
-      signin({
-        provider: "mises",
-        user_authz: { auth },
-      }).then((data) => {
-        data.token && dispatch(setUserToken(data.token));
-        // localStorage.setItem('setAccount',true)
-      });
-    getUserInfo();
-    console.log(auth, "--------------------", token);
-  }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
+    if(isFistLogin&&!loginForm.is_airdropped){
+      history.push('/airdrop')
+    }
+    // eslint-disable-next-line
+  }, [isFistLogin,loginForm])
+  
   const getUserInfo = () => {
     if (auth && token) {
-      getUserSelfInfo().then((res) => {
+      return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
-        console.log(res)
       });
     }
+    return Promise.resolve()
   };
   useDidRecover(() => {
     window.refreshByCacheKey("/follow");

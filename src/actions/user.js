@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 22:14:52
- * @LastEditTime: 2022-02-08 17:23:57
+ * @LastEditTime: 2022-03-07 14:48:15
  * @LastEditors: lmk
  * @Description: user actions
  */
@@ -58,6 +58,13 @@ export function setWeb3ProviderMaxFlag(data){
 export function setWeb3AccountChanged(data){
   return {
     type: 'SET_WEB3_ACCOUNTCHANGED',
+    data
+  };
+}
+// Set web3 actions
+export function setFirstLogin(data){
+  return {
+    type: 'SET_FIRST_LOGIN',
     data
   };
 }

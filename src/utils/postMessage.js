@@ -8,7 +8,7 @@
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
+import { setFirstLogin, setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -243,6 +243,7 @@ export default class MisesExtensionController{
         "user_authz": {auth:res.auth}
       })
       data.token&&store.dispatch(setUserToken(data.token))
+      store.dispatch(setFirstLogin(data.is_created))
       return Promise.resolve()
     } catch (error) {
       if(error&&error.code===4001){
