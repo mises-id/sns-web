@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-07 14:07:50
+ * @LastEditTime: 2022-03-08 17:28:27
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -14,7 +14,7 @@ import "./index.scss";
 const AirdropSuccess = () => {
   const { t } = useTranslation();
   const viewInWallet = ()=>{
-    window.open('chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html')
+    window.open('mises-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html')
   }
   return (
     <div>
