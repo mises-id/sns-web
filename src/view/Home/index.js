@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-08 09:34:40
+ * @LastEditTime: 2022-03-08 11:13:51
  * @LastEditors: lmk
  * @Description:
  */
@@ -57,10 +57,12 @@ const Home = ({ history, children = [] }) => {
     if (auth && token) {
       return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
-        if(!res.is_logined){
-          history.push('/airdrop')
-          dispatch(setFirstLogin(true))
-        }
+        setTimeout(() => {
+          if(!res.is_logined){
+            history.push('/airdrop')
+            dispatch(setFirstLogin(true))
+          }
+        }, 100);
       });
     }
     return Promise.resolve()
