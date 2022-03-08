@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-07 15:51:13
+ * @LastEditTime: 2022-03-08 11:12:19
  * @LastEditors: lmk
  * @Description:
  */
@@ -80,7 +80,7 @@ const Myself = ({ history }) => {
     window.mises
       .requestAccounts()
       .then((res) => {
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
