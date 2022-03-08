@@ -7,12 +7,19 @@ exports[`Cell should render correctly 1`] = `
   <div
     className="m-flex"
   >
-    <span
-      className="m-colors-333 m-font16 "
-      style={Object {}}
+    <div
+      className=""
     >
-      test
-    </span>
+      <span
+        className="m-colors-333 m-font16"
+        style={Object {}}
+      >
+        test
+      </span>
+      <div
+        className="m-margin-top5"
+      />
+    </div>
   </div>
   <div
     className="m-flex"

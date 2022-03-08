@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-02-11 14:22:54
+ * @LastEditTime: 2022-03-07 15:51:13
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useEffect, useState } from "react";
 import "./index.scss";
-import { UndoOutline } from "antd-mobile-icons";
+import { UndoOutline , RightOutline} from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
 import me_1 from "@/images/me_1.png";
 import me_2 from "@/images/me_2.png";
@@ -80,7 +80,7 @@ const Myself = ({ history }) => {
     window.mises
       .requestAccounts()
       .then((res) => {
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -227,6 +227,10 @@ const Myself = ({ history }) => {
       window.location.reload();
     }
   };
+  const getAirdrop = (e)=>{
+    e.stopPropagation()
+    history.push(loginForm.is_airdropped ? '/airdropSuccess':`/airdrop?isFrom=homePage`)
+  }
   const myselfView = () => {
     return (
       <div className="m-layout">
@@ -237,6 +241,10 @@ const Myself = ({ history }) => {
             label={username(loginForm)}
             labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
             onPress={userInfo}
+            subTitle={loginForm.airdrop_status ? <div onClick={getAirdrop} className="getAirdrop">
+              <span>Get Airdrop</span>
+              <RightOutline fontSize={7}/>
+            </div> : ''}
           />
           {list.map((val, index) => (
             <Cell

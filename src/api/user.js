@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-01-07 10:43:29
+ * @LastEditTime: 2022-03-07 13:55:06
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -75,5 +75,16 @@ export function removeBlackList(uid){
 export function getBlackList(){
   return request({
     url:'/user/blacklist',
+  })
+}
+/**
+ * @description: share to twitter
+ * @param {*} params
+ * @return {*}
+ */
+export function shareTwitter(params){
+  return request({
+    params,
+    url:'/share/twitter'
   })
 }

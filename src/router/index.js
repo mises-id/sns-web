@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-02-15 15:04:01
+ * @LastEditTime: 2022-03-04 09:41:32
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -22,6 +22,8 @@ const GreatePosts = getAsyncComponent(() => import(/* webpackChunkName: 'GreateP
 const Forward = getAsyncComponent(() => import(/* webpackChunkName: 'Forward' */ '@/view/Forward'))
 const Notifications = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Notifications'))
 const ShareWith = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/ShareWith'))
+const Airdrop = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Airdrop'))
+const AirdropSuccess = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/AirdropSuccess'))
 const routeConfig = [
 	{
 		path: '/home',
@@ -93,6 +95,14 @@ const routeConfig = [
 	{
 		path: '/userFollowPage',
 		component: UserFollowPage,
+	},
+	{
+		path: '/airdrop',
+		component: Airdrop,
+	},
+	{
+		path: '/airdropSuccess',
+		component: AirdropSuccess,
 	}
 ]
 

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-01-29 10:53:08
+ * @LastEditTime: 2022-03-07 14:11:32
  * @LastEditors: lmk
  * @Description: 
  */
@@ -68,6 +68,7 @@ const enUS = {
     done:"Done",
     editPhoto:'Edit photo',
     'blackListPageTitle':"Block List",
+    'airdropPageTitle':"Get Your Airdrop",
     "commentPlaceholder":"Write a comment...",
     'succcess':"Succeeded",
     "pictureError":"Picture upload failed, please try again",
@@ -75,7 +76,16 @@ const enUS = {
     "notificationPostDelete":"This content has been delete",
     "postBlock":"This user has been blocked by you",
     "postPrivate":"This is a private post",
-    "usernameError":'The user name is illegal. Only letters, numbers, underscores and no more than 25 characters can be used'
+    "usernameError":'The user name is illegal. Only letters, numbers, underscores and no more than 25 characters can be used',
+    'sendTweet':'Send Tweet',
+    "viewInWallet":"View in Wallet",
+    "airdropContentTitle":'MIS airdrop for the first',
+    "airdropContentTitle2":'100,000 users',
+    'toClaim':"To Claim",
+    "airdropContentdesc":'Tap”send tweet”,and send a tweet including your Mises ID and tag #Mises.',
+    "airdropContentdesc1":'Make sure your account was created before Jan.1,2022.',
+    "airdropContentdesc2":'Receive your airdrop within 48 hours if your account is eligible.',
+    "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!"
   }
 }
 export default enUS

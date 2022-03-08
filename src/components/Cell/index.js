@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2022-01-06 14:01:42
+ * @LastEditTime: 2022-03-03 15:55:48
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -32,6 +32,7 @@ const Cell = ({
   showLine = true,
   labelStyle = {},
   shape = "circle",
+  subTitle
 }) => {
   return (
     <div
@@ -44,14 +45,12 @@ const Cell = ({
         {showIcon && (
           <Image size={iconSize} shape={shape} source={icon}></Image>
         )}
-        <span
-          className={`m-colors-333 m-font16 ${
-            showIcon ? "m-margin-left13" : ""
-          }`}
-          style={labelStyle}
-        >
-          {label}
-        </span>
+        <div className={`${showIcon ? "m-margin-left13" : ""}`}>
+          <span className={`m-colors-333 m-font16`} style={labelStyle}>
+            {label}
+          </span>
+          <div className="m-margin-top5">{subTitle}</div>
+        </div>
       </div>
       <div className="m-flex">
         {rightChild && (

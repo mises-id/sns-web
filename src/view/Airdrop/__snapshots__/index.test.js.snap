@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GreatePosts should render correctly 1`] = `
+<div>
+  <Navbar
+    rightChild=""
+    title="airdropPageTitle"
+  />
+  <div
+    className="m-layout m-bg-fff m-padding15 m-font18"
+  >
+    <p
+      className="airdrop-title"
+    >
+      airdropContentTitle
+    </p>
+    <p
+      className="airdrop-title"
+    >
+      airdropContentTitle2
+    </p>
+    <p
+      className="toClaim"
+    >
+      toClaim
+      :
+    </p>
+    <p
+      className="desc-item"
+    >
+      airdropContentdesc
+    </p>
+    <p
+      className="desc-item"
+    >
+      airdropContentdesc1
+    </p>
+    <p
+      className="desc-item"
+    >
+      airdropContentdesc2
+    </p>
+    <div
+      className="sendTweet"
+    >
+      <Button
+        block={true}
+        disabled={false}
+        ghost={false}
+        htmlType="button"
+        loading={false}
+        onClick={[Function]}
+        prefixCls="za-button"
+        shadow={false}
+        shape="round"
+        size="md"
+        theme="primary"
+      >
+        <span
+          className="btn-txt"
+        >
+          sendTweet
+        </span>
+      </Button>
+    </div>
+  </div>
+</div>
+`;

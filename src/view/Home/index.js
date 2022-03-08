@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-01 14:36:14
+ * @LastEditTime: 2022-03-08 09:34:40
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,9 +11,9 @@ import { Badge, Tabs } from "zarm";
 import send from "@/images/send.png";
 import "./index.scss";
 import Image from "@/components/Image";
-import { getUserSelfInfo, signin } from "@/api/user";
+import { getUserSelfInfo } from "@/api/user";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginForm, setUserAuth, setUserToken } from "@/actions/user";
+import { setFirstLogin, setLoginForm, setUserAuth } from "@/actions/user";
 import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 const { Panel } = Tabs;
@@ -51,25 +51,19 @@ const Home = ({ history, children = [] }) => {
   const user = useSelector((state) => state.user) || {};
   const { auth, token, badge = {} } = user;
   useEffect(() => {
-    auth &&
-      !token &&
-      signin({
-        provider: "mises",
-        user_authz: { auth },
-      }).then((data) => {
-        data.token && dispatch(setUserToken(data.token));
-        // localStorage.setItem('setAccount',true)
-      });
-    getUserInfo();
-    console.log(auth, "--------------------", token);
+    getUserInfo()
   }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = () => {
     if (auth && token) {
-      getUserSelfInfo().then((res) => {
+      return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
-        console.log(res)
+        if(!res.is_logined){
+          history.push('/airdrop')
+          dispatch(setFirstLogin(true))
+        }
       });
     }
+    return Promise.resolve()
   };
   useDidRecover(() => {
     window.refreshByCacheKey("/follow");

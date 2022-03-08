@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-02-08 09:41:53
+ * @LastEditTime: 2022-03-03 15:52:00
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -108,6 +108,9 @@ $positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555 111;
 .m-flex{
   display: flex;
   align-items: center;
+  &.m-col{
+    flex-direction: column;
+  }
   &.m-row{
     &-between{
       justify-content: space-between;
