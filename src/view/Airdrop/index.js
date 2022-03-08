@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-07 15:17:12
+ * @LastEditTime: 2022-03-08 09:31:15
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -30,14 +30,17 @@ const Airdrop = () => {
         width: "83%",
         onCancel: () => {},
         onOk: () => {
-          window.history.back();
+          skip()
         },
       });
     })
   };
+  const skip = ()=>{
+    window.history.back();
+  }
   return (
     <div>
-      <Navbar title={t("airdropPageTitle")} rightChild={showSkip ? <div className="skip">Skip</div> : ''} />
+      <Navbar title={t("airdropPageTitle")} rightChild={showSkip ? <div className="skip" onClick={skip}>Skip</div> : ''} />
       <div className="m-layout m-bg-fff m-padding15 m-font18">
         <p className="airdrop-title">{t("airdropContentTitle")}</p>
         <p className="airdrop-title">{t("airdropContentTitle2")}</p>

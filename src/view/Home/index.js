@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-07 14:53:31
+ * @LastEditTime: 2022-03-08 09:32:59
  * @LastEditors: lmk
  * @Description:
  */
@@ -13,7 +13,7 @@ import "./index.scss";
 import Image from "@/components/Image";
 import { getUserSelfInfo } from "@/api/user";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginForm, setUserAuth } from "@/actions/user";
+import { setFirstLogin, setLoginForm, setUserAuth } from "@/actions/user";
 import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 const { Panel } = Tabs;
@@ -50,30 +50,17 @@ const Home = ({ history, children = [] }) => {
   };
   const user = useSelector((state) => state.user) || {};
   const { auth, token, badge = {},isFistLogin,loginForm } = user;
-  // useEffect(() => {
-  //   auth &&
-  //     !token &&
-  //     signin({
-  //       provider: "mises",
-  //       user_authz: { auth },
-  //     }).then((data) => {
-  //       data.token && dispatch(setUserToken(data.token));
-  //       // localStorage.setItem('setAccount',true)
-  //     });
-    
-  //   console.log(auth, "--------------------", token);
-  // }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if(isFistLogin&&!loginForm.is_airdropped){
-      history.push('/airdrop')
-    }
-    // eslint-disable-next-line
-  }, [isFistLogin,loginForm])
-  
+    getUserInfo()
+  }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = () => {
     if (auth && token) {
       return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
+        if(!res.is_logined){
+          history.push('/airdrop')
+          dispatch(setFirstLogin(true))
+        }
       });
     }
     return Promise.resolve()
