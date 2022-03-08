@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-08 09:32:59
+ * @LastEditTime: 2022-03-08 09:34:40
  * @LastEditors: lmk
  * @Description:
  */
@@ -49,7 +49,7 @@ const Home = ({ history, children = [] }) => {
     }
   };
   const user = useSelector((state) => state.user) || {};
-  const { auth, token, badge = {},isFistLogin,loginForm } = user;
+  const { auth, token, badge = {} } = user;
   useEffect(() => {
     getUserInfo()
   }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
