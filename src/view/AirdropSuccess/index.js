@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-08 17:28:27
+ * @LastEditTime: 2022-03-09 17:01:13
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -14,7 +14,8 @@ import "./index.scss";
 const AirdropSuccess = () => {
   const { t } = useTranslation();
   const viewInWallet = ()=>{
-    window.open('mises-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html')
+    // window.open('mises-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html')
+    window.mises.openRestore()
   }
   return (
     <div>
