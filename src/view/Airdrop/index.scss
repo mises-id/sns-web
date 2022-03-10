@@ -7,6 +7,8 @@
   width: 70px;
   display: block;
   margin: 0 auto;
+  position: relative;
+  z-index: 3;
 }
 .toClaim-content{
   border: 3px solid #BAEBFC;
@@ -15,6 +17,7 @@
   margin: -40px 15px 0;
   padding: 29px 24px;
   position:relative;
+  z-index: 2;
   .ribbon{
     position: absolute;
     width: 34px;
