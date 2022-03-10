@@ -7,61 +7,93 @@ exports[`GreatePosts should render correctly 1`] = `
     title="airdropPageTitle"
   />
   <div
-    className="m-layout m-bg-fff m-padding15 m-font18"
+    className="airdrop-bg m-font18"
   >
-    <p
-      className="airdrop-title"
-    >
-      airdropContentTitle
-    </p>
-    <p
-      className="airdrop-title"
-    >
-      airdropContentTitle2
-    </p>
-    <p
-      className="toClaim"
-    >
-      toClaim
-      :
-    </p>
-    <p
-      className="desc-item"
-    >
-      airdropContentdesc
-    </p>
-    <p
-      className="desc-item"
-    >
-      airdropContentdesc1
-    </p>
-    <p
-      className="desc-item"
-    >
-      airdropContentdesc2
-    </p>
     <div
-      className="sendTweet"
+      className="layout-box"
     >
-      <Button
-        block={true}
-        disabled={false}
-        ghost={false}
-        htmlType="button"
-        loading={false}
-        onClick={[Function]}
-        prefixCls="za-button"
-        shadow={false}
-        shape="round"
-        size="md"
-        theme="primary"
+      <img
+        alt=""
+        className="background"
+        src="/static/images/background.png"
+      />
+      <div
+        className="layout-content"
       >
-        <span
-          className="btn-txt"
+        <img
+          alt=""
+          className="airdrop-title"
+          src="/static/images/title.png"
+        />
+        <div
+          className="toClaim-box"
         >
-          sendTweet
-        </span>
-      </Button>
+          <img
+            alt=""
+            className="airdrop-parachute"
+            src="/static/images/parachute.png"
+          />
+          <div
+            className="toClaim-content"
+          >
+            <p
+              className="toClaim"
+            >
+              toClaim
+              :
+            </p>
+            <p
+              className="desc-item"
+            >
+              airdropContentdesc
+              <img
+                alt=""
+                className="circle"
+                src="/static/images/circle.png"
+              />
+            </p>
+            <p
+              className="desc-item"
+            >
+              airdropContentdesc1
+              <img
+                alt=""
+                className="circle"
+                src="/static/images/circle.png"
+              />
+            </p>
+            <p
+              className="desc-item"
+            >
+              airdropContentdesc2
+              <img
+                alt=""
+                className="circle"
+                src="/static/images/circle.png"
+              />
+            </p>
+            <div
+              className="sendTweet"
+            >
+              <div
+                className="airdrop-btn"
+                onClick={[Function]}
+              >
+                <span
+                  className="airdrop-btn-txt"
+                >
+                  sendTweet
+                </span>
+              </div>
+            </div>
+            <img
+              alt=""
+              className="ribbon"
+              src="/static/images/ribbon.png"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

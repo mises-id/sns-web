@@ -1,33 +1,92 @@
 .airdrop-title{
-  font-size: 25px;
-  color: #333333;
-  font-weight: bold;
-  margin-top: 10px;
+  width: 86%;
+  display: block;
+  margin:82px auto 0;
+}
+.airdrop-parachute{
+  width: 70px;
+  display: block;
+  margin: 0 auto;
+}
+.toClaim-content{
+  border: 3px solid #BAEBFC;
+  border-radius: 15px;
+  background: white;
+  margin: -40px 15px 0;
+  padding: 29px 24px;
+  position:relative;
+  .ribbon{
+    position: absolute;
+    width: 34px;
+    bottom: 36px;
+    left: -15px;
+  }
 }
 .toClaim{
-  font-size: 20px;
+  font-size: 22px;
   color: #333333;
   font-weight: bold;
-  margin: 30px 0 20px;
+  margin-bottom: 25px;
 }
 .desc-item{
   font-size: 16px;
   color: #333333;
   line-height: 21px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  position: relative;
+  .circle{
+    position: absolute;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    top: -2px;
+    left: -7px;
+  }
 }
 .sendTweet{
-  width: 180px;
-  margin: 50px auto;
+  margin: 0 auto 10px;
+  padding-top: 10px;
+}
+.airdrop-btn-txt{
+  color: #000000;
+  font-size: 17px;
+  font-weight: 600;
 }
 .skip{
   font-size: 12px;
-  color: #5D61FF;
-  border: 1px solid #5D61FF;
+  color: #666666;
+  border: 1px solid #DDDDDD;
   border-radius: 50px;
   width: 50px;
   height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.airdrop-bg{
+  background-color: #daf6fa;
+}
+.background{
+  display: block;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.layout-box{
+  position: relative
+}
+.layout-content{
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+.airdrop-btn{
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50px;
+  background-color: #FFD72F;
+  box-shadow: 0px 8px 15px 0px rgba(255, 215, 47, 0.3);
 }
