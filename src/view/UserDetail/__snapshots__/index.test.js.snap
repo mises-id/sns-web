@@ -9,7 +9,7 @@ exports[`UserDetail should render correctly 1`] = `
       <img
         alt="userbg"
         className="user-bg"
-        src="user_bg.png"
+        src="/static/images/user_bg.jpg"
       />
       <div
         className="m-flex nav-box m-row-between"
