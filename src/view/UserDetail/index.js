@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import userBg from "@/images/user_bg.png";
 import userBack from "@/images/user_back.png";
 // import userMore from "@/images/user_more.png";
 import "./index.scss";
@@ -106,7 +105,7 @@ const UserDetail = (props) => {
       <div className="app-container user-detail">
         <div>
           {/* header */}
-          <img src={userBg} className="user-bg" alt="userbg"></img>
+          <img src="/static/images/user_bg.jpg" className="user-bg" alt="userbg"></img>
           <div className="m-flex nav-box m-row-between">
             <img
               src={userBack}

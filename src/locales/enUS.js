@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-07 14:11:32
+ * @LastEditTime: 2022-03-15 10:53:25
  * @LastEditors: lmk
  * @Description: 
  */
@@ -47,7 +47,7 @@ const enUS = {
     notLogin:'Your Mises ID is not connected. Please connect your account.',
     notRegister:'Go to create your Mises ID',
     createMisesIdTips:"If you don't have a Metamask account, please click \"create misses ID\", We will guide you to create a Metamask account and obtain your Mises ID ",
-    connectMisesIdTips:'Mises is a blockchain which aims to support decentralized Id, strorage & social media.  Mises embeds an enhanced metamask plugin for users to access Mises Chain.',
+    connectMisesIdTips:'Mises is a blockchain network which supports decentralized ID, storage and social media features. Mises embeds an enhanced Metamask plugin for users to access Mises Chain.',
     resoreMisesIdTips:"Mises ID is a decentralized personal account. You can get your Mises ID via a Metamask account.",
     createPostsPlaceholder:'Please enter the contents',
     createPostsTips:"Please enter contents or upload pictures",
