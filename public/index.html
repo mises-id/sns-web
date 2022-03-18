@@ -1,7 +1,7 @@
 <!--
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-17 13:39:30
+ * @LastEditTime: 2022-03-17 15:34:26
  * @LastEditors: lmk
  * @Description: 
 -->
@@ -23,7 +23,6 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://home.mises.site/misesTwitter.jpg">
     <meta name="twitter:title" content="Welcome to Mises">
     <meta property="og:title" content="Welcome to Mises">
     <!--
@@ -36,6 +35,9 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>SNS-WEB</title>
+    <script>
+      document.write(`<meta name="twitter:image" content="https://home.mises.site/misesTwitter.jpg?t=${new Date().getTime()}">`)
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
