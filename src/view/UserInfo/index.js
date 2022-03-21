@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-03-03 14:13:42
+ * @LastEditTime: 2022-03-21 16:22:54
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -112,7 +112,7 @@ const UserInfo = (props) => {
   const saveMisesInfo = ()=>{
     const avatarUrl =
         user.avatar && user.avatar.large ? user.avatar.large : "";
-    window.mises.setUserInfo({
+    const userInfo = {
       name: username.value,
       gender: user.gender,
       telephones: [phone.value].filter(val=>val),
@@ -120,7 +120,9 @@ const UserInfo = (props) => {
       avatarUrl,
       homePageUrl:'homePageUrl',
       intro:'intro'
-    }).catch(err=>{
+    }
+    console.log('update mises network',userInfo)
+    window.mises.setUserInfo(userInfo).catch(err=>{
       if(err==='Wallet not activated'){
         loginModal(()=>{
           saveMisesInfo()
@@ -165,6 +167,7 @@ const UserInfo = (props) => {
   const setAvatarInfo = (res) => {
     submit({ avatar: res }, "avatar").then(() => {
       Toast.show(t("updataUserInfoSuccess"));
+      saveMisesInfo()
     });
   };
   // const loginModal = useLoginModal()
