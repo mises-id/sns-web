@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-02-14 10:22:45
+ * @LastEditTime: 2022-03-22 11:19:36
  * @LastEditors: lmk
  * @Description:
  */
@@ -66,7 +66,6 @@ const Follow = ({ history = {} }) => {
   const { t } = useTranslation();
   const { setLike, followPress } = useChangePosts(setdataSource, dataSource);
   // get dataList
-
   useEffect(() => {
     let cache = localStorage.getItem("discoverPageCache");
     if (isDiscoverPage.indexOf("discover") > -1 && cache) {
@@ -74,12 +73,23 @@ const Follow = ({ history = {} }) => {
       // if(dataSource.length>0){
       //   setIsAuto(false)
       // }
-      setdataSource(dataSource);
+      setdataSource(unique(dataSource));
       setdownRefreshLastId(downRefreshLastId);
       setlast_id(last_id);
     }
     // eslint-disable-next-line
   }, []);
+  // unique
+  const unique = arr =>{
+    const uniqueArr = []
+    if(Array.isArray(arr)){
+      arr.forEach(val=>{
+        const flag = uniqueArr.some(item=>item.id===val.id);
+        if(!flag) uniqueArr.push(val)
+      })
+    }
+    return uniqueArr
+  }
   useEffect(() => {
     if (isDiscover) {
       let start = 0;
