@@ -1,17 +1,33 @@
-```bash
+## Building locally
+
+- Install [Node.js](https://nodejs.org) version 14
+    - If you are using [nvm](https://github.com/creationix/nvm#installation) (recommended) running `nvm use` will automatically choose the right node version for you.
+- Install [Yarn](https://yarnpkg.com/en/docs/install)
+- Install dependencies: `yarn` (not the usual install command)
+- Build the project to the `./build/` folder with `yarn build`.
+
+### Running Unit Tests
+
+Run unit tests  with  `yarn test  -u`.
+
+# Setting server URL
+
+file `src/utils/request.js` setting value `baseURL`.
+
+# Project Structure
+
+```
 ├── README.md
 ├── appspec.yml
 ├── babel.config.js
-├── config-overrides.js
-├── jsconfig.json
-├── package.json
 ├── public
 │   ├── favicon.ico
 │   ├── index.html
 │   ├── logo192.png
-│   ├── logo512.png
 │   ├── manifest.json
-│   └── robots.txt
+│   ├── misesTwitter.jpg
+│   ├── robots.txt
+│   └── static
 ├── scripts
 │   ├── check.sh
 │   ├── start_running.sh
@@ -24,6 +40,7 @@
     ├── api
     │   ├── comment.js
     │   ├── fans.js
+    │   ├── notifications.js
     │   ├── status.js
     │   ├── updata.js
     │   └── user.js
@@ -32,6 +49,10 @@
     │   │   ├── index.js
     │   │   ├── index.scss
     │   │   └── index.test.js
+    │   ├── EditImage
+    │   │   ├── index.js
+    │   │   ├── index.test.js
+    │   │   └── styles.scss
     │   ├── Empty
     │   │   ├── index.js
     │   │   ├── index.scss
@@ -39,7 +60,17 @@
     │   ├── Image
     │   │   ├── index.js
     │   │   └── index.test.js
+    │   ├── ImageList
+    │   │   ├── index.js
+    │   │   ├── index.test.js
+    │   │   └── style.scss
+    │   ├── MButton
+    │   │   ├── index.js
+    │   │   └── index.scss
     │   ├── NavBar
+    │   │   ├── index.js
+    │   │   └── index.test.js
+    │   ├── NavbarRightButton
     │   │   ├── index.js
     │   │   └── index.test.js
     │   ├── PostItem
@@ -50,9 +81,21 @@
     │   │   ├── index.js
     │   │   ├── index.scss
     │   │   └── index.test.js
-    │   └── PullList
+    │   ├── PullList
+    │   │   ├── index.js
+    │   │   └── index.test.js
+    │   ├── ReplyInput
+    │   │   ├── index.js
+    │   │   ├── index.test.js
+    │   │   └── style.scss
+    │   ├── TouchImage
+    │   │   ├── index.js
+    │   │   ├── index.test.js
+    │   │   └── style.scss
+    │   └── UpLoad
     │       ├── index.js
-    │       └── index.test.js
+    │       ├── index.test.js
+    │       └── style.scss
     ├── index.js
     ├── locales
     │   ├── enUS.js
@@ -72,7 +115,8 @@
     │   ├── App.css
     │   ├── common.scss
     │   ├── followPage.scss
-    │   └── index.css
+    │   ├── index.css
+    │   └── setZarmTheme.js
     ├── test
     │   └── testSetup.js
     ├── utils
@@ -82,19 +126,23 @@
     │   ├── reactUtil.js
     │   └── request.js
     └── view
+        ├── Airdrop
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── AirdropSuccess
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── BlackList
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
         ├── Comment
+        │   ├── commentPop.js
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
-        ├── CreateMisesId
-        │   ├── index.js
-        │   ├── index.scss
-        │   └── index.test.js
-        ├── Discover
-        │   ├── index.js
-        │   └── index.test.js
-        ├── Empty
-        │   └── index.js
         ├── Following
         │   ├── index.js
         │   ├── index.scss
@@ -125,7 +173,15 @@
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
+        ├── MyLikes
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
         ├── MyPosts
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── Notifications
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
@@ -133,35 +189,19 @@
         │   ├── index.js
         │   ├── index.scss
         │   └── index.test.js
+        ├── ShareWith
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
+        ├── UserDetail
+        │   ├── UserFollowPage.js
+        │   ├── UserLike.js
+        │   ├── UserPost.js
+        │   ├── index.js
+        │   ├── index.scss
+        │   └── index.test.js
         └── UserInfo
             ├── index.js
             ├── index.scss
             └── index.test.js
-
-36 directories, 102 files
 ```
-### Mises Discover
-
-- [x] `发布动态`：已实现发布纯文字效果
-  - [x] 上传图片
-  - [x] 裁剪图片
-  - [x] 图片添加文字
-  - [x] 选择是否私密、过期时间(后台问题)
-- [x] `首页`：已实现三个tab的数据展示 点赞 评论 详情页等功能
-  - [x] 点击用户头像进入用户主页
-  - [x] 可查看Ta的粉丝列表
-  - [x] Ta已关注列表
-  - [x] 点赞记录列表
-  - [x] 图片预览
-  - [x] following增加关注用户更新提醒，点击头像进入用户主页
-  - [x] following增加动态提醒Notification 点击可查看互动记录
-  - [x] 动态详情展示的评论数据 最多展示三条二级评论 其余的点击按钮进入三级页面展示更多数据
-  - [ ] Discover顶部增加用户推荐功能
-  - [x] 图片展示根据图片数量展示不同规格尺寸   **图片数量为1时，宽高比例为图片原始比例，图片数量>1 且图片数量<5 图片排版为2\*2 ，图片数量>5 图片排版为3*3**
-- [x] `个人中心`：已完成我关注的、关注我的、已发布的动态列表、个人信息修改、未登录状态
-  - [x] 我的点赞记录列表
-  - [x] 我的通知提醒
-- [x] `其他功能待实现`：
-  - [x] 1.和浏览器端通过jsbirage调用sdk或函数等操作
-  - [x] 2.通过浏览器拿到misesid后与后台的操作
-
