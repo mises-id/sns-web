@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-10 12:00:41
+ * @LastEditTime: 2022-03-23 17:03:39
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -17,7 +17,9 @@ const Airdrop = () => {
   const [showSkip, setShowSkip] = useState(false)
   const historyState = useRouteState();
   useEffect(() => {
-    setShowSkip(historyState.isFrom!=='homePage')
+    const flag = historyState.isFrom!=='homePage'
+    setShowSkip(flag)
+    if(flag) window.location.reload()
     // eslint-disable-next-line
   }, [])
   
