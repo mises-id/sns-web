@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-15 10:53:25
+ * @LastEditTime: 2022-03-23 16:54:03
  * @LastEditors: lmk
  * @Description: 
  */
@@ -84,7 +84,7 @@ const enUS = {
     'toClaim':"To Claim",
     "airdropContentdesc":'Tap”send tweet”,and send a tweet including your Mises ID and tag #Mises.',
     "airdropContentdesc1":'Make sure your account was created before Jan.1,2022.',
-    "airdropContentdesc2":'Receive your airdrop within 48 hours if your account is eligible.',
+    "airdropContentdesc2":'Receive your airdrop within 48 hours if your Twitter account is eligible.',
     "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!"
   }
 }
