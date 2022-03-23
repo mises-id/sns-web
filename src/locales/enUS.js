@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-23 16:54:03
+ * @LastEditTime: 2022-03-23 17:12:09
  * @LastEditors: lmk
  * @Description: 
  */
@@ -82,9 +82,9 @@ const enUS = {
     "airdropContentTitle":'MIS airdrop for the first',
     "airdropContentTitle2":'100,000 users',
     'toClaim':"To Claim",
-    "airdropContentdesc":'Tap”send tweet”,and send a tweet including your Mises ID and tag #Mises.',
-    "airdropContentdesc1":'Make sure your account was created before Jan.1,2022.',
-    "airdropContentdesc2":'Receive your airdrop within 48 hours if your Twitter account is eligible.',
+    "airdropContentdesc":'Tap "send tweet", and send a tweet including your Mises ID and tag #Mises',
+    "airdropContentdesc1":'Make sure your Twitter account was created before January 1, 2022',
+    "airdropContentdesc2":'Receive your airdrop within 48 hours if your account is eligible',
     "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!"
   }
 }
