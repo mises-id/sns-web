@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: build/
-    destination: /var/www/mises/
+    destination: /var/www/sns-web/
 hooks:
   BeforeInstall:
     - location: scripts/stop_running.sh
