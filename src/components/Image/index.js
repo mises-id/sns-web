@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-24 18:18:24
+ * @LastEditTime: 2022-03-24 14:40:01
  * @LastEditors: lmk
  * @Description:
  */
@@ -62,7 +62,6 @@ const Image = ({
       />
     },
     error:()=>{
-      console.log('error image');
       return <img
         src={normal}
         style={{

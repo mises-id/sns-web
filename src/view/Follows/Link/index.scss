@@ -14,12 +14,14 @@
   margin-top: 4px;
 }
 .title{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 60vw;
-  display: block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  width: 70vw;
   margin-top: 3px;
   line-height: 1;
+  line-height: 14px;
   color: #222;
 }

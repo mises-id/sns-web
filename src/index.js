@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-24 13:10:07
+ * @LastEditTime: 2022-03-24 17:08:25
  * @LastEditors: lmk
  * @Description: 
  */
@@ -25,7 +25,6 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
-
 
 render(
   <React.StrictMode>
