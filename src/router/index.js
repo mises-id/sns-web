@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-03-04 09:41:32
+ * @LastEditTime: 2022-03-24 17:53:41
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -24,6 +24,7 @@ const Notifications = getAsyncComponent(() => import(/* webpackChunkName: 'Empty
 const ShareWith = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/ShareWith'))
 const Airdrop = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Airdrop'))
 const AirdropSuccess = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/AirdropSuccess'))
+const Error = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Error'))
 const routeConfig = [
 	{
 		path: '/home',
@@ -103,6 +104,10 @@ const routeConfig = [
 	{
 		path: '/airdropSuccess',
 		component: AirdropSuccess,
+	},
+	{
+		path: '/error',
+		component: Error,
 	}
 ]
 
@@ -134,4 +139,8 @@ export const unAuthRoute = [{
 {
 	path: '/comment',
 	component: Comment,
+},
+{
+	path: '/error',
+	component: Error,
 }]

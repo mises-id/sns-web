@@ -1,0 +1,26 @@
+.fullpage{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error-tips{
+  font-size: 16px;
+}
+.refresh-btn{
+  width: 145px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background: #5D61FF;
+  color: white;
+  margin: 40px auto;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  span{
+    display: inline-block;
+    margin-left: 5px;
+  }
+}

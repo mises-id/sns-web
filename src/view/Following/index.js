@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-02-14 10:04:54
+ * @LastEditTime: 2022-03-24 13:55:27
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -17,7 +17,7 @@ import { friendShip } from "@/api/fans";
 import { useSelector } from "react-redux";
 import PullList from "@/components/PullList";
 import Navbar from "@/components/NavBar";
-import { objToUrl, useList, username, useRouteState } from "@/utils";
+import { objToUrl, useList, useLoginModal, username, useRouteState } from "@/utils";
 import { followed } from "@/components/PostsIcons/common";
 import { refreshByCacheKey } from "react-router-cache-route";
 const Following = ({ pageType,uid }) => {
@@ -38,6 +38,7 @@ const Following = ({ pageType,uid }) => {
     limit: 20,
     last_id: lastId,
   });
+  const loginModal = useLoginModal()
   const renderView = (val = {}, index) => {
     const user = val.user;
     const icon = {
@@ -48,15 +49,15 @@ const Following = ({ pageType,uid }) => {
     const setFollow = async e => {
       e.stopPropagation()
       const followFlag = val.relation_type === "fan"; // 为粉丝则没有互相关注
+      const followObj = {
+        user: {
+          uid: val.user.uid,
+          is_followed: !followFlag,
+          misesid: val.user.misesid,
+        },
+      };
       try {
         if (followLoading) return false;
-        const followObj = {
-          user: {
-            uid: val.user.uid,
-            is_followed: !followFlag,
-            misesid: val.user.misesid,
-          },
-        };
         setfollowLoading(true);
         await followed(followObj);
         setfollowLoading(false);
@@ -71,6 +72,18 @@ const Following = ({ pageType,uid }) => {
         setData("fan");
       } catch (error) {
         console.log(error);
+        error==='Wallet not activated'&&loginModal(()=>{
+          followed(followObj);
+          if (val.relation_type === "fan") {
+            const followType =
+              type === "following" && val.old_relation_type !== "friend"
+                ? "following"
+                : "friend";
+            setData(followType);
+            return false;
+          }
+          setData("fan");
+        })
         setfollowLoading(false);
       }
     };
