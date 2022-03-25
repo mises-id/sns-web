@@ -44,6 +44,7 @@ const App = ()=> {
       window.removeEventListener('error',error)
       window.removeEventListener('unhandledrejection',error)
     }
+    // eslint-disable-next-line
   }, [])
   return (
     <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
