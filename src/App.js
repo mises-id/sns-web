@@ -13,20 +13,21 @@ import { hot } from 'react-hot-loader/root'
 import {setTheme} from '@/styles/setZarmTheme'
 import { CacheSwitch } from 'react-router-cache-route'
 import { useState } from 'react';
+import { useLogin } from './components/PostsIcons/common';
+const SetRoute = ()=>{
+  const {isLogin} = useLogin()
+  return <Router>
+  <CacheSwitch>
+    {routes(routeConfig,'',isLogin)}
+    <Redirect to={isLogin ? "/home/discover" : "/home/me"} />
+  </CacheSwitch>
+</Router>
+}
 const App = ()=> {
-  const [hasToken, sethasToken] = useState('');
   const [isHref, setisHref] = useState(false)
-  // const history = useHistory()
+ 
   useEffect(() => {
     setTheme()
-    const token = store.getState().user.token
-    sethasToken(token)
-    // const whiteList = ['/','/home/following','/home/discover','/home/me']
-    // const pathname = window.location.pathname
-    // if(!token&&!whiteList.includes(pathname)){
-    //   console.log(pathname);
-    //   window.location.replace('/')
-    // }
     const error = e=>{
       console.log(e)
       if(e.message==="Uncaught SyntaxError: Unexpected token '<'" 
@@ -46,20 +47,13 @@ const App = ()=> {
     }
     // eslint-disable-next-line
   }, [])
-  return (
-    <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <Router>
-            <CacheSwitch>
-              {routes(routeConfig,'',hasToken)}
-              <Redirect to={hasToken ? "/home/discover" : "/home/me"} />
-            </CacheSwitch>
-          </Router>
-        </PersistGate>
-      </Provider>
-    </ConfigProvider>
-  );
+  return <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+       <SetRoute></SetRoute>
+      </PersistGate>
+    </Provider>
+  </ConfigProvider>;
 }
 
 export default process.env.NODE_ENV === "development" ? hot(App) : App;

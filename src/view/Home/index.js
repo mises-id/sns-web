@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-08 11:13:51
+ * @LastEditTime: 2022-03-25 17:47:31
  * @LastEditors: lmk
  * @Description:
  */
@@ -58,7 +58,7 @@ const Home = ({ history, children = [] }) => {
       return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
         setTimeout(() => {
-          if(!res.is_logined){
+          if(!res.is_logined&&history.location.pathname!=='airdrop'){
             history.push('/airdrop')
             dispatch(setFirstLogin(true))
           }

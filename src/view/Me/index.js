@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-23 17:00:07
+ * @LastEditTime: 2022-03-25 14:25:27
  * @LastEditors: lmk
  * @Description:
  */
@@ -50,6 +50,8 @@ const Myself = ({ history }) => {
           setloadingMisesTxt("Loading Mises")
           clearTimeout(timer);
           timer = null;
+        }).catch(err=>{
+          console.log(err)
         });
     } else {
       // setflag(false)
