@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-03-25 09:38:56
+ * @LastEditTime: 2022-03-25 16:58:20
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -150,6 +150,14 @@ export const unAuthRoute = [{
 			component: Me
 		}
 	]
+},
+{
+	path: '/userDetail',
+	component: UserDetail,
+},
+{
+	path: '/userFollowPage',
+	component: UserFollowPage,
 },
 {
 	path: '/post',

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-23 17:03:39
+ * @LastEditTime: 2022-03-25 17:43:17
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -19,7 +19,14 @@ const Airdrop = () => {
   useEffect(() => {
     const flag = historyState.isFrom!=='homePage'
     setShowSkip(flag)
-    if(flag) window.location.reload()
+    const isRefresh =  sessionStorage.getItem('isRefresh')
+    if(flag&&!isRefresh) {
+      sessionStorage.setItem('isRefresh',true)
+      window.location.reload()
+    }
+    return ()=>{
+      console.log(1)
+    }
     // eslint-disable-next-line
   }, [])
   
