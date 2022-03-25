@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-01-27 14:10:43
+ * @LastEditTime: 2022-03-25 11:32:04
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -78,12 +78,12 @@ const reject = ({code,message})=>{
 const invalidToken = ()=>{
   window.mises.resetUser()
   store.dispatch(setUserToken(''))
-  window.onload();
+  window.location.reload()
   // getAuth().then((res={})=>{
   //   const auth = store.getState().user.auth;
   //   console.log(res.data,auth)
   //   if(res.data===auth){
-  //     window.onload();
+  //     window.location.reload()
   //   }else{
   //     openLoginPage()
   //   }

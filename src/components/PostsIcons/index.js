@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2022-01-13 15:05:07
+ * @LastEditTime: 2022-03-25 13:48:06
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -46,6 +46,8 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
     navigator.share&&navigator.share({
       text: 'share post',
       url: `${window.location.origin}/post?id=${item.id}`
+    }).catch(err=>{
+      console.log(err)
     })
   }
   const typeClassName = !type ? {fontClass:'m-font12',iconClass:'iconStyle'} : {fontClass:'m-font14',iconClass:'iconStyle1'}
