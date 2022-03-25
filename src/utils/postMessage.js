@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-03-08 09:07:47
+ * @LastEditTime: 2022-03-25 11:27:53
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -150,6 +150,8 @@ export default class MisesExtensionController{
       res.length===0&&this.isActive().then(res=>{
         console.log('not find selectedAddress');
         this.resetApp()
+      }).catch(err=>{
+        console.log(err)
       })
     })
     window.ethereum.on('chainChanged',res=>{
