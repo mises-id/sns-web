@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-29 14:31:10
+ * @LastEditTime: 2022-03-29 15:31:00
  * @LastEditors: lmk
  * @Description:
  */
@@ -229,10 +229,10 @@ const Myself = ({ history }) => {
       window.location.reload();
     }
   };
-  const getAirdrop = (e)=>{
-    e.stopPropagation()
-    history.push(loginForm.is_airdropped ? '/airdropSuccess':`/airdrop?isFrom=homePage`)
-  }
+  // const getAirdrop = (e)=>{
+  //   e.stopPropagation()
+  //   history.push(loginForm.is_airdropped ? '/airdropSuccess':`/airdrop?isFrom=homePage`)
+  // }
   const myselfView = () => {
     return (
       <div className="m-layout">
@@ -243,10 +243,10 @@ const Myself = ({ history }) => {
             label={username(loginForm)}
             labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
             onPress={userInfo}
-            subTitle={loginForm.airdrop_status ? <div onClick={getAirdrop} className="getAirdrop">
-              <span>Get Airdrop</span>
-              <RightOutline fontSize={7}/>
-            </div> : ''}
+            // subTitle={loginForm.airdrop_status ? <div onClick={getAirdrop} className="getAirdrop">
+            //   <span>Get Airdrop</span>
+            //   <RightOutline fontSize={7}/>
+            // </div> : ''}
           />
           {list.map((val, index) => (
             <Cell
