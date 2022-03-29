@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-29 15:31:00
+ * @LastEditTime: 2022-03-29 16:10:13
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useEffect, useState } from "react";
 import "./index.scss";
-import { UndoOutline , RightOutline} from "antd-mobile-icons";
+import { UndoOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
 import me_1 from "@/images/me_1.png";
 import me_2 from "@/images/me_2.png";
