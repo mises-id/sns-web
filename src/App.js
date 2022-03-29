@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useLogin } from './components/PostsIcons/common';
 const SetRoute = ()=>{
   const {isLogin} = useLogin()
+  console.log(isLogin)
   return <Router>
   <CacheSwitch>
     {routes(routeConfig,'',isLogin)}

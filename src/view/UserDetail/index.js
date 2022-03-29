@@ -48,6 +48,8 @@ const UserDetail = (props) => {
       state.uid = res.uid;
       const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
       setbuttons(btnArr)
+    }).catch(err=>{
+      console.log(err)
     })
   }
   const history = useHistory();

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-25 14:25:27
+ * @LastEditTime: 2022-03-29 14:31:10
  * @LastEditors: lmk
  * @Description:
  */
@@ -58,7 +58,7 @@ const Myself = ({ history }) => {
       setmisesLoading(true);
       if(!timer){
         timer = setTimeout(() => {
-          setloadingMisesTxt('Injecting Meatmask')
+          setloadingMisesTxt('Injecting Metamask')
         }, 2000);
       }
     }
