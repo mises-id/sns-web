@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-03-21 16:22:54
+ * @LastEditTime: 2022-03-29 13:06:01
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -62,6 +62,8 @@ const UserInfo = (props) => {
         phone.onChange(res.mobile)
         mail.onChange(res.email)
         address.onChange(res.address)
+      }).catch(err=>{
+        console.log(err)
       })
     }
     // eslint-disable-next-line
@@ -161,6 +163,8 @@ const UserInfo = (props) => {
       Promise.all(promise).then(() => {
         Toast.show(t("updataUserInfoSuccess"));
         saveMisesInfo()
+      }).catch(err=>{
+        console.log(err)
       });
     }
   };
@@ -168,7 +172,9 @@ const UserInfo = (props) => {
     submit({ avatar: res }, "avatar").then(() => {
       Toast.show(t("updataUserInfoSuccess"));
       saveMisesInfo()
-    });
+    }).catch(err=>{
+      console.log(err)
+    });;
   };
   // const loginModal = useLoginModal()
   const submit = async (form, by) => {

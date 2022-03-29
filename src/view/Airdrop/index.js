@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-25 17:43:17
+ * @LastEditTime: 2022-03-29 13:11:25
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -42,6 +42,8 @@ const Airdrop = () => {
           skip()
         },
       });
+    }).catch(err=>{
+      console.log(err)
     })
   };
   const skip = ()=>{
