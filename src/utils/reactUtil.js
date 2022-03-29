@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import CacheRoute from "react-router-cache-route";
-import { unAuthRoute } from "@/router";
+// import { unAuthRoute } from "@/router";
 /**
  * The corresponding route is generated according to the route configuration
  * @param {array} routeConfig route config
@@ -11,23 +11,23 @@ export function routes(routeConfig, parentPath = "",hasToken=true) {
   if (!routeConfig || routeConfig.length === 0) {
     return null;
   }
-  if(!hasToken){
-    return unAuthRoute.map(route=><CacheRoute
-      path={parentPath + route.path}
-      key={parentPath + route.path}
-      cacheKey={parentPath + route.path}
-      exact={route.exact}
-      when='always'
-      render={(props) => {
-        return (
-          <route.component {...props}>
-            {/* The nested route can be added through this.props.children in the parent route*/}
-            {routes(route.routes, parentPath + route.path)}
-          </route.component>
-        );
-      }}
-    />)
-  }
+  // if(!hasToken){
+  //   return unAuthRoute.map(route=><CacheRoute
+  //     path={parentPath + route.path}
+  //     key={parentPath + route.path}
+  //     cacheKey={parentPath + route.path}
+  //     exact={route.exact}
+  //     when='always'
+  //     render={(props) => {
+  //       return (
+  //         <route.component {...props}>
+  //           {/* The nested route can be added through this.props.children in the parent route*/}
+  //           {routes(route.routes, parentPath + route.path)}
+  //         </route.component>
+  //       );
+  //     }}
+  //   />)
+  // }
   return routeConfig.map((route) => {
     if (["/createPosts", "/forward"].includes(route.path)) {
       return (
