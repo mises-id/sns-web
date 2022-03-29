@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-28 15:49:21
+ * @LastEditTime: 2022-03-29 15:31:06
  * @LastEditors: lmk
  * @Description:
  */
@@ -102,6 +102,9 @@ const Home = ({ history, children = [] }) => {
   const createPosts = () => {
     history.push({ pathname: "/createPosts" });
   };
+  const getAirdrop = ()=>{
+    history.push('/airdrop?isFrom=homePage')
+  }
   //Show current route
   const showChild = (path) =>
     children.find((val) => val.key === path) || <div></div>;
@@ -135,6 +138,7 @@ const Home = ({ history, children = [] }) => {
             source={send}
             shape="square"
           ></Image>
+          <div className="airdrop" onClick={getAirdrop}>Airdrop</div>
         </div>
       )}
     </div>
