@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-25 17:47:31
+ * @LastEditTime: 2022-03-28 15:49:21
  * @LastEditors: lmk
  * @Description:
  */
@@ -63,6 +63,8 @@ const Home = ({ history, children = [] }) => {
             dispatch(setFirstLogin(true))
           }
         }, 100);
+      }).catch(res=>{
+        console.log(res,'getUserInfo')
       });
     }
     return Promise.resolve()

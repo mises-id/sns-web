@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-03-25 11:27:53
+ * @LastEditTime: 2022-03-28 11:31:02
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -175,6 +175,7 @@ export default class MisesExtensionController{
     }
   }
   async resetAccount(res){
+    console.log('resetAccount')
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
     const {loginForm} = store.getState().user
     // If the selected user is different from the current user

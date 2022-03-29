@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/plugin-proposal-private-methods": "^7.14.5",
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
+    "@commitlint/config-conventional": "^16.2.1",
     "@sentry/react": "^6.19.2",
     "@sentry/tracing": "^6.19.2",
     "@testing-library/jest-dom": "^5.11.4",
@@ -13,12 +14,16 @@
     "axios": "^0.21.1",
     "babel-plugin-import": "^1.13.3",
     "caniuse-lite": "^1.0.30001284",
+    "commitizen": "^4.2.4",
+    "commitlint": "^16.2.3",
     "customize-cra": "^1.0.0",
     "dayjs": "^1.10.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
+    "husky": "^7.0.4",
     "i18next": "^20.3.2",
     "konva": "^8.3.0",
+    "lint-staged": "^12.3.7",
     "node-sass": "^4.14.1",
     "pinch-zoom-js": "2.3.4",
     "postcss-px-to-viewport": "^1.1.1",
@@ -51,10 +56,12 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "react-app-rewired test  --watchAll",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "tree": "tree -I 'node_modules|__snapshots__|images|yarn*|package-lock.json'>README.md"
+    "tree": "tree -I 'node_modules|__snapshots__|images|yarn*|package-lock.json'>README.md",
+    "prepareHusky": "husky install",
+    "commit": "git-cz"
   },
   "eslintConfig": {
     "extends": [
@@ -77,7 +84,8 @@
   "devDependencies": {
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2"
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+    "cz-conventional-changelog": "^3.3.0"
   },
   "jest": {
     "verbose": true,
@@ -95,5 +103,10 @@
       "/node_modules/",
       "<rootDir>/src/utils/reactUtil.js"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
