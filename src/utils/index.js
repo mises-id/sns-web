@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-02-08 11:55:40
+ * @LastEditTime: 2022-03-30 12:08:33
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -95,7 +95,7 @@ export function useList(fn,params={},listType={type:'refresh'}){
       if(isRefresh&&isRefreshList){
         res.data.reverse()
         res.data.forEach(val=>dataSource.unshift(val))
-        setdataSource(dataSource.slice(0,200)) // max length
+        setdataSource([...dataSource])
         lastId&&setdownRefreshLastId(lastId)
         lastId&&setlast_id(lastId)
       }else{
