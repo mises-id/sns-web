@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-03-25 16:58:20
+ * @LastEditTime: 2022-03-29 17:15:52
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -25,25 +25,6 @@ import Error from '@/view/Error'
 import Me from '@/view/Me'
 import UserInfo from '@/view/UserInfo'
 import Following from '@/view/Following'
-// const BlackList = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/BlackList'))
-// const UserFollowPage = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/UserDetail/UserFollowPage'))
-// const UserDetail = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/UserDetail'))
-// const Home = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/Home'))
-// const MyLikes = getAsyncComponent(() => import(/* webpackChunkName: 'pageHome' */ '@/view/MyLikes'))
-// const Follows = getAsyncComponent(() => import(/* webpackChunkName: 'pageFollow' */ '@/view/Follows'))
-// const Me = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/Me'))
-// const UserInfo = getAsyncComponent(() => import(/* webpackChunkName: 'pageRadio' */ '@/view/UserInfo'))
-// const Following = getAsyncComponent(() => import(/* webpackChunkName: 'Following' */ '@/view/Following'))
-// const Post = getAsyncComponent(() => import(/* webpackChunkName: 'Post' */ '@/view/Post'))
-// const Comment = getAsyncComponent(() => import(/* webpackChunkName: 'Comment' */ '@/view/Comment'))
-// const MyPosts = getAsyncComponent(() => import(/* webpackChunkName: 'MyPost' */ '@/view/MyPosts'))
-// const GreatePosts = getAsyncComponent(() => import(/* webpackChunkName: 'GreatePosts' */ '@/view/GreatePosts'))
-// const Forward = getAsyncComponent(() => import(/* webpackChunkName: 'Forward' */ '@/view/Forward'))
-// const Notifications = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Notifications'))
-// const ShareWith = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/ShareWith'))
-// const Airdrop = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Airdrop'))
-// const AirdropSuccess = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/AirdropSuccess'))
-// const Error = getAsyncComponent(() => import(/* webpackChunkName: 'Empty' */ '@/view/Error'))
 const routeConfig = [
 	{
 		path: '/home',

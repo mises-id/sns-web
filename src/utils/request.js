@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-03-25 11:32:04
+ * @LastEditTime: 2022-03-29 18:57:38
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -72,21 +72,23 @@ const reject = ({code,message})=>{
   if(code===403002){
     invalidToken()
   }
-  console.log(message);
+  if(code===401000){
+    invalidAuth()
+  }
+  if(code===400000){
+    invalidAuth()
+  }
+  console.log(code);
   Toast.show(message|| 'error')
 }
 const invalidToken = ()=>{
   window.mises.resetUser()
   store.dispatch(setUserToken(''))
   window.location.reload()
-  // getAuth().then((res={})=>{
-  //   const auth = store.getState().user.auth;
-  //   console.log(res.data,auth)
-  //   if(res.data===auth){
-  //     window.location.reload()
-  //   }else{
-  //     openLoginPage()
-  //   }
-  // })
+}
+const invalidAuth = ()=>{
+  window.mises.resetUser()
+  store.dispatch(setUserToken(''))
+  window.location.replace('/home/me')
 }
 export default request

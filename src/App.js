@@ -19,7 +19,7 @@ const SetRoute = ()=>{
   console.log(isLogin)
   return <Router>
   <CacheSwitch>
-    {routes(routeConfig,'',isLogin)}
+    {routes(routeConfig)}
     <Redirect to={isLogin ? "/home/discover" : "/home/me"} />
   </CacheSwitch>
 </Router>
@@ -51,7 +51,7 @@ const App = ()=> {
   return <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-       <SetRoute></SetRoute>
+        <SetRoute />
       </PersistGate>
     </Provider>
   </ConfigProvider>;
