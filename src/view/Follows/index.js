@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-03-22 11:19:36
+ * @LastEditTime: 2022-03-30 11:09:07
  * @LastEditors: lmk
  * @Description:
  */
@@ -90,13 +90,10 @@ const Follow = ({ history = {} }) => {
     }
     return uniqueArr
   }
-  useEffect(() => {
+  const getSuccess = ()=>{
     if (isDiscover) {
-      let start = 0;
+      const start = 0;
       const maxCacheCount = 200;
-      if (dataSource.length > maxCacheCount) {
-        start = dataSource.length - maxCacheCount;
-      }
       const data = dataSource.slice(start, maxCacheCount);
       localStorage.setItem(
         "discoverPageCache",
@@ -107,8 +104,7 @@ const Follow = ({ history = {} }) => {
         })
       );
     }
-    // eslint-disable-next-line
-  }, [dataSource.length, last_id]);
+  }
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
     const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1;
@@ -343,6 +339,7 @@ const Follow = ({ history = {} }) => {
           isAuto={isAuto}
           renderView={renderView}
           data={dataSource}
+          getSuccess={getSuccess}
           load={async (e) => {
             getFollowingLatest();
             const res = await fetchData(e);

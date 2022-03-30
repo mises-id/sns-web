@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-03-29 12:16:07
+ * @LastEditTime: 2022-03-30 11:07:52
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -34,7 +34,7 @@ let mounted = true;
  * @param {*}isAuto:can you auto load
  * @return {*} element
  */
-const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
+const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess }) => {
   const pullRef = useRef();
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
   const [loading, setLoading] = useState(LOAD_STATE.normal);
@@ -49,6 +49,9 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView }) => {
       if (res) {
         setisOnceLoad(false)
         console.log(res,lastId)
+        if (res.data.length > 0) {
+          getSuccess()
+        }
         if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
           return false;
         }
