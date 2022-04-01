@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-01 13:26:07
+ * @LastEditTime: 2022-04-01 18:06:50
  * @LastEditors: lmk
  * @Description:
  */
@@ -26,18 +26,20 @@ import "./index.scss";
 import Image from "@/components/Image";
 import { getNotifications } from "@/api/notifications";
 import { setFollowingBadge } from "@/actions/user";
-import { useLocation } from "react-router-dom";
 import { useDidRecover } from "react-router-cache-route";
 const Follow = ({ history = {} }) => {
+  const isDiscoverFn = ()=> {
+    const isDiscoverPage = window.location.pathname || "";
+    return isDiscoverPage.indexOf("discover") > -1 
+  }
   const user = useSelector((state) => state.user) || {};
-  const location = useLocation() || {};
-  const isDiscoverPage = location.pathname || "";
   const [isDiscover, setisDiscover] = useState(false);
-  const fn = isDiscoverPage.indexOf("discover") > -1 ? recommend : following;
+  const fn = isDiscoverFn() ? recommend : following;
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
-  const storeageKey = `discoverPageCache`
+  const getUid = localStorage.getItem('uid');
+  const storeageKey = `discoverPageCache${user.loginForm&&user.loginForm.uid  ? user.loginForm.uid : ''}`
   const [
     fetchData,
     last_id,
@@ -53,7 +55,7 @@ const Follow = ({ history = {} }) => {
       limit: 10,
       last_id: lastId,
     },
-    { type: isDiscover ? "refreshList" : "refresh" }
+    { type: isDiscoverFn() ? "refreshList" : "refresh" }
   );
   useSetDataSourceAction(dataSource, setdataSource);
   const [notifitionObj, setnotifitionObj] = useState({
@@ -66,7 +68,7 @@ const Follow = ({ history = {} }) => {
   const [followingLatestArr, setfollowingLatest] = useState([]);
   const { t } = useTranslation();
   const setdataSourceStorage = ()=>{
-    if (isDiscover) {
+    if (isDiscoverFn()) {
       const start = 0;
       const maxCacheCount = 200;
       const data = dataSource.slice(start, maxCacheCount);
@@ -83,14 +85,17 @@ const Follow = ({ history = {} }) => {
   }
   const { setLike, followPress } = useChangePosts(setdataSource, dataSource,setdataSourceStorage);
   // get dataList
-  useEffect(() => {
+  const getDiscoverCache = ()=>{
     let cache = localStorage.getItem(storeageKey);
-    if (isDiscoverPage.indexOf("discover") > -1 && cache) {
+    if (isDiscoverFn() && cache) {
       const { dataSource, downRefreshLastId, last_id } = JSON.parse(cache);
       setdataSource(unique(dataSource));
       setdownRefreshLastId(downRefreshLastId);
       setlast_id(last_id);
     }
+  }
+  useEffect(() => {
+    getDiscoverCache()
     // eslint-disable-next-line
   }, []);
   // unique
@@ -104,17 +109,10 @@ const Follow = ({ history = {} }) => {
     }
     return uniqueArr
   }
-  useEffect(() => {
-    if(!isDiscover&&dataSource.length===0&&user.loginForm.uid){
-      localStorage.removeItem('isFollowd')
-    }
-    // eslint-disable-next-line
-  }, [dataSource.length,last_id])
   
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
-    const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1;
-    setisDiscover(isDiscoverFlag);
+    setisDiscover(isDiscoverFn());
     setloading(false);
 
     // getFollowingLatest()
@@ -132,7 +130,7 @@ const Follow = ({ history = {} }) => {
     getFollowingLatest();
   });
   const getFollowingLatest = () => {
-    const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1;
+    const isDiscoverFlag = isDiscoverFn();
     if (!isDiscoverFlag && user.token) {
       // follow latest user list
       followingLatest()
@@ -222,6 +220,14 @@ const Follow = ({ history = {} }) => {
     getMisesAccountFlag();
     // eslint-disable-next-line
   }, [selector.web3Status]);
+  useEffect(() => {
+    if(user.loginForm.uid&&user.loginForm.uid!==Number(getUid)){
+      window.refreshByCacheKey('/home')
+      console.log('%c storeageKey','color:red',storeageKey)
+    }
+    // eslint-disable-next-line
+  }, [storeageKey])
+  
   // If you are not logged in, this view is displayed
   const btnElement = () => {
     if(misesloading){

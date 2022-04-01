@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-30 18:16:00
+ * @LastEditTime: 2022-04-01 15:43:36
  * @LastEditors: lmk
  * @Description: 
  */
@@ -19,7 +19,7 @@ const enUS = {
     "aboutId":'About Mises',
     "restoreTitle":'Get your Mises ID via a Metamask account',
     "restore":"Restore Mises ID",
-    "restoreTips":'Misesid is restored by entering a mnemonic.',
+    "restoreTips":'Mises ID is restored by entering a mnemonic.',
     "following":"Following",
     "followers":"Followers",
     "posts":'Posts',
@@ -34,7 +34,7 @@ const enUS = {
     "followingPageTitle":'Following',
     "fansPageTitle":'Followers',
     "postPageTitle":"Post",
-    "lookAtAll":"Look at all",
+    "lookAtAll":"View all",
     "commentPageTitle":'Comment',
     "myPostPageTitle":'My Posts',
     "cancel":'Cancel',

@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-04-01 09:17:54
+ * @LastEditTime: 2022-04-01 17:22:45
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
 import {urlToJson} from "./";
-import { setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
+import {setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
@@ -171,7 +171,6 @@ export default class MisesExtensionController{
         store.dispatch(setUserToken(''))
         this.resetUser()
         store.dispatch(setLoginForm({})) 
-        localStorage.removeItem('isFollowd')
         // localStorage.removeItem('discoverPageCache')
       }, 0);
     }
@@ -200,7 +199,8 @@ export default class MisesExtensionController{
   }
   isUnInitMetaMask(){
     // 
-    if(!navigator.userAgent.indexOf('Chrome/77.0.3865.116 Mobile Safari/537.36')>-1){
+    console.log(navigator.userAgent)
+    if(navigator.userAgent.indexOf('Chrome/77.0.3865.116 Mobile Safari/537.36')===-1){
       store.dispatch(setVisibility(true))
       return false;
     }
@@ -220,8 +220,8 @@ export default class MisesExtensionController{
       total:0,
       notifications_count:0
     }))
+    // refreshByCacheKey('/home')
     clearCache()
-    refreshByCacheKey('/home')
     console.log('resetUser')
   }
   connect(userid){

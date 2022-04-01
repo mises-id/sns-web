@@ -49,7 +49,6 @@ export async function followed(item={}){
       uid:val.uid,
       actionType: val.is_followed ? 'following' : 'follow'
     }))
-    val.is_followed&&localStorage.setItem('isFollowd',true)
   } catch (error) {
     console.log(error)
     // Toast.show(error||'follow error')

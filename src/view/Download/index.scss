@@ -31,7 +31,10 @@
   font-weight: 400;
   color: #333333;
   line-height: 25px;
-  margin-left: 27px;
+  margin:0 27px;
+  p{
+    word-break: break-word;
+  }
 }
 .download{
   width: 315px;

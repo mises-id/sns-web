@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-01-28 21:47:22
+ * @LastEditTime: 2022-04-01 15:40:09
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -14,13 +14,11 @@ import Link from "../Follows/Link";
 import { getLink, useBind, useRouteState } from "@/utils";
 import { createStatus, getStatusItem } from "@/api/status";
 import ImageList from "@/components/ImageList";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserSetting } from "@/actions/user";
 const Forward = ({ history = {} }) => {
   const [item, setitem] = useState("");
   const { t } = useTranslation();
-  const historyHooks = useHistory()
   const historyState = useRouteState(history);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getPosts = useCallback(() => {
@@ -46,7 +44,7 @@ const Forward = ({ history = {} }) => {
           stayTime: 1500,
           afterClose: () => {
             window.refreshByCacheKey('/home/following')
-            historyHooks.replace('/home/following')
+            // historyHooks.replace('/home/following')
             setloading(false);
             dispatch(setUserSetting({
               postId:historyState.id,
