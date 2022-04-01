@@ -42,7 +42,7 @@ jobs:
       - name: CodeDeploy to EC2
         run: |
           aws deploy create-deployment \
-           --application-name sns-web \
+           --application-name sns-web-test \
            --deployment-group-name SnsWebDeployGroup \
            --s3-location bucket=misesid,key=sns-web-test.tar.gz,bundleType=tgz \
            --file-exists-behavior RETAIN
