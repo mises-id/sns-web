@@ -1,7 +1,8 @@
-name: Release
+name: Dev
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +26,7 @@ jobs:
           CI: true
       - name: 'Tar files'
         run: |
-          tar -czvf sns-web.tar.gz build/ appspec.yml scripts/
+          tar --transform='s|appspec.test|appspec|' -czvf sns-web-test.tar.gz build/ appspec.test.yml scripts/
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -36,11 +37,11 @@ jobs:
         run: |
           aws s3 cp \
            --region us-east-1 \
-           sns-web.tar.gz s3://misesid
+           sns-web-test.tar.gz s3://misesid
       - name: CodeDeploy to EC2
         run: |
           aws deploy create-deployment \
            --application-name sns-web \
            --deployment-group-name SnsWebDeployGroup \
-           --s3-location bucket=misesid,key=sns-web.tar.gz,bundleType=tgz \
+           --s3-location bucket=misesid,key=sns-web-test.tar.gz,bundleType=tgz \
            --file-exists-behavior RETAIN
