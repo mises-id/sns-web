@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2022-03-25 13:48:06
+ * @LastEditTime: 2022-04-01 13:13:35
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -44,7 +44,7 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
       Toast.show('Browser cannot share website')
     }
     navigator.share&&navigator.share({
-      text: 'share post',
+      text: '',
       url: `${window.location.origin}/post?id=${item.id}`
     }).catch(err=>{
       console.log(err)

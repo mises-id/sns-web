@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-03-30 11:09:07
+ * @LastEditTime: 2022-04-01 13:26:07
  * @LastEditors: lmk
  * @Description:
  */
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import PullList from "@/components/PullList";
 import { following, followingLatest, recommend } from "@/api/status";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityIndicator, Badge } from "zarm";
+import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useTranslation } from "react-i18next";
 import {
   objToUrl,
@@ -37,6 +37,7 @@ const Follow = ({ history = {} }) => {
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
+  const storeageKey = `discoverPageCache`
   const [
     fetchData,
     last_id,
@@ -64,15 +65,28 @@ const Follow = ({ history = {} }) => {
   const [userRecommend] = useState([]);
   const [followingLatestArr, setfollowingLatest] = useState([]);
   const { t } = useTranslation();
-  const { setLike, followPress } = useChangePosts(setdataSource, dataSource);
+  const setdataSourceStorage = ()=>{
+    if (isDiscover) {
+      const start = 0;
+      const maxCacheCount = 200;
+      const data = dataSource.slice(start, maxCacheCount);
+      localStorage.setItem(
+        storeageKey,
+        JSON.stringify({
+          last_id,
+          downRefreshLastId,
+          dataSource: data,
+        })
+      );
+      return false;
+    }
+  }
+  const { setLike, followPress } = useChangePosts(setdataSource, dataSource,setdataSourceStorage);
   // get dataList
   useEffect(() => {
-    let cache = localStorage.getItem("discoverPageCache");
+    let cache = localStorage.getItem(storeageKey);
     if (isDiscoverPage.indexOf("discover") > -1 && cache) {
       const { dataSource, downRefreshLastId, last_id } = JSON.parse(cache);
-      // if(dataSource.length>0){
-      //   setIsAuto(false)
-      // }
       setdataSource(unique(dataSource));
       setdownRefreshLastId(downRefreshLastId);
       setlast_id(last_id);
@@ -90,21 +104,13 @@ const Follow = ({ history = {} }) => {
     }
     return uniqueArr
   }
-  const getSuccess = ()=>{
-    if (isDiscover) {
-      const start = 0;
-      const maxCacheCount = 200;
-      const data = dataSource.slice(start, maxCacheCount);
-      localStorage.setItem(
-        "discoverPageCache",
-        JSON.stringify({
-          last_id,
-          downRefreshLastId,
-          dataSource: data,
-        })
-      );
+  useEffect(() => {
+    if(!isDiscover&&dataSource.length===0&&user.loginForm.uid){
+      localStorage.removeItem('isFollowd')
     }
-  }
+    // eslint-disable-next-line
+  }, [dataSource.length,last_id])
+  
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
     const isDiscoverFlag = isDiscoverPage.indexOf("discover") > -1;
@@ -174,8 +180,68 @@ const Follow = ({ history = {} }) => {
     );
   };
   const find = () => history.push("/home/discover");
+  const connect = () => {
+    window.mises
+      .requestAccounts()
+      .catch((err) => {
+        console.log(err);
+        if (err && err.code === -32002) {
+          Modal.alert({
+            content: "Please switch to the unlock tab to unlock your account",
+            width: "77%",
+            title: "Message",
+          });
+        }
+      });
+  };
+  const selector = useSelector((state) => state.user) || {};
+  const [flag, setflag] = useState(false);
+  const [misesloading, setMisesloading] = useState(true);
+  let timer = null;
+  const getMisesAccountFlag = () => {
+    if (selector.web3Status) {
+      window.mises &&
+        window.mises.getMisesAccounts(true).then((res) => {
+          setflag(!!res);
+          setMisesloading(false)
+        }).catch(err=>{
+          console.log(err)
+          setMisesloading(false)
+        });
+    }else{
+      if(timer){
+        clearTimeout(timer)
+        timer = null;
+      }
+      timer = setTimeout(() => {
+        setMisesloading(false)
+      }, 2000);
+    }
+  };
+  useEffect(() => {
+    getMisesAccountFlag();
+    // eslint-disable-next-line
+  }, [selector.web3Status]);
   // If you are not logged in, this view is displayed
   const btnElement = () => {
+    if(misesloading){
+      return <div style={{ textAlign: "center", padding: "20px" }}>
+      <ActivityIndicator type="spinner" />
+    </div>
+    }
+    if(flag){
+      return <div className="empty-box">
+      <img src={emptyIcon} alt="" className="empty-icon" />
+      <p className="m-colors-333 m-title m-margin-bottom20 m-padding-lr20 m-tips">
+        {t("unloginTitle")}
+      </p>
+     <div className="connect">
+      <Button block shape="round" theme="primary" onClick={connect}>
+          <span className="btn-txt">{t("loginUser")}</span>
+        </Button>
+     </div>
+    </div>
+    }
     return (
       <div className="empty-box">
         <img src={emptyIcon} alt="" className="empty-icon" />
@@ -326,7 +392,7 @@ const Follow = ({ history = {} }) => {
     );
   };
   return (
-    <div>
+    <>
       {loading ? (
         <div style={{ textAlign: "center", padding: "20px" }}>
           <ActivityIndicator type="spinner" />
@@ -339,7 +405,7 @@ const Follow = ({ history = {} }) => {
           isAuto={isAuto}
           renderView={renderView}
           data={dataSource}
-          getSuccess={getSuccess}
+          getSuccess={setdataSourceStorage}
           load={async (e) => {
             getFollowingLatest();
             const res = await fetchData(e);
@@ -347,7 +413,7 @@ const Follow = ({ history = {} }) => {
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 export default Follow;

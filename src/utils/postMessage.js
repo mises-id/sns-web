@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-03-28 11:31:02
+ * @LastEditTime: 2022-04-01 09:17:54
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -13,6 +13,7 @@ import { store } from "@/stores";
 import { signin } from '@/api/user';
 import { clearCache,dropByCacheKey,getCachingKeys,refreshByCacheKey } from 'react-router-cache-route'
 import { Modal } from 'zarm';
+import { setVisibility } from '@/actions/app';
 window.clearCache = clearCache;
 window.dropByCacheKey = dropByCacheKey;
 window.getCachingKeys = getCachingKeys;
@@ -170,7 +171,8 @@ export default class MisesExtensionController{
         store.dispatch(setUserToken(''))
         this.resetUser()
         store.dispatch(setLoginForm({})) 
-        localStorage.removeItem('discoverPageCache')
+        localStorage.removeItem('isFollowd')
+        // localStorage.removeItem('discoverPageCache')
       }, 0);
     }
   }
@@ -197,6 +199,11 @@ export default class MisesExtensionController{
     return window.ethereum&&Boolean(window.ethereum.chainId) ? Promise.resolve(true) : (!hideModal&&this.isUnInitMetaMask())
   }
   isUnInitMetaMask(){
+    // 
+    if(!navigator.userAgent.indexOf('Chrome/77.0.3865.116 Mobile Safari/537.36')>-1){
+      store.dispatch(setVisibility(true))
+      return false;
+    }
     Modal.confirm({
       title: 'Message',
       width:'83%',
@@ -209,9 +216,6 @@ export default class MisesExtensionController{
     return Promise.resolve(false)
   }
   resetUser(){
-    // store.dispatch(setUserAuth(''))
-    // store.dispatch(setUserToken(''))
-    // store.dispatch(setLoginForm({}))
     store.dispatch(setFollowingBadge({
       total:0,
       notifications_count:0

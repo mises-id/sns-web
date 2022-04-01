@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-29 15:31:06
+ * @LastEditTime: 2022-03-31 16:47:13
  * @LastEditors: lmk
  * @Description:
  */
@@ -109,7 +109,7 @@ const Home = ({ history, children = [] }) => {
   const showChild = (path) =>
     children.find((val) => val.key === path) || <div></div>;
   return (
-    <div>
+    <>
       <Tabs value={value} onChange={getChange} lineWidth={10} swipeable={false}>
         {tab.map((val, index) => (
           <Panel
@@ -141,7 +141,7 @@ const Home = ({ history, children = [] }) => {
           <div className="airdrop" onClick={getAirdrop}>Airdrop</div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default Home;

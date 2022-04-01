@@ -5,7 +5,7 @@ import "./index.scss";
 import Image from "@/components/Image";
 import { useTranslation } from "react-i18next";
 import MButton from "@/components/MButton";
-import { objToUrl, urlToJson, useChangePosts, useLoginModal, username, useRouteState } from "@/utils";
+import { numToKMGTPE, objToUrl, urlToJson, useChangePosts, useLoginModal, username, useRouteState } from "@/utils";
 import { useLogin } from "@/components/PostsIcons/common";
 import addIcon from "@/images/add.png";
 import { ActionSheet, Panel, Tabs, Toast } from "zarm";
@@ -105,9 +105,9 @@ const UserDetail = (props) => {
   return (
     <div>
       <div className="app-container user-detail">
-        <div>
+        <div className="user-detail-header" style={{backgroundImage:"url(/static/images/user_bg.jpg)"}}>
           {/* header */}
-          <img src="/static/images/user_bg.jpg" className="user-bg" alt="userbg"></img>
+          {/* <img src="/static/images/user_bg.jpg" className="user-bg" alt="userbg"></img> */}
           <div className="m-flex nav-box m-row-between">
             <img
               src={userBack}
@@ -145,11 +145,11 @@ const UserDetail = (props) => {
               </div>
               <div className="follow-box m-flex">
                 <div onClick={() => getFollow(0)}>
-                  <span className="follow-num">{userInfo.followings_count || 0}</span>
+                  <span className="follow-num">{numToKMGTPE(userInfo.followings_count) || 0}</span>
                   <span className="follow-name">Following</span>
                 </div>
                 <div onClick={() => getFollow(1)}>
-                  <span className="follow-num">{userInfo.fans_count || 0}</span>
+                  <span className="follow-num">{numToKMGTPE(userInfo.fans_count) || 0}</span>
                   <span className="follow-name">Followers</span>
                 </div>
               </div>

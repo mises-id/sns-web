@@ -8,7 +8,7 @@ import { Toast } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-23 14:45:43
- * @LastEditTime: 2022-01-25 14:46:34
+ * @LastEditTime: 2022-03-31 18:18:52
  * @LastEditors: lmk
  * @Description: postsIcon function
  */
@@ -49,6 +49,7 @@ export async function followed(item={}){
       uid:val.uid,
       actionType: val.is_followed ? 'following' : 'follow'
     }))
+    val.is_followed&&localStorage.setItem('isFollowd',true)
   } catch (error) {
     console.log(error)
     // Toast.show(error||'follow error')

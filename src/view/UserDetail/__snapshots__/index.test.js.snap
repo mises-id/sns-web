@@ -5,12 +5,14 @@ exports[`UserDetail should render correctly 1`] = `
   <div
     className="app-container user-detail"
   >
-    <div>
-      <img
-        alt="userbg"
-        className="user-bg"
-        src="/static/images/user_bg.jpg"
-      />
+    <div
+      className="user-detail-header"
+      style={
+        Object {
+          "backgroundImage": "url(/static/images/user_bg.jpg)",
+        }
+      }
+    >
       <div
         className="m-flex nav-box m-row-between"
       >

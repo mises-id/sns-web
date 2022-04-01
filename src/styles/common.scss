@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-03-03 15:52:00
+ * @LastEditTime: 2022-03-31 11:55:00
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -176,11 +176,11 @@ $align:center left right;
 }
 
 .Panel .m-layout{
-  height: calc(100vh - 60px)
+  height: calc(100vh - 60px - var(--window-layout-height))
 }
 .m-layout{
   overflow-y: auto;
-  height: calc(100vh - 45px)
+  height: calc(100vh - var(--window-layout-height) - 45px)
 }
 body{
   .za-nav-bar{
