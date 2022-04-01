@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-03-31 16:47:13
+ * @LastEditTime: 2022-04-01 17:20:43
  * @LastEditors: lmk
  * @Description:
  */
@@ -24,24 +24,27 @@ const Home = ({ history, children = [] }) => {
     { path: "/home/discover", text: t("discover") },
     { path: "/home/me", text: t("me") },
   ]);
-  const [value, setvalue] = useState(0);
+  const [value, setvalue] = useState(localStorage.getItem('tabIndex') || 0);
   const dispatch = useDispatch();
   const setTabActive = () => {
     const { pathname } = window.location;
     //get hostname to set tabIndex
     // const path = pathname;
+    let index = 0
     switch (pathname) {
       case "/home/following":
-        setvalue(0);
+        index = 0;
         break;
       case "/home/discover":
-        setvalue(1);
+        index = 1;
         break;
       default:
         getUserInfo();
-        setvalue(2);
+        index = 2;
         break;
     }
+    setvalue(index);
+    localStorage.setItem('tabIndex',index);
     const { mises_id, nonce, sig } = urlToJson();
     if (mises_id && nonce && sig) {
       const auth = `mises_id=${mises_id}&nonce=${nonce}&sig=${sig}`;
@@ -57,6 +60,7 @@ const Home = ({ history, children = [] }) => {
     if (auth && token) {
       return getUserSelfInfo().then((res) => {
         dispatch(setLoginForm(res));
+        localStorage.setItem('uid',res.uid);
         setTimeout(() => {
           if(!res.is_logined&&history.location.pathname!=='airdrop'){
             history.push('/airdrop')
@@ -70,15 +74,9 @@ const Home = ({ history, children = [] }) => {
     return Promise.resolve()
   };
   useDidRecover(() => {
-    window.refreshByCacheKey("/follow");
-    window.refreshByCacheKey("/notifications");
-    window.refreshByCacheKey("/myLikes");
-    window.refreshByCacheKey("/myPosts");
-    window.refreshByCacheKey("/blackList");
-    window.refreshByCacheKey("/userFollowPage");
-    window.refreshByCacheKey("/post");
-    window.refreshByCacheKey("/comment");
-    window.refreshByCacheKey("/userInfo");
+    window.getCachingKeys().forEach(res=>{
+      window.refreshByCacheKey(res);
+    })
   });
   useEffect(() => {
     document.body.style.overflow = "hidden";

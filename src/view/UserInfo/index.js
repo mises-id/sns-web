@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-03-29 13:06:01
+ * @LastEditTime: 2022-04-01 16:17:45
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -120,8 +120,8 @@ const UserInfo = (props) => {
       telephones: [phone.value].filter(val=>val),
       emails: [mail.value].filter(val=>val),
       avatarUrl,
-      homePageUrl:'homePageUrl',
-      intro:'intro'
+      homePageUrl:'',
+      intro:''
     }
     console.log('update mises network',userInfo)
     window.mises.setUserInfo(userInfo).catch(err=>{
