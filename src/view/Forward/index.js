@@ -11,7 +11,7 @@ import { NavBar, Button, Input, Toast } from "zarm";
 import "@/styles/common.scss";
 import UserHeader from "../Follows/UserHeader";
 import Link from "../Follows/Link";
-import { useBind, useRouteState } from "@/utils";
+import { getLink, useBind, useRouteState } from "@/utils";
 import { createStatus, getStatusItem } from "@/api/status";
 import ImageList from "@/components/ImageList";
 import { useHistory } from "react-router-dom";
@@ -110,8 +110,7 @@ const Forward = ({ history = {} }) => {
                   btnType="empty"
                 ></UserHeader>
                 {item.content && (
-                  <p className="itemContent m-font13 m-margin-tb10 item-eli">
-                    {item.content}
+                  <p className="itemContent m-font13 m-margin-tb10 item-eli" dangerouslySetInnerHTML={{ __html: getLink(item.content) }}>
                   </p>
                 )}
                 {item.status_type === "link" && (

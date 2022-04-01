@@ -1,0 +1,50 @@
+.mises-bg{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: center;
+}
+.download-logo{
+  width: 89px;
+  display: inline-block;
+}
+.mises-txt{
+  font-size: 40px;
+  font-family: SF UI Display;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 25px;
+}
+.download-png{
+  width: calc(100% - 16px);
+  display: block;
+  margin: 44px auto;
+}
+.option{
+  font-size: 14px;
+  font-family: SF UI Display;
+  font-weight: 400;
+  color: #333333;
+  line-height: 25px;
+  margin-left: 27px;
+}
+.download{
+  width: 315px;
+  height: 50px;
+  background: #5D61FF;
+  border-radius: 25px;
+  margin: 40px auto 55px;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+  color: #FFFFFF;
+  font-size: 17px;
+  font-family: SF UI Display;
+  font-weight: bold;
+  color: #FFFFFF;
+}

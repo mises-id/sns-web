@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-03-30 12:08:33
+ * @LastEditTime: 2022-04-01 13:08:33
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -127,11 +127,11 @@ export function useRouteState(history){
 /**
 * @param {*} 
 */
-export function useChangePosts(setdataSource,dataSource){
+export function useChangePosts(setdataSource,dataSource,cb){
   const success = ()=>{
     const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
     setdataSource(data)
-   
+    cb&&cb()
   }
   const [likeLoading, setlikeLoading] = useState(false)
   const setLike = async val=>{
@@ -355,4 +355,36 @@ export function isMe(user,createdUserId){
   if(!user || !createdUserId) return false;
   const {loginForm={}} = store.getState().user;
   return Number((user.uid || createdUserId))===Number(loginForm.uid)
+}
+
+// Extract links based on content
+export function getLink(content){
+  // eslint-disable-next-line
+  const reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/g;
+  const result = reg.exec(content);
+  const link = result ? result[0] : "";
+  //the link according to the link to remove the http/https
+  const getOrigin = link.replace(/^(http|https):\/\//, "").substring(0, 25);
+  return content.replace(reg, `<a href="${link}" onclick="event.stopPropagation()"  class="link" title="${link}" target="_blank">${getOrigin}...</a>`).replace(/\n/g, '<br/>');
+};
+
+export function numToKMGTPE(num, digits=1) {
+  if(!num) return 0
+  const  si = [
+    { value: 1, symbol: "" },
+    { value: 1E3, symbol: "k" },
+    { value: 1E6, symbol: "M" },
+    { value: 1E9, symbol: "G" },
+    { value: 1E12, symbol: "T" },
+    { value: 1E15, symbol: "P" },
+    { value: 1E18, symbol: "E" }
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  let i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }

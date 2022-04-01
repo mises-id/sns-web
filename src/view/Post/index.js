@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-02-21 17:59:56
+ * @LastEditTime: 2022-04-01 14:00:06
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -34,6 +34,7 @@ import CommentsPop from "../Comment/commentPop";
 import Image from "@/components/Image";
 import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 import { setUserSetting } from "@/actions/user";
+import Empty from "@/components/Empty";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState(""); // post data 
@@ -53,6 +54,7 @@ const Post = ({ history = {} }) => {
   const [showMore, setshowMore] = useState(false);
   const [selectItem, setselectItem] = useState({}); // select comment user
   const input = useRef();
+  const [notFound, setnotFound] = useState(false)
   // start loading 
   useEffect(() => {
     if (state) {
@@ -113,14 +115,22 @@ const Post = ({ history = {} }) => {
   };
   // get this post detail 
   const getDetail = async (id) => {
-    const res = await getStatusItem(id)
-    setitem(res);
-    window.$misesShare = {
-      url:window.location.href,
-      images:res.thumb_images&&res.thumb_images[0] ? res.thumb_images[0] : 'https://home.mises.site/logo192.png'
-    };
-    Loading.hide();
-    return res;
+    try {
+      const res = await getStatusItem(id)
+      setitem(res);
+      window.$misesShare = {
+        url:window.location.href,
+        images:res.thumb_images&&res.thumb_images[0] ? res.thumb_images[0] : 'https://home.mises.site/logo192.png'
+      };
+      Loading.hide();
+      return res;
+    } catch (error) {
+      Loading.hide();
+      if(error==='mongo: no documents in result'){
+        setnotFound(true)
+      }
+      console.log(error)
+    }
   };
   const getCommentList = (id) => {
     getComment({ status_id: id, limit: 3 }).then((res) => {
@@ -396,6 +406,7 @@ const Post = ({ history = {} }) => {
           )}
         </div>
       )}
+      {notFound && (<Empty />)}
       <CommentsPop
         visible={visible}
         setvisible={setvisible}

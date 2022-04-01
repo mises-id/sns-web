@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-03-29 17:15:52
+ * @LastEditTime: 2022-03-31 09:50:05
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -25,6 +25,7 @@ import Error from '@/view/Error'
 import Me from '@/view/Me'
 import UserInfo from '@/view/UserInfo'
 import Following from '@/view/Following'
+import Download from '@/view/Download'
 const routeConfig = [
 	{
 		path: '/home',
@@ -108,6 +109,10 @@ const routeConfig = [
 	{
 		path: '/error',
 		component: Error,
+	},
+	{
+		path: '/download',
+		component: Download,
 	}
 ]
 

@@ -38,7 +38,7 @@
   line-height: 19px;
   color: #222;
   word-break: break-all;
-  white-space: break-spaces;
+  white-space: initial;
 }
 .forwardBox{
   border-radius: 3px;
@@ -144,4 +144,8 @@
 }
 .follower-view{
   margin-top: 25px;
+}
+.connect{
+  width: 190px;
+  margin: 30px auto;
 }

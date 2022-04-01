@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-03-29 09:08:17
+ * @LastEditTime: 2022-03-30 18:16:00
  * @LastEditors: lmk
  * @Description: 
  */
@@ -85,7 +85,8 @@ const enUS = {
     "airdropContentdesc":'Tap "send tweet", and send a tweet including your Mises ID and tag #Mises',
     "airdropContentdesc1":'Make sure your Twitter account was created before January 1, 2022',
     "airdropContentdesc2":'Receive your airdrop within 24 hours if your account is eligible',
-    "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!"
+    "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!",
+    "unloginTitle":"Connect to your Mises ID to receive content from your Following"
   }
 }
 export default enUS

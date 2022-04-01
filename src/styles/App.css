@@ -5,3 +5,60 @@ iframe{
   background: red;
   left: 9999999999px !important;
 }
+.launchApp{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color:#EEEFFF;
+  z-index: 300;
+  padding:10px 15px;
+  box-sizing: border-box;
+}
+.launchApp-logo{
+  width: 30px;
+  height: 30px;
+}
+.launchApp-empty{
+  height: 50px;
+}
+.link{
+  color: #5D61FF;
+  text-decoration: none;
+}
+.launchApp-txt{
+  padding-left: 8px;
+  width: 200px;
+  font-size: 12px;
+  font-family: SF UI Display;
+  color: #555555;
+  line-height: 16px;
+  word-break: break-word;
+}
+.launchApp-txt span{
+  font-weight: bold;
+}
+.download-btn,.popup-btn{
+  width: 83px;
+  height: 28px;
+  background: #5D61FF;
+  border-radius: 14px;
+  text-align: center;
+  line-height: 28px;
+  color: white;
+  font-size: 12px;
+}
+.popup-img{
+  display: block;
+  margin: 20px auto;
+  width: 40px;
+}
+.popup-txt{
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+}
+.popup-btn{
+  margin: 20px auto;
+}

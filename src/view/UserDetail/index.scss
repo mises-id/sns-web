@@ -29,6 +29,7 @@
 .userinfo-box{
   @include headerBgView;
   padding: 20px 15px;
+  box-sizing: border-box;
 }
 .avatar-box{
   border-radius: 50%;
@@ -37,7 +38,7 @@
   height: 79px;
 }
 .user-info{
-  margin-left: 13px;
+  margin-left:13px;
 }
 .username{
   font-size: 22px;
@@ -86,11 +87,17 @@
 }
 .user-post-content{
   .m-layout{
-    height: calc(100vh - 90px - 132px);
+    height: calc(100vh - 90px - 132px - var(--window-layout-height));
   }
 }
 .user-follow-page{
   .m-layout{
-    height: calc(100vh - 90px);
+    height: calc(100vh - 90px - var(--window-layout-height));
   }
+}
+.user-detail-header{
+  // background: url(~/static/images/user_bg.jpg) no-repeat;
+  background-position: top;
+  background-size: 100vw 115px;
+  background-repeat: no-repeat;
 }

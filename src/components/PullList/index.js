@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-03-30 11:07:52
+ * @LastEditTime: 2022-04-01 13:02:50
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -50,7 +50,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
         setisOnceLoad(false)
         console.log(res,lastId)
         if (res.data.length > 0) {
-          getSuccess()
+          getSuccess&&getSuccess()
         }
         if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
           return false;
@@ -66,6 +66,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
         return Promise.resolve(true)
       }
     } catch (error) {
+      console.log(error);
       !isOnceLoad && setLoading(LOAD_STATE.failure);
       setRefreshing(REFRESH_STATE.normal);
       setisOnceLoad(false)

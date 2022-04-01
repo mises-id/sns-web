@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-04 15:23:53
- * @LastEditTime: 2022-01-27 17:57:49
+ * @LastEditTime: 2022-03-31 15:13:08
  * @LastEditors: lmk
  * @Description: set zarm UI theme
  */
@@ -15,7 +15,8 @@ export function setTheme(){
     "--badge-dot-diameter":"6px",
     "--theme-danger":"#FF3D62",
     "--badge-height":'16px',
-    "--modal-title-font-size":"20px"
+    "--modal-title-font-size":"20px",
+    '--window-layout-height': !window.ethereum ? '50px' :'0px'
   }
   if(window.innerHeight){
     themeObj['--window-height'] = `${window.innerHeight}px`

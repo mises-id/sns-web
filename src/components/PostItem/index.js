@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-01-29 14:38:18
+ * @LastEditTime: 2022-03-30 17:28:26
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,7 +11,7 @@ import React from "react";
 import PostsIcons from "../PostsIcons";
 import "@/styles/followPage.scss";
 import ImageList from "../ImageList";
-import { objToUrl } from "@/utils";
+import { getLink, objToUrl } from "@/utils";
 import cry from '@/images/cry.png';
 import block from '@/images/block.png';
 import { useTranslation } from "react-i18next";
@@ -79,8 +79,8 @@ const PostItem = ({
               ? "item-eli m-font15 m-margin-tb8"
               : "m-font18 m-margin-tb12 detail-content"
           }`}
+          dangerouslySetInnerHTML={{ __html: getLink(val.content) }}
         >
-          {val.content}
         </p>
       )}
 
@@ -121,8 +121,7 @@ const PostItem = ({
           {
             !val.parent_ststus_is_black && val.parent_status.is_public && <div>
               { val.parent_status.content && (
-                <p className="itemContent m-font13 m-margin-tb5">
-                  {val.parent_status.content}
+                <p className="itemContent m-font13 m-margin-tb5" dangerouslySetInnerHTML={{ __html: getLink(val.parent_status.content) }}>
                 </p>
               )}
               {!val.parent_status.content && (

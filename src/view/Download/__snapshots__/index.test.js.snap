@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GreatePosts should render correctly 1`] = `
+<Fragment>
+  <div
+    className="m-position-relative"
+  >
+    <img
+      alt=""
+      src="/static/images/bg.png"
+      width="100%"
+    />
+    <div
+      className="mises-bg"
+    >
+      <div>
+        <img
+          alt=""
+          className="download-logo"
+          src="/static/images/download-logo.png"
+        />
+        <p
+          className="mises-txt"
+        >
+          Mises
+        </p>
+      </div>
+    </div>
+  </div>
+  <img
+    alt=""
+    className="download-png"
+    src="/static/images/download.png"
+  />
+  <div
+    className="option"
+  >
+    <p>
+      · A decentralized social network
+    </p>
+    <p>
+      · A browser to discover the brand new world of web3
+    </p>
+    <p>
+      · A crypto wallet supports ethereum and other chains
+    </p>
+  </div>
+  <a
+    className="download"
+    href="https://play.google.com/store/apps/details?id=site.mises.browser"
+    rel="noreferrer"
+    target="_blank"
+  >
+    Download
+  </a>
+</Fragment>
+`;

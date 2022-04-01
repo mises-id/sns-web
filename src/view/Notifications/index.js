@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-02-07 16:21:09
+ * @LastEditTime: 2022-03-30 17:07:03
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -211,26 +211,29 @@ const Notifications = ({ history }) => {
           borderRadius="3px"
           source={image}
         ></Image>}
-        {status.status_type === "text"&&!image&&<div>
-          <p className="post-content item-eli">{meta_data.content_summary || meta_data.comment_content || meta_data.status_content_summary || meta_data.status_content}</p>
+        {!image&&<div>
+          <p className="post-content item-eli">{
+            meta_data.content_summary || 
+            meta_data.comment_content || 
+            meta_data.status_content_summary || 
+            meta_data.status_content
+          }</p>
         </div>}
       </div>
     );
   };
   const returnImage = (status={})=>{
     switch (status.status_type) {
-      case 'image':
+      case 'image': // if this is a image status
         return status.thumb_images[0];
-      case 'text':
-        if(status.parent_status){
-          if(status.parent_status.status_type==='image'){
-            return status.parent_status.thumb_images[0];
-          }
-          if(status.parent_status.status_type==='link'){
-            return status.parent_status.link_meta.attachment_url;
-          }
-        } 
+      case 'text': // if this is a text status
+        if(status.parent_status){ // if this parent status is a image status
+          return returnImage(status.parent_status)
+        }
         return ''
+        // if this is a link status
+      case 'link':
+        return status.link_meta.attachment_url;
       default:
         return ''
     }
