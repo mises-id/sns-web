@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useLogin } from './components/PostsIcons/common';
 import { setVisibility } from './actions/app';
 import { Popup } from 'antd-mobile';
+import { isMisesBrowser } from './utils';
 const SetRoute = ()=>{
   const {isLogin} = useLogin()
   return <Router>
@@ -27,7 +28,7 @@ const SetRoute = ()=>{
 }
 const  Download = ()=>{
   // const selector = useSelector((state) => state.user) || {};
-  const isMises = navigator.userAgent.indexOf('Chrome/77.0.3865.116 Mobile Safari/537.36')>-1
+  const isMises = isMisesBrowser()
   return !isMises&&!['/download'].includes(window.location.pathname) ? <>
     <div className='launchApp m-flex'>
       <div className='m-flex-1 m-flex'>

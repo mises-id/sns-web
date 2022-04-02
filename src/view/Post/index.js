@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-04-01 14:00:06
+ * @LastEditTime: 2022-04-02 13:42:31
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -126,9 +126,7 @@ const Post = ({ history = {} }) => {
       return res;
     } catch (error) {
       Loading.hide();
-      if(error==='mongo: no documents in result'){
-        setnotFound(true)
-      }
+      setnotFound(true)
       console.log(error)
     }
   };
