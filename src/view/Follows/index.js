@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-02 12:57:39
+ * @LastEditTime: 2022-04-02 16:54:54
  * @LastEditors: lmk
  * @Description:
  */
@@ -38,7 +38,6 @@ const Follow = ({ history = {} }) => {
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
-  const getUid = localStorage.getItem('uid');
   const storeageKey = `discoverPageCache${user.loginForm&&user.loginForm.uid  ? user.loginForm.uid : ''}`
   const [
     fetchData,
@@ -220,10 +219,12 @@ const Follow = ({ history = {} }) => {
     getMisesAccountFlag();
     // eslint-disable-next-line
   }, [selector.web3Status]);
+  const getOldUid = localStorage.getItem('uid');
   useEffect(() => {
-    if(getUid&&user.loginForm.uid&&user.loginForm.uid!==Number(getUid)){
+    const getUid = localStorage.getItem('uid');
+    console.log('%c storeageKey','color:red',storeageKey,getOldUid)
+    if(user.loginForm.uid===Number(getUid)&&getUid!==getOldUid){
       window.refreshByCacheKey('/home')
-      console.log('%c storeageKey','color:red',storeageKey)
     }
     // eslint-disable-next-line
   }, [storeageKey])
