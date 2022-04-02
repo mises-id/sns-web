@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-01 18:06:50
+ * @LastEditTime: 2022-04-02 09:29:12
  * @LastEditors: lmk
  * @Description:
  */
@@ -221,7 +221,7 @@ const Follow = ({ history = {} }) => {
     // eslint-disable-next-line
   }, [selector.web3Status]);
   useEffect(() => {
-    if(user.loginForm.uid&&user.loginForm.uid!==Number(getUid)){
+    if(getUid&&user.loginForm.uid&&user.loginForm.uid!==Number(getUid)){
       window.refreshByCacheKey('/home')
       console.log('%c storeageKey','color:red',storeageKey)
     }
