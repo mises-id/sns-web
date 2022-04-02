@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-04-01 15:40:09
+ * @LastEditTime: 2022-04-02 17:19:17
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -44,7 +44,7 @@ const Forward = ({ history = {} }) => {
           stayTime: 1500,
           afterClose: () => {
             window.refreshByCacheKey('/home/following')
-            // historyHooks.replace('/home/following')
+            window.history.back()
             setloading(false);
             dispatch(setUserSetting({
               postId:historyState.id,
