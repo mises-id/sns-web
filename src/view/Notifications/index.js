@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-04-02 13:39:20
+ * @LastEditTime: 2022-04-02 16:26:56
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -44,9 +44,8 @@ const Notifications = ({ history }) => {
   //getData
   const [isseting, setisseting] = useState(false);
   const dispatch = useDispatch(null);
-  useEffect(() => {
-    setlastId(last_id);
-    if (!isseting&&dataSource.length>0) {
+  const readData = ()=>{
+    if (dataSource.length>0) {
       uploadNotificationState({ latest_id: dataSource[0].id }).then((res) => {
         dispatch(
           setFollowingBadge({
@@ -54,9 +53,13 @@ const Notifications = ({ history }) => {
             notifications_count: 0,
           })
         );
+        setisseting(true);
       }).catch((error) => {});
-      setisseting(true);
     }
+  }
+  useEffect(() => {
+    setlastId(last_id);
+    if(!isseting) readData()
   }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
@@ -288,8 +291,11 @@ const Notifications = ({ history }) => {
       <PullList
         renderView={renderView}
         data={dataSource}
-        load={fetchData}
-      ></PullList>
+        load={async (e)=>{
+          e==='refresh'&&readData()
+          const res = await fetchData()
+          return res;
+        }}></PullList>
       <CommentsPop
         visible={visible}
         setvisible={setvisible}
