@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-04-01 17:22:45
+ * @LastEditTime: 2022-04-02 11:24:57
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from 'web3'
-import {urlToJson} from "./";
+import {isMisesBrowser, urlToJson} from "./";
 import {setFollowingBadge, setLoginForm, setUserAuth, setUserToken, setWeb3AccountChanged, setWeb3Init, setWeb3ProviderMaxFlag } from '@/actions/user';
 import { store } from "@/stores";
 import { signin } from '@/api/user';
@@ -199,8 +199,7 @@ export default class MisesExtensionController{
   }
   isUnInitMetaMask(){
     // 
-    console.log(navigator.userAgent)
-    if(navigator.userAgent.indexOf('Chrome/77.0.3865.116 Mobile Safari/537.36')===-1){
+    if(!isMisesBrowser()){
       store.dispatch(setVisibility(true))
       return false;
     }

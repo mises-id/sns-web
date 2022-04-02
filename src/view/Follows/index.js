@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-02 09:29:12
+ * @LastEditTime: 2022-04-02 12:57:39
  * @LastEditors: lmk
  * @Description:
  */
@@ -371,7 +371,7 @@ const Follow = ({ history = {} }) => {
     });
     history.push({
       pathname: "/notifications",
-      search: objToUrl({ count: notifitionObj.notifications_count }),
+      search: objToUrl({ notificationsType: 'unread' }),
     });
   };
   const followers = () => {

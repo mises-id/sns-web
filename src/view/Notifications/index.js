@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-03-30 17:07:03
+ * @LastEditTime: 2022-04-02 13:39:20
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -26,7 +26,7 @@ import {
   getNotificationList,
   uploadNotificationState,
 } from "@/api/notifications";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFollowingBadge } from "@/actions/user";
 import { useRef } from "react";
 import { getCommentId, likeComment, removeComment, unlikeComment } from "@/api/comment";
@@ -35,32 +35,27 @@ import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState();
-  const selector = useSelector((state) => state.user) || {};
+  // const selector = useSelector((state) => state.user) || {};
   const [fetchData, last_id, dataSource] = useList(getNotificationList, {
     last_id: lastId,
-    limit: state.count || 20,
+    limit: 20,
+    state: state.notificationsType || 'all',
   });
   //getData
   const [isseting, setisseting] = useState(false);
   const dispatch = useDispatch(null);
   useEffect(() => {
     setlastId(last_id);
-    if (!isseting) {
-      const getUnReadArr = dataSource.filter((val) => val.state === "unread");
-      if (getUnReadArr.length > 0) {
-        const ids = getUnReadArr.map((val) => val.id);
-        uploadNotificationState({ ids })
-          .then((res) => {
-            dispatch(
-              setFollowingBadge({
-                total: selector.badge.total - ids.length,
-                notifications_count: 0,
-              })
-            );
+    if (!isseting&&dataSource.length>0) {
+      uploadNotificationState({ latest_id: dataSource[0].id }).then((res) => {
+        dispatch(
+          setFollowingBadge({
+            total: 0,
+            notifications_count: 0,
           })
-          .catch((error) => {});
-        setisseting(true);
-      }
+        );
+      }).catch((error) => {});
+      setisseting(true);
     }
   }, [dataSource.length]); // eslint-disable-line react-hooks/exhaustive-deps
   // const createPosts = () => history.push({ pathname: "/createPosts" });
