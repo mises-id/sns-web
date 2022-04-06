@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-04-01 17:20:43
+ * @LastEditTime: 2022-04-06 12:49:31
  * @LastEditors: lmk
  * @Description:
  */
@@ -75,7 +75,10 @@ const Home = ({ history, children = [] }) => {
   };
   useDidRecover(() => {
     window.getCachingKeys().forEach(res=>{
-      window.refreshByCacheKey(res);
+      if(['/home'].includes(res)){
+        console.log(res)
+        window.refreshByCacheKey(res);
+      }
     })
   });
   useEffect(() => {
