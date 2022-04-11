@@ -11,8 +11,9 @@ import { Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
+
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
-// export const baseURL = 'http://192.168.1.2:8080/api/v1/'
+
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url http://47.100.235.21:12338
