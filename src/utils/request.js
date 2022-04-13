@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-04-02 14:40:51
+ * @LastEditTime: 2022-04-12 09:19:36
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -11,7 +11,7 @@ import { Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
-export const baseURL = 'https://apiv2.mises.site/api/v1/'
+export const baseURL = 'https://api.alb.mises.site/api/v1/'
 // export const baseURL = 'http://192.168.1.2:8080/api/v1/'
 // create an axios instance
 const request = axios.create({
