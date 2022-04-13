@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-04-06 12:49:31
+ * @LastEditTime: 2022-04-13 17:23:03
  * @LastEditors: lmk
  * @Description:
  */
@@ -75,7 +75,7 @@ const Home = ({ history, children = [] }) => {
   };
   useDidRecover(() => {
     window.getCachingKeys().forEach(res=>{
-      if(['/home'].includes(res)){
+      if(!['/home','/home/discover','/home/following'].includes(res)){
         console.log(res)
         window.refreshByCacheKey(res);
       }
