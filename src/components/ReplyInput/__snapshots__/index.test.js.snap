@@ -1,39 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ReplyInput should render correctly 1`] = `
-<div
-  className="reply-input-box  "
->
+<Fragment>
   <div
-    className="m-line-top reply-input"
+    className="reply-input-box  "
   >
-    <form
-      className="m-flex-1 m-flex "
+    <div
+      className="m-line-top reply-input"
     >
-      <Input
-        className="input"
-        clearable={false}
-        onBlur={[Function]}
-        onFocus={[Function]}
-        placeholder="commentPlaceholder"
-        type="text"
-      />
-      <Button
-        block={true}
-        className="button"
-        disabled={false}
-        ghost={false}
-        htmlType="button"
-        loading={false}
-        prefixCls="za-button"
-        shadow={false}
-        shape="round"
-        size="xs"
-        theme="primary"
+      <form
+        className="m-flex-1 m-flex "
       >
-        send
-      </Button>
-    </form>
+        <Input
+          className="input"
+          clearable={false}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          placeholder="commentPlaceholder"
+          type="text"
+        />
+        <Button
+          block={true}
+          className="button"
+          disabled={false}
+          ghost={false}
+          htmlType="button"
+          loading={false}
+          prefixCls="za-button"
+          shadow={false}
+          shape="round"
+          size="xs"
+          theme="primary"
+        >
+          send
+        </Button>
+      </form>
+    </div>
   </div>
-</div>
+  <div
+    className="reply-input-box-empty"
+  />
+</Fragment>
 `;

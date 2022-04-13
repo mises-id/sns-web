@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-04-12 09:19:36
+ * @LastEditTime: 2022-04-13 17:29:11
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -12,10 +12,9 @@ import { setUserToken } from '@/actions/user';
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
-// export const baseURL = 'http://192.168.1.2:8080/api/v1/'
 // create an axios instance
 const request = axios.create({
-  baseURL, // url = base url + request url http://47.100.235.21:12338
+  baseURL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 100000 // request timeout
 })
