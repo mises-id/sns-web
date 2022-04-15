@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-15 10:42:36
+ * @LastEditTime: 2022-04-15 11:06:22
  * @LastEditors: lmk
  * @Description:
  */
@@ -70,7 +70,8 @@ const Follow = ({ history = {} }) => {
     if (isDiscoverFn()) {
       const start = 0;
       const maxCacheCount = 200;
-      const data = dataSource.slice(start, maxCacheCount);
+      const data = dataSource.slice(start, maxCacheCount)
+      console.log(last_id,downRefreshLastId)
       localStorage.setItem(
         storeageKey,
         JSON.stringify({
