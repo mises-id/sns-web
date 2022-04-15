@@ -12,7 +12,7 @@ import {PersistGate} from 'redux-persist/lib/integration/react';
 import { hot } from 'react-hot-loader/root'
 import {setTheme} from '@/styles/setZarmTheme'
 import { CacheSwitch } from 'react-router-cache-route'
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useLogin } from './components/PostsIcons/common';
 import { setVisibility } from './actions/app';
 import { Popup } from 'antd-mobile';
