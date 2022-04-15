@@ -71,26 +71,26 @@ const DownloadPopUp = ()=>{
   
 
 const App = ()=> {
-  const [isHref, setisHref] = useState(false)
+  // const [isHref, setisHref] = useState(false)
  
   useEffect(() => {
     setTheme()
-    const error = e=>{
-      if(e.message==="Uncaught SyntaxError: Unexpected token '<'" 
-      || (e.reason && ["CSS_CHUNK_LOAD_FAILED","ChunkLoadError"].includes(e.reason.code || e.reason.name))){
-        const pathname = window.location.pathname
-        if(!isHref&&pathname!=='error'){
-          window.location.replace('/error')
-          setisHref(true)
-        }
-      }
-    }
-    window.addEventListener('error',error,true)
-    window.addEventListener('unhandledrejection',error)
-    return ()=>{
-      window.removeEventListener('error',error)
-      window.removeEventListener('unhandledrejection',error)
-    }
+    // const error = e=>{
+    //   if(e.message==="Uncaught SyntaxError: Unexpected token '<'" 
+    //   || (e.reason && ["CSS_CHUNK_LOAD_FAILED","ChunkLoadError"].includes(e.reason.code || e.reason.name))){
+    //     const pathname = window.location.pathname
+    //     if(!isHref&&pathname!=='error'){
+    //       window.location.replace('/error')
+    //       setisHref(true)
+    //     }
+    //   }
+    // }
+    // window.addEventListener('error',error,true)
+    // window.addEventListener('unhandledrejection',error)
+    // return ()=>{
+    //   window.removeEventListener('error',error)
+    //   window.removeEventListener('unhandledrejection',error)
+    // }
     // eslint-disable-next-line
   }, [])
   return <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-04-02 13:42:31
+ * @LastEditTime: 2022-04-15 13:35:58
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -63,6 +63,9 @@ const Post = ({ history = {} }) => {
       setid(state.id);
       getDetail(state.id);
       getCommentList(state.id);
+      if(state.misesid){
+        sessionStorage.setItem('referrer',state.misesid)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.id]);
