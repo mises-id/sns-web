@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-02 16:54:54
+ * @LastEditTime: 2022-04-15 11:06:22
  * @LastEditors: lmk
  * @Description:
  */
@@ -66,16 +66,17 @@ const Follow = ({ history = {} }) => {
   const [userRecommend] = useState([]);
   const [followingLatestArr, setfollowingLatest] = useState([]);
   const { t } = useTranslation();
-  const setdataSourceStorage = ()=>{
+  const setdataSourceStorage = (id)=>{
     if (isDiscoverFn()) {
       const start = 0;
       const maxCacheCount = 200;
-      const data = dataSource.slice(start, maxCacheCount);
+      const data = dataSource.slice(start, maxCacheCount)
+      console.log(last_id,downRefreshLastId)
       localStorage.setItem(
         storeageKey,
         JSON.stringify({
-          last_id,
-          downRefreshLastId,
+          last_id:id,
+          downRefreshLastId:id,
           dataSource: data,
         })
       );

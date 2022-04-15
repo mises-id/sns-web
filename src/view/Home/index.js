@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-04-13 17:23:03
+ * @LastEditTime: 2022-04-15 12:38:34
  * @LastEditors: lmk
  * @Description:
  */
@@ -54,7 +54,9 @@ const Home = ({ history, children = [] }) => {
   const user = useSelector((state) => state.user) || {};
   const { auth, token, badge = {} } = user;
   useEffect(() => {
-    getUserInfo()
+    getUserInfo().catch(err=>{
+      console.log(err)
+    })
   }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = () => {
     if (auth && token) {

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 10:16:14
- * @LastEditTime: 2022-04-01 13:13:35
+ * @LastEditTime: 2022-04-15 14:22:55
  * @LastEditors: lmk
  * @Description: PostsIcon : like comment forward
  */
@@ -15,6 +15,7 @@ import './index.scss'
 import { useLogin } from './common';
 import { useLoginModal } from '@/utils';
 import { Toast } from 'zarm';
+import { useSelector } from 'react-redux';
 /**
  * @description: 
  * @param {Function}forwardPress.type click forward icon
@@ -35,6 +36,7 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
   }
   const forwardPress = e=>hasLogin(e,forwardCallback)
   const likePress = e=>hasLogin(e,likeCallback)
+  const selector = useSelector((state) => state.user) || {};
   const sharetoPress = e=>{
     e.stopPropagation();
     // Toast.show('shareTo')
@@ -43,9 +45,10 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
     if(!navigator.share){
       Toast.show('Browser cannot share website')
     }
+    const misesid = isLogin ? `&misesid=${selector.loginForm.misesid}` : ''
     navigator.share&&navigator.share({
       text: '',
-      url: `${window.location.origin}/post?id=${item.id}`
+      url: `${window.location.origin}/post?id=${item.id}&${misesid}`,
     }).catch(err=>{
       console.log(err)
     })

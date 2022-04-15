@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-03-07 13:55:06
+ * @LastEditTime: 2022-04-15 13:40:59
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -86,5 +86,12 @@ export function shareTwitter(params){
   return request({
     params,
     url:'/share/twitter'
+  })
+}
+export async function getReferralUrl (params){
+  return request({
+    url: '/channel/info',
+    method: 'get',
+    params
   })
 }
