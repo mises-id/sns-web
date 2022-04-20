@@ -11,6 +11,7 @@ const enUS = {
     "follow":'Following',
     "discover":'Discover',
     "me":'Me',
+    "recent":'Recent',
     "followTxt":'follow',
     "followedTxt":'following',
     "createId":"Create/Restore Mises ID",

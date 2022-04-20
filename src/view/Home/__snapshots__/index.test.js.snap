@@ -43,6 +43,21 @@ exports[`Home should render correctly 1`] = `
       <div />
     </TabPanel>
     <TabPanel
+      key="/home/recent"
+      prefixCls="za-tabs"
+      title={
+        <React.Fragment>
+          <span
+            className="unactive"
+          >
+            recent
+          </span>
+        </React.Fragment>
+      }
+    >
+      <div />
+    </TabPanel>
+    <TabPanel
       key="/home/me"
       prefixCls="za-tabs"
       title={

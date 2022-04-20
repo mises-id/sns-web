@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-04-15 12:38:34
+ * @LastEditTime: 2022-04-20 10:00:08
  * @LastEditors: lmk
  * @Description:
  */
@@ -22,6 +22,7 @@ const Home = ({ history, children = [] }) => {
   const [tab, setTab] = useState([
     { path: "/home/following", text: t("follow"), badge: 0 },
     { path: "/home/discover", text: t("discover") },
+    { path: "/home/recent", text: t("recent") },
     { path: "/home/me", text: t("me") },
   ]);
   const [value, setvalue] = useState(localStorage.getItem('tabIndex') || 0);
@@ -37,10 +38,13 @@ const Home = ({ history, children = [] }) => {
         break;
       case "/home/discover":
         index = 1;
+      break;
+      case "/home/recent":
+        index = 2;
         break;
       default:
         getUserInfo();
-        index = 2;
+        index = 3;
         break;
     }
     setvalue(index);

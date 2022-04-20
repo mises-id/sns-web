@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-03-31 09:50:05
+ * @LastEditTime: 2022-04-20 09:59:37
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -38,6 +38,10 @@ const routeConfig = [
 			},
 			{
 				path: '/discover',
+				component: Follows
+			},
+			{
+				path: '/recent',
 				component: Follows
 			},
 			{
