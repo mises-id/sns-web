@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-20 10:17:23
+ * @LastEditTime: 2022-04-20 11:45:58
  * @LastEditors: lmk
  * @Description:
  */
@@ -275,12 +275,10 @@ const Follow = ({ history = {} }) => {
   // Render top recommendations and concerns
   const otherView = () => {
     if(isFollowing){
-      followers()
-      return 
+      return  followers()
     }
     if(isDiscover){
-      recommendation();
-      return
+      return recommendation();
     }
   }
   // Return to recommendation list
@@ -332,6 +330,7 @@ const Follow = ({ history = {} }) => {
   };
   // Return to followers list
   const renderFollowersView = () => {
+    console.log(followingLatestArr,'followingLatestArr')
     const renderView = followingLatestArr.map((val, index) => {
       const {
         avatar = {},
