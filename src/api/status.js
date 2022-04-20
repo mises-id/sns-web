@@ -72,6 +72,15 @@ export function following(params){
   })
 }
 /**
+* @param {*} get recent
+*/
+export function recent(params){
+  return request({
+    params,
+    url:'/status/recent'
+  })
+}
+/**
 * @param {*} discover data
 */
 export function recommend(params){

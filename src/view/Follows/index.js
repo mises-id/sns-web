@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-15 11:06:22
+ * @LastEditTime: 2022-04-20 11:09:40
  * @LastEditors: lmk
  * @Description:
  */
 import { useEffect, useState } from "react";
 import PullList from "@/components/PullList";
-import { following, followingLatest, recommend } from "@/api/status";
+import { following, followingLatest, recent, recommend } from "@/api/status";
 import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useTranslation } from "react-i18next";
@@ -30,11 +30,16 @@ import { useDidRecover } from "react-router-cache-route";
 const Follow = ({ history = {} }) => {
   const isDiscoverFn = ()=> {
     const isDiscoverPage = window.location.pathname || "";
-    return isDiscoverPage.indexOf("discover") > -1 
+    return !['/home/following','/home/recent'].includes(isDiscoverPage)
   }
   const user = useSelector((state) => state.user) || {};
-  const [isDiscover, setisDiscover] = useState(false);
-  const fn = isDiscoverFn() ? recommend : following;
+  const [isFollowing] = useState(window.location.pathname==='/home/following');
+  const [isDiscover] = useState(window.location.pathname==='/home/discover');
+  const fn = {
+    '/home/following': following,
+    '/home/recent': recent,
+    '/home/discover': recommend,
+  }[window.location.pathname]
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
@@ -112,7 +117,8 @@ const Follow = ({ history = {} }) => {
   
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
-    setisDiscover(isDiscoverFn());
+    // const isFollow
+    // setisDiscover(isDiscoverFn());
     setloading(false);
 
     // getFollowingLatest()
@@ -125,7 +131,7 @@ const Follow = ({ history = {} }) => {
     //   })
     // }
     // eslint-disable-next-line
-  }, [isDiscover]);
+  }, [isFollowing]);
   useDidRecover(() => {
     getFollowingLatest();
   });
@@ -267,7 +273,16 @@ const Follow = ({ history = {} }) => {
   };
 
   // Render top recommendations and concerns
-  const otherView = () => !isDiscover ? followers() : recommendation();
+  const otherView = () => {
+    if(isFollowing){
+      followers()
+      return 
+    }
+    if(isDiscover){
+      recommendation();
+      return
+    }
+  }
   // Return to recommendation list
   const renderRecommendView = () => {
     const renderView = userRecommend.map((val, index) => {
@@ -405,7 +420,7 @@ const Follow = ({ history = {} }) => {
         <div style={{ textAlign: "center", padding: "20px" }}>
           <ActivityIndicator type="spinner" />
         </div>
-      ) : !isDiscover && !user.token ? (
+      ) : isFollowing && !user.token ? (
         btnElement()
       ) : (
         <PullList

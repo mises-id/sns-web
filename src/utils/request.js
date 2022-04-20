@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-04-13 17:29:11
+ * @LastEditTime: 2022-04-20 10:40:22
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -12,6 +12,7 @@ import { setUserToken } from '@/actions/user';
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
+// export const baseURL = 'http://192.168.1.3:8080/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url
