@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-20 11:09:40
+ * @LastEditTime: 2022-04-20 10:17:23
  * @LastEditors: lmk
  * @Description:
  */
@@ -136,8 +136,8 @@ const Follow = ({ history = {} }) => {
     getFollowingLatest();
   });
   const getFollowingLatest = () => {
-    const isDiscoverFlag = isDiscoverFn();
-    if (!isDiscoverFlag && user.token) {
+    // const isDiscoverFlag = isDiscoverFn();
+    if (isFollowing && user.token) {
       // follow latest user list
       followingLatest()
         .then((res) => {
