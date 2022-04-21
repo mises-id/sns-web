@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-04-15 10:42:19
+ * @LastEditTime: 2022-04-21 17:59:45
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -49,7 +49,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
       if (res) {
         setisOnceLoad(false)
         const last_id = res.pagination.last_id;
-        if(type==='refresh'&&res.listType.type==='refreshList'&&res.data.length===0){
+        if(res.listType.isCache){
           getSuccess&&getSuccess(last_id)
           return false;
         }
@@ -63,8 +63,11 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
             setlastId(last_id);
           }
         }
-        getSuccess&&getSuccess(last_id)
         console.log('last_id',last_id)
+        if(res.listType.isCache){
+          getSuccess&&getSuccess(last_id)
+          return false;
+        }
         return Promise.resolve(true)
       }
     } catch (error) {

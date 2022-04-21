@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-20 11:45:58
+ * @LastEditTime: 2022-04-21 17:45:03
  * @LastEditors: lmk
  * @Description:
  */
@@ -59,7 +59,7 @@ const Follow = ({ history = {} }) => {
       limit: 10,
       last_id: lastId,
     },
-    { type: isDiscoverFn() ? "refreshList" : "refresh" }
+    { type: isDiscoverFn() ? "refreshList" : "refresh",isCache: isDiscoverFn()}
   );
   useSetDataSourceAction(dataSource, setdataSource);
   const [notifitionObj, setnotifitionObj] = useState({
