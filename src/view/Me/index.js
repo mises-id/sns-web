@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-03-29 16:10:13
+ * @LastEditTime: 2022-05-16 10:42:50
  * @LastEditors: lmk
  * @Description:
  */
@@ -20,7 +20,8 @@ import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
-
+import Avatar from "@/components/NFTAvatar";
+import 'antd-mobile/es/global/global.css';
 const Myself = ({ history }) => {
   const { t } = useTranslation();
   const [loginForm, setLoginForm] = useState({});
@@ -229,24 +230,15 @@ const Myself = ({ history }) => {
       window.location.reload();
     }
   };
-  // const getAirdrop = (e)=>{
-  //   e.stopPropagation()
-  //   history.push(loginForm.is_airdropped ? '/airdropSuccess':`/airdrop?isFrom=homePage`)
-  // }
   const myselfView = () => {
     return (
       <div className="m-layout">
         <div className="m-padding-lr15 m-margin-top10  m-bg-fff">
           <Cell
-            iconSize={60}
-            icon={loginForm.avatar && loginForm.avatar.medium}
+            icon={<Avatar avatarItem={loginForm.avatar} size="60px"/>}
             label={username(loginForm)}
             labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
             onPress={userInfo}
-            // subTitle={loginForm.airdrop_status ? <div onClick={getAirdrop} className="getAirdrop">
-            //   <span>Get Airdrop</span>
-            //   <RightOutline fontSize={7}/>
-            // </div> : ''}
           />
           {list.map((val, index) => (
             <Cell

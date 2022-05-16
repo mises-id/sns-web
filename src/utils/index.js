@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-04-02 11:24:28
+ * @LastEditTime: 2022-05-12 18:21:59
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -129,9 +129,11 @@ export function useRouteState(history){
 */
 export function useChangePosts(setdataSource,dataSource,cb){
   const success = ()=>{
-    const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
-    setdataSource(data)
-    cb&&cb()
+    if(cb){
+      const data = Array.isArray(dataSource) ? [...dataSource] : {...dataSource}
+      setdataSource(data)
+      cb()
+    }
   }
   const [likeLoading, setlikeLoading] = useState(false)
   const setLike = async val=>{
@@ -224,13 +226,13 @@ export function getShareWithObj(value){
   return shareWith.find(val=>val.value===value) || {}
 }
 
-export function username(val={}){
+export function username(val={},defaultName="Anonymous"){
   if(val.username) return val.username;
   if(val.misesid&&val.misesid.length>26){
     const name = `${shortenAddress(val.misesid)}`
     return name.replace('did:mises:','')
   }
-  return "Anonymous"
+  return defaultName
 }
 export function shortenAddress(
   address = ''

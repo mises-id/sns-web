@@ -1,0 +1,11 @@
+.fixed-navbar-mask{
+  height: 45px;
+}
+.fixed-navbar{
+  position: fixed;
+  top: var(--window-layout-height);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background: white;
+}

@@ -1,0 +1,13 @@
+
+.nft-tag{
+  position:absolute;
+  top: calc(var(--avatatSize) - (var(--size) * 0.60 / 2));
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--size);
+}
+.nft-avatar{
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+}

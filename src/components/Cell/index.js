@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2022-03-03 15:55:48
+ * @LastEditTime: 2022-05-12 10:15:18
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -43,7 +43,10 @@ const Cell = ({
     >
       <div className="m-flex">
         {showIcon && (
-          <Image size={iconSize} shape={shape} source={icon}></Image>
+          <>
+            {typeof icon === 'string'&&<Image size={iconSize} shape={shape} source={icon} />}
+            {typeof icon !== 'string'&&icon}
+          </>
         )}
         <div className={`${showIcon ? "m-margin-left13" : ""}`}>
           <span className={`m-colors-333 m-font16`} style={labelStyle}>

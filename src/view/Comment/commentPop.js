@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-02-14 10:04:06
+ * @LastEditTime: 2022-05-12 18:59:26
  * @LastEditors: lmk
  * @Description:
  */
@@ -63,11 +63,18 @@ const CommentsPop = (
   const [setrefreshFlag, setrefresh] = useState(false); // refresh status
   const loginModal = useLoginModal();
   const history = useHistory()
+  const idForm = {}
+  if(comment.nft_asset_id){
+    idForm.nft_asset_id = comment.nft_asset_id
+  }
+  if(comment.status_id){
+    idForm.status_id = status_id || comment.status_id
+  }
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
-    status_id: state.id || comment.state_id,
     topic_id: comment.id,
     limit: 20,
     last_id: lastId,
+    ...idForm,
   });
   useEffect(() => {
     setlastId(last_id);
@@ -269,7 +276,7 @@ const CommentsPop = (
     submit&&submit(e);
     createComment({
       content: commentContent.value,
-      status_id: status_id  || comment.state_id,
+      ...idForm,
       parent_id: selectItem.id || "",
     }).then((res) => {
       commentContent.onChange("");

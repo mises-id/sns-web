@@ -1,0 +1,151 @@
+.NFT-detail{
+  &-img{
+    width: 100%;
+    height: calc(100vw - 30px);
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  &-content{
+    padding: 15px;
+  }
+  &-like{
+    position: absolute;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    bottom: -50px;
+  }
+  &-title{
+    padding: 30px 0 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333; 
+  }
+  &-descitem{
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 20px 0 ;
+    &.grid-cols-3{
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .descitem{
+      text-align: center;
+      line-height: 1;
+      width: 100%;
+      &:nth-of-type(2){
+        position: relative;
+        &::after, &::before{
+          content: "";
+          width: 1px;
+          height: 40px;
+          background: #EEEEEE;
+          position: absolute;
+          top: 10px;
+        }
+        &::after{
+          left: 0;
+        }
+        &::before{
+          right: 0;
+        }
+      }
+      p{
+        &:first-child{
+          font-size: 16px;
+          font-weight: bold;
+          color: #333333
+        }
+        &:last-child{
+          margin-top: 15px;
+          font-size: 13px;
+          color: #666
+        }
+      }
+    }
+  }
+
+  .link{
+    font-size: 12px;
+    font-weight: 400;
+    color: #666666;
+    justify-content: end;
+    padding-top: 15px;
+    a{
+      color: #5D61FF;
+    }
+    img{
+      width: 4px;
+      height: 7px;
+      display: inline-block;
+      margin-left: 4px;
+    }
+  }
+  &-tab{
+    margin-top: 10px;
+    &-title{
+      font-size: 13px;
+      color: #666666;
+    }
+  }
+  .NFT-detail-tab-title{
+    display: block;
+    padding: 9px 0;
+    font-weight: bold;
+  }
+  .adm-tabs-tab-active{
+    .NFT-detail-tab-title{
+      color: var(--adm-color-primary);
+    }
+  }
+  .tabContainer{
+    position: sticky;
+    top: 0;
+    z-index: 79;
+    background: #ffffff;
+  }
+  .adm-tabs-tab-line{
+    height: 1px;
+  }
+}
+.tab-container{
+  .m-layout{
+    height: auto;
+    min-height: 400px;
+    overflow: hidden;
+  }
+}
+.user-item{
+  padding: 17px 15px 0;
+  &:last-child{
+    padding-bottom: 20px;
+  }
+}
+.activity-user{
+  padding: 25px 15px 0;
+  &:last-child{
+    padding-bottom: 20px;
+  }
+  .activity-user-content{
+    margin-left: 10px;
+  }
+  .activity-user-name{
+    font-size: 13px;
+    font-weight: 400;
+    color: #111111;
+    span{
+      font-weight: bold;
+    }
+  }
+  .activity-user-time{
+    font-size: 11px;
+    font-weight: 400;
+    margin-top: 9px;
+    line-height: 1;
+    color: #666666;
+  }
+}
+.comment-view{
+  min-height: 400px;
+  padding-bottom: 60px;
+}

@@ -10,7 +10,8 @@
   position: relative;
   // min-height: 100vh;
   // z-index: 11111;
-  background: white;
+  height: calc(100vh - var(--window-layout-height));
+  overflow-y: auto;
 }
 .nav-icon{
   width: 30px;
@@ -77,17 +78,11 @@
     background-color: white;
   }
 }
-.tab-header{
-  .za-tabs__tablist{
-    width: 180px;
-  }
-  &::after{
-    display: none;
-  }
-}
 .user-post-content{
   .m-layout{
-    height: calc(100vh - 90px - 132px - var(--window-layout-height));
+    height: auto;
+    min-height: 400px;
+    overflow: hidden;
   }
 }
 .user-follow-page{
@@ -100,4 +95,90 @@
   background-position: top;
   background-size: 100vw 115px;
   background-repeat: no-repeat;
+  background-color: white;
+}
+.intro-content{
+  background: #F8F8F8;
+  border-radius: 5px;
+  padding: 15px 26px;
+  margin:  0 15px;
+  position: relative;
+}
+.intro-txt{
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 19px;
+}
+.quotes{
+  width: 8px;
+  position: absolute;
+  &.left{
+    top: 11px;
+    left: 7px;
+  }
+  &.right{
+    bottom: 11px;
+    right: 7px;
+  }
+}
+.NFT-list{
+  padding: 15px;
+  .NFT-title{
+    font-size: 19px;
+    font-weight: bold;
+    color: #333333;
+    margin-top: 4px;
+  }
+}
+.nft-list-items{
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  margin-top: 18px;
+  .grid-item{
+    img{
+      width: 100%;
+      height: calc((100vw - 60px) / 3);
+    }
+  }
+}
+.nft-name{
+  margin-top: 7px;
+  padding-right: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333333;
+  width: calc((100vw - 60px) / 3);
+}
+.view-more{
+  width: 165px;
+  margin: 5px auto 0;
+  padding-bottom: 20px;
+  span{
+    font-size: 12px;
+  }
+  img{
+    width:4px;
+    margin-left: 5px;
+  }
+}
+.tab-header{
+  position: sticky;
+  top: 45px;
+  z-index: 100;
+  background: white;
+  .adm-tabs-tab-active{
+    font-size: 19px;
+    font-weight: bold;
+    color: #333333;
+  }
+}
+.tab-content{
+  margin-top: 10px;
+}
+.adm-tabs{
+  --active-line-height: 4px;
 }

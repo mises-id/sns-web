@@ -17,15 +17,16 @@ exports[`UserInfo should render correctly 1`] = `
         rightChild={
           <div
             className="m-position-relative"
+            onClick={[Function]}
           >
             <input
               accept="image/png,image/jpeg"
-              className="avatar-input m-position-absolute"
+              className="avatar-input hidden"
               onChange={[Function]}
               type="file"
             />
-            <Image
-              size={35}
+            <NFTAvatar
+              size="35px"
             />
           </div>
         }
@@ -88,13 +89,13 @@ exports[`UserInfo should render correctly 1`] = `
       />
       <Cell
         className="m-padding-lr15 m-padding-tb19"
-        label="address"
+        label="intro"
         rightChild={
           <Input
             className="userinfo-input"
             clearable={false}
             onChange={[Function]}
-            placeholder="addressPlaceholder"
+            placeholder="introPlaceholder"
             type="text"
           />
         }
@@ -231,5 +232,77 @@ exports[`UserInfo should render correctly 1`] = `
       ]
     }
   />
+  <ForwardRef(forwardRef)
+    actions={
+      Array [
+        Object {
+          "onClick": [Function],
+          "text": "Avatar",
+        },
+        Object {
+          "onClick": [Function],
+          "text": "Avatar-NFT",
+        },
+      ]
+    }
+    onCancel={[Function]}
+    onMaskClick={[Function]}
+    spacing={true}
+    visible={false}
+  />
+  <Popup
+    bodyStyle={
+      Object {
+        "height": "100vh",
+      }
+    }
+    visible={false}
+  >
+    <NavBar
+      backArrow={false}
+      left={
+        <span
+          onClick={[Function]}
+        >
+          cancel
+        </span>
+      }
+      right={
+        <div
+          style={
+            Object {
+              "display": "inline-block",
+              "width": "61px",
+            }
+          }
+        >
+          <Button
+            block={true}
+            disabled={false}
+            ghost={false}
+            htmlType="button"
+            loading={false}
+            onClick={[Function]}
+            prefixCls="za-button"
+            shadow={false}
+            shape="round"
+            size="xs"
+            theme="primary"
+          >
+            done
+          </Button>
+        </div>
+      }
+    />
+    <div
+      className="pull-list"
+    >
+      <PullList
+        data={Array []}
+        load={[Function]}
+        renderView={[Function]}
+      />
+    </div>
+  </Popup>
 </div>
 `;

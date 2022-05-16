@@ -1,14 +1,20 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-07 23:23:36
+ * @LastEditTime: 2022-05-10 16:21:49
+ * @LastEditors: lmk
+ * @Description: 
+ */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import enUS from './enUS'
+import enUS from './enUS.json'
 const resources = {
-  enUS  //English lng
+  enUS
 }
 
 i18n.use(initReactI18next) // passes i18n down to react-i18next
 .init({
   resources,
-  debug:true,
   fallbackLng:'enUS',
   lng: 'enUS',
   keySeparator: false, // we do not use keys in form messages.welcome

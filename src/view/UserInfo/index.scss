@@ -25,3 +25,77 @@
 body .za-button--primary.za-button--loading .za-activity-indicator.za-activity-indicator--circular circle{
   stroke:var(--theme-primary)
 }
+.NFT-container{
+  padding:0 15px;
+}
+.NFT-select{
+  &-items{
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+  }
+  &-item{
+    width: 100%;
+    &-img{
+      width: 100%;
+      height: calc((100vw - 60px) / 3);
+      border-radius: 10px;
+      display: block;
+    }
+    &-img-box{
+      margin-top: 18px;
+      margin-bottom: 7px;
+      position: relative;
+      .active-image{
+        transition: all 0.3s;
+        opacity: 0;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 33;
+      }
+      &.active{
+        .active-image{
+          opacity: 1;
+        }
+        &::after{
+          content: "";
+          width: calc(100% + 10px);
+          height: calc(100% + 10px);
+          border: 1px solid var(--button-primary-background);
+          position: absolute;
+          left: -5px;
+          top: -5px;
+          border-radius: 10px;
+        }
+        &::before{
+          content: "";
+          width:100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          position: absolute;
+          left: 0;
+          top: 0;
+          border-radius: 10px;
+        }
+      }
+    }
+    &-title{
+      font-size: 12px;
+      font-weight: 400;
+      color: #333333;
+    }
+  }
+  &-series-title{
+    font-size: 19px;
+    font-family: SF UI Display;
+    font-weight: bold;
+    margin-top: 25px;
+    color: #333333;
+  }
+}
+.pull-list{
+  border: 1px solid var(--adm-border-color);
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-04-02 16:26:56
+ * @LastEditTime: 2022-05-16 09:16:09
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -32,6 +32,7 @@ import { useRef } from "react";
 import { getCommentId, likeComment, removeComment, unlikeComment } from "@/api/comment";
 import { Modal } from "zarm";
 import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
+import Avatar from '@/components/NFTAvatar'
 const Notifications = ({ history }) => {
   const [lastId, setlastId] = useState("");
   const state = useRouteState();
@@ -167,14 +168,13 @@ const Notifications = ({ history }) => {
   //render item
   const renderView = (val = {}, index) => {
     const user = val.user || {};
-    const avatar = user.avatar ? user.avatar.medium : "";
     return (
       <div
         className="item m-flex m-line-bottom"
         key={index}
         onClick={() => detail(val)}
       >
-        <Image size={40} source={avatar} onClick={e=>userDetail(e,user)}></Image>
+        <Avatar avatarItem={user.avatar} size="40px" onClick={e=>userDetail(e,user)}/>
         <div className="avatar-item m-flex-1" style={{width:0}}>
           <p className="user-name m-colors-111">{username(user)}</p>
           {notificationsType(val)}
@@ -241,6 +241,7 @@ const Notifications = ({ history }) => {
     //type :new_comment, new_like, new_fans, new_forward
     switch (val.message_type) {
       case "new_like_status":
+      case "new_like_nft":
       case "new_like_comment":
         return (
           <div className="like-icon">

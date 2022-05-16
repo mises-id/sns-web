@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-03-30 17:28:26
+ * @LastEditTime: 2022-05-13 16:57:25
  * @LastEditors: lmk
  * @Description:
  */
@@ -101,7 +101,7 @@ const PostItem = ({
               from_type: val.parent_status.from_type,
               created_at: val.parent_status.created_at,
             }}
-            size={30}
+            size="30px"
             btnType={val.parent_ststus_is_black ? 'block' : btnType}
             followed={() => changeFollow(val, !!val.parent_status)}
           />

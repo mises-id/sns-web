@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-04-02 17:19:17
+ * @LastEditTime: 2022-05-12 10:50:45
  * @LastEditors: lmk
  * @Description: Forward page
  */
@@ -98,15 +98,14 @@ const Forward = ({ history = {} }) => {
             <div className="m-bg-fff m-margin-top10">
               <div className="m-padding10">
                 <UserHeader
-                  size={30}
+                  size="30px"
                   item={{
                     ...item.user,
                     from_type: item.from_type,
                     created_at: item.created_at,
                     is_public: true,
                   }}
-                  btnType="empty"
-                ></UserHeader>
+                  btnType="empty" />
                 {item.content && (
                   <p className="itemContent m-font13 m-margin-tb10 item-eli" dangerouslySetInnerHTML={{ __html: getLink(item.content) }}>
                   </p>

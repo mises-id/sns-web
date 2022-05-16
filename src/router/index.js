@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-04-20 09:59:37
+ * @LastEditTime: 2022-05-10 14:25:23
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -26,6 +26,8 @@ import Me from '@/view/Me'
 import UserInfo from '@/view/UserInfo'
 import Following from '@/view/Following'
 import Download from '@/view/Download'
+import NFTPage from '@/view/NFT'
+import NFTDetail from '@/view/NFTDetail'
 const routeConfig = [
 	{
 		path: '/home',
@@ -117,6 +119,14 @@ const routeConfig = [
 	{
 		path: '/download',
 		component: Download,
+	},
+	{
+		path: '/NFT',
+		component: NFTPage,
+	},
+	{
+		path: '/NFTDetail',
+		component: NFTDetail,
 	}
 ]
 
@@ -160,4 +170,8 @@ export const unAuthRoute = [{
 {
 	path: '/error',
 	component: Error,
+},
+{
+	path: '/NFTDetail',
+	component: NFTDetail,
 }]

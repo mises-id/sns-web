@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-04-02 11:24:57
+ * @LastEditTime: 2022-05-06 10:57:12
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -25,6 +25,7 @@ export default class MisesExtensionController{
   startNum = 10000;
   getMax = 10;
   getNum = 0;
+  switchNetworkLoading = false;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor (){
     setTimeout(() => {
@@ -110,6 +111,9 @@ export default class MisesExtensionController{
         call: 'mises_getAddressToMisesId',
         params: 1,
         inputFormatter: [null]
+      },{
+        name:'getCollectibles',
+        call: 'mises_getCollectibles'
       }]
     })
     store.dispatch(setWeb3Init(true))
@@ -126,7 +130,6 @@ export default class MisesExtensionController{
       return false;
     }
     window.ethereum.on('accountsChanged',async res=>{
-      console.log(res);
       if(res.length){
         store.dispatch(setWeb3AccountChanged(true))
         await this.resetAccount(res[0])
@@ -160,6 +163,9 @@ export default class MisesExtensionController{
     })
     window.ethereum.on('restoreAccount',res=>{
       console.log(res,'restoreAccount')
+    })
+    window.ethereum.on('unlocked',res=>{
+      console.log(res,'unlocked')
     })
   }
   resetApp(){
@@ -224,13 +230,16 @@ export default class MisesExtensionController{
     console.log('resetUser')
   }
   connect(userid){
-    console.log('connect')
     return this.web3.misesWeb3.connect({
       domain: 'mises.site', //
       appid:this.appid,
       userid,
       permissions:[]
     })
+  }
+  // getcollectibles
+  getCollectibles(){
+    return this.web3.misesWeb3.getCollectibles()
   }
   disconnect(userid){
     console.log('disconnect')
@@ -265,6 +274,8 @@ export default class MisesExtensionController{
       if(!flag) return Promise.reject()
       await this.init()
       const res = await this.web3.misesWeb3.requestAccounts();
+      const getCollectibles = await this.getCollectibles()
+      console.log(getCollectibles)
       const {mises_id} = urlToJson(`?${res.auth}`);
       await this.connect(mises_id)
       return {

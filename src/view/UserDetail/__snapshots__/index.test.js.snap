@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UserDetail should render correctly 1`] = `
-<div>
+<Fragment>
   <div
     className="app-container user-detail"
   >
@@ -29,8 +29,10 @@ exports[`UserDetail should render correctly 1`] = `
         <div
           className="avatar-box"
         >
-          <Image
-            size={75}
+          <NFTAvatar
+            NFTTagSize="48px"
+            onClick={[Function]}
+            size="75px"
           />
         </div>
         <div
@@ -106,5 +108,5 @@ exports[`UserDetail should render correctly 1`] = `
     spacing={true}
     visible={false}
   />
-</div>
+</Fragment>
 `;

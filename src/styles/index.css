@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root:root {
+  --adm-color-primary:#5D61FF;
+  --adm-border-color:#EEEEEE;
+  --active-line-height:1px;
+  --fixed-active-line-width:9px;
+}
+.adm-tabs-tab-list{
+  height: 50px;
+}

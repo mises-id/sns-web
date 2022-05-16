@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-04-15 13:40:59
+ * @LastEditTime: 2022-05-13 09:30:00
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -92,6 +92,96 @@ export async function getReferralUrl (params){
   return request({
     url: '/channel/info',
     method: 'get',
+    params
+  })
+}
+
+/**
+ * @description: Get NFT list of users
+ * @param {*} params
+ * @return {*}
+ */
+export async function getUserDetailNFTAsset (params){
+  return request({
+    url: `/user/${params.uid}/nft_asset`,
+    params
+  })
+}
+/**
+ * @description: get nft list
+ * @param {*} params
+ * @return {*}
+ */
+export async function getNFTAsset(params){
+  return request({
+    url: `/user/${params.uid}/nft_asset`,
+    params
+  })
+}
+/**
+ * @description: get nft detail
+ * @param {*} id
+ * @return {*}
+ */
+export async function getNFTDetail(id){
+  return request({
+    url: `/nft_asset/${id}`
+  })
+}
+/**
+ * @description: like nft
+ * @param {*} id
+ * @return {*}
+ */
+export async function likeNFT(id){
+  return request({
+    url: `/nft_asset/${id}/like`,
+    method:'post'
+  })
+}
+/**
+ * @description: unlike nft
+ * @param {*} id
+ * @return {*}
+ */
+export async function unlikeNFT(id){
+  return request({
+    url: `/nft_asset/${id}/like`,
+    method:'delete'
+  })
+}
+
+/**
+ * @description: activity nft
+ * @param {*} id
+ * @return {*}
+ */
+ export async function NFTEvent(params){
+  return request({
+    url: `/nft_asset/${params.id}/event`,
+    params
+  })
+}
+
+/**
+ * @description: activity nft
+ * @param {*} id
+ * @return {*}
+ */
+ export async function NFTLikeList(params){
+  return request({
+    url: `/nft_asset/${params.id}/like`,
+    params
+  })
+}
+/**
+ * @description: activity nft
+ * @param {*} id
+ * @return {*}
+ */
+ export async function getMyNFTAsset(params){
+  return request({
+    url: `/user/nft_asset`,
     params
   })
 }

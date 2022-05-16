@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-04-21 17:45:03
+ * @LastEditTime: 2022-05-12 10:22:09
  * @LastEditors: lmk
  * @Description:
  */
@@ -330,7 +330,6 @@ const Follow = ({ history = {} }) => {
   };
   // Return to followers list
   const renderFollowersView = () => {
-    console.log(followingLatestArr,'followingLatestArr')
     const renderView = followingLatestArr.map((val, index) => {
       const {
         avatar = {},

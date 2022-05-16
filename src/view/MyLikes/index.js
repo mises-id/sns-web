@@ -24,11 +24,11 @@ const MyLikes = ({ history }) => {
     limit: 20,
     last_id: lastId,
   });
-  useSetDataSourceAction(dataSource, setdataSource,'status')
-  //getData
   useEffect(() => {
     setlastId(last_id);
   }, [last_id]);
+  useSetDataSourceAction(dataSource, setdataSource,'status')
+  //getData
   const { setLike, followPress } = useChangePosts(setdataSource, dataSource);
   const { t } = useTranslation();
   //render item
