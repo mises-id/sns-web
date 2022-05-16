@@ -81,9 +81,12 @@
     "airdropSuccessContent":"You have receive your Airdrop, thanks for your support!",
     "unloginTitle":"Connect to your Mises ID to receive content from your Following",
     "NFTPageTitle": "User's NFT",
+    "MyNFTPageTitle": "My NFT",
     "NFTDetailPageTitle": "NFT Detail",
     "NFTDetailLike":"Like",
     "NFTDetailComment":"Comment",
-    "NFTDetailActivity":"Activity"
+    "NFTDetailActivity":"Activity",
+    "NFTEmpty": "No NFTs yet",
+    "importNFT": "Import your NFT List from Wallet"
   }
 }

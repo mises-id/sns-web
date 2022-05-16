@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-13 17:07:57
+ * @LastEditTime: 2022-05-16 17:42:43
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -250,7 +250,7 @@ const UserInfo = (props) => {
       const slugArr = [];
       dataSource.forEach((item) => {
         const {
-          collection: { slug },
+          collection: { slug,name },
         } = item;
         const hasSlug = slugArr.find((val) => val.slugName === slug);
         // group by slug
@@ -258,7 +258,7 @@ const UserInfo = (props) => {
           hasSlug.list.push(item);
         } else {
           slugArr.push({
-            slugName: slug,
+            slugName: name,
             list: [item],
           });
         }

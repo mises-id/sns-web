@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-16 11:08:46
+ * @LastEditTime: 2022-05-16 18:10:17
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -10,10 +10,11 @@ import { useTranslation } from "react-i18next";
 import "./index.scss";
 import comment_NFT from '@/images/comment_NFT.png'
 import like_NFT from '@/images/like_NFT.png'
+import importIcon from '@/images/Import.png'
 import Navbar from "@/components/NavBar";
 import PullList from "@/components/PullList";
 import { objToUrl, useList, useRouteState } from "@/utils";
-import { Image } from "antd-mobile";
+import { Button, Image } from "antd-mobile";
 import { getMyNFTAsset, getNFTAsset } from "@/api/user";
 const NFTPage = ({history}) => {
   const {t} = useTranslation();
@@ -72,14 +73,14 @@ const NFTPage = ({history}) => {
     if(dataSource.length>0){
       const slugArr = [];
       dataSource.forEach(item => {
-        const {collection:{slug}} = item;
+        const {collection:{slug,name}} = item;
         const hasSlug = slugArr.find(val=>val.slugName===slug)
         // group by slug
         if(hasSlug){
           hasSlug.list.push(item)
         }else{
           slugArr.push({
-            slugName:slug,
+            slugName:name,
             list:[item]
           })
         }
@@ -88,15 +89,35 @@ const NFTPage = ({history}) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource.length])
-  
+  // import NFT
+  const importWallet = ()=>{
+    window.mises.NFTPage()
+  }
+  const [loading, setLoading] = useState(true);
   return (
     <div>
-      <Navbar title={t("NFTPageTitle")} />
+      <Navbar title={t(!state.uid ? 'MyNFTPageTitle' : "NFTPageTitle")} />
       <PullList
         renderView={renderView}
         data={NFTData}
-        load={fetchData}
-      ></PullList>
+        emptyTxt="NFTEmpty"
+        load={async (res)=>{
+          try {
+            setLoading(true)
+            await fetchData(res)
+            setLoading(false)
+          } catch (error) {
+            setLoading(false)
+            return Promise.reject(error)
+          }
+        }}>
+          {NFTData.length===0&&!loading&&<div className="NFTEmpty">
+            <Button shape="rounded" color="primary" className="block" onClick={importWallet}>
+              <img src={importIcon} alt="" className="importIcon"/>
+              {t('importNFT')}
+            </Button>
+          </div>}
+      </PullList>
     </div>
   );
 };

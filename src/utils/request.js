@@ -1,14 +1,15 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-05-16 15:03:55
+ * @LastEditTime: 2022-05-16 15:29:16
  * @LastEditors: lmk
  * @Description: common request
  */
 import axios from 'axios'
 import { store } from "@/stores";
-import { Toast } from 'zarm';
+import { Modal, Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
+
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
@@ -70,12 +71,15 @@ request.interceptors.response.use(
 const reject = ({code,message})=>{
   if(code===403002){
     invalidToken()
+    return
   }
   if(code===401000){
     invalidAuth()
+    return
   }
   if(code===400000){
     invalidAuth()
+    return
   }
   console.log(code);
   Toast.show(message|| 'error')
@@ -88,6 +92,12 @@ const invalidToken = ()=>{
 const invalidAuth = ()=>{
   window.mises.resetUser()
   store.dispatch(setUserToken(''))
-  window.location.replace('/home/me')
+  Modal.alert({
+    title: 'Message',
+    content: 'Connection failed, please reconnect',
+    onCancel: () => {
+      window.location.replace('/home/me')
+    }
+  })
 }
 export default request

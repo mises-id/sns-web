@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-05-06 10:57:12
+ * @LastEditTime: 2022-05-16 16:50:42
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -93,6 +93,9 @@ export default class MisesExtensionController{
       },{
         name:'openRestore',
         call: 'mises_openRestore'
+      },{
+        name:'openNFTPage',
+        call: 'mises_openNFTPage'
       },{
         name:'getActive',
         call: 'mises_getActive'
@@ -351,5 +354,11 @@ export default class MisesExtensionController{
       console.log(error,'isActive')
       return Promise.reject(error || 'Wallet not activated')
     }
+  }
+  async NFTPage(){
+    const flag = await this.isInitMetaMask();
+    if(!flag) return Promise.reject()
+    await this.init()
+    this.web3.misesWeb3.openNFTPage()
   }
 }

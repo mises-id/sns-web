@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-05-16 14:00:05
+ * @LastEditTime: 2022-05-16 15:37:59
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -34,7 +34,7 @@ let mounted = true;
  * @param {*}isAuto:can you auto load
  * @return {*} element
  */
-const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess }) => {
+const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess,children,emptyTxt }) => {
   const pullRef = useRef();
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
   const [loading, setLoading] = useState(LOAD_STATE.normal);
@@ -131,7 +131,8 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
       >
         {loading !== 2 && !isOnceLoad && otherView && otherView()}
         {data.map(renderView)}
-        {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty></Empty>}
+        {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty emptyTxt={emptyTxt}></Empty>}
+        {children}
         {/* {loading===3&&data.length >0&&<div className="pull-empty">-- No more data --</div>} */}
       </Pull>
     </>

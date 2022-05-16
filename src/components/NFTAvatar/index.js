@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-05-09 17:53:04
- * @LastEditTime: 2022-05-13 16:56:17
+ * @LastEditTime: 2022-05-16 15:21:49
  * @LastEditors: lmk
  * @Description: 
  */
@@ -10,7 +10,7 @@ import React from 'react';
 import './index.scss';
 import NFT from "@/images/head_NFT.png";
 const NFTAvatar = ({avatarItem={},size="44px",onClick,NFTTagSize="23px"})=>{
-  const {medium,nft_asset_id} = avatarItem
+  const {medium,nft_asset_id} = avatarItem || {}
   return <div className='m-position-relative' onClick={onClick}>
     <Avatar src={medium} 
       alt="avatar"
