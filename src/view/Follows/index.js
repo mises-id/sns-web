@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-12 10:22:09
+ * @LastEditTime: 2022-05-16 14:00:25
  * @LastEditors: lmk
  * @Description:
  */
@@ -229,7 +229,6 @@ const Follow = ({ history = {} }) => {
   const getOldUid = localStorage.getItem('uid');
   useEffect(() => {
     const getUid = localStorage.getItem('uid');
-    console.log('%c storeageKey','color:red',storeageKey,getOldUid)
     if(user.loginForm.uid===Number(getUid)&&getUid!==getOldUid){
       window.refreshByCacheKey('/home')
     }

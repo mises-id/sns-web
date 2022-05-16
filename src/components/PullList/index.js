@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-04-21 17:59:45
+ * @LastEditTime: 2022-05-16 14:00:05
  * @LastEditors: lmk
  * @Description: global pull list
  */
@@ -63,7 +63,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
             setlastId(last_id);
           }
         }
-        console.log('last_id',last_id)
+        // console.log('last_id',last_id)
         if(res.listType.isCache){
           getSuccess&&getSuccess(last_id)
           return false;
