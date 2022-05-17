@@ -1,22 +1,21 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-01-29 17:45:02
+ * @LastEditTime: 2022-05-17 14:30:58
  * @LastEditors: lmk
  * @Description:
  */
 import React, { useState } from "react";
 import "@/styles/common.scss";
 import "./style.scss";
-// import WxImageViewer from 'react-wx-images-viewer';
 import { ImageViewer,Image } from 'antd-mobile'
 
-// import Image from "../Image";
 const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) => {
   let [style, setstyle] = useState({
-    width: "auto",
-    height: "auto",
+    width: "200px",
+    height: "200px",
   });
+  // get image width and height
   const imageLoad = (e) => {
     const { naturalWidth, naturalHeight } = e.target;
     //set once image width
@@ -37,12 +36,12 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
   // only one
   const firstImage = () => {
     return (
-      <img
+      <Image
         src={thumbImages[0]}
         alt=""
-        className="image-max"
         onLoad={imageLoad}
-        style={style}
+        className="imgListOnce"
+        {...style}
         onClick={e=>{
           e.stopPropagation()
           ImageViewer.show({ image: list[0]})
@@ -61,8 +60,6 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
             className="img-box"
             onClick={e=>{
               e.stopPropagation()
-              // setpictureIndex(index)
-              // setvisibleState(true)
               ImageViewer.Multi.show({ images: list,defaultIndex:index })
             }}
           >
@@ -72,8 +69,6 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
       </div>
     );
   };
-  // const [visibleState, setvisibleState] = useState(false)
-  // const [pictureIndex, setpictureIndex] = useState(0)
   // second mode 2*2 layout
   const secondImageMode = () => drawImageList(2);
   // third mode 3*3 layout
