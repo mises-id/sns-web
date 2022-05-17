@@ -78,6 +78,7 @@ exports[`UserInfo should render correctly 1`] = `
         label="mail"
         rightChild={
           <Input
+            autoHeight={true}
             className="userinfo-input"
             clearable={false}
             onChange={[Function]}
@@ -88,16 +89,19 @@ exports[`UserInfo should render correctly 1`] = `
         showIcon={false}
       />
       <Cell
-        className="m-padding-lr15 m-padding-tb19"
+        className="m-padding-lr15 m-padding-tb19 m-col-top"
         label="intro"
         rightChild={
-          <Input
-            className="userinfo-input"
-            clearable={false}
-            onChange={[Function]}
-            placeholder="introPlaceholder"
-            type="text"
-          />
+          <div>
+            <Input
+              className="userinfo-input"
+              maxLength={200}
+              onChange={[Function]}
+              placeholder="introPlaceholder"
+              rows={5}
+              type="text"
+            />
+          </div>
         }
         showIcon={false}
       />

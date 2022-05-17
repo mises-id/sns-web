@@ -22,7 +22,7 @@ exports[`Cell should render correctly 1`] = `
     </div>
   </div>
   <div
-    className="m-flex"
+    className="m-flex right-content"
   >
     <img
       alt=""
