@@ -3,10 +3,11 @@
 exports[`NFTPage should render correctly 1`] = `
 <div>
   <Navbar
-    title="NFTPageTitle"
+    title="MyNFTPageTitle"
   />
   <PullList
     data={Array []}
+    emptyTxt="NFTEmpty"
     load={[Function]}
     renderView={[Function]}
   />
