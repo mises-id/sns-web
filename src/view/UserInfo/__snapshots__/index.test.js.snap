@@ -251,11 +251,6 @@ exports[`UserInfo should render correctly 1`] = `
     visible={false}
   />
   <Popup
-    bodyStyle={
-      Object {
-        "height": "100vh",
-      }
-    }
     visible={false}
   >
     <NavBar
