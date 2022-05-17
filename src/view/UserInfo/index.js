@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-17 11:06:39
+ * @LastEditTime: 2022-05-17 15:14:37
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -382,9 +382,9 @@ const UserInfo = (props) => {
             className="m-padding-lr15 m-padding-tb19"
             rightChild={
               <Input
-                type="text"
                 className="userinfo-input"
                 clearable={false}
+                autoHeight
                 {...mail}
                 placeholder={t("emailPlaceholder")}
               />
@@ -393,15 +393,18 @@ const UserInfo = (props) => {
           <Cell
             label={t("intro")}
             showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
+            className="m-padding-lr15 m-padding-tb19 m-col-top"
             rightChild={
-              <Input
-                type="text"
-                className="userinfo-input"
-                clearable={false}
-                {...intro}
-                placeholder={t("introPlaceholder")}
-              />
+              <div>
+                <Input
+                  type="text"
+                  className="userinfo-input"
+                  maxLength={200}
+                  rows={5}
+                  {...intro}
+                  placeholder={t("introPlaceholder")}
+                />
+              </div>
             }
           ></Cell>
         </div>

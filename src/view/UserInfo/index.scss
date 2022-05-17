@@ -1,10 +1,10 @@
 .userinfo{
   .za-input{
     padding-right:0;
-    width: 50vw;
+    width: 60vw;
     font-size: 14px;
     color: #666;
-    input{
+    input,textarea{
       text-align: right;
     }
   }
@@ -100,5 +100,13 @@ body .za-button--primary.za-button--loading .za-activity-indicator.za-activity-i
   border: 1px solid var(--adm-border-color);
   .m-layout{
     height:calc(var(--window-height) - var(--window-layout-height) - 45px)
+  }
+}
+.m-col-top{
+  .right-content{
+    align-items: flex-start;
+    .arrow{
+      margin-top: 8px;
+    }
   }
 }

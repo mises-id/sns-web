@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2022-05-12 10:15:18
+ * @LastEditTime: 2022-05-17 15:15:16
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -55,7 +55,7 @@ const Cell = ({
           <div className="m-margin-top5">{subTitle}</div>
         </div>
       </div>
-      <div className="m-flex">
+      <div className="m-flex right-content">
         {rightChild && (
           <div className={`${showArrow ? "m-margin-right15" : ""}`}>
             {rightChild}
