@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-16 17:42:43
+ * @LastEditTime: 2022-05-17 09:55:45
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -258,7 +258,8 @@ const UserInfo = (props) => {
           hasSlug.list.push(item);
         } else {
           slugArr.push({
-            slugName: name,
+            name,
+            slugName: slug,
             list: [item],
           });
         }
@@ -270,7 +271,7 @@ const UserInfo = (props) => {
   const renderView = (val, index) => {
     return (
       <div className="NFT-container" key={index}>
-        <p className="NFT-select-series-title">{val.slugName}</p>
+        <p className="NFT-select-series-title">{val.name}</p>
         <div className="m-grid NFT-select-items">
           {Array.isArray(val.list) &&
             val.list.map((item, index) => {

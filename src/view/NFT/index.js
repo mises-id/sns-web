@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-16 18:10:17
+ * @LastEditTime: 2022-05-17 09:55:58
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -30,7 +30,7 @@ const NFTPage = ({history}) => {
 
   const renderView = (val,index) => {
     return <div className="NFT" key={index}>
-      <p className="NFT-series-title">{val.slugName}</p>
+      <p className="NFT-series-title">{val.name}</p>
       <div className="m-grid grid-2">
         {Array.isArray(val.list)&&val.list.map((item, index) => {
           return (
@@ -74,15 +74,16 @@ const NFTPage = ({history}) => {
       const slugArr = [];
       dataSource.forEach(item => {
         const {collection:{slug,name}} = item;
-        const hasSlug = slugArr.find(val=>val.slugName===slug)
+        const hasSlug = slugArr.find((val) => val.slugName === slug);
         // group by slug
-        if(hasSlug){
-          hasSlug.list.push(item)
-        }else{
+        if (hasSlug) {
+          hasSlug.list.push(item);
+        } else {
           slugArr.push({
-            slugName:name,
-            list:[item]
-          })
+            name,
+            slugName: slug,
+            list: [item],
+          });
         }
       })
       setNFTData(slugArr)
