@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-05-12 18:55:04
+ * @LastEditTime: 2022-05-17 10:21:07
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -28,11 +28,11 @@ import liked from "@/images/liked.png";
 import like from "@/images/like.png";
 import commentIcon from "@/images/comment.png";
 import ReplyInput from "@/components/ReplyInput";
-import Image from "@/components/Image";
 import CommentsPop from "./commentPop";
 import deleteComment from "@/images/deleteComment.png";
 import { Modal } from "zarm";
 import { setUserSetting } from "@/actions/user";
+import Avatar from '@/components/NFTAvatar'
 // import { setUserSetting } from "@/actions/user";
 
 const Comment = ({ history }) => {
@@ -148,7 +148,8 @@ const Comment = ({ history }) => {
         className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15"
         onClick={() => replyItem(val)}
       >
-        <Image size={30} source={avatar && avatar.medium} onClick={(e)=>userDetail(e,val)}></Image>
+        <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,val)}/>
+        {/* <Image size={30} source={avatar && avatar.medium} onClick={(e)=>userDetail(e,val)}></Image> */}
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -197,7 +198,7 @@ const Comment = ({ history }) => {
                   className="m-flex m-col-top m-bg-fff m-padding-bottom15 right-content"
                   onClick={(e) => replyItem(item, e)}
                 >
-                  <Image size={20} source={avatar && avatar.medium}  onClick={(e)=>userDetail(e,item)}></Image>
+                  <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,item)}/>
                   <div className="m-margin-left11 m-flex-1">
                     <div className="m-padding-bottom10">
                       <span className="commentNickname1">

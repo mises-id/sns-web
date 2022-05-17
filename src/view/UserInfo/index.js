@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-17 09:55:45
+ * @LastEditTime: 2022-05-17 11:06:39
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -245,6 +245,7 @@ const UserInfo = (props) => {
   }, [last_id]);
 
   const [NFTData, setNFTData] = useState([]);
+  
   useEffect(() => {
     if (dataSource.length > 0) {
       const slugArr = [];
@@ -486,7 +487,7 @@ const UserInfo = (props) => {
         onMaskClick={() => setActionSheetVisible(false)}
         onCancel={() => setActionSheetVisible(false)}
       />
-      <Popup visible={NFTVisible} bodyStyle={{ height: "100vh" }}>
+      <Popup visible={NFTVisible}>
         <NavBar
           left={<span onClick={() => setNFTVisible(false)}>{t("cancel")}</span>}
           backArrow={false}

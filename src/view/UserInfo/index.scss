@@ -98,4 +98,7 @@ body .za-button--primary.za-button--loading .za-activity-indicator.za-activity-i
 }
 .pull-list{
   border: 1px solid var(--adm-border-color);
+  .m-layout{
+    height:calc(var(--window-height) - var(--window-layout-height) - 45px)
+  }
 }

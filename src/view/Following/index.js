@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-03-24 13:55:27
+ * @LastEditTime: 2022-05-17 10:14:16
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -20,6 +20,7 @@ import Navbar from "@/components/NavBar";
 import { objToUrl, useList, useLoginModal, username, useRouteState } from "@/utils";
 import { followed } from "@/components/PostsIcons/common";
 import { refreshByCacheKey } from "react-router-cache-route";
+import Avatar from '@/components/NFTAvatar'
 const Following = ({ pageType,uid }) => {
   const { t } = useTranslation();
   const state = useRouteState();
@@ -112,7 +113,7 @@ const Following = ({ pageType,uid }) => {
         label={username(user)}
         key={index}
         onPress={()=>personDetail(user)}
-        icon={user.avatar ? user.avatar.medium : ""}
+        icon={<Avatar size="30px" avatarItem={user}/>}
         rightChild={
           isMe ? '':<img
             onClick={setFollow}

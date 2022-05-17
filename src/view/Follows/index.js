@@ -27,6 +27,7 @@ import Image from "@/components/Image";
 import { getNotifications } from "@/api/notifications";
 import { setFollowingBadge } from "@/actions/user";
 import { useDidRecover } from "react-router-cache-route";
+import Avatar from '@/components/NFTAvatar'
 const Follow = ({ history = {} }) => {
   const isDiscoverFn = ()=> {
     const isDiscoverPage = window.location.pathname || "";
@@ -398,10 +399,7 @@ const Follow = ({ history = {} }) => {
           )}
           {notifitionObj.notifications_count > 0 && (
             <div className="notification" onClick={notificationPage}>
-              <Image
-                size={30}
-                source={notifitionObj.avatar && notifitionObj.avatar.medium}
-              />
+              <Avatar size="30px" avatarItem={notifitionObj.avatar}/>
               <div className="notification-txt">
                 {notifitionObj.notifications_count} Notification
               </div>

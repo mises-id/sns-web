@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-01-13 10:58:12
+ * @LastEditTime: 2022-05-17 10:17:29
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -15,6 +15,7 @@ import MButton from "@/components/MButton";
 import { useList, username } from "@/utils";
 import PullList from "@/components/PullList";
 import { Toast } from "zarm";
+import Avatar from '@/components/NFTAvatar'
 const BlackList = ({ history }) => {
   const { t } = useTranslation();
    // eslint-disable-next-line
@@ -38,7 +39,7 @@ const BlackList = ({ history }) => {
         showArrow={false}
         label={username(user)}
         key={index}
-        icon={user.avatar ? user.avatar.medium : ""}
+        icon={<Avatar size="30px" avatarItem={user.avatar} />}
         rightChild={
           <MButton onPress={()=>onPress(val,index)} txt="Unblock"  borderColor="#DDDDDD" txtColor="#666666" txtSize={12}></MButton>
         }
