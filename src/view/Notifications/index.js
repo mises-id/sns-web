@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-05-18 16:07:50
+ * @LastEditTime: 2022-05-18 17:48:18
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -301,7 +301,7 @@ const Notifications = ({ history }) => {
         data={dataSource}
         load={async (e)=>{
           e==='refresh'&&readData()
-          const res = await fetchData()
+          const res = await fetchData(e)
           return res;
         }}></PullList>
       <CommentsPop

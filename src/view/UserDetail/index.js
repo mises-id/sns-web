@@ -36,12 +36,14 @@ import { Image, Button } from "antd-mobile";
 import block from "@/images/block.png";
 import { useThrottleFn } from "ahooks";
 import Navbar from "@/components/NavBar";
+import { useSelector } from "react-redux";
 const UserDetail = (props) => {
   const [userInfo, setUserInfo] = useState({});
   const { t } = useTranslation();
   const { isLogin } = useLogin();
   const [value, setvalue] = useState("0");
   const state = useRouteState();
+  const {loginForm={}} = useSelector((state) => state.user) || {};
   useEffect(() => {
     getNFT(state.uid);
     setInfo(state);
@@ -224,7 +226,7 @@ const UserDetail = (props) => {
             <div className="m-flex-1 user-info">
               <div className="m-flex m-row-between">
                 <span className="username">{username(userInfo)}</span>
-                {userInfo.is_blocked ? (
+                {(userInfo.is_blocked || userInfo.uid===loginForm.uid)? (
                   ""
                 ) : (
                   <MButton
@@ -316,8 +318,8 @@ const UserDetail = (props) => {
                 block
                 shape="rounded"
               >
-                <div className="m-flex">
-                  <span>View More User’s NFT</span>
+                <div className="m-flex m-row-center">
+                  <span>View More</span>
                   <img src={Airdrop} alt="" />
                 </div>
               </Button>
