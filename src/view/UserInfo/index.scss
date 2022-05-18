@@ -4,9 +4,13 @@
     width: 60vw;
     font-size: 14px;
     color: #666;
-    input,textarea{
+    input{
       text-align: right;
     }
+  }
+  textarea{
+    text-align: right;
+    font-size: 14px;
   }
   .avatar-input{
     width: 35px;

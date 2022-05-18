@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-05-16 10:42:50
+ * @LastEditTime: 2022-05-18 15:04:53
  * @LastEditors: lmk
  * @Description:
  */
@@ -14,7 +14,7 @@ import me_2 from "@/images/me_2.png";
 import me_3 from "@/images/me_3.png";
 import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
-// import me_6 from "@/images/me_6.png";
+import me_7 from "@/images/me_7.png";
 import Cell from "@/components/Cell";
 import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useSelector } from "react-redux";
@@ -128,6 +128,11 @@ const Myself = ({ history }) => {
       label: t("posts"),
       icon: me_5,
       url: "/myPosts",
+    },
+    {
+      label: t("MyNFTPageTitle"),
+      icon: me_7,
+      url: "/NFT",
     },
   ]);
   /* 

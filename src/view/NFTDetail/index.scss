@@ -69,7 +69,7 @@
     font-size: 12px;
     font-weight: 400;
     color: #666666;
-    justify-content: end;
+    justify-content: flex-end;
     padding-top: 15px;
     a{
       color: #5D61FF;
@@ -115,7 +115,7 @@
     overflow: hidden;
   }
 }
-.user-item{
+.nft-user-item{
   padding: 17px 15px 0;
   &:last-child{
     padding-bottom: 20px;

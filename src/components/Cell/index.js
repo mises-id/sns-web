@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:58:47
- * @LastEditTime: 2022-05-17 15:15:16
+ * @LastEditTime: 2022-05-18 15:05:36
  * @LastEditors: lmk
  * @Description: cell Component
  */
@@ -52,7 +52,7 @@ const Cell = ({
           <span className={`m-colors-333 m-font16`} style={labelStyle}>
             {label}
           </span>
-          <div className="m-margin-top5">{subTitle}</div>
+          {subTitle&&<div className="m-margin-top5">{subTitle}</div>}
         </div>
       </div>
       <div className="m-flex right-content">

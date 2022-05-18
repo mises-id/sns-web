@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-16 14:00:25
+ * @LastEditTime: 2022-05-18 10:49:00
  * @LastEditors: lmk
  * @Description:
  */
@@ -302,7 +302,7 @@ const Follow = ({ history = {} }) => {
         >
           <div className="user-avatar">
             <div className="circle">
-              <Image size={50} source={avatarStr} />
+              <Avatar avatarItem={avatar} size='50px'/>
             </div>
             <div className="add-icon">
               <Image source={recommendationIcon} size={20}></Image>
@@ -363,7 +363,7 @@ const Follow = ({ history = {} }) => {
         >
           <div className="user-avatar">
             <div className="circle">
-              <Image size={50} source={avatarStr} />
+              <Avatar avatarItem={avatar} size="50px"></Avatar>
             </div>
             <div className="new-message-icon">{val.unread && <Badge />}</div>
           </div>

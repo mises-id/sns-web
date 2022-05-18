@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-14 21:52:16
- * @LastEditTime: 2022-05-17 14:30:58
+ * @LastEditTime: 2022-05-18 16:24:00
  * @LastEditors: lmk
  * @Description:
  */
@@ -19,6 +19,7 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
   const imageLoad = (e) => {
     const { naturalWidth, naturalHeight } = e.target;
     //set once image width
+    const radio = naturalWidth / naturalHeight;
     if (naturalWidth > naturalHeight) {
       style = {
         width: "200px",
@@ -28,7 +29,7 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
     if (naturalWidth < naturalHeight) {
       style = {
         height: "200px",
-        width: "auto",
+        width: radio * 200 + "px",
       };
     }
     setstyle(style);

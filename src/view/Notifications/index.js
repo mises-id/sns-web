@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 23:43:29
- * @LastEditTime: 2022-05-16 09:16:09
+ * @LastEditTime: 2022-05-18 16:07:50
  * @LastEditors: lmk
  * @Description: my post page
  */
@@ -18,7 +18,7 @@ import {
   username,
   useRouteState,
 } from "@/utils";
-import Image from "@/components/Image";
+import {Image} from "antd-mobile";
 import like from "@/images/like.png";
 import CommentsPop from "@/view/Comment/commentPop";
 import cry from '@/images/cry.png';
@@ -65,11 +65,18 @@ const Notifications = ({ history }) => {
   // const createPosts = () => history.push({ pathname: "/createPosts" });
   const { t } = useTranslation();
   const commentsPopRef = useRef();
-  const goDetail = ({ status}) => {
+  const goDetail = ({ status,nft_asset}) => {
     status&&history.push({
       pathname: "/post",
       search: objToUrl({ id: status.id }),
     });
+    nft_asset&&history.push({
+      pathname: "/NFTDetail",
+      search:objToUrl({
+        tokenId:nft_asset.id,
+        image:nft_asset.image_url,
+      })
+    })
   };
   const detail = async val => {
     const { status,message_type,user,meta_data,created_at,comment_is_deleted } = val
@@ -191,25 +198,24 @@ const Notifications = ({ history }) => {
   };
   const userDetail = (e,user)=>{
     e.stopPropagation()
-    console.log(user);
     const avatar = user.avatar ? user.avatar.medium : "";
     history.push({
       pathname: "/userDetail",
       search: objToUrl({ uid: user.uid, username: user.username, avatar,is_followed: user.is_followed,misesid:user.misesid }),
     });
   }
-  const rightView = ({ status,meta_data={},message_type}) => {
+  const rightView = ({ status,meta_data={},message_type,nft_asset}) => {
     const image = status&&message_type!=='new_like_comment'&&returnImage(status)
-    return status&&(
-      <div className="right-view">
-        {image&&<Image
-          size={60}
+    const nftImage = nft_asset && nft_asset.image_preview_url
+    const source = image || nftImage
+    return <div className="right-view">
+        {source&&<Image
+          width={60}
+          height={60}
           alt="image"
-          shape="square"
-          borderRadius="3px"
-          source={image}
-        ></Image>}
-        {!image&&<div>
+          style={{borderRadius:'3px'}}
+          src={source} />}
+        {!source&&meta_data&&<div>
           <p className="post-content item-eli">{
             meta_data.content_summary || 
             meta_data.comment_content || 
@@ -218,7 +224,6 @@ const Notifications = ({ history }) => {
           }</p>
         </div>}
       </div>
-    );
   };
   const returnImage = (status={})=>{
     switch (status.status_type) {
@@ -243,9 +248,10 @@ const Notifications = ({ history }) => {
       case "new_like_status":
       case "new_like_nft":
       case "new_like_comment":
+      case "new_like_nft_comment":
         return (
           <div className="like-icon">
-            <Image source={like} shape="square" size={16}></Image>
+            <Image src={like} width={16} height={16}></Image>
           </div>
         );
       case "new_fowards":
@@ -256,6 +262,7 @@ const Notifications = ({ history }) => {
           </div>
         );
       case "new_comment": 
+      case "new_nft_comment": 
         const obj = {};
         if(metaData.parent_username.indexOf('did:mises')>-1){
           obj.misesid = metaData.parent_username

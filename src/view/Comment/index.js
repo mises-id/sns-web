@@ -149,7 +149,6 @@ const Comment = ({ history }) => {
         onClick={() => replyItem(val)}
       >
         <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,val)}/>
-        {/* <Image size={30} source={avatar && avatar.medium} onClick={(e)=>userDetail(e,val)}></Image> */}
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">

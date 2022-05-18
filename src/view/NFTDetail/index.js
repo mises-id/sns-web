@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-16 11:04:16
+ * @LastEditTime: 2022-05-18 16:30:11
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -75,11 +75,11 @@ const NFTDetail = (props) => {
           <p className="NFT-detail-title">{nftInfo.name}</p>
           <div className="NFT-detail-descitem m-grid grid-cols-3">
             <div className="descitem">
-              <p>{nftInfo.price || '0 ETH'}</p>
+              <p>{nftInfo.price || '-'}</p>
               <p>Floor Price</p>
             </div>
             <div className="descitem">
-              <p>{nftInfo.rarity || '0%'}</p>
+              <p>{nftInfo.rarity ? `${nftInfo.rarity}%` : '-'}</p>
               <p>Rarity</p>
             </div>
             <div className="descitem">

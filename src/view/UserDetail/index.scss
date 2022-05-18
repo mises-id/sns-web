@@ -123,13 +123,16 @@
   }
 }
 .NFT-list{
-  padding: 15px;
+  padding:0 15px 15px;
   .NFT-title{
     font-size: 19px;
     font-weight: bold;
     color: #333333;
     margin-top: 4px;
   }
+}
+.NFT-empty-line{
+  height: 15px;
 }
 .nft-list-items{
   grid-template-columns: 1fr 1fr 1fr;

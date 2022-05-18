@@ -29,7 +29,7 @@ export function routes(routeConfig, parentPath = "",hasToken=true) {
   //   />)
   // }
   return routeConfig.map((route) => {
-    if (["/createPosts", "/forward"].includes(route.path)) {
+    if (["/createPosts", "/forward",'/NFTDetail'].includes(route.path)) {
       return (
         <Route
           path={parentPath + route.path}

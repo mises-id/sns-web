@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 13:41:35
- * @LastEditTime: 2022-05-17 10:14:16
+ * @LastEditTime: 2022-05-18 10:15:40
  * @LastEditors: lmk
  * @Description: Following and Followers page
  */
@@ -113,7 +113,7 @@ const Following = ({ pageType,uid }) => {
         label={username(user)}
         key={index}
         onPress={()=>personDetail(user)}
-        icon={<Avatar size="30px" avatarItem={user}/>}
+        icon={<Avatar size="30px" avatarItem={user.avatar}/>}
         rightChild={
           isMe ? '':<img
             onClick={setFollow}

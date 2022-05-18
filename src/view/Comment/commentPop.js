@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-05-17 10:20:50
+ * @LastEditTime: 2022-05-18 10:50:44
  * @LastEditors: lmk
  * @Description:
  */
@@ -173,7 +173,6 @@ const CommentsPop = (
       >
 
         <Avatar size="30px" avatarItem={valAvatar} onClick={e=>userDetail(e,val)}  key={val.id} />
-        {/* <Image size={30} source={valAvatar.medium}></Image> */}
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(val.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -214,7 +213,6 @@ const CommentsPop = (
         onClick={() => replyItem(data)}
       >
         <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,data)}/>
-        {/* <Image size={30} source={avatar && avatar.medium} onClick={e=>userDetail(e,data)}></Image> */}
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(data.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8   m-padding-bottom13">

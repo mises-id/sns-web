@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-05-12 16:53:47
- * @LastEditTime: 2022-05-13 17:11:15
+ * @LastEditTime: 2022-05-18 10:17:54
  * @LastEditors: lmk
  * @Description: 
  */
@@ -16,7 +16,7 @@ import Avatar from "@/components/NFTAvatar";
 export const GlobalPullView = ({type,nftInfo})=>{
   const { followPress } = useChangePosts();
   const likeRenderView = (val,index) => {
-    return <div className="user-item" key={index} >
+    return <div className="nft-user-item" key={index} >
       <UserHeader
         followed={()=>followPress(val)}
         size="35px" 

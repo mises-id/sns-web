@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-17 09:55:58
+ * @LastEditTime: 2022-05-18 14:48:16
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -105,8 +105,9 @@ const NFTPage = ({history}) => {
         load={async (res)=>{
           try {
             setLoading(true)
-            await fetchData(res)
+            const data = await fetchData(res)
             setLoading(false)
+            return data;
           } catch (error) {
             setLoading(false)
             return Promise.reject(error)

@@ -93,13 +93,18 @@ exports[`UserInfo should render correctly 1`] = `
         label="intro"
         rightChild={
           <div>
-            <Input
-              className="userinfo-input"
-              maxLength={200}
+            <ForwardRef
+              autoSize={
+                Object {
+                  "maxRows": 5,
+                  "minRows": 3,
+                }
+              }
+              defaultValue=""
               onChange={[Function]}
               placeholder="introPlaceholder"
-              rows={5}
-              type="text"
+              rows={2}
+              showCount={false}
             />
           </div>
         }
@@ -109,21 +114,25 @@ exports[`UserInfo should render correctly 1`] = `
     <div
       className="m-padding20 save-box"
     >
-      <Button
+      <ForwardRef
         block={true}
-        disabled={false}
-        ghost={true}
-        htmlType="button"
+        color="primary"
+        fill="outline"
+        onClick={[Function]}
+        shape="rounded"
+      >
+        Preview
+      </ForwardRef>
+      <ForwardRef
+        block={true}
+        className="m-margin-top10"
+        color="primary"
         loading={false}
         onClick={[Function]}
-        prefixCls="za-button"
-        shadow={false}
-        shape="round"
-        size="md"
-        theme="primary"
+        shape="rounded"
       >
         apply
-      </Button>
+      </ForwardRef>
     </div>
   </div>
   <Modal
@@ -136,40 +145,30 @@ exports[`UserInfo should render correctly 1`] = `
         <div
           className="m-flex-1 m-padding-lr10"
         >
-          <Button
+          <ForwardRef
             block={true}
-            disabled={false}
-            ghost={true}
-            htmlType="button"
-            loading={false}
+            color="primary"
+            fill="outline"
             onClick={[Function]}
-            prefixCls="za-button"
-            shadow={false}
-            shape="round"
-            size="sm"
-            theme="primary"
+            shape="rounded"
+            size="middle"
           >
             cancel
-          </Button>
+          </ForwardRef>
         </div>
         <div
           className="m-flex-1 m-padding-lr10"
         >
-          <Button
+          <ForwardRef
             block={true}
-            disabled={false}
-            ghost={true}
-            htmlType="button"
+            color="primary"
             loading={false}
             onClick={[Function]}
-            prefixCls="za-button"
-            shadow={false}
-            shape="round"
-            size="sm"
-            theme="primary"
+            shape="rounded"
+            size="middle"
           >
             send
-          </Button>
+          </ForwardRef>
         </div>
       </React.Fragment>
     }
@@ -255,6 +254,12 @@ exports[`UserInfo should render correctly 1`] = `
     visible={false}
   />
   <Popup
+    bodyStyle={
+      Object {
+        "borderTopLeftRadius": "10px",
+        "borderTopRightRadius": "10px",
+      }
+    }
     visible={false}
   >
     <NavBar
@@ -275,21 +280,14 @@ exports[`UserInfo should render correctly 1`] = `
             }
           }
         >
-          <Button
-            block={true}
-            disabled={false}
-            ghost={false}
-            htmlType="button"
-            loading={false}
+          <ForwardRef
+            color="primary"
             onClick={[Function]}
-            prefixCls="za-button"
-            shadow={false}
-            shape="round"
-            size="xs"
-            theme="primary"
+            shape="rounded"
+            size="small"
           >
             done
-          </Button>
+          </ForwardRef>
         </div>
       }
     />

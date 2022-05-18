@@ -1,16 +1,17 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-17 15:14:37
+ * @LastEditTime: 2022-05-18 16:59:15
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
 import Cell from "@/components/Cell";
-import { useBind, useList, useLoginModal } from "@/utils";
+import { objToUrl, useBind, useList, useLoginModal } from "@/utils";
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Modal, Button, Picker, Toast, ActionSheet } from "zarm";
+import { Input, Modal, Picker, Toast, ActionSheet } from "zarm";
+import {Button} from 'antd-mobile'
 import "./index.scss";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -19,11 +20,12 @@ import selectNFTIcon from "@/images/selected_NFT.png";
 import { getMyNFTAsset, getUserSelfInfo, updateUser } from "@/api/user";
 import { setLoginForm } from "@/actions/user";
 import Navbar from "@/components/NavBar";
-import { Image, NavBar } from "antd-mobile";
+import { Image, NavBar, TextArea } from "antd-mobile";
 import { useEffect } from "react";
 import Avatar from "@/components/NFTAvatar";
 import { Popup } from "antd-mobile";
 import PullList from "@/components/PullList";
+import { useHistory } from "react-router-dom";
 const genderList = [
   { value: "female", label: "female" },
   { value: "male", label: "male" },
@@ -310,6 +312,7 @@ const UserInfo = (props) => {
       setNFTVisible(false);
     });
   };
+  const history = useHistory();
   return (
     <div>
       <Navbar title={t("userInfoPageTitle")} />
@@ -396,27 +399,33 @@ const UserInfo = (props) => {
             className="m-padding-lr15 m-padding-tb19 m-col-top"
             rightChild={
               <div>
-                <Input
-                  type="text"
-                  className="userinfo-input"
-                  maxLength={200}
-                  rows={5}
-                  {...intro}
+                <TextArea
+                  autoSize={{ minRows: 3, maxRows: 5 }}
                   placeholder={t("introPlaceholder")}
+                  {...intro}
                 />
               </div>
             }
           ></Cell>
         </div>
         <div className="m-padding20 save-box">
-          <Button
+          <Button color="primary" 
             block
-            theme="primary"
-            disabled={saveLoading}
+            fill="outline"
+            shape="rounded"
+            onClick={() => {
+              history.push({
+                pathname: "/userDetail",
+                search: objToUrl({ uid: user.uid, username: user.username, avatar:user.avatar&&user.avatar.medium,is_followed: user.is_followed,misesid:user.misesid }),
+              });
+            }}>
+            Preview
+          </Button>
+          <Button color="primary" 
+            block
+            className="m-margin-top10"
             loading={saveLoading}
-            ghost
-            size="md"
-            shape="round"
+            shape="rounded"
             onClick={() => saveInfo("info")}
           >
             {t("apply")}
@@ -433,10 +442,10 @@ const UserInfo = (props) => {
             <div className="m-flex-1 m-padding-lr10">
               <Button
                 block
-                theme="primary"
-                ghost
-                size="sm"
-                shape="round"
+                color="primary"
+                fill="outline"
+                size="middle"
+                shape="rounded"
                 onClick={() => setvisible(false)}
               >
                 {t("cancel")}
@@ -445,12 +454,10 @@ const UserInfo = (props) => {
             <div className="m-flex-1 m-padding-lr10">
               <Button
                 block
-                theme="primary"
-                ghost
-                disabled={avatarLoading}
+                color="primary"
                 loading={avatarLoading}
-                size="sm"
-                shape="round"
+                size="middle"
+                shape="rounded"
                 onClick={sendAvatar}
               >
                 {t("send")}
@@ -490,17 +497,16 @@ const UserInfo = (props) => {
         onMaskClick={() => setActionSheetVisible(false)}
         onCancel={() => setActionSheetVisible(false)}
       />
-      <Popup visible={NFTVisible}>
+      <Popup visible={NFTVisible} bodyStyle={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px"}}>
         <NavBar
           left={<span onClick={() => setNFTVisible(false)}>{t("cancel")}</span>}
           backArrow={false}
           right={
             <div style={{ width: "61px", display: "inline-block" }}>
               <Button
-                theme="primary"
-                block
-                size="xs"
-                shape="round"
+                color="primary"
+                shape="rounded"
+                size="small"
                 onClick={saveNFTAvatar}
               >
                 {t("done")}
