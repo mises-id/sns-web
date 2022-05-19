@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-19 10:19:37
+ * @LastEditTime: 2022-05-19 15:38:36
  * @LastEditors: lmk
  * @Description:
  */
@@ -43,7 +43,6 @@ const Follow = ({ history = {} }) => {
 
   const user = useSelector((state) => state.user) || {};
   const [lastId] = useState("");
-  const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
   const [isFollowing] = useState(window.location.pathname==='/home/following');
   const [isDiscover] = useState(window.location.pathname==='/home/discover');
@@ -121,10 +120,6 @@ const Follow = ({ history = {} }) => {
   }
   
   // Get the required status of the page, get recommended users, and get the update list of concerned users
-  useEffect(() => {
-    setloading(false);
-    // eslint-disable-next-line
-  }, [isFollowing]);
   useDidRecover(() => {
     getFollowingLatest();
   });
@@ -194,7 +189,7 @@ const Follow = ({ history = {} }) => {
   const selector = useSelector((state) => state.user) || {};
   const [flag, setflag] = useState(false);
   const [misesloading, setMisesloading] = useState(true);
-  let timer = null;
+  // let timer = null;
   const getMisesAccountFlag = () => {
     if (selector.web3Status) {
       window.mises &&
@@ -205,16 +200,11 @@ const Follow = ({ history = {} }) => {
           console.log(err)
           setMisesloading(false)
         });
-    }else{
-      if(timer){
-        clearTimeout(timer)
-        timer = null;
-      }
-      timer = setTimeout(() => {
-        setMisesloading(false)
-      }, 2000);
     }
   };
+  useEffect(() => {
+    !selector.web3ProviderFlag&&setMisesloading(false)
+  }, [selector.web3ProviderFlag]);
   useEffect(() => {
     getMisesAccountFlag();
     // eslint-disable-next-line

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-05-19 12:33:53
+ * @LastEditTime: 2022-05-19 15:25:04
  * @LastEditors: lmk
  * @Description:
  */
@@ -22,7 +22,7 @@ import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
 import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
-import {Skeleton} from 'antd-mobile'
+// import {Skeleton} from 'antd-mobile'
 const Myself = ({ history }) => {
   const { t } = useTranslation();
   const [loginForm, setLoginForm] = useState({});
