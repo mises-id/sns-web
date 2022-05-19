@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-29 13:11:25
+ * @LastEditTime: 2022-05-18 18:01:19
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -14,76 +14,116 @@ import { Modal } from "zarm";
 import "./index.scss";
 const Airdrop = () => {
   const { t } = useTranslation();
-  const [showSkip, setShowSkip] = useState(false)
+  const [showSkip, setShowSkip] = useState(false);
   const historyState = useRouteState();
   useEffect(() => {
-    const flag = historyState.isFrom!=='homePage'
-    setShowSkip(flag)
-    const isRefresh =  sessionStorage.getItem('isRefresh')
-    if(flag&&!isRefresh) {
-      sessionStorage.setItem('isRefresh',true)
-      window.location.reload()
+    const flag = historyState.isFrom !== "homePage";
+    setShowSkip(flag);
+    const isRefresh = sessionStorage.getItem("isRefresh");
+    if (flag && !isRefresh) {
+      sessionStorage.setItem("isRefresh", true);
+      window.location.reload();
     }
-    return ()=>{
-      console.log(1)
-    }
+    return () => {
+      console.log(1);
+    };
     // eslint-disable-next-line
-  }, [])
-  
+  }, []);
+
   const sendTweet = () => {
-    shareTwitter().then(res=>{
-      window.open(res.url)
-      Modal.confirm({
-        title: "Message",
-        content: "Please make sure you have sent your tweet already. ",
-        width: "83%",
-        onCancel: () => {},
-        onOk: () => {
-          skip()
-        },
+    shareTwitter()
+      .then((res) => {
+        window.open(res.url);
+        Modal.confirm({
+          title: "Message",
+          content: "Please make sure you have sent your tweet already. ",
+          width: "83%",
+          onCancel: () => {},
+          onOk: () => {
+            skip();
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch(err=>{
-      console.log(err)
-    })
   };
-  const skip = ()=>{
+  const skip = () => {
     window.history.back();
-  }
+  };
   return (
     <div>
-      <Navbar title={t("airdropPageTitle")} rightChild={showSkip ? <div className="skip" onClick={skip}>Skip</div> : ''} />
+      <Navbar
+        title={t("airdropPageTitle")}
+        rightChild={
+          showSkip ? (
+            <div className="skip" onClick={skip}>
+              Skip
+            </div>
+          ) : (
+            ""
+          )
+        }
+      />
       <div className="airdrop-bg m-font18">
         <div className="layout-box">
-          <img src="/static/images/background.png" alt="" className="background"/>
+          <img
+            src="/static/images/background.png"
+            alt=""
+            className="background"
+          />
           <div className="layout-content">
-            <img src="/static/images/title.png" alt="" className="airdrop-title"/>
+            <img
+              src="/static/images/title.png"
+              alt=""
+              className="airdrop-title"
+            />
             <div className="toClaim-box">
-              <img src="/static/images/parachute.png" alt="" className="airdrop-parachute"/>
+              <img
+                src="/static/images/parachute.png"
+                alt=""
+                className="airdrop-parachute"
+              />
               <div className="toClaim-content">
                 <p className="toClaim">{t("toClaim")}:</p>
                 <p className="desc-item">
                   {t("airdropContentdesc")}
-                  <img src="/static/images/circle.png" alt="" className="circle"/>
+                  <img
+                    src="/static/images/circle.png"
+                    alt=""
+                    className="circle"
+                  />
                 </p>
                 <p className="desc-item">
                   {t("airdropContentdesc1")}
-                  <img src="/static/images/circle.png" alt="" className="circle"/>
+                  <img
+                    src="/static/images/circle.png"
+                    alt=""
+                    className="circle"
+                  />
                 </p>
                 <p className="desc-item">
                   {t("airdropContentdesc2")}
-                  <img src="/static/images/circle.png" alt="" className="circle"/>
+                  <img
+                    src="/static/images/circle.png"
+                    alt=""
+                    className="circle"
+                  />
                 </p>
                 <div className="sendTweet">
                   <div onClick={sendTweet} className="airdrop-btn">
                     <span className="airdrop-btn-txt">{t("sendTweet")}</span>
                   </div>
                 </div>
-                <img src="/static/images/ribbon.png" alt="" className="ribbon"/>
+                <img
+                  src="/static/images/ribbon.png"
+                  alt=""
+                  className="ribbon"
+                />
               </div>
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-03-09 17:01:13
+ * @LastEditTime: 2022-05-18 18:16:57
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -13,10 +13,6 @@ import complete from '@/images/complete.png'
 import "./index.scss";
 const AirdropSuccess = () => {
   const { t } = useTranslation();
-  const viewInWallet = ()=>{
-    // window.open('mises-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html')
-    window.mises.openRestore()
-  }
   return (
     <div>
       <Navbar title={t('airdropPageTitle')} />
@@ -26,7 +22,7 @@ const AirdropSuccess = () => {
           <p className="content">{t('airdropSuccessContent')}</p>
         </div>
         <div className="viewInWallet">
-          <Button block shape="round" theme="primary" onClick={viewInWallet}>
+          <Button block shape="round" theme="primary" onClick={()=>window.mises.openRestore()}>
             <span className="btn-txt">{t("viewInWallet")}</span>
           </Button>
         </div>

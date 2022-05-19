@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-05-18 15:04:53
+ * @LastEditTime: 2022-05-19 12:33:53
  * @LastEditors: lmk
  * @Description:
  */
@@ -22,12 +22,52 @@ import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
 import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
+import {Skeleton} from 'antd-mobile'
 const Myself = ({ history }) => {
   const { t } = useTranslation();
   const [loginForm, setLoginForm] = useState({});
   const [token, settoken] = useState("");
   // eslint-disable-next-line
   const selector = useSelector((state) => state.user) || {};
+  const [list, setTabList] = useState([
+    {
+      label: t("following"),
+      icon: me_1,
+      url: "/follow",
+      pageType: "following",
+      badge: loginForm.followings_count,
+    },
+    {
+      label: t("followers"),
+      icon: me_2,
+      url: "/follow",
+      pageType: "fans",
+      badge: loginForm.fans_count,
+      isNew: false, // If this item is updated
+    },
+    {
+      label: t("NotificationsPageTitle"),
+      icon: me_3,
+      url: "/notifications",
+      badge: 0,
+      isBg: true, // has backgroundcolor
+    },
+    {
+      label: t("MyLikesPageTitle"),
+      icon: me_4,
+      url: "/myLikes",
+    },
+    {
+      label: t("posts"),
+      icon: me_5,
+      url: "/myPosts",
+    },
+    {
+      label: t("MyNFTPageTitle"),
+      icon: me_7,
+      url: "/NFT",
+    },
+  ]);
   useEffect(() => {
     setLoginForm(selector.loginForm);
     settoken(selector.token);
@@ -70,9 +110,19 @@ const Myself = ({ history }) => {
   }, [token]);
   useEffect(() => {
     getMisesAccountFlag();
-    setloading(false);
+    if(selector.web3Status){
+      setloading(false);
+    }
     // eslint-disable-next-line
   }, [selector.web3Status]);
+  useEffect(() => {
+    if(!selector.web3ProviderFlag){
+      setTimeout(() => {
+        setloading(false);
+      }, 100);
+    }
+    // eslint-disable-next-line
+  }, [selector.web3ProviderFlag]);
 
   useEffect(() => {
     list[2].badge = selector.badge.notifications_count;
@@ -96,45 +146,6 @@ const Myself = ({ history }) => {
         }
       });
   };
-  const [list, setTabList] = useState([
-    {
-      label: t("following"),
-      icon: me_1,
-      url: "/follow",
-      pageType: "following",
-      badge: loginForm.followings_count,
-    },
-    {
-      label: t("followers"),
-      icon: me_2,
-      url: "/follow",
-      pageType: "fans",
-      badge: loginForm.fans_count,
-      isNew: false, // If this item is updated
-    },
-    {
-      label: t("NotificationsPageTitle"),
-      icon: me_3,
-      url: "/notifications",
-      badge: 0,
-      isBg: true, // has backgroundcolor
-    },
-    {
-      label: t("MyLikesPageTitle"),
-      icon: me_4,
-      url: "/myLikes",
-    },
-    {
-      label: t("posts"),
-      icon: me_5,
-      url: "/myPosts",
-    },
-    {
-      label: t("MyNFTPageTitle"),
-      icon: me_7,
-      url: "/NFT",
-    },
-  ]);
   /* 
   ,
     {

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-18 10:49:00
+ * @LastEditTime: 2022-05-19 10:19:37
  * @LastEditors: lmk
  * @Description:
  */
@@ -29,22 +29,29 @@ import { setFollowingBadge } from "@/actions/user";
 import { useDidRecover } from "react-router-cache-route";
 import Avatar from '@/components/NFTAvatar'
 const Follow = ({ history = {} }) => {
+  // Is it a discover page
   const isDiscoverFn = ()=> {
     const isDiscoverPage = window.location.pathname || "";
     return !['/home/following','/home/recent'].includes(isDiscoverPage)
   }
-  const user = useSelector((state) => state.user) || {};
-  const [isFollowing] = useState(window.location.pathname==='/home/following');
-  const [isDiscover] = useState(window.location.pathname==='/home/discover');
+
   const fn = {
     '/home/following': following,
     '/home/recent': recent,
     '/home/discover': recommend,
   }[window.location.pathname]
+
+  const user = useSelector((state) => state.user) || {};
   const [lastId] = useState("");
   const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
+  const [isFollowing] = useState(window.location.pathname==='/home/following');
+  const [isDiscover] = useState(window.location.pathname==='/home/discover');
   const storeageKey = `discoverPageCache${user.loginForm&&user.loginForm.uid  ? user.loginForm.uid : ''}`
+  const dispatch = useDispatch(null);
+  const [userRecommend] = useState([]);
+  const [followingLatestArr, setfollowingLatest] = useState([]);
+  const { t } = useTranslation();
   const [
     fetchData,
     last_id,
@@ -63,15 +70,12 @@ const Follow = ({ history = {} }) => {
     { type: isDiscoverFn() ? "refreshList" : "refresh",isCache: isDiscoverFn()}
   );
   useSetDataSourceAction(dataSource, setdataSource);
+  //
   const [notifitionObj, setnotifitionObj] = useState({
     total: 0,
     notifications_count: 0,
     users_count: 0,
   });
-  const dispatch = useDispatch(null);
-  const [userRecommend] = useState([]);
-  const [followingLatestArr, setfollowingLatest] = useState([]);
-  const { t } = useTranslation();
   const setdataSourceStorage = (id)=>{
     if (isDiscoverFn()) {
       const start = 0;
@@ -118,19 +122,7 @@ const Follow = ({ history = {} }) => {
   
   // Get the required status of the page, get recommended users, and get the update list of concerned users
   useEffect(() => {
-    // const isFollow
-    // setisDiscover(isDiscoverFn());
     setloading(false);
-
-    // getFollowingLatest()
-    // if(isDiscoverFlag){
-    //   // recommend user
-    //   recommendUser().then(res=>{
-    //     setuserRecommend(res || [])
-    //   }).catch(error=>{
-    //     console.log(error)
-    //   })
-    // }
     // eslint-disable-next-line
   }, [isFollowing]);
   useDidRecover(() => {
@@ -275,7 +267,7 @@ const Follow = ({ history = {} }) => {
   // Render top recommendations and concerns
   const otherView = () => {
     if(isFollowing){
-      return  followers()
+      return followers()
     }
     if(isDiscover){
       return recommendation();
@@ -410,28 +402,22 @@ const Follow = ({ history = {} }) => {
     );
   };
   return (
-    <>
-      {loading ? (
-        <div style={{ textAlign: "center", padding: "20px" }}>
-          <ActivityIndicator type="spinner" />
-        </div>
-      ) : isFollowing && !user.token ? (
-        btnElement()
-      ) : (
-        <PullList
-          otherView={otherView}
-          isAuto={isAuto}
-          renderView={renderView}
-          data={dataSource}
-          getSuccess={setdataSourceStorage}
-          load={async (e) => {
-            getFollowingLatest();
-            const res = await fetchData(e);
-            return res;
-          }}
-        />
-      )}
-    </>
+    isFollowing && !user.token ? (
+      btnElement()
+    ) : (
+      <PullList
+        otherView={otherView}
+        isAuto={isAuto}
+        renderView={renderView}
+        data={dataSource}
+        getSuccess={setdataSourceStorage}
+        load={async (e) => {
+          getFollowingLatest();
+          const res = await fetchData(e);
+          return res;
+        }}
+      />
+    )
   );
 };
 export default Follow;

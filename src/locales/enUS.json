@@ -86,7 +86,7 @@
     "NFTDetailLike":"Like",
     "NFTDetailComment":"Comment",
     "NFTDetailActivity":"Activity",
-    "NFTEmpty": "No NFTs yet",
+    "NFTEmpty": "No NFT yet",
     "importNFT": "Import your NFT List from Wallet"
   }
 }

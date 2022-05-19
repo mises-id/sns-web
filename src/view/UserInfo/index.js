@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-18 16:59:15
+ * @LastEditTime: 2022-05-19 14:54:54
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -518,6 +518,7 @@ const UserInfo = (props) => {
           <PullList
             renderView={renderView}
             data={NFTData}
+            emptyText="NFTEmpty"
             load={fetchData} />
         </div>
       </Popup>

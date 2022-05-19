@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 22:30:53
- * @LastEditTime: 2022-05-12 14:05:59
+ * @LastEditTime: 2022-05-18 18:04:03
  * @LastEditors: lmk
  * @Description:
  */
@@ -21,7 +21,7 @@ const Navbar = ({ title,rightChild,fixed=false }) => {
     <NavBar onBack={back}
       className={fixed ? "fixed-navbar" : ""}
       backArrow={<img src={backIcon} alt="" width={22} height={22} style={{display:'block'}}/>}
-      right={rightChild}>
+      right={rightChild&&<div className="m-flex m-row-end">{rightChild}</div>}>
       <span style={{
         fontSize: '19px',
         fontWeight: 'bold',
