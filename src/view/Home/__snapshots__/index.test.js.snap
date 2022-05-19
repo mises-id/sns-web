@@ -2,76 +2,66 @@
 
 exports[`Home should render correctly 1`] = `
 <Fragment>
-  <Tabs
-    direction="horizontal"
-    disabled={false}
-    lineWidth={10}
-    onChange={[Function]}
-    prefixCls="za-tabs"
-    scrollable={false}
-    swipeable={false}
-    value={0}
-  >
-    <TabPanel
-      key="/home/following"
-      prefixCls="za-tabs"
-      title={
-        <React.Fragment>
-          <span
-            className="active"
-          >
-            follow
-          </span>
-        </React.Fragment>
+  <div>
+    <Tabs
+      activeKey="1"
+      activeLineMode="fixed"
+      onChange={[Function]}
+      style={
+        Object {
+          "--content-padding": 0,
+        }
       }
     >
-      <div />
-    </TabPanel>
-    <TabPanel
-      key="/home/discover"
-      prefixCls="za-tabs"
-      title={
-        <React.Fragment>
+      <Tab
+        key="0"
+        title={
           <span
             className="unactive"
           >
+            follow
+          </span>
+        }
+      >
+        <div />
+      </Tab>
+      <Tab
+        key="1"
+        title={
+          <span
+            className="active"
+          >
             discover
           </span>
-        </React.Fragment>
-      }
-    >
-      <div />
-    </TabPanel>
-    <TabPanel
-      key="/home/recent"
-      prefixCls="za-tabs"
-      title={
-        <React.Fragment>
+        }
+      >
+        <div />
+      </Tab>
+      <Tab
+        key="2"
+        title={
           <span
             className="unactive"
           >
             recent
           </span>
-        </React.Fragment>
-      }
-    >
-      <div />
-    </TabPanel>
-    <TabPanel
-      key="/home/me"
-      prefixCls="za-tabs"
-      title={
-        <React.Fragment>
+        }
+      >
+        <div />
+      </Tab>
+      <Tab
+        key="3"
+        title={
           <span
             className="unactive"
           >
             me
           </span>
-        </React.Fragment>
-      }
-    >
-      <div />
-    </TabPanel>
-  </Tabs>
+        }
+      >
+        <div />
+      </Tab>
+    </Tabs>
+  </div>
 </Fragment>
 `;

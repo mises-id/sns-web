@@ -296,6 +296,7 @@ exports[`UserInfo should render correctly 1`] = `
     >
       <PullList
         data={Array []}
+        emptyText="NFTEmpty"
         load={[Function]}
         renderView={[Function]}
       />
