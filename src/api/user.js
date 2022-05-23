@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-05-13 09:30:00
+ * @LastEditTime: 2022-05-23 09:33:46
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -183,5 +183,16 @@ export async function unlikeNFT(id){
   return request({
     url: `/user/nft_asset`,
     params
+  })
+}
+
+ export async function getOpenseaNFTAsset(ethAddress){
+  return request({
+    url: `/opensea/assets`,
+    params:{
+      owner: ethAddress,
+      cursor:'',
+      limit:50
+    }
   })
 }

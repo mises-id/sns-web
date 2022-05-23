@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-05-16 15:29:16
+ * @LastEditTime: 2022-05-23 10:05:43
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -51,14 +51,19 @@ request.interceptors.request.use(
 // response interceptor
 request.interceptors.response.use(
   response => {
-    const {data,message,code,pagination} = response.data;
+    const {data,message,code,pagination,assets} = response.data;
+    if(response.data.hasOwnProperty('assets')&&!response.data.hasOwnProperty('code')){
+      return assets
+    }
     if (code!==0) {
       console.log(message,'message')
       reject(data.data)
       return Promise.reject(new Error(message || 'Error'))
     }
-    const res  = pagination ? {data,pagination} : data;
-    return res;
+    if(pagination){
+      return {data,pagination}
+    }
+    return data;
   },
   error => {
     error.response&&reject(error.response.data)

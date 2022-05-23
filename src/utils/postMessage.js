@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-05-18 15:34:19
+ * @LastEditTime: 2022-05-23 09:25:18
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -408,6 +408,13 @@ export default class MisesExtensionController {
       console.log(error, "isActive");
       return Promise.reject(error || "Wallet not activated");
     }
+  }
+  // get metamask version
+  getMetamaskVersion() {
+    if(window.misesModule.getMetamaskVersion){
+      return window.misesModule.getMetamaskVersion()
+    }
+    return ''
   }
 
   async NFTPage() {

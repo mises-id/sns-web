@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-18 14:48:16
+ * @LastEditTime: 2022-05-23 10:27:42
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -13,9 +13,9 @@ import like_NFT from '@/images/like_NFT.png'
 import importIcon from '@/images/Import.png'
 import Navbar from "@/components/NavBar";
 import PullList from "@/components/PullList";
-import { objToUrl, useList, useRouteState } from "@/utils";
-import { Button, Image } from "antd-mobile";
-import { getMyNFTAsset, getNFTAsset } from "@/api/user";
+import { objToUrl, useList, useLoginModal, useRouteState } from "@/utils";
+import { Button, Image, Toast } from "antd-mobile";
+import { getMyNFTAsset, getNFTAsset, getOpenseaNFTAsset } from "@/api/user";
 const NFTPage = ({history}) => {
   const {t} = useTranslation();
   const NFTDetail = item=>{
@@ -91,8 +91,22 @@ const NFTPage = ({history}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource.length])
   // import NFT
+  const loginModal = useLoginModal()
   const importWallet = ()=>{
-    window.mises.NFTPage()
+    const version =  window.mises.getMetamaskVersion()
+    if(version==='10.14.0'){
+      window.mises.NFTPage()
+      return 
+    }
+    if(window.ethereum.selectedAddress){
+      getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
+        Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
+      })
+      return
+    }
+    loginModal(()=>{
+      importWallet()
+    })
   }
   const [loading, setLoading] = useState(true);
   return (
