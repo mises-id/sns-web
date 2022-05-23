@@ -5,7 +5,7 @@
  * @LastEditors: lmk
  * @Description: NFT page
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./index.scss";
 import comment_NFT from '@/images/comment_NFT.png'
@@ -92,6 +92,7 @@ const NFTPage = ({history}) => {
   }, [dataSource.length])
   // import NFT
   const loginModal = useLoginModal()
+  const pullList = useRef(null);
   const importWallet = ()=>{
     const version =  window.mises.getMetamaskVersion()
     if(version==='10.14.0'){
@@ -101,6 +102,9 @@ const NFTPage = ({history}) => {
     if(window.ethereum.selectedAddress){
       getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
         Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
+        if(res.length>0){
+          pullList.current.refreshData()
+        }
       })
       return
     }
@@ -116,6 +120,7 @@ const NFTPage = ({history}) => {
         renderView={renderView}
         data={NFTData}
         emptyTxt="NFTEmpty"
+        ref={pullList}
         load={async (res)=>{
           try {
             setLoading(true)

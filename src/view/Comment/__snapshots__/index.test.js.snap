@@ -10,7 +10,7 @@ exports[`Comment should render correctly 1`] = `
   <div
     className="m-flex-1 commentBox"
   >
-    <PullList
+    <ForwardRef(PullList)
       data={Array []}
       load={[Function]}
       renderView={[Function]}

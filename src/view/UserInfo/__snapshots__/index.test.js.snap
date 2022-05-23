@@ -294,7 +294,7 @@ exports[`UserInfo should render correctly 1`] = `
     <div
       className="pull-list"
     >
-      <PullList
+      <ForwardRef(PullList)
         data={Array []}
         emptyText="NFTEmpty"
         load={[Function]}

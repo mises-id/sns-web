@@ -1,11 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-05-16 15:37:59
+ * @LastEditTime: 2022-05-23 11:54:33
  * @LastEditors: lmk
  * @Description: global pull list
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Pull } from "zarm";
 import "@/styles/followPage.scss";
 import Empty from "@/components/Empty";
@@ -34,7 +34,7 @@ let mounted = true;
  * @param {*}isAuto:can you auto load
  * @return {*} element
  */
-const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess,children,emptyTxt }) => {
+const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess,children,emptyTxt },ref) => {
   const pullRef = useRef();
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
   const [loading, setLoading] = useState(LOAD_STATE.normal);
@@ -108,6 +108,11 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
       setisOnceLoad(true);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps 
+  useImperativeHandle(ref, () => {
+    return {
+      refreshData
+    }
+  })
   return (
     <>
       {/* {isOnceLoad && (
@@ -138,4 +143,4 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
     </>
   );
 };
-export default PullList;
+export default forwardRef(PullList);

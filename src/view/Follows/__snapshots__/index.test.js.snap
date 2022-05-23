@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Follows should render correctly 1`] = `
-<PullList
+<ForwardRef(PullList)
   data={Array []}
   getSuccess={[Function]}
   isAuto={true}

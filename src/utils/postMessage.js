@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-05-23 09:25:18
+ * @LastEditTime: 2022-05-23 12:26:26
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -411,7 +411,7 @@ export default class MisesExtensionController {
   }
   // get metamask version
   getMetamaskVersion() {
-    if(window.misesModule.getMetamaskVersion){
+    if(window.misesModule&&window.misesModule.getMetamaskVersion){
       return window.misesModule.getMetamaskVersion()
     }
     return ''
