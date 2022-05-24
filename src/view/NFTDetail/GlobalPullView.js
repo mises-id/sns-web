@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-05-12 16:53:47
- * @LastEditTime: 2022-05-18 10:17:54
+ * @LastEditTime: 2022-05-24 18:17:36
  * @LastEditors: lmk
  * @Description: 
  */
@@ -31,11 +31,11 @@ export const GlobalPullView = ({type,nftInfo})=>{
   const activeRender = (val,index) => {
     const {to_account} = val;
     const userInfo = {
-      avatar: to_account.mises_user ? to_account.mises_user.avatar : {
-        medium:to_account.profile_img_url,
+      avatar: to_account&&to_account.mises_user ? to_account.mises_user.avatar : {
+        medium:to_account&&to_account.profile_img_url ? to_account.profile_img_url : '',
         nft_asset_id:'',
       },
-      username:username(to_account.mises_user || {},'0x*********'),
+      username:username(to_account&&to_account.mises_user ? to_account.mises_user : {},'0x*********'),
       event_type: val.event_type,
       created_at:val.created_date
     }
