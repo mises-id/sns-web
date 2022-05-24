@@ -16,13 +16,10 @@ exports[`Cell should render correctly 1`] = `
       >
         test
       </span>
-      <div
-        className="m-margin-top5"
-      />
     </div>
   </div>
   <div
-    className="m-flex"
+    className="m-flex right-content"
   >
     <img
       alt=""

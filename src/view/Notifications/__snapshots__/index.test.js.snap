@@ -5,7 +5,7 @@ exports[`Notifications should render correctly 1`] = `
   <Navbar
     title="NotificationsPageTitle"
   />
-  <PullList
+  <ForwardRef(PullList)
     data={Array []}
     load={[Function]}
     renderView={[Function]}

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NFTPage should render correctly 1`] = `
+<div>
+  <Navbar
+    title="MyNFTPageTitle"
+  />
+  <ForwardRef(PullList)
+    data={Array []}
+    emptyTxt="NFTEmpty"
+    load={[Function]}
+    renderView={[Function]}
+  />
+</div>
+`;

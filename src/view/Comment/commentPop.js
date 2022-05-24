@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-02-14 10:04:06
+ * @LastEditTime: 2022-05-18 10:50:44
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,6 @@ import "./index.scss";
 import replies_close from "@/images/replies_close.png";
 import replies_refresh from "@/images/replies_refresh.png";
 import { Popup } from "zarm";
-import Image from "@/components/Image";
 import {
   formatTimeStr,
   isMe,
@@ -36,6 +35,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { createComment } from "@/api/comment";
 import { useHistory } from "react-router-dom";
+import Avatar from '@/components/NFTAvatar'
 const CommentsPop = (
   {
     setvisible,
@@ -63,11 +63,18 @@ const CommentsPop = (
   const [setrefreshFlag, setrefresh] = useState(false); // refresh status
   const loginModal = useLoginModal();
   const history = useHistory()
+  const idForm = {}
+  if(comment.nft_asset_id){
+    idForm.nft_asset_id = comment.nft_asset_id
+  }
+  if(comment.status_id){
+    idForm.status_id = status_id || comment.status_id
+  }
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
-    status_id: state.id || comment.state_id,
     topic_id: comment.id,
     limit: 20,
     last_id: lastId,
+    ...idForm,
   });
   useEffect(() => {
     setlastId(last_id);
@@ -164,7 +171,8 @@ const CommentsPop = (
         key={index}
         onClick={() => replyItem(val)}
       >
-        <Image size={30} source={valAvatar.medium} key={val.id} onClick={e=>userDetail(e,val)}></Image>
+
+        <Avatar size="30px" avatarItem={valAvatar} onClick={e=>userDetail(e,val)}  key={val.id} />
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(val.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -204,7 +212,7 @@ const CommentsPop = (
         className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15"
         onClick={() => replyItem(data)}
       >
-        <Image size={30} source={avatar && avatar.medium} onClick={e=>userDetail(e,data)}></Image>
+        <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,data)}/>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(data.user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8   m-padding-bottom13">
@@ -269,7 +277,7 @@ const CommentsPop = (
     submit&&submit(e);
     createComment({
       content: commentContent.value,
-      status_id: status_id  || comment.state_id,
+      ...idForm,
       parent_id: selectItem.id || "",
     }).then((res) => {
       commentContent.onChange("");

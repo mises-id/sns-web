@@ -1,18 +1,18 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-04-20 10:40:22
+ * @LastEditTime: 2022-05-23 10:05:43
  * @LastEditors: lmk
  * @Description: common request
  */
 import axios from 'axios'
 import { store } from "@/stores";
-import { Toast } from 'zarm';
+import { Modal, Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
+
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
-// export const baseURL = 'http://192.168.1.3:8080/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url
@@ -51,14 +51,19 @@ request.interceptors.request.use(
 // response interceptor
 request.interceptors.response.use(
   response => {
-    const {data,message,code,pagination} = response.data;
+    const {data,message,code,pagination,assets} = response.data;
+    if(response.data.hasOwnProperty('assets')&&!response.data.hasOwnProperty('code')){
+      return assets
+    }
     if (code!==0) {
       console.log(message,'message')
       reject(data.data)
       return Promise.reject(new Error(message || 'Error'))
     }
-    const res  = pagination ? {data,pagination} : data;
-    return res;
+    if(pagination){
+      return {data,pagination}
+    }
+    return data;
   },
   error => {
     error.response&&reject(error.response.data)
@@ -71,12 +76,15 @@ request.interceptors.response.use(
 const reject = ({code,message})=>{
   if(code===403002){
     invalidToken()
+    return
   }
   if(code===401000){
     invalidAuth()
+    return
   }
   if(code===400000){
     invalidAuth()
+    return
   }
   console.log(code);
   Toast.show(message|| 'error')
@@ -89,6 +97,12 @@ const invalidToken = ()=>{
 const invalidAuth = ()=>{
   window.mises.resetUser()
   store.dispatch(setUserToken(''))
-  window.location.replace('/home/me')
+  Modal.alert({
+    title: 'Message',
+    content: 'Connection failed, please reconnect',
+    onCancel: () => {
+      window.location.replace('/home/me')
+    }
+  })
 }
 export default request

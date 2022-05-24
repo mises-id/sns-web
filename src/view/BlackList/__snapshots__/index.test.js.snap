@@ -5,7 +5,7 @@ exports[`BlackList should render correctly 1`] = `
   <Navbar
     title="blackListPageTitle"
   />
-  <PullList
+  <ForwardRef(PullList)
     data={Array []}
     load={[Function]}
     renderView={[Function]}

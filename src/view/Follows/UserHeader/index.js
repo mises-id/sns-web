@@ -1,11 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-01-25 16:10:03
+ * @LastEditTime: 2022-05-12 15:58:16
  * @LastEditors: lmk
  * @Description:
  */
-import Image from "@/components/Image/index";
+import Avatar from "@/components/NFTAvatar";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import deteleIcon from "@/images/arrow-down.png";
@@ -53,14 +53,10 @@ const UserHeader = ({
   return (
     <div className={`m-flex m-row-between ${size ? "forward" : "normal"}`}>
       <div className="m-flex">
-        <Image
-          size={size}
-          source={item.avatar ? item.avatar.medium : ""}
-          onClick={onClick}
-        />
+        <Avatar avatarItem={item.avatar} size={size} onClick={onClick}/>
         <div className={!size ? "m-margin-left12" : "m-margin-left8"}>
           <span className="nickname">{username(item)}</span>
-          <div
+          {item.created_at&&<div
             className={
               !size ? "m-margin-top8 timeAndType" : "m-margin-top4 timeAndType"
             }
@@ -68,7 +64,7 @@ const UserHeader = ({
             {formatTimeStr(item.created_at)}
             <span className="m-margin-left3">{item.from_type}</span>
             {!item.is_public&&<img src={privateIcon} alt="" width="9px" style={{marginLeft:'8px'}}/>}
-          </div>
+          </div>}
         </div>
       </div>
       {!isMe && btnType === "follow" && (

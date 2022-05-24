@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-01-29 11:04:52
+ * @LastEditTime: 2022-05-17 10:21:07
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -28,11 +28,11 @@ import liked from "@/images/liked.png";
 import like from "@/images/like.png";
 import commentIcon from "@/images/comment.png";
 import ReplyInput from "@/components/ReplyInput";
-import Image from "@/components/Image";
 import CommentsPop from "./commentPop";
 import deleteComment from "@/images/deleteComment.png";
 import { Modal } from "zarm";
 import { setUserSetting } from "@/actions/user";
+import Avatar from '@/components/NFTAvatar'
 // import { setUserSetting } from "@/actions/user";
 
 const Comment = ({ history }) => {
@@ -148,7 +148,7 @@ const Comment = ({ history }) => {
         className="m-flex m-col-top m-padding-top13 m-bg-fff m-padding-left15"
         onClick={() => replyItem(val)}
       >
-        <Image size={30} source={avatar && avatar.medium} onClick={(e)=>userDetail(e,val)}></Image>
+        <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,val)}/>
         <div className="m-margin-left11 m-line-bottom m-flex-1">
           <span className="commentNickname">{username(user)}</span>
           <div className="m-font15 m-colors-555 m-margin-top8 right-content  m-padding-bottom13">
@@ -197,7 +197,7 @@ const Comment = ({ history }) => {
                   className="m-flex m-col-top m-bg-fff m-padding-bottom15 right-content"
                   onClick={(e) => replyItem(item, e)}
                 >
-                  <Image size={20} source={avatar && avatar.medium}  onClick={(e)=>userDetail(e,item)}></Image>
+                  <Avatar size="30px" avatarItem={avatar} onClick={e=>userDetail(e,item)}/>
                   <div className="m-margin-left11 m-flex-1">
                     <div className="m-padding-bottom10">
                       <span className="commentNickname1">
@@ -238,11 +238,23 @@ const Comment = ({ history }) => {
   };
   //getData
   const [lastId, setlastId] = useState("");
-  const [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
-    status_id: state.id,
+
+  const getFormId = ()=>{
+    const form = {};
+    if(state.id || state.status_id) form.status_id = state.id || state.status_id
+    if(state.nft_asset_id) form.nft_asset_id = state.nft_asset_id
+    return form
+  }
+  const form = {
     limit: 20,
     last_id: lastId,
-  });
+    ...getFormId()
+  }
+  const [fetchData, last_id, dataSource, setdataSource,total] = useList(getComment, form);
+  useEffect(() => {
+    console.log(total)
+  }, [total])
+  
   const user = useSelector((state) => state.user) || {};
   const [loading, setloading] = useState(false);
   useEffect(() => {
@@ -257,7 +269,7 @@ const Comment = ({ history }) => {
     setloading(true);
     createComment({
       content: commentContent.value,
-      status_id: state.id,
+      ...getFormId(),
       parent_id: selectItem.id || "",
     })
       .then((res) => {
@@ -302,16 +314,20 @@ const Comment = ({ history }) => {
   const [visible, setvisible] = useState(false);
   const [commentPop, setcommentPop] = useState({});
   const showMoreComment = (e, val) => {
-    e.stopPropagation();
-    setvisible(true);
-    setcommentPop(val);
-    val.username = username(val.user);
-    setselectItem(val);
+
+    const form = {
+      ...val,
+      ...getFormId()
+    }
+    setcommentPop(form)
+    form.username = username(val.user)
+    setselectItem(form)
+    setvisible(true)
   };
   const dispatch = useDispatch()
   const uploadPostDataList = (countNum)=>{
     dispatch(setUserSetting({
-      postId: state.id,
+      postId: state.status_id,
       data:countNum,
       actionType: 'comment'
     }))
@@ -328,7 +344,10 @@ const Comment = ({ history }) => {
         <PullList
           renderView={renderView}
           data={dataSource}
-          load={fetchData}
+          load={async ()=>{
+            const res = await fetchData()
+            setCount(res.pagination.total)
+          }}
         ></PullList>
       </div>
       <CommentsPop

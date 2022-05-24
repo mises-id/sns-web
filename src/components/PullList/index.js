@@ -1,11 +1,11 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-23 10:01:30
- * @LastEditTime: 2022-04-21 17:59:45
+ * @LastEditTime: 2022-05-23 11:54:33
  * @LastEditors: lmk
  * @Description: global pull list
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Pull } from "zarm";
 import "@/styles/followPage.scss";
 import Empty from "@/components/Empty";
@@ -34,7 +34,7 @@ let mounted = true;
  * @param {*}isAuto:can you auto load
  * @return {*} element
  */
-const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess }) => {
+const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSuccess,children,emptyTxt },ref) => {
   const pullRef = useRef();
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal);
   const [loading, setLoading] = useState(LOAD_STATE.normal);
@@ -63,7 +63,7 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
             setlastId(last_id);
           }
         }
-        console.log('last_id',last_id)
+        // console.log('last_id',last_id)
         if(res.listType.isCache){
           getSuccess&&getSuccess(last_id)
           return false;
@@ -108,6 +108,11 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
       setisOnceLoad(true);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps 
+  useImperativeHandle(ref, () => {
+    return {
+      refreshData
+    }
+  })
   return (
     <>
       {/* {isOnceLoad && (
@@ -131,10 +136,11 @@ const PullList = ({ renderView, data=[], isAuto = true, load, otherView,getSucce
       >
         {loading !== 2 && !isOnceLoad && otherView && otherView()}
         {data.map(renderView)}
-        {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty></Empty>}
+        {loading !== 2 && data.length === 0 && !isOnceLoad && <Empty emptyTxt={emptyTxt}></Empty>}
+        {children}
         {/* {loading===3&&data.length >0&&<div className="pull-empty">-- No more data --</div>} */}
       </Pull>
     </>
   );
 };
-export default PullList;
+export default forwardRef(PullList);

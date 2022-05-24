@@ -1,83 +1,117 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import userBack from "@/images/user_back.png";
+import quotes_left from "@/images/quotes_left.png";
+import quotes_right from "@/images/quotes_right.png";
+import Airdrop from "@/images/Airdrop.png";
 // import userMore from "@/images/user_more.png";
 import "./index.scss";
-import Image from "@/components/Image";
+import Avatar from "@/components/NFTAvatar";
 import { useTranslation } from "react-i18next";
 import MButton from "@/components/MButton";
-import { numToKMGTPE, objToUrl, urlToJson, useChangePosts, useLoginModal, username, useRouteState } from "@/utils";
+import {
+  getLink,
+  numToKMGTPE,
+  objToUrl,
+  urlToJson,
+  useChangePosts,
+  useLoginModal,
+  username,
+  useRouteState,
+} from "@/utils";
 import { useLogin } from "@/components/PostsIcons/common";
 import addIcon from "@/images/add.png";
-import { ActionSheet, Panel, Tabs, Toast } from "zarm";
+import { ActionSheet, Toast } from "zarm";
+import { Tabs } from "antd-mobile";
 import UserPosts from "./UserPost";
 import UserLikes from "./UserLike";
 import { useHistory } from "react-router-dom";
-import { clearCache, useDidRecover } from 'react-router-cache-route'
-import { getUserInfo, JoinBlackList, removeBlackList } from "@/api/user";
-import block from '@/images/block.png';
+import { clearCache, useDidRecover } from "react-router-cache-route";
+import {
+  getUserDetailNFTAsset,
+  getUserInfo,
+  JoinBlackList,
+  removeBlackList,
+} from "@/api/user";
+import { Image, Button } from "antd-mobile";
+import block from "@/images/block.png";
+import { useThrottleFn } from "ahooks";
+import Navbar from "@/components/NavBar";
+import { useSelector } from "react-redux";
 const UserDetail = (props) => {
   const [userInfo, setUserInfo] = useState({});
   const { t } = useTranslation();
   const { isLogin } = useLogin();
-  const [value, setvalue] = useState(0);
+  const [value, setvalue] = useState("0");
   const state = useRouteState();
+  const {loginForm={}} = useSelector((state) => state.user) || {};
   useEffect(() => {
-    setInfo(state)
-    setvalue(0)
+    getNFT(state.uid);
+    setInfo(state);
+    setvalue("0");
     // eslint-disable-next-line
-  }, [state.uid]); 
+  }, [state.uid]);
   useDidRecover(() => {
     const historyState = urlToJson(window.location.search);
-    console.log(historyState)
-    setInfo(historyState)
-    if(JSON.stringify(historyState)!==JSON.stringify(state)){
-      window.refreshByCacheKey("/userDetail")
+    getNFT(historyState.uid);
+    setInfo(historyState);
+    if (JSON.stringify(historyState) !== JSON.stringify(state)) {
+      window.refreshByCacheKey("/userDetail");
     }
-    window.refreshByCacheKey("/userFollowPage")
-    window.refreshByCacheKey("/comment")
-    window.refreshByCacheKey("/post")
-  },[state])
-  
-  const setInfo = (state) =>{
-    const uid = state.uid
-    state.uid = ''
+    window.refreshByCacheKey("/userFollowPage");
+    window.refreshByCacheKey("/comment");
+    window.refreshByCacheKey("/post");
+    window.refreshByCacheKey("/NFTDetail");
+  }, [state]);
+  const setInfo = (state) => {
+    const uid = state.uid;
+    state.uid = "";
+    state.avatar = {
+      medium: state.avatar,
+    };
     setUserInfo(state);
-    getUserInfo(uid).then(res=>{
-      res.avatar = res.avatar ? res.avatar.medium : ''
-      setUserInfo(res);
-      state.uid = res.uid;
-      const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
-      setbuttons(btnArr)
-    }).catch(err=>{
-      console.log(err)
-    })
-  }
+    getUserInfo(uid)
+      .then((res) => {
+        setUserInfo(res);
+        state.uid = res.uid;
+        const btnArr = res.is_blocked ? removeBlackButton : joinBlackButton;
+        setbuttons(btnArr);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const history = useHistory();
   // show assentSheet
-  const successBlock = ()=>{
-    setInfo(state)
-    Toast.show(t('succcess'))
-    clearCache()
-  }
-  const [visible, setVisible] = useState(false)
-  const joinBlackButton = [{ // Black user
-    text:'Block',
-    theme: 'danger',
-    onClick: ()=>{
-      JoinBlackList({uid:Number(state.uid)}).then(successBlock)
-      setVisible(false)
-    }
-  }]
-  const removeBlackButton = [{ // Black user
-    text:'unBlock',
-    theme: 'danger',
-    onClick: () => {
-      removeBlackList(state.uid).then(successBlock)
-      setVisible(false)
-    }
-  }]
+  const successBlock = () => {
+    setInfo(state);
+    Toast.show(t("succcess"));
+    clearCache();
+  };
+  const [visible, setVisible] = useState(false);
+  const joinBlackButton = [
+    {
+      // Black user
+      text: "Block",
+      theme: "danger",
+      onClick: () => {
+        JoinBlackList({ uid: Number(state.uid) }).then(successBlock);
+        setVisible(false);
+      },
+    },
+  ];
+  const removeBlackButton = [
+    {
+      // Black user
+      text: "unBlock",
+      theme: "danger",
+      onClick: () => {
+        removeBlackList(state.uid).then(successBlock);
+        setVisible(false);
+      },
+    },
+  ];
   // Judge the display content according to the status
-  const [buttons, setbuttons] = useState(joinBlackButton)
+  const [buttons, setbuttons] = useState(joinBlackButton);
   // const showCheckItem = ()=> setVisible(true)
   const back = () => {
     window.history.back();
@@ -94,20 +128,83 @@ const UserDetail = (props) => {
   const getFollow = (value) => {
     history.push({
       pathname: "/userFollowPage",
-      search: objToUrl({ uid: userInfo.uid, username: username(userInfo), value }),
+      search: objToUrl({
+        uid: userInfo.uid,
+        username: username(userInfo),
+        value,
+      }),
     });
   };
   const { followPress } = useChangePosts(setUserInfo, userInfo);
-  const followedItem = (e) => hasLogin(e, async ()=>{
-    await followPress(userInfo)
-  });
+  const followedItem = (e) =>
+    hasLogin(e, async () => {
+      await followPress(userInfo);
+    });
   const isFollow = userInfo.is_followed ? "followedTxt" : "followTxt";
+  // router push this NFT detail
+  const NFTDetail = () => {
+    if (!userInfo.avatar.nft_asset_id) return;
+    routeToNFTDetail({
+      tokenId: userInfo.avatar.nft_asset_id,
+      image: userInfo.avatar.medium,
+    });
+  };
+  const routeToNFTDetail = (item) => {
+    history.push({
+      pathname: "/NFTDetail",
+      search: objToUrl(item),
+    });
+  };
+  const [NFTList, setNFTList] = useState([]);
+  const getNFT = (uid) => {
+    if (!uid) return;
+    getUserDetailNFTAsset({ scene: "recommend", limit: 3, uid }).then((res) => {
+      setNFTList(res.data);
+    });
+  };
+  // view more
+  const userAllNFT = () => {
+    history.push({
+      pathname: "/NFT",
+      search: objToUrl({ uid: userInfo.uid }),
+    });
+  };
+  const [showNavBar, setShowNavBar] = useState(false);
+  const { run: handleScroll } = useThrottleFn(
+    (e) => {
+      if (e.target.scrollTop > 60 && !showNavBar) {
+        setShowNavBar(true);
+      }
+      if (e.target.scrollTop < 60 && showNavBar) {
+        setShowNavBar(false);
+      }
+    },
+    {
+      leading: true,
+      trailing: true,
+      wait: 100,
+    }
+  );
+  const userDetail = useRef(null);
+  useEffect(() => {
+    userDetail.current.addEventListener("scroll", handleScroll);
+    return () => {
+      if (userDetail.current)
+      // eslint-disable-next-line
+        userDetail.current.removeEventListener("scroll", handleScroll);
+    };
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <div>
-      <div className="app-container user-detail">
-        <div className="user-detail-header" style={{backgroundImage:"url(/static/images/user_bg.jpg)"}}>
+    <>
+      {showNavBar && <Navbar title={username(userInfo)} fixed />}
+      <div className="app-container user-detail" ref={userDetail}>
+        <div
+          className="user-detail-header"
+          style={{ backgroundImage: "url(/static/images/user_bg.jpg)" }}
+        >
           {/* header */}
-          {/* <img src="/static/images/user_bg.jpg" className="user-bg" alt="userbg"></img> */}
           <div className="m-flex nav-box m-row-between">
             <img
               src={userBack}
@@ -115,78 +212,143 @@ const UserDetail = (props) => {
               alt=""
               onClick={back}
             ></img>
-            {/* <img src={userMore} className="nav-icon" alt="" onClick={showCheckItem}></img> */}
           </div>
           {/* userinfo */}
           <div className="userinfo-box m-flex">
             <div className="avatar-box">
-              <Image source={userInfo.avatar} size={75}></Image>
+              <Avatar
+                avatarItem={userInfo.avatar}
+                size="75px"
+                NFTTagSize="48px"
+                onClick={NFTDetail}
+              />
             </div>
             <div className="m-flex-1 user-info">
               <div className="m-flex m-row-between">
                 <span className="username">{username(userInfo)}</span>
-                {userInfo.is_blocked ? '' : <MButton
-                  txt={t(isFollow)}
-                  onPress={followedItem}
-                  {...(userInfo.is_followed
-                    ? {
-                        borderColor: "#FFFFFF",
-                        txtColor: "#FFFFFF",
-                      }
-                    : {
-                        borderColor: "#FFFFFF",
-                        backgroundColor: "#FFFFFF",
-                        txtColor: "#666",
-                      })}
-                  imgIcon={!userInfo.is_followed ? addIcon : ""}
-                  width={70}
-                  height={25}
-                />}
+                {(userInfo.is_blocked || userInfo.uid===loginForm.uid)? (
+                  ""
+                ) : (
+                  <MButton
+                    txt={t(isFollow)}
+                    onPress={followedItem}
+                    {...(userInfo.is_followed
+                      ? {
+                          borderColor: "#FFFFFF",
+                          txtColor: "#FFFFFF",
+                        }
+                      : {
+                          borderColor: "#FFFFFF",
+                          backgroundColor: "#FFFFFF",
+                          txtColor: "#666",
+                        })}
+                    imgIcon={!userInfo.is_followed ? addIcon : ""}
+                    width={70}
+                    height={25}
+                  />
+                )}
               </div>
               <div className="follow-box m-flex">
                 <div onClick={() => getFollow(0)}>
-                  <span className="follow-num">{numToKMGTPE(userInfo.followings_count) || 0}</span>
+                  <span className="follow-num">
+                    {numToKMGTPE(userInfo.followings_count) || 0}
+                  </span>
                   <span className="follow-name">Following</span>
                 </div>
                 <div onClick={() => getFollow(1)}>
-                  <span className="follow-num">{numToKMGTPE(userInfo.fans_count) || 0}</span>
+                  <span className="follow-num">
+                    {numToKMGTPE(userInfo.fans_count) || 0}
+                  </span>
                   <span className="follow-name">Followers</span>
                 </div>
               </div>
             </div>
           </div>
+          {/* user intro */}
+          {userInfo.intro && (
+            <div className="intro-content">
+              <img src={quotes_left} alt="" className="quotes left" />
+              <div
+                className="intro-txt"
+                dangerouslySetInnerHTML={{ __html: getLink(userInfo.intro) }}
+              ></div>
+              <img src={quotes_right} alt="" className="quotes right" />
+            </div>
+          )}
+          {(userInfo.intro || NFTList.length > 0)&&<div className="NFT-empty-line"></div> }
+          {/* user NFT list */}
+          {NFTList.length > 0 && (
+            <div className="NFT-list">
+              <p className="NFT-title">User's NFT</p>
+              <div className="m-grid nft-list-items">
+                {NFTList.map((val, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="grid-item"
+                      onClick={() =>
+                        routeToNFTDetail({
+                          name: val.name,
+                          image: val.image_url,
+                          tokenId: val.id,
+                        })
+                      }
+                    >
+                      <Image
+                        src={val.image_preview_url}
+                        fit="cover"
+                        style={{
+                          borderRadius: 10,
+                          height: "calc((100vw - 60px) / 3)",
+                        }}
+                      />
+                      <p className="nft-name">{val.name}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {NFTList.length > 0 && (
+            <div className="view-more">
+              <Button
+                color="primary"
+                fill="outline"
+                onClick={userAllNFT}
+                block
+                shape="rounded"
+              >
+                <div className="m-flex m-row-center">
+                  <span>View More</span>
+                  <img src={Airdrop} alt="" />
+                </div>
+              </Button>
+            </div>
+          )}
         </div>
         {/* tab content */}
-        {userInfo.uid && !userInfo.is_blocked &&(
+        {userInfo.uid && !userInfo.is_blocked && (
           <div className="tab-content">
             <div className="tab-header">
-              <Tabs swipeable lineWidth={10} value={value} onChange={setvalue}>
-                <Panel
-                  title={
-                    <span className={value === 0 ? "active" : "unactive"}>
-                      Posts
-                    </span>
-                  }
-                >
-                  <UserPosts uid={userInfo.uid} />
-                </Panel>
-                <Panel
-                  title={
-                    <span className={value === 1 ? "active" : "unactive"}>
-                      Likes
-                    </span>
-                  }
-                >
-                  <UserLikes  uid={userInfo.uid}/>
-                </Panel>
+              <Tabs
+                activeLineMode="fixed"
+                activeKey={value}
+                onChange={setvalue}
+              >
+                <Tabs.Tab title="Posts" key={0} />
+                <Tabs.Tab title="Likes" key={1} />
               </Tabs>
             </div>
+            {value === "0" ? <UserPosts uid={userInfo.uid} /> : ""}
+            {value === "1" ? <UserLikes uid={userInfo.uid} /> : ""}
           </div>
         )}
-        {userInfo.uid && userInfo.is_blocked&& <div className="blockStatus m-flex m-row-center m-margin-tb15 block-box">
-          <img src={block} alt="" width={20}/>
-          <span className="delete-txt">{t('postBlock')}</span>
-        </div>}
+        {userInfo.uid && userInfo.is_blocked && (
+          <div className="blockStatus m-flex m-row-center m-margin-tb15 block-box">
+            <img src={block} alt="" width={20} />
+            <span className="delete-txt">{t("postBlock")}</span>
+          </div>
+        )}
       </div>
       <ActionSheet
         spacing
@@ -195,7 +357,7 @@ const UserDetail = (props) => {
         onMaskClick={() => setVisible(!visible)}
         onCancel={() => setVisible(!visible)}
       />
-    </div>
+    </>
   );
 };
 export default UserDetail;

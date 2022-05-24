@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-04-12 09:40:41
+ * @LastEditTime: 2022-05-19 09:58:24
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -120,6 +120,9 @@ $positon:fff eee f8f8f8 999 FF3D62 333 666 5c65f6 555 111;
     }
     &-center{
       justify-content: center;
+    }
+    &-end{
+      justify-content: flex-end;
     }
   }
   &-1{
@@ -271,4 +274,17 @@ body{
   color: #666;
   font-size: 14px;
   text-align: center;
+}
+.hidden{
+  display: none;
+}
+
+.adm-tabs-header{
+  background-color: white;
+}
+.adm-tabs-tab-list{
+  height: 50px;
+  .adm-tabs-tab-wrapper-stretch{
+    flex: 1;
+  }
 }

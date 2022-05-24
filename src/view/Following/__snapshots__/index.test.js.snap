@@ -5,7 +5,7 @@ exports[`Following should render correctly 1`] = `
   <Navbar
     title="followingPageTitle"
   />
-  <PullList
+  <ForwardRef(PullList)
     data={Array []}
     load={[Function]}
     renderView={[Function]}

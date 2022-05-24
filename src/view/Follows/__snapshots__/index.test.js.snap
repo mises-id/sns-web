@@ -1,22 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Follows should render correctly 1`] = `
-<Fragment>
-  <div
-    style={
-      Object {
-        "padding": "20px",
-        "textAlign": "center",
-      }
-    }
-  >
-    <ActivityIndicator
-      loading={true}
-      percent={20}
-      prefixCls="za-activity-indicator"
-      strokeWidth={5}
-      type="spinner"
-    />
-  </div>
-</Fragment>
+<ForwardRef(PullList)
+  data={Array []}
+  getSuccess={[Function]}
+  isAuto={true}
+  load={[Function]}
+  otherView={[Function]}
+  renderView={[Function]}
+/>
 `;

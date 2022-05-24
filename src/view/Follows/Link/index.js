@@ -1,14 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:09:29
- * @LastEditTime: 2022-02-14 10:20:29
+ * @LastEditTime: 2022-05-18 10:52:59
  * @LastEditors: lmk
  * @Description:
  */
 
 import React from "react";
 import link from "@/images/link.png";
-import Image from "@/components/Image/index";
+import {Image} from "antd-mobile";
 import "./index.scss";
 // import { sdkLocationHref } from '@/utils/postMessage';
 /**
@@ -32,12 +32,16 @@ const Link = ({ theme = "primary", item = {}, type }) => {
         onClick={linkTo}
       >
         <div className="m-flex">
-          <Image
+          {/* <Image
             shape="square"
             size={!type ? "sm" : 35}
             alt="image"
             source={item.attachment_url}
-          />
+          /> */}
+          <Image src={item.attachment_url} 
+          width={!type ? "28px" : '35px'} 
+          fit="cover"
+          height={!type ? "28px" : '35px'}></Image>
           <div className="m-margin-left7">
             <span className={`title ${!type ? "m-font12" : "m-font15"}`}>
               {item.title}

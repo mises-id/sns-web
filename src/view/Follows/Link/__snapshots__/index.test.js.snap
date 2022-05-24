@@ -8,10 +8,10 @@ exports[`Link should render correctly 1`] = `
   <div
     className="m-flex"
   >
-    <Image
-      alt="image"
-      shape="square"
-      size="sm"
+    <Staged
+      fit="cover"
+      height="28px"
+      width="28px"
     />
     <div
       className="m-margin-left7"

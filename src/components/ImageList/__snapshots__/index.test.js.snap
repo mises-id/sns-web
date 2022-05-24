@@ -4,17 +4,13 @@ exports[`ImageList should render correctly 1`] = `
 <div
   className="imageList"
 >
-  <img
+  <Staged
     alt=""
-    className="image-max"
+    className="imgListOnce"
+    height="200px"
     onClick={[Function]}
     onLoad={[Function]}
-    style={
-      Object {
-        "height": "auto",
-        "width": "auto",
-      }
-    }
+    width="200px"
   />
 </div>
 `;

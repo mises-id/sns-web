@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NFTDetail should render correctly 1`] = `
+<div>
+  <Navbar
+    title="NFTDetailPageTitle"
+  />
+  <div
+    className="m-bg-f8f8f8 NFT-detail m-layout"
+  >
+    <div
+      className="m-bg-fff NFT-detail-content"
+    >
+      <div
+        className="m-position-relative"
+      >
+        <Staged
+          className="NFT-detail-img"
+          fit="cover"
+        />
+        <img
+          alt=""
+          className="NFT-detail-like"
+          onClick={[Function]}
+          src="like_NFT_big.png"
+        />
+      </div>
+      <p
+        className="NFT-detail-title"
+      />
+      <div
+        className="NFT-detail-descitem m-grid grid-cols-3"
+      >
+        <div
+          className="descitem"
+        >
+          <p>
+            -
+          </p>
+          <p>
+            Floor Price
+          </p>
+        </div>
+        <div
+          className="descitem"
+        >
+          <p>
+            -
+          </p>
+          <p>
+            Rarity
+          </p>
+        </div>
+        <div
+          className="descitem"
+        >
+          <p>
+            Anonymous
+          </p>
+          <p>
+            Owner
+          </p>
+        </div>
+      </div>
+      <p
+        className="link m-flex m-flex-center"
+      >
+        Want to buy it?  
+        <a
+          rel="noreferrer"
+          target="_blank"
+        >
+          Click here
+        </a>
+        <img
+          alt=""
+          src="Airdrop.png"
+        />
+      </p>
+    </div>
+    <div
+      className="NFT-detail-tab m-bg-fff"
+    >
+      <div
+        className="tabContainer"
+      >
+        <Tabs
+          activeKey="like"
+          activeLineMode="full"
+          destroyOnClose={true}
+          onChange={[Function]}
+        >
+          <Tab
+            key="like"
+            title={
+              <span
+                className="NFT-detail-tab-title"
+              >
+                NFTDetailLike
+                
+              </span>
+            }
+          />
+          <Tab
+            key="comment"
+            title={
+              <span
+                className="NFT-detail-tab-title"
+              >
+                NFTDetailComment
+                
+              </span>
+            }
+          />
+          <Tab
+            key="activity"
+            title={
+              <span
+                className="NFT-detail-tab-title"
+              >
+                NFTDetailActivity
+                
+              </span>
+            }
+          />
+        </Tabs>
+      </div>
+      <div
+        className="tab-container"
+      />
+    </div>
+  </div>
+</div>
+`;

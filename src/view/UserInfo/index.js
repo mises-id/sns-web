@@ -1,25 +1,31 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-04-01 16:17:45
+ * @LastEditTime: 2022-05-19 14:54:54
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
 import Cell from "@/components/Cell";
-import Image from "@/components/Image";
-import { useBind, useLoginModal } from "@/utils";
-import React, { useState } from "react";
+import { objToUrl, useBind, useList, useLoginModal } from "@/utils";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Modal, Button, Picker, Toast } from "zarm";
+import { Input, Modal, Picker, Toast, ActionSheet } from "zarm";
+import {Button} from 'antd-mobile'
 import "./index.scss";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { attachment } from "@/api/updata";
-import { getUserSelfInfo, updateUser } from "@/api/user";
+import selectNFTIcon from "@/images/selected_NFT.png";
+import { getMyNFTAsset, getUserSelfInfo, updateUser } from "@/api/user";
 import { setLoginForm } from "@/actions/user";
 import Navbar from "@/components/NavBar";
+import { Image, NavBar, TextArea } from "antd-mobile";
 import { useEffect } from "react";
+import Avatar from "@/components/NFTAvatar";
+import { Popup } from "antd-mobile";
+import PullList from "@/components/PullList";
+import { useHistory } from "react-router-dom";
 const genderList = [
   { value: "female", label: "female" },
   { value: "male", label: "male" },
@@ -27,12 +33,13 @@ const genderList = [
 ];
 const UserInfo = (props) => {
   const { t } = useTranslation();
-  const { loginForm = {},accountsChanged} = useSelector((state) => state.user) || {};
+  const { loginForm = {}, accountsChanged } =
+    useSelector((state) => state.user) || {};
   const [user, setuser] = useState(loginForm);
   const username = useBind(user.username);
   const phone = useBind(user.mobile);
   const mail = useBind(user.email);
-  const address = useBind(user.address);
+  const intro = useBind(user.intro);
   const [avatar, setavatar] = useState("");
   const [visible, setvisible] = useState(false);
   const [cropper, setcropper] = useState(null);
@@ -55,20 +62,23 @@ const UserInfo = (props) => {
     }
   };
   useEffect(() => {
-    if(!accountsChanged){
-      getUserSelfInfo().then(res=>{
-        setuser({...res})
-        username.onChange(res.username)
-        phone.onChange(res.mobile)
-        mail.onChange(res.email)
-        address.onChange(res.address)
-      }).catch(err=>{
-        console.log(err)
-      })
+    if (!accountsChanged) {
+      getUserSelfInfo()
+        .then((res) => {
+          setuser({ ...res });
+          username.onChange(res.username);
+          phone.onChange(res.mobile);
+          mail.onChange(res.email);
+          intro.onChange(res.intro);
+          setNFTSelected(res.avatar.nft_asset_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     // eslint-disable-next-line
-  }, [accountsChanged])
-  
+  }, [accountsChanged]);
+
   //send avatar
   const sendAvatar = () => {
     const option = {
@@ -93,8 +103,8 @@ const UserInfo = (props) => {
             t.attachment_id = res.attach_id;
             t.avatar.large = res.url;
             setAvatarInfo({
-              attachment_path:res.path,
-              attachment_id:res.attach_id
+              attachment_path: res.path,
+              attachment_id: res.attach_id,
             });
             return t;
           });
@@ -110,28 +120,27 @@ const UserInfo = (props) => {
     }
     setpickerVisible(false);
   };
-  const loginModal = useLoginModal()
-  const saveMisesInfo = ()=>{
-    const avatarUrl =
-        user.avatar && user.avatar.large ? user.avatar.large : "";
+  const loginModal = useLoginModal();
+  const saveMisesInfo = () => {
+    const avatarUrl = user.avatar && user.avatar.large ? user.avatar.large : "";
     const userInfo = {
       name: username.value,
       gender: user.gender,
-      telephones: [phone.value].filter(val=>val),
-      emails: [mail.value].filter(val=>val),
+      telephones: [phone.value].filter((val) => val),
+      emails: [mail.value].filter((val) => val),
       avatarUrl,
-      homePageUrl:'',
-      intro:''
-    }
-    console.log('update mises network',userInfo)
-    window.mises.setUserInfo(userInfo).catch(err=>{
-      if(err==='Wallet not activated'){
-        loginModal(()=>{
-          saveMisesInfo()
-        })
+      homePageUrl: "",
+      intro: intro.value,
+    };
+    console.log("update mises network", userInfo);
+    window.mises.setUserInfo(userInfo).catch((err) => {
+      if (err === "Wallet not activated") {
+        loginModal(() => {
+          saveMisesInfo();
+        });
       }
-    })
-  }
+    });
+  };
   const saveInfo = (by = "info") => {
     const form = {
       username: {
@@ -140,41 +149,45 @@ const UserInfo = (props) => {
       profile: {
         mobile: phone.value,
         email: mail.value,
-        address: address.value,
+        intro: intro.value,
         gender: user.gender,
       },
     };
     if (by === "info") {
-      const reg = /^[A-Za-z0-9]+(_?)+([A-Za-z0-9]+)$/
-      if(username.value&&!reg.test(username.value)){
+      const reg = /^[A-Za-z0-9]+(_?)+([A-Za-z0-9]+)$/;
+      if (username.value && !reg.test(username.value)) {
         // Toast.show('Incorrect username')
         Modal.alert({
-          title:'Message',
-          width:'83%',
-          content:t('usernameError')
-        })
+          title: "Message",
+          width: "83%",
+          content: t("usernameError"),
+        });
         return false;
       }
       setsaveLoading(true);
       const promise = [submit(form, "profile")];
-      if (username.value && username.value!==loginForm.username) {
+      if (username.value && username.value !== loginForm.username) {
         promise.push(submit(form, "username"));
       }
-      Promise.all(promise).then(() => {
-        Toast.show(t("updataUserInfoSuccess"));
-        saveMisesInfo()
-      }).catch(err=>{
-        console.log(err)
-      });
+      Promise.all(promise)
+        .then(() => {
+          Toast.show(t("updataUserInfoSuccess"));
+          saveMisesInfo();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   const setAvatarInfo = (res) => {
-    submit({ avatar: res }, "avatar").then(() => {
-      Toast.show(t("updataUserInfoSuccess"));
-      saveMisesInfo()
-    }).catch(err=>{
-      console.log(err)
-    });;
+    return submit({ avatar: res }, "avatar")
+      .then(() => {
+        Toast.show(t("updataUserInfoSuccess"));
+        saveMisesInfo();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   // const loginModal = useLoginModal()
   const submit = async (form, by) => {
@@ -198,11 +211,108 @@ const UserInfo = (props) => {
     return Promise.reject(error);
   };
   useEffect(() => {
-    if(!loginForm.misesid){
-      window.location.replace('/home/me')
+    if (!loginForm.misesid) {
+      window.location.replace("/home/me");
     }
   }, [loginForm.misesid]);
+  const [actionSheetVisible, setActionSheetVisible] = useState(false);
+  const inputRef = useRef(null);
+  // actionSheet select the avatar
+  const buttons = [
+    {
+      text: "Avatar",
+      onClick: () => {
+        inputRef.current.click();
+        setActionSheetVisible(false);
+      },
+    },
+    {
+      text: "Avatar-NFT",
+      onClick: () => {
+        setActionSheetVisible(false);
+        setNFTVisible(true);
+      },
+    },
+  ];
+  // nft avatar
+  const [NFTVisible, setNFTVisible] = useState(false);
+  const [NFTSelected, setNFTSelected] = useState({});
+  const [lastId, setlastId] = useState("");
+  const [fetchData, last_id, dataSource] = useList(getMyNFTAsset, {
+    limit: 20,
+    last_id: lastId,
+  });
+  useEffect(() => {
+    setlastId(last_id);
+  }, [last_id]);
+
+  const [NFTData, setNFTData] = useState([]);
   
+  useEffect(() => {
+    if (dataSource.length > 0) {
+      const slugArr = [];
+      dataSource.forEach((item) => {
+        const {
+          collection: { slug,name },
+        } = item;
+        const hasSlug = slugArr.find((val) => val.slugName === slug);
+        // group by slug
+        if (hasSlug) {
+          hasSlug.list.push(item);
+        } else {
+          slugArr.push({
+            name,
+            slugName: slug,
+            list: [item],
+          });
+        }
+      });
+      setNFTData(slugArr);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSource.length]);
+  const renderView = (val, index) => {
+    return (
+      <div className="NFT-container" key={index}>
+        <p className="NFT-select-series-title">{val.name}</p>
+        <div className="m-grid NFT-select-items">
+          {Array.isArray(val.list) &&
+            val.list.map((item, index) => {
+              return (
+                <div
+                  className="NFT-select-item"
+                  key={index}
+                  onClick={() => setNFTSelected(item.id)}
+                >
+                  <div
+                    className={`NFT-select-item-img-box ${
+                      NFTSelected === item.id ? "active" : ""
+                    }`}
+                  >
+                    <Image
+                      src={item.image_preview_url}
+                      alt=""
+                      fit="cover"
+                      className="NFT-select-item-img"
+                    />
+                    <Image className="active-image" src={selectNFTIcon}></Image>
+                  </div>
+                  <p className="NFT-select-item-title">{item.name}</p>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+    );
+  };
+  const saveNFTAvatar = () => {
+    setAvatarInfo({
+      nft_asset_id: NFTSelected,
+    }).then((_) => {
+      setNFTVisible(false);
+    });
+  };
+  const history = useHistory();
   return (
     <div>
       <Navbar title={t("userInfoPageTitle")} />
@@ -213,17 +323,18 @@ const UserInfo = (props) => {
             showIcon={false}
             className="m-padding-lr15 m-padding-tb12"
             rightChild={
-              <div className="m-position-relative">
+              <div
+                className="m-position-relative"
+                onClick={() => setActionSheetVisible(true)}
+              >
                 <input
                   type="file"
+                  ref={inputRef}
                   accept="image/png,image/jpeg"
-                  className="avatar-input m-position-absolute"
+                  className="avatar-input hidden"
                   onChange={getAvatarChange}
                 ></input>
-                <Image
-                  size={35}
-                  source={user.avatar && user.avatar.large}
-                ></Image>
+                <Avatar avatarItem={loginForm.avatar} size="35px" />
               </div>
             }
           ></Cell>
@@ -274,38 +385,47 @@ const UserInfo = (props) => {
             className="m-padding-lr15 m-padding-tb19"
             rightChild={
               <Input
-                type="text"
                 className="userinfo-input"
                 clearable={false}
+                autoHeight
                 {...mail}
                 placeholder={t("emailPlaceholder")}
               />
             }
           ></Cell>
           <Cell
-            label={t("address")}
+            label={t("intro")}
             showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
+            className="m-padding-lr15 m-padding-tb19 m-col-top"
             rightChild={
-              <Input
-                type="text"
-                className="userinfo-input"
-                clearable={false}
-                {...address}
-                placeholder={t("addressPlaceholder")}
-              />
+              <div>
+                <TextArea
+                  autoSize={{ minRows: 3, maxRows: 5 }}
+                  placeholder={t("introPlaceholder")}
+                  {...intro}
+                />
+              </div>
             }
           ></Cell>
         </div>
         <div className="m-padding20 save-box">
-          <Button
+          <Button color="primary" 
             block
-            theme="primary"
-            disabled={saveLoading}
+            fill="outline"
+            shape="rounded"
+            onClick={() => {
+              history.push({
+                pathname: "/userDetail",
+                search: objToUrl({ uid: user.uid, username: user.username, avatar:user.avatar&&user.avatar.medium,is_followed: user.is_followed,misesid:user.misesid }),
+              });
+            }}>
+            Preview
+          </Button>
+          <Button color="primary" 
+            block
+            className="m-margin-top10"
             loading={saveLoading}
-            ghost
-            size="md"
-            shape="round"
+            shape="rounded"
             onClick={() => saveInfo("info")}
           >
             {t("apply")}
@@ -322,10 +442,10 @@ const UserInfo = (props) => {
             <div className="m-flex-1 m-padding-lr10">
               <Button
                 block
-                theme="primary"
-                ghost
-                size="sm"
-                shape="round"
+                color="primary"
+                fill="outline"
+                size="middle"
+                shape="rounded"
                 onClick={() => setvisible(false)}
               >
                 {t("cancel")}
@@ -334,12 +454,10 @@ const UserInfo = (props) => {
             <div className="m-flex-1 m-padding-lr10">
               <Button
                 block
-                theme="primary"
-                ghost
-                disabled={avatarLoading}
+                color="primary"
                 loading={avatarLoading}
-                size="sm"
-                shape="round"
+                size="middle"
+                shape="rounded"
                 onClick={sendAvatar}
               >
                 {t("send")}
@@ -371,6 +489,39 @@ const UserInfo = (props) => {
         wheelDefaultValue={selectGender}
         value={selectGender}
       ></Picker>
+
+      <ActionSheet
+        spacing
+        visible={actionSheetVisible}
+        actions={buttons}
+        onMaskClick={() => setActionSheetVisible(false)}
+        onCancel={() => setActionSheetVisible(false)}
+      />
+      <Popup visible={NFTVisible} bodyStyle={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px"}}>
+        <NavBar
+          left={<span onClick={() => setNFTVisible(false)}>{t("cancel")}</span>}
+          backArrow={false}
+          right={
+            <div style={{ width: "61px", display: "inline-block" }}>
+              <Button
+                color="primary"
+                shape="rounded"
+                size="small"
+                onClick={saveNFTAvatar}
+              >
+                {t("done")}
+              </Button>
+            </div>
+          }
+        />
+        <div className="pull-list">
+          <PullList
+            renderView={renderView}
+            data={NFTData}
+            emptyText="NFTEmpty"
+            load={fetchData} />
+        </div>
+      </Popup>
     </div>
   );
 };
