@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-24 11:28:40
+ * @LastEditTime: 2022-05-24 16:31:38
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -134,7 +134,8 @@ const UserInfo = (props) => {
     };
     console.log("update mises network", userInfo);
     window.mises.setUserInfo(userInfo).then(()=>{
-      setNFTSelected({...NFTSelected,image_preview_url:''});
+      console.log(NFTSelected.image_preview_url)
+      setNFTSelected(NFTSelected.image_preview_url ? {} : {...NFTSelected,image_preview_url:''});
     }).catch((err) => {
       if (err === "Wallet not activated") {
         loginModal(() => {
