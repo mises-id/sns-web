@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-19 14:54:54
+ * @LastEditTime: 2022-05-24 11:28:40
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -70,7 +70,7 @@ const UserInfo = (props) => {
           phone.onChange(res.mobile);
           mail.onChange(res.email);
           intro.onChange(res.intro);
-          setNFTSelected(res.avatar.nft_asset_id);
+          setNFTSelected({id:res.avatar.nft_asset_id});
         })
         .catch((err) => {
           console.log(err);
@@ -128,12 +128,14 @@ const UserInfo = (props) => {
       gender: user.gender,
       telephones: [phone.value].filter((val) => val),
       emails: [mail.value].filter((val) => val),
-      avatarUrl,
+      avatarUrl:NFTSelected.image_preview_url || avatarUrl,
       homePageUrl: "",
       intro: intro.value,
     };
     console.log("update mises network", userInfo);
-    window.mises.setUserInfo(userInfo).catch((err) => {
+    window.mises.setUserInfo(userInfo).then(()=>{
+      setNFTSelected({...NFTSelected,image_preview_url:''});
+    }).catch((err) => {
       if (err === "Wallet not activated") {
         loginModal(() => {
           saveMisesInfo();
@@ -282,11 +284,11 @@ const UserInfo = (props) => {
                 <div
                   className="NFT-select-item"
                   key={index}
-                  onClick={() => setNFTSelected(item.id)}
+                  onClick={() => setNFTSelected(item)}
                 >
                   <div
                     className={`NFT-select-item-img-box ${
-                      NFTSelected === item.id ? "active" : ""
+                      NFTSelected.id === item.id ? "active" : ""
                     }`}
                   >
                     <Image
@@ -305,13 +307,19 @@ const UserInfo = (props) => {
       </div>
     );
   };
+  // const [nftNameVisible, setNFTNameVisible] = useState(false);
   const saveNFTAvatar = () => {
     setAvatarInfo({
-      nft_asset_id: NFTSelected,
+      nft_asset_id: NFTSelected.id,
     }).then((_) => {
       setNFTVisible(false);
+      // setNFTNameVisible(true)
     });
   };
+  // const sendNFTname = () => {
+  //   setNFTNameVisible(false);
+  //   setNFTSelected({});
+  // }
   const history = useHistory();
   return (
     <div>
@@ -522,6 +530,42 @@ const UserInfo = (props) => {
             load={fetchData} />
         </div>
       </Popup>
+      {/* <Modal 
+        visible={nftNameVisible}
+        width="83%"
+        hasFooter={true}
+        animationType="slideUp"
+        footer={
+          <>
+            <div className="m-flex-1 m-padding-lr10">
+              <Button
+                block
+                color="default"
+                size="middle"
+                shape="rounded"
+                onClick={() => setNFTNameVisible(false)}
+              >
+                {t("cancel")}
+              </Button>
+            </div>
+            <div className="m-flex-1 m-padding-lr10">
+              <Button
+                block
+                color="primary"
+                size="middle"
+                shape="rounded"
+                onClick={sendNFTname}
+              >OK</Button>
+            </div>
+          </>
+        }
+        maskClosable>
+        <div className="m-text-center center-content">
+          <p>Would you like to set</p>
+          <p className="nft-selected-name">"{NFTSelected.name}"</p>
+          <p>as your user name?</p>
+        </div>
+      </Modal> */}
     </div>
   );
 };
