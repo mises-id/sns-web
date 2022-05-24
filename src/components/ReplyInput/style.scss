@@ -7,6 +7,9 @@
   background: transparent;
   z-index: 80;
   transition: all .3s;
+  &-empty{
+    height: 70px;
+  }
 }
 .reply-input{
   padding: 10px 15px;

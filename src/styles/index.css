@@ -16,4 +16,8 @@ code {
   --adm-border-color:#EEEEEE;
   --active-line-height:1px;
   --fixed-active-line-width:9px;
+  
+}
+div.adm-nav-bar{
+  --border-bottom: 1px solid #eee
 }
