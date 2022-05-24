@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-23 10:27:42
+ * @LastEditTime: 2022-05-24 13:58:21
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -97,7 +97,7 @@ const NFTPage = ({history}) => {
     const version =  window.mises.getMetamaskVersion()
     if(version==='10.14.0'){
       window.mises.NFTPage()
-      return 
+      // return 
     }
     if(window.ethereum.selectedAddress){
       getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
