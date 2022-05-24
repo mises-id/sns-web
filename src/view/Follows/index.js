@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-19 15:38:36
+ * @LastEditTime: 2022-05-24 16:10:12
  * @LastEditors: lmk
  * @Description:
  */
@@ -34,23 +34,18 @@ const Follow = ({ history = {} }) => {
     const isDiscoverPage = window.location.pathname || "";
     return !['/home/following','/home/recent'].includes(isDiscoverPage)
   }
-
+  const user = useSelector((state) => state.user) || {};
+  const [isFollowing] = useState(window.location.pathname==='/home/following');
+  const [isDiscover] = useState(window.location.pathname==='/home/discover');
   const fn = {
     '/home/following': following,
     '/home/recent': recent,
     '/home/discover': recommend,
   }[window.location.pathname]
-
-  const user = useSelector((state) => state.user) || {};
   const [lastId] = useState("");
+  const [loading, setloading] = useState(true);
   const [isAuto] = useState(true);
-  const [isFollowing] = useState(window.location.pathname==='/home/following');
-  const [isDiscover] = useState(window.location.pathname==='/home/discover');
   const storeageKey = `discoverPageCache${user.loginForm&&user.loginForm.uid  ? user.loginForm.uid : ''}`
-  const dispatch = useDispatch(null);
-  const [userRecommend] = useState([]);
-  const [followingLatestArr, setfollowingLatest] = useState([]);
-  const { t } = useTranslation();
   const [
     fetchData,
     last_id,
@@ -69,12 +64,15 @@ const Follow = ({ history = {} }) => {
     { type: isDiscoverFn() ? "refreshList" : "refresh",isCache: isDiscoverFn()}
   );
   useSetDataSourceAction(dataSource, setdataSource);
-  //
   const [notifitionObj, setnotifitionObj] = useState({
     total: 0,
     notifications_count: 0,
     users_count: 0,
   });
+  const dispatch = useDispatch(null);
+  const [userRecommend] = useState([]);
+  const [followingLatestArr, setfollowingLatest] = useState([]);
+  const { t } = useTranslation();
   const setdataSourceStorage = (id)=>{
     if (isDiscoverFn()) {
       const start = 0;
@@ -120,6 +118,10 @@ const Follow = ({ history = {} }) => {
   }
   
   // Get the required status of the page, get recommended users, and get the update list of concerned users
+  useEffect(() => {
+    setloading(false);
+    // eslint-disable-next-line
+  }, [isFollowing]);
   useDidRecover(() => {
     getFollowingLatest();
   });
@@ -189,7 +191,7 @@ const Follow = ({ history = {} }) => {
   const selector = useSelector((state) => state.user) || {};
   const [flag, setflag] = useState(false);
   const [misesloading, setMisesloading] = useState(true);
-  // let timer = null;
+  let timer = null;
   const getMisesAccountFlag = () => {
     if (selector.web3Status) {
       window.mises &&
@@ -200,11 +202,16 @@ const Follow = ({ history = {} }) => {
           console.log(err)
           setMisesloading(false)
         });
+    }else{
+      if(timer){
+        clearTimeout(timer)
+        timer = null;
+      }
+      timer = setTimeout(() => {
+        setMisesloading(false)
+      }, 2000);
     }
   };
-  useEffect(() => {
-    !selector.web3ProviderFlag&&setMisesloading(false)
-  }, [selector.web3ProviderFlag]);
   useEffect(() => {
     getMisesAccountFlag();
     // eslint-disable-next-line
@@ -212,6 +219,7 @@ const Follow = ({ history = {} }) => {
   const getOldUid = localStorage.getItem('uid');
   useEffect(() => {
     const getUid = localStorage.getItem('uid');
+    console.log('%c storeageKey','color:red',storeageKey,getOldUid)
     if(user.loginForm.uid===Number(getUid)&&getUid!==getOldUid){
       window.refreshByCacheKey('/home')
     }
@@ -257,7 +265,7 @@ const Follow = ({ history = {} }) => {
   // Render top recommendations and concerns
   const otherView = () => {
     if(isFollowing){
-      return followers()
+      return  followers()
     }
     if(isDiscover){
       return recommendation();
@@ -284,7 +292,7 @@ const Follow = ({ history = {} }) => {
         >
           <div className="user-avatar">
             <div className="circle">
-              <Avatar avatarItem={avatar} size='50px'/>
+              <Image size={50} source={avatarStr} />
             </div>
             <div className="add-icon">
               <Image source={recommendationIcon} size={20}></Image>
@@ -381,6 +389,10 @@ const Follow = ({ history = {} }) => {
           )}
           {notifitionObj.notifications_count > 0 && (
             <div className="notification" onClick={notificationPage}>
+              {/* <Image
+                size={30}
+                source={notifitionObj.avatar && notifitionObj.avatar.medium}
+              /> */}
               <Avatar size="30px" avatarItem={notifitionObj.avatar}/>
               <div className="notification-txt">
                 {notifitionObj.notifications_count} Notification
@@ -392,22 +404,28 @@ const Follow = ({ history = {} }) => {
     );
   };
   return (
-    isFollowing && !user.token ? (
-      btnElement()
-    ) : (
-      <PullList
-        otherView={otherView}
-        isAuto={isAuto}
-        renderView={renderView}
-        data={dataSource}
-        getSuccess={setdataSourceStorage}
-        load={async (e) => {
-          getFollowingLatest();
-          const res = await fetchData(e);
-          return res;
-        }}
-      />
-    )
+    <>
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <ActivityIndicator type="spinner" />
+        </div>
+      ) : isFollowing && !user.token ? (
+        btnElement()
+      ) : (
+        <PullList
+          otherView={otherView}
+          isAuto={isAuto}
+          renderView={renderView}
+          data={dataSource}
+          getSuccess={setdataSourceStorage}
+          load={async (e) => {
+            getFollowingLatest();
+            const res = await fetchData(e);
+            return res;
+          }}
+        />
+      )}
+    </>
   );
 };
 export default Follow;
