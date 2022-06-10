@@ -84,12 +84,12 @@
   }
 }
 .pop-content-scroll{
-  height: 80vh;
+  height: 60vh;
   overflow-y:auto ;
   padding-bottom: 60px;
   background-color: white;
   .m-layout{
-    height: calc(80vh - 60px);
+    height: calc(60vh - 60px);
   }
 }
 .at-name{
