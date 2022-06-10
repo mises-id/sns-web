@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-05-13 16:57:25
+ * @LastEditTime: 2022-05-24 17:07:48
  * @LastEditors: lmk
  * @Description:
  */
@@ -121,7 +121,7 @@ const PostItem = ({
           {
             !val.parent_ststus_is_black && val.parent_status.is_public && <div>
               { val.parent_status.content && (
-                <p className="itemContent m-font13 m-margin-tb5" dangerouslySetInnerHTML={{ __html: getLink(val.parent_status.content) }}>
+                <p className="item-eli itemContent m-font13 m-margin-tb5 " dangerouslySetInnerHTML={{ __html: getLink(val.parent_status.content) }}>
                 </p>
               )}
               {!val.parent_status.content && (

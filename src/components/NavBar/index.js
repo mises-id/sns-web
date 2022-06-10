@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 22:30:53
- * @LastEditTime: 2022-05-18 18:04:03
+ * @LastEditTime: 2022-06-11 00:06:41
  * @LastEditors: lmk
  * @Description:
  */
@@ -9,7 +9,9 @@ import React from "react";
 import { NavBar } from "antd-mobile";
 import backIcon from "@/images/back.png";
 import './index.scss'
+// import { useHistory } from "react-router-dom";
 const Navbar = ({ title,rightChild,fixed=false }) => {
+  // const history = useHistory()
   const back = () => {
     if (window.history.length === 1) {
       window.location.replace("/home/discover");
