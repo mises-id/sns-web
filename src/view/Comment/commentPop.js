@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2022-01-10 16:23:16
- * @LastEditTime: 2022-05-18 10:50:44
+ * @LastEditTime: 2022-06-11 00:03:05
  * @LastEditors: lmk
  * @Description:
  */
@@ -67,8 +67,8 @@ const CommentsPop = (
   if(comment.nft_asset_id){
     idForm.nft_asset_id = comment.nft_asset_id
   }
-  if(comment.status_id){
-    idForm.status_id = status_id || comment.status_id
+  if(comment.state_id || status_id){
+    idForm.status_id = status_id || comment.state_id
   }
   let [fetchData, last_id, dataSource, setdataSource] = useList(getComment, {
     topic_id: comment.id,

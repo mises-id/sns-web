@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 22:30:53
- * @LastEditTime: 2022-05-25 15:00:23
+ * @LastEditTime: 2022-06-11 00:06:41
  * @LastEditors: lmk
  * @Description:
  */
@@ -9,14 +9,14 @@ import React from "react";
 import { NavBar } from "antd-mobile";
 import backIcon from "@/images/back.png";
 import './index.scss'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 const Navbar = ({ title,rightChild,fixed=false }) => {
-  const history = useHistory()
+  // const history = useHistory()
   const back = () => {
-    if (history.length === 1) {
-      history.replace("/home/discover");
+    if (window.history.length === 1) {
+      window.location.replace("/home/discover");
     } else {
-      history.go(-1);
+      window.history.back();
     }
   };
   return (
