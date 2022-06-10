@@ -2,30 +2,19 @@
 
 exports[`CreateMisesId should render correctly 1`] = `
 <NavBar
-  backArrow={
+  left={
     <img
-      alt=""
-      height={22}
+      alt="back"
+      onClick={[Function]}
       src="back.png"
       style={
         Object {
-          "display": "block",
+          "height": "22px",
+          "width": "22px",
         }
       }
-      width={22}
     />
   }
-  className=""
-  onBack={[Function]}
->
-  <span
-    style={
-      Object {
-        "color": "#333",
-        "fontSize": "19px",
-        "fontWeight": "bold",
-      }
-    }
-  />
-</NavBar>
+  prefixCls="za-nav-bar"
+/>
 `;
