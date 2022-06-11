@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 16:07:01
- * @LastEditTime: 2022-05-17 10:21:07
+ * @LastEditTime: 2022-06-11 09:57:15
  * @LastEditors: lmk
  * @Description: comment
  */
@@ -344,8 +344,8 @@ const Comment = ({ history }) => {
         <PullList
           renderView={renderView}
           data={dataSource}
-          load={async ()=>{
-            const res = await fetchData()
+          load={async (type)=>{
+            const res = await fetchData(type)
             setCount(res.pagination.total)
           }}
         ></PullList>
