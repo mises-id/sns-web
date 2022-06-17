@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-17 16:19:28
+ * @LastEditTime: 2022-06-17 16:29:41
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -39,20 +39,27 @@ const AirdropResult = () => {
     history.replace('/home/me')
   }
   const [getValue, setValue] = useState('Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit.')
+  const [loading,setLoading] = useState(false)
   const getAirdrop = () => {
+    setLoading(true)
     getAirdropReceive({
       tweet: getValue
     }).then(res=>{
       Toast.show('success')
+    }).finally(()=>{
+      setLoading(false)
     })
   }
   const getAuth = () => {
+    setLoading(true)
     getTwitterAuth()
       .then((res) => {
         window.location.href = res.url;
       })
       .catch((err) => {
         console.log(err);
+      }).finally(()=>{
+        setLoading(false)
       });
   };
   const selector = useSelector(state => state.user) || {}
@@ -87,6 +94,7 @@ const AirdropResult = () => {
               className="btn" 
               fill='solid' 
               color='primary'
+              loading={loading}
               onClick={getAirdrop}>
               <span>Send Tweet and get Airdrop</span>
             </Button>
@@ -101,6 +109,7 @@ const AirdropResult = () => {
               className="btn-fail" 
               fill='outline' 
               color='primary'
+              loading={loading}
               onClick={getAuth}>
               <span>Change Twitter</span>
             </Button>

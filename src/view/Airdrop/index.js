@@ -1,13 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-17 16:02:30
+ * @LastEditTime: 2022-06-17 16:33:11
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
 import { getTwitterAuth } from "@/api/user";
 import Navbar from "@/components/NavBar";
 import { useRouteState } from "@/utils";
+import { Button } from "antd-mobile";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./index.scss";
@@ -28,7 +29,7 @@ const Airdrop = () => {
     };
     // eslint-disable-next-line
   }, []);
-
+  const [loading,setLoading] = useState(false)
   const getAuth = () => {
     getTwitterAuth()
       .then((res) => {
@@ -36,6 +37,8 @@ const Airdrop = () => {
       })
       .catch((err) => {
         console.log(err);
+      }).finally(()=>{
+        setLoading(false)
       });
   };
   const skip = () => {
@@ -101,9 +104,11 @@ const Airdrop = () => {
                   />
                 </p>
                 <div className="sendTweet">
-                  <div onClick={getAuth} className="airdrop-btn">
+                  <Button fill="solid" type="primary"
+                  loading={loading}
+                   onClick={getAuth} className="airdrop-btn">
                     <span className="airdrop-btn-txt">{t("sendTweet")}</span>
-                  </div>
+                  </Button>
                 </div>
                 <img
                   src="/static/images/ribbon.png"

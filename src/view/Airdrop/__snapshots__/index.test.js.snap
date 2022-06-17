@@ -75,16 +75,19 @@ exports[`GreatePosts should render correctly 1`] = `
             <div
               className="sendTweet"
             >
-              <div
+              <ForwardRef
                 className="airdrop-btn"
+                fill="solid"
+                loading={false}
                 onClick={[Function]}
+                type="primary"
               >
                 <span
                   className="airdrop-btn-txt"
                 >
                   sendTweet
                 </span>
-              </div>
+              </ForwardRef>
             </div>
             <img
               alt=""

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-06-17 16:07:18
+ * @LastEditTime: 2022-06-17 16:34:15
  * @LastEditors: lmk
  * @Description:
  */
@@ -117,7 +117,7 @@ const Home = ({ history, children = [] }) => {
     history.push({ pathname: "/createPosts" });
   };
   const getAirdrop = () => {
-    history.push(user.loginForm.airdrop_status ? '/airdropSuccess' : "/airdrop?isFrom=homePage");
+    history.push(user.loginForm.is_airdropped ? '/airdropSuccess' : "/airdrop?isFrom=homePage");
   };
   //Show current route
   const showChild = (path) =>
@@ -158,9 +158,9 @@ const Home = ({ history, children = [] }) => {
       {token && (
         <div className="m-position-fixed createPosts">
           <Image width={75} height={75} src={send} onClick={createPosts}/>
-          <div className="airdrop" onClick={getAirdrop}>
+          {user.loginForm.airdrop_status ? <div className="airdrop" onClick={getAirdrop}>
             Airdrop
-          </div>
+          </div>: null}
         </div>
       )}
     </>

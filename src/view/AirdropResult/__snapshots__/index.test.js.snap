@@ -80,6 +80,7 @@ exports[`GreatePosts should render correctly 1`] = `
         className="btn"
         color="primary"
         fill="solid"
+        loading={false}
         onClick={[Function]}
       >
         <span>
