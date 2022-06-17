@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-05-19 11:17:55
+ * @LastEditTime: 2022-06-17 16:07:18
  * @LastEditors: lmk
  * @Description:
  */
@@ -117,7 +117,7 @@ const Home = ({ history, children = [] }) => {
     history.push({ pathname: "/createPosts" });
   };
   const getAirdrop = () => {
-    history.push("/airdrop?isFrom=homePage");
+    history.push(user.loginForm.airdrop_status ? '/airdropSuccess' : "/airdrop?isFrom=homePage");
   };
   //Show current route
   const showChild = (path) =>

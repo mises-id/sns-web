@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-05-17 14:01:28
+ * @LastEditTime: 2022-06-17 16:03:03
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -262,7 +262,7 @@ export function username(val = {}, defaultName = "Anonymous") {
   return defaultName;
 }
 export function shortenAddress(address = "") {
-  return `${address.slice(0, 18)}...${address.slice(-4)}`;
+  return address ? `${address.slice(0, 18)}...${address.slice(-4)}` : '';
 }
 export function formatTimeStr(time) {
   if (!time) return "";

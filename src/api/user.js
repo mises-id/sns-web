@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-05-23 09:33:46
+ * @LastEditTime: 2022-06-16 17:19:48
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -77,15 +77,22 @@ export function getBlackList(){
     url:'/user/blacklist',
   })
 }
-/**
- * @description: share to twitter
- * @param {*} params
- * @return {*}
- */
-export function shareTwitter(params){
+
+export function getTwitterAuth(){
   return request({
-    params,
-    url:'/share/twitter'
+    url:'/twitter/auth_url'
+  })
+}
+export function getAirdropInfo(){
+  return request({
+    url:'/airdrop/info'
+  })
+}
+export function getAirdropReceive(data){
+  return request({
+    url:'/airdrop/receive',
+    data,
+    method:"post"
   })
 }
 export async function getReferralUrl (params){

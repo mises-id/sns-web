@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-05-10 14:25:23
+ * @LastEditTime: 2022-06-16 11:45:14
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -28,6 +28,7 @@ import Following from '@/view/Following'
 import Download from '@/view/Download'
 import NFTPage from '@/view/NFT'
 import NFTDetail from '@/view/NFTDetail'
+import AirdropResult from '@/view/AirdropResult'
 const routeConfig = [
 	{
 		path: '/home',
@@ -111,6 +112,10 @@ const routeConfig = [
 	{
 		path: '/airdropSuccess',
 		component: AirdropSuccess,
+	},
+	{
+		path: '/airdropResult',
+		component: AirdropResult,
 	},
 	{
 		path: '/error',
