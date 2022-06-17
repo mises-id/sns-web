@@ -9,8 +9,12 @@ import React from "react";
 import { NavBar } from "zarm";
 import backIcon from "@/images/back.png";
 
-const Navbar = ({ title,rightBtnClick,rightChild }) => {
+const Navbar = ({ title,rightChild,customBack}) => {
   const back = () => {
+    if(customBack){
+      customBack()
+      return
+    }
     if (window.history.length === 1) {
       window.location.replace("/home/discover");
     } else {

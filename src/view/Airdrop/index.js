@@ -1,16 +1,15 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-05-18 18:01:19
+ * @LastEditTime: 2022-06-17 16:02:30
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
-import { shareTwitter } from "@/api/user";
+import { getTwitterAuth } from "@/api/user";
 import Navbar from "@/components/NavBar";
 import { useRouteState } from "@/utils";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal } from "zarm";
 import "./index.scss";
 const Airdrop = () => {
   const { t } = useTranslation();
@@ -25,24 +24,15 @@ const Airdrop = () => {
       window.location.reload();
     }
     return () => {
-      console.log(1);
+      
     };
     // eslint-disable-next-line
   }, []);
 
-  const sendTweet = () => {
-    shareTwitter()
+  const getAuth = () => {
+    getTwitterAuth()
       .then((res) => {
-        window.open(res.url);
-        Modal.confirm({
-          title: "Message",
-          content: "Please make sure you have sent your tweet already. ",
-          width: "83%",
-          onCancel: () => {},
-          onOk: () => {
-            skip();
-          },
-        });
+        window.location.href = res.url;
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +101,7 @@ const Airdrop = () => {
                   />
                 </p>
                 <div className="sendTweet">
-                  <div onClick={sendTweet} className="airdrop-btn">
+                  <div onClick={getAuth} className="airdrop-btn">
                     <span className="airdrop-btn-txt">{t("sendTweet")}</span>
                   </div>
                 </div>

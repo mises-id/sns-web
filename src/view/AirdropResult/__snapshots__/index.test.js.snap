@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GreatePosts should render correctly 1`] = `
+<Fragment>
+  <Navbar
+    customBack={[Function]}
+    title="airdropPageTitle"
+  />
+  <div
+    className="m-layout airdrop-content"
+    style={
+      Object {
+        "backgroundImage": "url(/static/images/airdrop-bg.png)",
+      }
+    }
+  >
+    <div
+      className="airdrop-box"
+    >
+      <div
+        className="listItem"
+      >
+        <span
+          className="label"
+        >
+          Mises ID:
+        </span>
+        <span
+          className="value"
+        />
+      </div>
+      <div
+        className="listItem"
+      >
+        <span
+          className="label"
+        >
+          Twitter:
+        </span>
+        <span
+          className="value"
+        >
+          NULL
+        </span>
+      </div>
+      <div
+        className="listItem"
+      >
+        <span
+          className="label"
+        >
+          Airdrop:
+        </span>
+        <span
+          className="value"
+        >
+          MIS
+        </span>
+      </div>
+      <p
+        className="text-bold success-tips"
+      >
+        Now send this Tweet to get airdrop!
+      </p>
+      <ForwardRef
+        autoSize={
+          Object {
+            "maxRows": 4,
+            "minRows": 4,
+          }
+        }
+        className="text-area"
+        defaultValue=""
+        onChange={[Function]}
+        rows={2}
+        showCount={false}
+        value="Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit."
+      />
+      <ForwardRef
+        className="btn"
+        color="primary"
+        fill="solid"
+        onClick={[Function]}
+      >
+        <span>
+          Send Tweet and get Airdrop
+        </span>
+      </ForwardRef>
+    </div>
+  </div>
+</Fragment>
+`;
