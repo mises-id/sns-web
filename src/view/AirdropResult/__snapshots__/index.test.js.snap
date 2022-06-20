@@ -62,24 +62,37 @@ exports[`GreatePosts should render correctly 1`] = `
       >
         Now send this Tweet to get airdrop!
       </p>
-      <ForwardRef
-        autoSize={
-          Object {
-            "maxRows": 4,
-            "minRows": 4,
-          }
-        }
+      <div
         className="text-area"
-        defaultValue=""
-        onChange={[Function]}
-        rows={2}
-        showCount={false}
-        value="Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit."
-      />
+      >
+        <ForwardRef
+          autoSize={
+            Object {
+              "maxRows": 4,
+              "minRows": 1,
+            }
+          }
+          className="font-14"
+          defaultValue=""
+          onChange={[Function]}
+          rows={2}
+          showCount={false}
+          value="Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit."
+        />
+        <p
+          className="font-14"
+        >
+          I have claimed undefined$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
+  Join us and 3% airdrop!
+  https://www.mises.site/download?MisesID=undefined
+  #Mises #Decentralized #SocialMedia
+        </p>
+      </div>
       <ForwardRef
         className="btn"
         color="primary"
         fill="solid"
+        loading={false}
         onClick={[Function]}
       >
         <span>
