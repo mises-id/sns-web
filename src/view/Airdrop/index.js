@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-17 16:33:11
+ * @LastEditTime: 2022-06-20 11:03:52
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -16,9 +16,11 @@ const Airdrop = () => {
   const { t } = useTranslation();
   const [showSkip, setShowSkip] = useState(false);
   const historyState = useRouteState();
+  const [MIS, setMIS] = useState(0);
   useEffect(() => {
     const flag = historyState.isFrom !== "homePage";
     setShowSkip(flag);
+    setMIS(historyState.MIS)
     const isRefresh = sessionStorage.getItem("isRefresh");
     if (flag && !isRefresh) {
       sessionStorage.setItem("isRefresh", true);
@@ -78,38 +80,49 @@ const Airdrop = () => {
                 className="airdrop-parachute"
               />
               <div className="toClaim-content">
-                <p className="toClaim">{t("toClaim")}:</p>
-                <p className="desc-item">
-                  {t("airdropContentdesc")}
-                  <img
-                    src="/static/images/circle.png"
-                    alt=""
-                    className="circle"
-                  />
-                </p>
-                <p className="desc-item">
-                  {t("airdropContentdesc1")}
-                  <img
-                    src="/static/images/circle.png"
-                    alt=""
-                    className="circle"
-                  />
-                </p>
-                <p className="desc-item">
-                  {t("airdropContentdesc2")}
-                  <img
-                    src="/static/images/circle.png"
-                    alt=""
-                    className="circle"
-                  />
-                </p>
-                <div className="sendTweet">
-                  <Button fill="solid" type="primary"
-                  loading={loading}
-                   onClick={getAuth} className="airdrop-btn">
-                    <span className="airdrop-btn-txt">{t("sendTweet")}</span>
-                  </Button>
-                </div>
+                {MIS>0 ? <>
+                  <p className="claimedMis">{`You have successfully claimed ${MIS}MIS`}</p>
+                  <p className="desc-item">
+                    Airdropping... This process could take a few minutes
+                    <img
+                      src="/static/images/circle.png"
+                      alt=""
+                      className="circle"
+                    />
+                  </p>
+                  <div className="sendTweet">
+                    <Button fill="solid" type="primary"
+                    onClick={skip} className="airdrop-btn">
+                      <span className="airdrop-btn-txt">Confirm</span>
+                    </Button>
+                  </div>
+                </> : <>
+                  <p className="toClaim">{t("toClaim")}:</p>
+                  <p className="desc-item">
+                    {t("airdropContentdesc")}
+                    <img
+                      src="/static/images/circle.png"
+                      alt=""
+                      className="circle"
+                    />
+                  </p>
+                  <p className="desc-item">
+                    {t("airdropContentdesc1")}
+                    <img
+                      src="/static/images/circle.png"
+                      alt=""
+                      className="circle"
+                    />
+                  </p>
+                  <div className="sendTweet">
+                    <Button fill="solid" type="primary"
+                    loading={loading}
+                    onClick={getAuth} className="airdrop-btn">
+                      <span className="airdrop-btn-txt">{t("sendTweet")}</span>
+                    </Button>
+                  </div>
+                </>}
+                
                 <img
                   src="/static/images/ribbon.png"
                   alt=""

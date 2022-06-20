@@ -62,16 +62,6 @@ exports[`GreatePosts should render correctly 1`] = `
                 src="/static/images/circle.png"
               />
             </p>
-            <p
-              className="desc-item"
-            >
-              airdropContentdesc2
-              <img
-                alt=""
-                className="circle"
-                src="/static/images/circle.png"
-              />
-            </p>
             <div
               className="sendTweet"
             >

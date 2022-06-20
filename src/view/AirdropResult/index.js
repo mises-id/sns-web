@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-17 16:29:41
+ * @LastEditTime: 2022-06-17 17:51:13
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -43,7 +43,7 @@ const AirdropResult = () => {
   const getAirdrop = () => {
     setLoading(true)
     getAirdropReceive({
-      tweet: getValue
+      tweet: `${getValue}${unEditText}`
     }).then(res=>{
       Toast.show('success')
     }).finally(()=>{
@@ -62,8 +62,12 @@ const AirdropResult = () => {
         setLoading(false)
       });
   };
-  const selector = useSelector(state => state.user) || {}
+  const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo.misesid || selector.loginForm?.misesid.replace('did:mises:','')
+  const unEditText = `I have claimed ${airdropInfo.amount}$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
+  Join us and 3% airdrop!
+  https://www.mises.site/download?MisesID=${misesid}
+  #Mises #Decentralized #SocialMedia`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -84,12 +88,15 @@ const AirdropResult = () => {
               <span className="value">{airdropInfo.amount}MIS</span>
             </div>
             <p className="text-bold success-tips">Now send this Tweet to get airdrop!</p>
-            <TextArea 
-              value={getValue}
-              autoSize={{ minRows: 4, maxRows: 4 }}
-              className="text-area"
-              onChange={setValue}
-            />
+            <div className="text-area">
+              <TextArea 
+                value={getValue}
+                autoSize={{ minRows: 1, maxRows: 4 }}
+                className="font-14"
+                onChange={setValue}
+              />
+              <p className="font-14">{unEditText}</p>
+            </div>
             <Button 
               className="btn" 
               fill='solid' 
