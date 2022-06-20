@@ -35,7 +35,7 @@ exports[`GreatePosts should render correctly 1`] = `
         <span
           className="label"
         >
-          Twitter:
+          Twitter ID:
         </span>
         <span
           className="value"
@@ -49,7 +49,7 @@ exports[`GreatePosts should render correctly 1`] = `
         <span
           className="label"
         >
-          Airdrop:
+          Available Airdrop:
         </span>
         <span
           className="value"
@@ -69,24 +69,31 @@ exports[`GreatePosts should render correctly 1`] = `
           autoSize={
             Object {
               "maxRows": 4,
-              "minRows": 1,
+              "minRows": 0,
             }
           }
-          className="font-14"
           defaultValue=""
           onChange={[Function]}
+          placeholder="Please enter your tweet here"
           rows={2}
           showCount={false}
-          value="Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit."
+          style={
+            Object {
+              "--font-size": "14px",
+              "marginBottom": "10px",
+            }
+          }
+          value=""
         />
         <p
           className="font-14"
-        >
-          I have claimed undefined$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
-  Join us and 3% airdrop!
-  https://www.mises.site/download?MisesID=undefined
-  #Mises #Decentralized #SocialMedia
-        </p>
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "I have claimed undefined$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
+  <br/>Join us and 3% airdrop!<br/><br/>https://www.mises.site/download?MisesID=undefined<br/><br/>#Mises #Decentralized #SocialMedia",
+            }
+          }
+        />
       </div>
       <ForwardRef
         className="btn"

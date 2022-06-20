@@ -19,7 +19,7 @@
 }
 .airdrop-box{
   background: white;
-  margin: 90px 15px 0 ;
+  margin: 70px 15px 30px;
   background: #FFFFFF;
   border: 3px solid #BAEBFC;
   border-radius: 15px;
@@ -28,10 +28,9 @@
 .listItem{
   display: flex;
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   .label{
     color: #666666;
-    width: 80px;
   }
   .value{
     color: #333;
@@ -41,7 +40,7 @@
   font-size: 16px;
   font-weight: bold;
   color: #333333;
-  margin-top: 29px;
+  margin-top: 19px;
   margin-bottom: 13px;
 }
 .text-area{
