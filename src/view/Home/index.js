@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-06-20 11:25:06
+ * @LastEditTime: 2022-06-20 18:02:39
  * @LastEditors: lmk
  * @Description:
  */
@@ -133,7 +133,7 @@ const Home = ({ history, children = [] }) => {
           case 'pending':
             url=`/airdrop?isFrom=homePage&MIS=${coin}`
             break;
-          case '发放成功':
+          case 'success':
             url="/airdropSuccess"
             break;
           case 'failed':
