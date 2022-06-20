@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-20 18:00:13
+ * @LastEditTime: 2022-06-20 18:33:56
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -18,14 +18,14 @@ import { useSelector } from "react-redux";
 const AirdropResult = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const  [status, setStatus] = useState('success'); // success, fail , unauth
+  const  [status, setStatus] = useState(''); // success, fail , unauth
   const [airdropInfo,setAirdropInfo] = useState({})
   useEffect(() => {
     const search = new URLSearchParams(location.search);
     // code : 0 1 2
     if(search.get('code')!=='2'){
       getAirdropInfo().then(res=>{
-        setAirdropInfo(res.twitter)
+        setAirdropInfo(res.twitter || {})
         setStatus(search.get('code')==='1' ? 'fail' : 'success')
       })
     }
@@ -50,7 +50,7 @@ const AirdropResult = () => {
         content: 'Send Success',
         duration: 1500,
         afterClose: () => {
-          const coin = airdropInfo.amount
+          const coin = airdropInfo?.amount
           history.replace(`/airdrop?isFrom=homePage&MIS=${coin}`)
         }
       })
@@ -71,7 +71,7 @@ const AirdropResult = () => {
       });
   };
   const selector = useSelector(state => state.user) || {};
-  const misesid = airdropInfo.misesid || selector.loginForm?.misesid.replace('did:mises:','')
+  const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
   const unEditText = `I have claimed ${airdropInfo.amount}$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
   <br/>Join us and 3% airdrop!<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Decentralized #SocialMedia`
   return (
@@ -114,7 +114,7 @@ const AirdropResult = () => {
             </Button>
           </>}
 
-          {status!=='success'&&<>
+          {status!=='success'&&status!==''&&<>
             <p className="fail-reason">Your account does not meet the requirements</p>
             <p className="fail-reason">
               Reason: {status==='fail' ? 'This Account has been verified' : 'Sorry, you canceled the authorization!'}

@@ -7,87 +7,20 @@ exports[`GreatePosts should render correctly 1`] = `
     title="airdropPageTitle"
   />
   <div
-    className="airdrop-bg m-font18"
+    style={
+      Object {
+        "padding": "20px",
+        "textAlign": "center",
+      }
+    }
   >
-    <div
-      className="layout-box"
-    >
-      <img
-        alt=""
-        className="background"
-        src="/static/images/background.png"
-      />
-      <div
-        className="layout-content"
-      >
-        <img
-          alt=""
-          className="airdrop-title"
-          src="/static/images/title.png"
-        />
-        <div
-          className="toClaim-box"
-        >
-          <img
-            alt=""
-            className="airdrop-parachute"
-            src="/static/images/parachute.png"
-          />
-          <div
-            className="toClaim-content"
-          >
-            <p
-              className="toClaim"
-            >
-              toClaim
-              :
-            </p>
-            <p
-              className="desc-item"
-            >
-              airdropContentdesc
-              <img
-                alt=""
-                className="circle"
-                src="/static/images/circle.png"
-              />
-            </p>
-            <p
-              className="desc-item"
-            >
-              airdropContentdesc1
-              <img
-                alt=""
-                className="circle"
-                src="/static/images/circle.png"
-              />
-            </p>
-            <div
-              className="sendTweet"
-            >
-              <ForwardRef
-                className="airdrop-btn"
-                fill="solid"
-                loading={false}
-                onClick={[Function]}
-                type="primary"
-              >
-                <span
-                  className="airdrop-btn-txt"
-                >
-                  sendTweet
-                </span>
-              </ForwardRef>
-            </div>
-            <img
-              alt=""
-              className="ribbon"
-              src="/static/images/ribbon.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <ActivityIndicator
+      loading={true}
+      percent={20}
+      prefixCls="za-activity-indicator"
+      strokeWidth={5}
+      type="spinner"
+    />
   </div>
 </div>
 `;

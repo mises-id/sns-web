@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-06-20 18:02:39
+ * @LastEditTime: 2022-06-20 18:47:21
  * @LastEditors: lmk
  * @Description:
  */
@@ -9,13 +9,12 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import send from "@/images/send.png";
 import "./index.scss";
-import { getAirdropInfo, getUserSelfInfo } from "@/api/user";
+import { getUserSelfInfo } from "@/api/user";
 import { useDispatch, useSelector } from "react-redux";
 import { setFirstLogin, setLoginForm, setUserAuth } from "@/actions/user";
 import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 import { Tabs, Badge, Image } from "antd-mobile";
-import { Toast } from "zarm";
 const Home = ({ history, children = [] }) => {
   const { t } = useTranslation();
   const [tab, setTab] = useState([
@@ -117,41 +116,8 @@ const Home = ({ history, children = [] }) => {
   const createPosts = () => {
     history.push({ pathname: "/createPosts" });
   };
-  let airdropPush = false
   const getAirdrop = () => {
-    // 正在跳转到airdrop页面
-    if(airdropPush) {
-      Toast.show("Link in, please wait...")
-      return 
-    };
-    airdropPush = true;
-    getAirdropInfo().then(res=>{
-      if(res.airdrop){
-        let url = null;
-        const {status,coin} = res.airdrop;
-        switch (status) {
-          case 'pending':
-            url=`/airdrop?isFrom=homePage&MIS=${coin}`
-            break;
-          case 'success':
-            url="/airdropSuccess"
-            break;
-          case 'failed':
-            url="/airdropResult?code=1"
-            break;
-          default:
-            url="/airdrop?isFrom=homePage"
-            break;
-        }
-        history.push(url);
-        return 
-      }
-      history.push("/airdrop?isFrom=homePage");
-      // airdropPush = false;
-    }).catch(err=>{
-      history.push("/airdrop?isFrom=homePage");
-      // airdropPush = false;
-    })
+    history.push("/airdrop?isFrom=homePage");
   };
   //Show current route
   const showChild = (path) =>

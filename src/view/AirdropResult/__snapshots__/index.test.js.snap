@@ -43,69 +43,6 @@ exports[`GreatePosts should render correctly 1`] = `
           NULL
         </span>
       </div>
-      <div
-        className="listItem"
-      >
-        <span
-          className="label"
-        >
-          Available Airdrop:
-        </span>
-        <span
-          className="value"
-        >
-          MIS
-        </span>
-      </div>
-      <p
-        className="text-bold success-tips"
-      >
-        Now send this Tweet to get airdrop!
-      </p>
-      <div
-        className="text-area"
-      >
-        <ForwardRef
-          autoSize={
-            Object {
-              "maxRows": 4,
-              "minRows": 0,
-            }
-          }
-          defaultValue=""
-          onChange={[Function]}
-          placeholder="Please enter your tweet here"
-          rows={2}
-          showCount={false}
-          style={
-            Object {
-              "--font-size": "14px",
-              "marginBottom": "10px",
-            }
-          }
-          value=""
-        />
-        <p
-          className="font-14"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "I have claimed undefined$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
-  <br/>Join us and 3% airdrop!<br/><br/>https://www.mises.site/download?MisesID=undefined<br/><br/>#Mises #Decentralized #SocialMedia",
-            }
-          }
-        />
-      </div>
-      <ForwardRef
-        className="btn"
-        color="primary"
-        fill="solid"
-        loading={false}
-        onClick={[Function]}
-      >
-        <span>
-          Send Tweet and get Airdrop
-        </span>
-      </ForwardRef>
     </div>
   </div>
 </Fragment>
