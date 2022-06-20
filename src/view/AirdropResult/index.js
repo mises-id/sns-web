@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-20 14:26:48
+ * @LastEditTime: 2022-06-20 18:00:13
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -12,7 +12,7 @@ import "./index.scss";
 import { getAirdropInfo, getAirdropReceive, getTwitterAuth } from "@/api/user";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { TextArea, Toast,Button, Modal } from "antd-mobile";
+import { TextArea, Toast,Button } from "antd-mobile";
 import { shortenAddress } from "@/utils";
 import { useSelector } from "react-redux";
 const AirdropResult = () => {
