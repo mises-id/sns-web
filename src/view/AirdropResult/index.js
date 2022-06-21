@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-20 18:33:56
+ * @LastEditTime: 2022-06-21 14:36:55
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -25,7 +25,10 @@ const AirdropResult = () => {
     // code : 0 1 2
     if(search.get('code')!=='2'){
       getAirdropInfo().then(res=>{
-        setAirdropInfo(res.twitter || {})
+        setAirdropInfo(res.twitter || {
+          username:search.username,
+          misesid:search.misesid,
+        })
         setStatus(search.get('code')==='1' ? 'fail' : 'success')
       })
     }
