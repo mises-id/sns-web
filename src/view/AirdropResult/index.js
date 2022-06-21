@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-21 14:36:55
+ * @LastEditTime: 2022-06-21 18:05:00
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -29,7 +29,7 @@ const AirdropResult = () => {
           username:search.username,
           misesid:search.misesid,
         })
-        setStatus(search.get('code')==='1' ? 'fail' : 'success')
+        setStatus(search.get('code')==='1' ? 'fail' : res.amount>0 ? 'success' : 'timeFail')
       })
     }
     if(search.get('code')==='2'){
@@ -73,10 +73,15 @@ const AirdropResult = () => {
         setLoading(false)
       });
   };
+  const statusTxt = ()=>{
+    if(status==='fail') return 'This Account has been verified'
+    if(status==='timeFail') return 'This Account was created after Jan. 1, 2022'
+    return 'Sorry, you canceled the authorization!'
+  }
   const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
   const unEditText = `I have claimed ${airdropInfo.amount}$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
-  <br/>Join us and 3% airdrop!<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Decentralized #SocialMedia`
+  <br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Decentralized #SocialMedia`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -120,7 +125,7 @@ const AirdropResult = () => {
           {status!=='success'&&status!==''&&<>
             <p className="fail-reason">Your account does not meet the requirements</p>
             <p className="fail-reason">
-              Reason: {status==='fail' ? 'This Account has been verified' : 'Sorry, you canceled the authorization!'}
+              Reason: {statusTxt()}
             </p>
             <Button 
               className="btn-fail" 
