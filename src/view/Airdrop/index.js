@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-21 09:56:17
+ * @LastEditTime: 2022-06-21 10:09:27
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -44,6 +44,7 @@ const Airdrop = () => {
             switch (status) {
               case "default":
                 url = `/airdrop?isFrom=homePage&MIS=${coin}`;
+                setPageLoading(false);
                 break;
               case "success":
                 url = "/airdropSuccess";
