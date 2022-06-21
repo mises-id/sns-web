@@ -44,7 +44,6 @@ const Airdrop = () => {
             switch (status) {
               case "default":
                 url = `/airdrop?isFrom=homePage&MIS=${coin}`;
-                setPageLoading(false);
                 break;
               case "success":
                 url = "/airdropSuccess";
@@ -54,9 +53,9 @@ const Airdrop = () => {
                 break;
               default:
                 // url="/airdrop?isFrom=homePage"
-                setPageLoading(false);
                 break;
             }
+            setPageLoading(false);
             url && history.replace(url);
             return;
           }else{
