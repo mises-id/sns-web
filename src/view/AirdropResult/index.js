@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-22 10:57:48
+ * @LastEditTime: 2022-06-22 11:46:09
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -29,7 +29,7 @@ const AirdropResult = () => {
           username:search.username,
           misesid:search.misesid,
         })
-        setStatus(search.get('code')==='1' ? 'fail' : res.amount>0 ? 'success' : 'timeFail')
+        setStatus(search.get('code')==='1' ? 'fail' : res.twitter.amount>0 ? 'success' : 'timeFail')
       })
     }
     if(search.get('code')==='2'){
