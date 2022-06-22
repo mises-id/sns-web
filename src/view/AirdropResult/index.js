@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-21 18:05:00
+ * @LastEditTime: 2022-06-22 10:57:48
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -75,7 +75,7 @@ const AirdropResult = () => {
   };
   const statusTxt = ()=>{
     if(status==='fail') return 'This Account has been verified'
-    if(status==='timeFail') return 'This Account was created after Jan. 1, 2022'
+    if(status==='timeFail') return 'This Account was created after May. 1, 2022'
     return 'Sorry, you canceled the authorization!'
   }
   const selector = useSelector(state => state.user) || {};
