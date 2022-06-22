@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-17 17:51:13
+ * @LastEditTime: 2022-06-21 18:05:00
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -18,15 +18,18 @@ import { useSelector } from "react-redux";
 const AirdropResult = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const  [status, setStatus] = useState('success'); // success, fail , unauth
+  const  [status, setStatus] = useState(''); // success, fail , unauth
   const [airdropInfo,setAirdropInfo] = useState({})
   useEffect(() => {
     const search = new URLSearchParams(location.search);
     // code : 0 1 2
     if(search.get('code')!=='2'){
       getAirdropInfo().then(res=>{
-        setAirdropInfo(res.twitter)
-        setStatus(search.get('code')==='1' ? 'fail' : 'success')
+        setAirdropInfo(res.twitter || {
+          username:search.username,
+          misesid:search.misesid,
+        })
+        setStatus(search.get('code')==='1' ? 'fail' : res.amount>0 ? 'success' : 'timeFail')
       })
     }
     if(search.get('code')==='2'){
@@ -38,14 +41,22 @@ const AirdropResult = () => {
   const customBack = () => {
     history.replace('/home/me')
   }
-  const [getValue, setValue] = useState('Hello everyone, I am Alice, an art lover, this is my personal website welcome to visit.')
+  const [getValue, setValue] = useState('')
   const [loading,setLoading] = useState(false)
   const getAirdrop = () => {
+    
     setLoading(true)
     getAirdropReceive({
-      tweet: `${getValue}${unEditText}`
+      tweet: `${getValue}\n\n${unEditText.replace(/<br\/>/g, '\n')}`
     }).then(res=>{
-      Toast.show('success')
+      Toast.show({
+        content: 'Send Success',
+        duration: 1500,
+        afterClose: () => {
+          const coin = airdropInfo?.amount
+          history.replace(`/airdrop?isFrom=homePage&MIS=${coin}`)
+        }
+      })
     }).finally(()=>{
       setLoading(false)
     })
@@ -62,12 +73,15 @@ const AirdropResult = () => {
         setLoading(false)
       });
   };
+  const statusTxt = ()=>{
+    if(status==='fail') return 'This Account has been verified'
+    if(status==='timeFail') return 'This Account was created after Jan. 1, 2022'
+    return 'Sorry, you canceled the authorization!'
+  }
   const selector = useSelector(state => state.user) || {};
-  const misesid = airdropInfo.misesid || selector.loginForm?.misesid.replace('did:mises:','')
+  const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
   const unEditText = `I have claimed ${airdropInfo.amount}$MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
-  Join us and 3% airdrop!
-  https://www.mises.site/download?MisesID=${misesid}
-  #Mises #Decentralized #SocialMedia`
+  <br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Decentralized #SocialMedia`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -78,24 +92,25 @@ const AirdropResult = () => {
             <span className="value">{shortenAddress(misesid)}</span>
           </div>
           <div className="listItem">
-            <span className="label">Twitter:</span>
+            <span className="label">Twitter ID:</span>
             <span className="value">{airdropInfo.username || 'NULL'}</span>
           </div>
 
           {status==='success'&&<>
             <div className="listItem">
-              <span className="label">Airdrop:</span>
+              <span className="label">Available Airdrop:</span>
               <span className="value">{airdropInfo.amount}MIS</span>
             </div>
             <p className="text-bold success-tips">Now send this Tweet to get airdrop!</p>
             <div className="text-area">
               <TextArea 
                 value={getValue}
-                autoSize={{ minRows: 1, maxRows: 4 }}
-                className="font-14"
+                autoSize={{ minRows: 0, maxRows: 4 }}
+                style={{'--font-size':'14px',marginBottom:'10px'}}
                 onChange={setValue}
+                placeholder="Please enter your tweet here"
               />
-              <p className="font-14">{unEditText}</p>
+              <p className="font-14" dangerouslySetInnerHTML={{__html:unEditText}}></p>
             </div>
             <Button 
               className="btn" 
@@ -107,10 +122,10 @@ const AirdropResult = () => {
             </Button>
           </>}
 
-          {status!=='success'&&<>
+          {status!=='success'&&status!==''&&<>
             <p className="fail-reason">Your account does not meet the requirements</p>
             <p className="fail-reason">
-              Reason: {status==='fail' ? 'This Account has been verified' : 'Sorry, you canceled the authorization!'}
+              Reason: {statusTxt()}
             </p>
             <Button 
               className="btn-fail" 
