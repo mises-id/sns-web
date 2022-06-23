@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-21 10:09:27
+ * @LastEditTime: 2022-06-23 09:45:20
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -59,7 +59,11 @@ const Airdrop = () => {
             url && history.replace(url);
             return;
           }else{
-            setPageLoading(false);
+            // if(res.twitter){
+            //   history.replace(`/airdropResult?code=0&misesid=${res.twitter.misesid}&username=${res.twitter.username}`);
+            // }else{
+            //   setPageLoading(false);
+            // }
           }
         })
         .catch((err) => {});
