@@ -80,8 +80,8 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
-  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop, come and join #Mises to experience the coolest decentralized social media with me!
-  <br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Decentralized #SocialMedia`
+  const unEditText = `I have claimed ${airdropInfo.amount} MIS airdrop, come and join @Mises001 to experience the coolest decentralized social media with me!
+  <br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/> @Mises001 #Decentralized #SocialMedia`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
