@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-28 14:09:01
+ * @LastEditTime: 2022-06-28 15:51:39
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -12,7 +12,7 @@ import "./index.scss";
 import { getAirdropInfo, getAirdropReceive, getTwitterAuth } from "@/api/user";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { TextArea, Toast,Button } from "antd-mobile";
+import { Toast,Button } from "antd-mobile";
 import { shortenAddress } from "@/utils";
 import { useSelector } from "react-redux";
 const AirdropResult = () => {
@@ -41,13 +41,13 @@ const AirdropResult = () => {
   const customBack = () => {
     history.replace('/home/me')
   }
-  const [getValue, setValue] = useState('')
+  // const [getValue, setValue] = useState('')
   const [loading,setLoading] = useState(false)
   const getAirdrop = () => {
     
     setLoading(true)
     getAirdropReceive({
-      tweet: `${getValue}\n\n${unEditText.replace(/<br\/>/g, '\n')}`
+      tweet: `${unEditText.replace(/<br\/>/g, '\n')}`
     }).then(res=>{
       Toast.show({
         content: 'Send Success',
@@ -80,7 +80,7 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
-  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop, come and join @Mises001 to experience the coolest decentralized social media with me!<br/><br/>Follow the only Mises official Twitter @Mises001 for more information, we'll never ask you to send your MIS to any other addresses!<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/> #Mises  #Decentralized  #SocialMedia  #Web3`
+  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop, come and join @Mises001 to experience the coolest decentralized social media with me!<br/><br/>Follow the only Mises official Twitter @Mises001 for more information<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/> #Mises  #Decentralized  #SocialMedia  #Web3`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -102,13 +102,13 @@ const AirdropResult = () => {
             </div>
             <p className="text-bold success-tips">Now send this Tweet to get airdrop!</p>
             <div className="text-area">
-              <TextArea 
+              {/* <TextArea 
                 value={getValue}
                 autoSize={{ minRows: 0, maxRows: 4 }}
                 style={{'--font-size':'14px',marginBottom:'10px'}}
                 onChange={setValue}
                 placeholder="Please enter your tweet here"
-              />
+              /> */}
               <p className="font-14 tweet" dangerouslySetInnerHTML={{__html:unEditText}}></p>
             </div>
             <Button 
