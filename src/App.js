@@ -43,7 +43,7 @@ const  Download = ()=>{
       }}>Download</div>
     </div>
     <div className='launchApp-empty'></div>
-  </> : ''
+  </> : <></>
 }
 // 封装antd的popup
 const DownloadPopUp = ()=>{

@@ -329,7 +329,7 @@ const UserDetail = (props) => {
         {/* tab content */}
         {userInfo.uid && !userInfo.is_blocked && (
           <div className="tab-content">
-            <div className="tab-header">
+            <div className={`tab-header`} style={{top:NFTList.length > 0 ? '45px' : '0'}}>
               <Tabs
                 activeLineMode="fixed"
                 activeKey={value}
