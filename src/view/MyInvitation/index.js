@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-29 17:49:40
+ * @LastEditTime: 2022-06-29 20:23:26
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -32,9 +32,8 @@ const MyInvitation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
-  const location = useLocation();
-  const search = new URLSearchParams(location.search);
-  const misesId = search.get("misesId").includes("did:mises:")
+  const search = new URLSearchParams(window.location.search);
+  const misesId = search.get("misesId")?.includes("did:mises:")
     ? search.get("misesId").replace("did:mises:", "")
     : search.get("misesId");
   useEffect(() => {

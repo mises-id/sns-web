@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-29 10:29:47
+ * @LastEditTime: 2022-06-29 20:22:55
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -91,9 +91,9 @@ const Airdrop = () => {
   const skip = () => {
     window.history.back();
   };
-  const {loginForm} = useSelector(state=>state.user)
+  const selector = useSelector(state=>state.user) || {}
   const inviteFriends = () => {
-    history.push(`/myInvitation?misesId=${loginForm.misesid}`);
+    history.push(`/myInvitation?misesId=${selector.loginForm.misesid}`);
   };
   return (
     <div>
