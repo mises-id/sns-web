@@ -193,13 +193,20 @@ export async function unlikeNFT(id){
   })
 }
 
- export async function getOpenseaNFTAsset(ethAddress){
-  return request({
-    url: `/opensea/assets`,
-    params:{
-      owner: ethAddress,
-      cursor:'',
-      limit:50
-    }
-  })
-}
+ export async function getOpenseaNFTAsset(ethAddress) {
+   return request({
+     url: `/opensea/assets`,
+     params: {
+       owner: ethAddress,
+       cursor: "",
+       limit: 50,
+     },
+   });
+ }
+
+ export async function getReferralList(params) {
+   return request({
+     url: `/channel_user/page`,
+     params
+   });
+ }
