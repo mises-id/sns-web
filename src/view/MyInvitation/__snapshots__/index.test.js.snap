@@ -3,6 +3,7 @@
 exports[`MyInvitation should render correctly 1`] = `
 <div>
   <Navbar
+    customBack={[Function]}
     title="myInvitationPageTitle"
   />
   <div
