@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-29 20:23:26
+ * @LastEditTime: 2022-06-30 15:42:46
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -17,6 +17,7 @@ import {
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 // import { useLocation } from "react-router-dom";
 import { Toast } from "zarm";
 import "./index.scss";
@@ -136,9 +137,13 @@ const MyInvitation = () => {
       console.log(err)
     })
   }
+  const history = useHistory()
+  const customBack = ()=>{
+    history.replace('/home/me')
+  }
   return (
     <div>
-      <Navbar title={t("myInvitationPageTitle")} />
+      <Navbar title={t("myInvitationPageTitle")} customBack={customBack}/>
       <div className="m-layout">
         <div className="position-relative">
           <img
