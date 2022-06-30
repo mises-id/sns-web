@@ -17,7 +17,7 @@ import {
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { Toast } from "zarm";
 import "./index.scss";
 const MyInvitation = () => {
