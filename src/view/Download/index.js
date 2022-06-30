@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-29 17:55:49
+ * @LastEditTime: 2022-06-30 12:51:50
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -26,7 +26,7 @@ const Download = () => {
       const misesid = search.get('misesid');
       if(misesid){
         getReferralUrl({
-          misesId,
+          misesId: misesid,
           type:'url',
           medium:'invite'
         }).then(res=>{
