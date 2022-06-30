@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-28 15:51:39
+ * @LastEditTime: 2022-06-30 18:05:31
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -29,7 +29,7 @@ const AirdropResult = () => {
           username:search.username,
           misesid:search.misesid,
         })
-        setStatus(search.get('code')==='1' ? 'fail' : res.twitter.amount>0 ? 'success' : 'timeFail')
+        setStatus(setViewStatus(search,res.twitter))
       })
     }
     if(search.get('code')==='2'){
@@ -37,6 +37,18 @@ const AirdropResult = () => {
     }
     // eslint-disable-next-line
   }, [])
+  const setViewStatus = (search,twitter)=>{
+    if(search.get('code')==='1'){
+      return 'fail'
+    }
+    if(twitter.followers_count===0){
+      return 'followers_countError'
+    }
+    if(twitter.amount>0){
+      return 'success'
+    }
+    return 'timeFail'
+  }
   const history = useHistory()
   const customBack = () => {
     history.replace('/home/me')
@@ -74,8 +86,9 @@ const AirdropResult = () => {
       });
   };
   const statusTxt = ()=>{
-    if(status==='fail') return 'This Account has been verified'
+    if(status==='fail') return '   Account has been verified'
     if(status==='timeFail') return 'This Account was created after May. 1, 2022'
+    if(status==='followers_countError') return 'Your Twitter account does not meet the requirements'
     return 'Sorry, you canceled the authorization!'
   }
   const selector = useSelector(state => state.user) || {};
