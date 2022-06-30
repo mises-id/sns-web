@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-24 17:52:34
+ * @LastEditTime: 2022-06-29 20:22:55
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -11,6 +11,7 @@ import { useRouteState } from "@/utils";
 import { Button } from "antd-mobile";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useDidRecover } from "react-router-cache-route";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ActivityIndicator } from "zarm";
@@ -34,7 +35,6 @@ const Airdrop = () => {
       sessionStorage.setItem("isRefresh", true);
       window.location.reload();
     }
-    console.log(MIS);
     if (flag && MIS === 0) {
       getAirdropInfo()
         .then((res) => {
@@ -91,8 +91,9 @@ const Airdrop = () => {
   const skip = () => {
     window.history.back();
   };
-  const backHome = () => {
-    history.replace("/home/me");
+  const selector = useSelector(state=>state.user) || {}
+  const inviteFriends = () => {
+    history.push(`/myInvitation?misesId=${selector.loginForm.misesid}`);
   };
   return (
     <div>
@@ -133,7 +134,15 @@ const Airdrop = () => {
                     <>
                       <p className="claimedMis">{`You have successfully claimed ${MIS}MIS`}</p>
                       <p className="desc-item">
-                        Airdropping... This process could take a few minutes
+                        Airdropping... This process could take a few minutes.
+                        <img
+                          src="/static/images/circle.png"
+                          alt=""
+                          className="circle"
+                        />
+                      </p>
+                      <p className="desc-item">
+                        Invite your friends to get more MIS!
                         <img
                           src="/static/images/circle.png"
                           alt=""
@@ -144,10 +153,10 @@ const Airdrop = () => {
                         <Button
                           fill="solid"
                           type="primary"
-                          onClick={backHome}
+                          onClick={inviteFriends}
                           className="airdrop-btn"
                         >
-                          <span className="airdrop-btn-txt">Confirm</span>
+                          <span className="airdrop-btn-txt">Invite Friends</span>
                         </Button>
                       </div>
                     </>

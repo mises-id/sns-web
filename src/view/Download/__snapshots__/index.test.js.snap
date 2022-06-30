@@ -5,15 +5,17 @@ exports[`GreatePosts should render correctly 1`] = `
   <div
     className="m-position-relative"
   >
-    <img
-      alt=""
-      src="/static/images/bg.png"
-      width="100%"
-    />
     <div
       className="mises-bg"
+      style={
+        Object {
+          "backgroundImage": "url('/static/images/bg.png')",
+        }
+      }
     >
-      <div>
+      <div
+        className="m-flex"
+      >
         <img
           alt=""
           className="download-logo"

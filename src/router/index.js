@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 14:52:19
- * @LastEditTime: 2022-06-16 11:45:14
+ * @LastEditTime: 2022-06-29 10:31:39
  * @LastEditors: lmk
  * @Description: routerConfig
  */
@@ -29,6 +29,7 @@ import Download from '@/view/Download'
 import NFTPage from '@/view/NFT'
 import NFTDetail from '@/view/NFTDetail'
 import AirdropResult from '@/view/AirdropResult'
+import MyInvitation from '@/view/MyInvitation'
 const routeConfig = [
 	{
 		path: '/home',
@@ -132,6 +133,10 @@ const routeConfig = [
 	{
 		path: '/NFTDetail',
 		component: NFTDetail,
+	},
+	{
+		path: '/myInvitation',
+		component: MyInvitation,
 	}
 ]
 
@@ -179,4 +184,8 @@ export const unAuthRoute = [{
 {
 	path: '/NFTDetail',
 	component: NFTDetail,
+},
+{
+	path: '/myInvitation',
+	component: MyInvitation,
 }]

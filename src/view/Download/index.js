@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-04-15 15:40:19
+ * @LastEditTime: 2022-06-30 12:51:50
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -17,19 +17,31 @@ const Download = () => {
       getReferralUrl({
         misesId,
         type:'url',
-        medium:'lending'
+        medium:'landing'
       }).then(res=>{
         setdownloadUrl(res.medium_url)
       })
+    } else {
+      const search = new URLSearchParams(window.location.search);
+      const misesid = search.get('misesid');
+      if(misesid){
+        getReferralUrl({
+          misesId: misesid,
+          type:'url',
+          medium:'invite'
+        }).then(res=>{
+          setdownloadUrl(res.medium_url)
+        })
+      }
     }
+
   }, [])
 
   return (
     <>
       <div className="m-position-relative">
-        <img src="/static/images/bg.png" alt="" width='100%'/>
-        <div className="mises-bg">
-          <div>
+        <div className="mises-bg" style={{backgroundImage:"url('/static/images/bg.png')"}}>
+          <div className="m-flex">
             <img src="/static/images/download-logo.png" alt="" className="download-logo"/>
             <p className="mises-txt">Mises</p>
           </div>

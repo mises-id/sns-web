@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-06-28 10:37:24
+ * @LastEditTime: 2022-06-29 09:47:24
  * @LastEditors: lmk
  * @Description:
  */
@@ -168,9 +168,11 @@ const Home = ({ history, children = [] }) => {
       {token && (
         <div className="m-position-fixed createPosts">
           <Image width={75} height={75} src={send} onClick={createPosts}/>
-          {user.loginForm.airdrop_status ? <div className="airdrop" onClick={getAirdrop}>
-            Airdrop
-          </div>: null}
+          {user.loginForm.airdrop_status&&!user.loginForm.is_airdropped ? <img 
+          alt=""
+          className="airdrop" 
+          src="/static/images/airdrop@2x.png"
+           onClick={getAirdrop} />: null}
         </div>
       )}
     </>

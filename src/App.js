@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import './styles/App.css';
 import { ConfigProvider} from 'zarm';
+import { ConfigProvider as AntdProvider } from 'antd-mobile'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import enUS from 'zarm/lib/config-provider/locale/en_US';
+import antdEnUS from 'antd-mobile/es/locales/en-US'
+
 import 'zarm/dist/zarm.css';
 import routeConfig from './router';
 import { routes } from './utils/reactUtil';
@@ -93,15 +96,17 @@ const App = ()=> {
     // }
     // eslint-disable-next-line
   }, [])
-  return <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <Download />
-        <SetRoute />
-        <DownloadPopUp />
-      </PersistGate>
-    </Provider>
-  </ConfigProvider>;
+  return <AntdProvider  locale={antdEnUS}>
+    <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Download />
+          <SetRoute />
+          <DownloadPopUp />
+        </PersistGate>
+      </Provider>
+    </ConfigProvider>
+  </AntdProvider>;
 }
 
 export default process.env.NODE_ENV === "development" ? hot(App) : App;
