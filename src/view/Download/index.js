@@ -17,16 +17,24 @@ const Download = () => {
       getReferralUrl({
         misesId,
         type:'url',
-        medium:'lending'
+        medium:'landing'
       }).then(res=>{
         setdownloadUrl(res.medium_url)
       })
+    } else {
+      const search = new URLSearchParams(window.location.search);
+      const misesid = search.get('misesid');
+      if(misesid){
+        getReferralUrl({
+          misesId,
+          type:'url',
+          medium:'invite'
+        }).then(res=>{
+          setdownloadUrl(res.medium_url)
+        })
+      }
     }
-    const search = new URLSearchParams(window.location.search);
-    const medium_url = search.get('medium_url');
-    if(medium_url){
-      setdownloadUrl(medium_url)
-    }
+
   }, [])
 
   return (

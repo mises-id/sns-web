@@ -124,14 +124,14 @@ const MyInvitation = () => {
     );
   };
   const share = ()=>{
-    console.log(`${window.location.origin}/download?medium_url=${info.medium_url}`)
+    console.log(`${window.location.origin}/download?misesid=${misesId}`)
     if(!navigator.share){
       Toast.show('Browser cannot share website')
       return false;
     }
     navigator.share&&navigator.share({
       text: `I'm using the free speech decentralized social media #Mises, join me in experiencing the new social of the #Web3 world!`,
-      url: `${window.location.origin}/download?medium_url=${info.medium_url}`,
+      url: `${window.location.origin}/download?misesid=${misesId}`,
     }).catch(err=>{
       console.log(err)
     })
