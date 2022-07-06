@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-06-29 09:47:24
+ * @LastEditTime: 2022-07-06 10:41:28
  * @LastEditors: lmk
  * @Description:
  */
@@ -12,7 +12,7 @@ import "./index.scss";
 import { getUserSelfInfo } from "@/api/user";
 import { useDispatch, useSelector } from "react-redux";
 import { setFirstLogin, setLoginForm, setUserAuth } from "@/actions/user";
-import { isMisesBrowser, urlToJson } from "@/utils";
+import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 import { Tabs, Badge, Image } from "antd-mobile";
 const Home = ({ history, children = [] }) => {
@@ -122,18 +122,18 @@ const Home = ({ history, children = [] }) => {
   //Show current route
   const showChild = (path) =>
     children.find((val) => val.key === path) || <div></div>;
-  const isMises = isMisesBrowser()
-  const [closeTipsState,setCloseTipsState] = useState(sessionStorage.getItem('isCloseTips'))
-  const closeTips = ()=>{
-    sessionStorage.setItem('isCloseTips',true)
-    setCloseTipsState(true)
-  }
+  // const isMises = isMisesBrowser()
+  // const [closeTipsState,setCloseTipsState] = useState(sessionStorage.getItem('isCloseTips'))
+  // const closeTips = ()=>{
+  //   sessionStorage.setItem('isCloseTips',true)
+  //   setCloseTipsState(true)
+  // }
   return (
     <>
-    {isMises&&!closeTipsState&&<div className="tips">
+    {/* {isMises&&!closeTipsState&&<div className="tips">
       <img src="/static/images/danger.png" alt="" className="tips-icon"/> Be aware of scams! The only official Mises Twitter account is <a href="https://twitter.com/Mises001" target="_blank" rel="noreferrer">@Mises001</a> We'll never ask you to send your MIS to any other addresses!
       <img src="/static/images/replies_close.png" alt="" onClick={closeTips} className="replies_close"/>
-    </div>}
+    </div>} */}
       <div>
         <Tabs
           activeLineMode="fixed"
