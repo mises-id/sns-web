@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-06-17 16:03:03
+ * @LastEditTime: 2022-07-14 17:47:46
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -430,8 +430,10 @@ export function numToKMGTPE(num, digits = 1) {
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 export function isMisesBrowser() {
+  console.log(navigator.userAgent)
   return (
     navigator.userAgent.indexOf("Chrome/77.0.3865.116 Mobile Safari/537.36") >
+    -1 || navigator.userAgent.indexOf("Mozilla/5.0 (iPhone; CPU iPhone OS 13_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/76.0.3809.123 Mobile/15E148 Safari/605.1") >
     -1
   );
 }
