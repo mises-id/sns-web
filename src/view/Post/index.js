@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:48:08
- * @LastEditTime: 2022-05-13 09:34:35
+ * @LastEditTime: 2022-08-02 16:37:17
  * @LastEditors: lmk
  * @Description: post detail
  */
@@ -30,7 +30,7 @@ const Post = ({ history = {} }) => {
   useEffect(() => {
     if (state) {
       // const historyState = urlToJson(location.search);
-      Loading.show();
+      state.id&&Loading.show();
       getDetail(state.id);
       if(state.misesid){
         sessionStorage.setItem('referrer',state.misesid)
@@ -41,6 +41,7 @@ const Post = ({ history = {} }) => {
   // like function 
   // get this post detail 
   const getDetail = async (id) => {
+    if(!id) return  
     try {
       const res = await getStatusItem(id)
       setitem(res);
