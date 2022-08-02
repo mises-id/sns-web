@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-05-23 12:26:26
+ * @LastEditTime: 2022-08-02 14:20:27
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -400,7 +400,7 @@ export default class MisesExtensionController {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      const getActive = window.ethereum._state.isUnlocked;
+      const getActive = window.ethereum._state.isUnlocked || await this.web3.misesWeb3.getActive();
       return getActive
         ? Promise.resolve(true)
         : Promise.reject("Wallet not activated");
