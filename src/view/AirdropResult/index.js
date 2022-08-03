@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-30 18:05:31
+ * @LastEditTime: 2022-08-03 16:30:49
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -86,13 +86,13 @@ const AirdropResult = () => {
       });
   };
   const statusTxt = ()=>{
-    if(status==='fail') return '   Account has been verified'
+    if(status==='fail') return 'Account has been verified'
     if(status==='timeFail') return 'This Account was created after May. 1, 2022'
     if(status==='followers_countError') return 'Your Twitter account does not meet the requirements'
     return 'Sorry, you canceled the authorization!'
   }
   const selector = useSelector(state => state.user) || {};
-  const misesid = airdropInfo?.misesid || selector.loginForm?.misesid.replace('did:mises:','')
+  const misesid = airdropInfo?.misesid || selector.loginForm?.misesid?.replace('did:mises:','')
   const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop, come and join @Mises001 to experience the coolest decentralized social media with me!<br/><br/>Follow the only Mises official Twitter @Mises001 for more information<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/> #Mises  #Decentralized  #SocialMedia  #Web3`
   return (
     <>
@@ -113,7 +113,8 @@ const AirdropResult = () => {
               <span className="label">Available Airdrop:</span>
               <span className="value">{airdropInfo.amount}MIS</span>
             </div>
-            <p className="text-bold success-tips">Now send this Tweet to get airdrop!</p>
+            <p className="text-bold success-tips">Now follow our official account, send this Tweet to get airdrop!</p>
+            <p className="twitter-tips">Mises Official Twitter: @mises001</p>
             <div className="text-area">
               {/* <TextArea 
                 value={getValue}
@@ -130,7 +131,7 @@ const AirdropResult = () => {
               color='primary'
               loading={loading}
               onClick={getAirdrop}>
-              <span>Send Tweet and get Airdrop</span>
+              <span>Follow & Send and get airdrop</span>
             </Button>
           </>}
 
