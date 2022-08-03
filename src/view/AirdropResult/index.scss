@@ -19,7 +19,7 @@
 }
 .airdrop-box{
   background: white;
-  margin: 70px 15px 30px;
+  margin: 35px 15px 30px;
   background: #FFFFFF;
   border: 3px solid #BAEBFC;
   border-radius: 15px;
@@ -40,7 +40,14 @@
   font-size: 16px;
   font-weight: bold;
   color: #333333;
-  margin-top: 19px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+.twitter-tips{
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 13px;
 }
 .text-area{
