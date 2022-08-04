@@ -64,6 +64,9 @@ const UserDetail = (props) => {
   }, [state]);
   const setInfo = (state) => {
     const uid = state.uid;
+    if(!uid){
+      return 
+    }
     state.uid = "";
     state.avatar = {
       medium: state.avatar,
