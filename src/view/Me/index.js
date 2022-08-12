@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-05-19 15:25:04
+ * @LastEditTime: 2022-08-12 10:56:27
  * @LastEditors: lmk
  * @Description:
  */
@@ -110,6 +110,7 @@ const Myself = ({ history }) => {
   }, [token]);
   useEffect(() => {
     getMisesAccountFlag();
+    console.log(selector.web3Status,'selector.web3Statusselector.web3Status')
     if(selector.web3Status){
       setloading(false);
     }

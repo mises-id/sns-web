@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-07-06 10:41:28
+ * @LastEditTime: 2022-08-12 11:36:13
  * @LastEditors: lmk
  * @Description:
  */
@@ -40,9 +40,12 @@ const Home = ({ history, children = [] }) => {
       case "/home/recent":
         index = 2;
         break;
-      default:
+      case "/home/me":
         getUserInfo();
         index = 3;
+        break;
+      default:
+        index = 3;    
         break;
     }
     setvalue(`${index}`);
@@ -60,7 +63,15 @@ const Home = ({ history, children = [] }) => {
       console.log(err);
     });
   }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
-  const getUserInfo = () => {
+  const getUserInfo = async () => {
+    const accounts = await window.ethereum.request({ method: "eth_accounts" });
+    if(accounts.length === 0){
+      // dispatch(setUserAuth(''));
+      // dispatch(setUserToken(''));
+      // dispatch(setLoginForm({}));
+      return 
+    }
+    console.log(auth, token)
     if (auth && token) {
       return getUserSelfInfo()
         .then((res) => {
