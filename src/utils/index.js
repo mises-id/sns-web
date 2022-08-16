@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-07-18 17:33:37
+ * @LastEditTime: 2022-08-16 17:58:46
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -178,14 +178,13 @@ export function useChangePosts(setdataSource, dataSource, cb) {
   const followPress = async (val, flag) => {
     try {
       const item = flag ? val.parent_status : val;
-      console.log(followLoading);
       if (followLoading) return false;
       setfollowLoading(true);
       await followed(item);
       setfollowLoading(false);
       success();
     } catch (error) {
-      console.log(error);
+      console.log(error, 'followPress');
       setfollowLoading(false);
       error === "Wallet not activated" &&
         loginModal(() => {
@@ -262,7 +261,7 @@ export function username(val = {}, defaultName = "Anonymous") {
   return defaultName;
 }
 export function shortenAddress(address = "") {
-  return address ? `${address.slice(0, 18)}...${address.slice(-4)}` : '';
+  return address ? `${address.slice(0, 18)}...${address.slice(-4)}` : "";
 }
 export function formatTimeStr(time) {
   if (!time) return "";
@@ -393,7 +392,7 @@ export function isMe(user, createdUserId) {
 // Extract links based on content
 export function getLink(content) {
   const reg =
-  // eslint-disable-next-line
+    // eslint-disable-next-line
     /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/g;
   const result = reg.exec(content);
   const link = result ? result[0] : "";
@@ -430,11 +429,9 @@ export function numToKMGTPE(num, digits = 1) {
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 export function isMisesBrowser() {
-  return window.ethereum && window.ethereum.isMetaMask;
-  // console.log(navigator.userAgent)
-  // return (
-  //   navigator.userAgent.indexOf("Chrome/77.0.3865.116 Mobile Safari/537.36") >
-  //   -1 || navigator.userAgent.indexOf("Mozilla/5.0 (iPhone; CPU iPhone OS 13_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/76.0.3809.123 Mobile/15E148 Safari/605.1") >
-  //   -1
-  // );
+  return navigator.userAgent.indexOf("Chrome/77.0.3865.116 Mobile Safari/537.36") >
+    -1 || isIos();
+}
+export function isIos() {
+  return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 }

@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-16 14:31:51
+ * @LastEditTime: 2022-08-16 17:57:50
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from "web3";
-import { isMisesBrowser, urlToJson } from "./";
+import { isIos, isMisesBrowser, urlToJson } from "./";
 import {
   setFollowingBadge,
   // setLoginForm,
@@ -401,7 +401,7 @@ export default class MisesExtensionController {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      const getActive = this.isIos() ?  await this.web3.misesWeb3.getActive() : window.ethereum._state.isUnlocked;
+      const getActive = isIos() ?  await this.web3.misesWeb3.getActive() : window.ethereum._state.isUnlocked;
       return getActive
         ? Promise.resolve(true)
         : Promise.reject("Wallet not activated");
@@ -410,15 +410,12 @@ export default class MisesExtensionController {
       return Promise.reject(error || "Wallet not activated");
     }
   }
-  isIos(){
-    return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-  }
   // get metamask version
   getMetamaskVersion() {
     if(window.misesModule&&window.misesModule.getMetamaskVersion){
       return window.misesModule.getMetamaskVersion()
     }
-    if(this.isIos()){
+    if(isIos()){
       return true
     }
     return ''
