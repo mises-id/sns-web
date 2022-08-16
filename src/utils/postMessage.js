@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-02 14:20:27
+ * @LastEditTime: 2022-08-12 13:31:19
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -10,7 +10,7 @@ import Web3 from "web3";
 import { isMisesBrowser, urlToJson } from "./";
 import {
   setFollowingBadge,
-  setLoginForm,
+  // setLoginForm,
   setUserAuth,
   setUserToken,
   setWeb3AccountChanged,
@@ -39,6 +39,7 @@ export default class MisesExtensionController {
   getMax = 10;
   getNum = 0;
   switchNetworkLoading = false;
+  selectedAddress = '';
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor() {
     setTimeout(() => {
@@ -167,6 +168,7 @@ export default class MisesExtensionController {
         store.dispatch(setWeb3AccountChanged(true));
         await this.resetAccount(res[0]);
         store.dispatch(setWeb3AccountChanged(false));
+        this.selectedAddress = res[0]
       }
       // if(res.length===0) {
       //   this.resetApp()
@@ -174,6 +176,7 @@ export default class MisesExtensionController {
     });
     window.ethereum.request({ method: "eth_accounts" }).then((res) => {
       if (res.length > 0) {
+        this.selectedAddress = res[0]
         this.resetAccount(res[0]);
         return false;
       }
@@ -210,11 +213,7 @@ export default class MisesExtensionController {
     if (loginForm.misesid) {
       console.log("resetApp");
       setTimeout(() => {
-        store.dispatch(setUserAuth(""));
-        store.dispatch(setUserToken(""));
         this.resetUser();
-        store.dispatch(setLoginForm({}));
-        // localStorage.removeItem('discoverPageCache')
       }, 0);
     }
   }
@@ -305,6 +304,7 @@ export default class MisesExtensionController {
         provider: "mises",
         user_authz: { auth: res.auth },
       });
+      this.selectedAddress = res.accounts[0];
       data.token && store.dispatch(setUserToken(data.token));
       return Promise.resolve();
     } catch (error) {
@@ -400,7 +400,7 @@ export default class MisesExtensionController {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      const getActive = window.ethereum._state.isUnlocked || await this.web3.misesWeb3.getActive();
+      const getActive = this.isIos() ?  await this.web3.misesWeb3.getActive() : window.ethereum._state.isUnlocked;
       return getActive
         ? Promise.resolve(true)
         : Promise.reject("Wallet not activated");
@@ -409,10 +409,16 @@ export default class MisesExtensionController {
       return Promise.reject(error || "Wallet not activated");
     }
   }
+  isIos(){
+    return navigator.userAgent.indexOf('iPhone') > -1
+  }
   // get metamask version
   getMetamaskVersion() {
     if(window.misesModule&&window.misesModule.getMetamaskVersion){
       return window.misesModule.getMetamaskVersion()
+    }
+    if(this.isIos()){
+      return true
     }
     return ''
   }
@@ -421,6 +427,7 @@ export default class MisesExtensionController {
     const flag = await this.isInitMetaMask();
     if (!flag) return Promise.reject();
     await this.init();
+    console.log(window.ethereum)
     if(window.ethereum.chainId!=='0x1'){
       Modal.confirm({
         title: "Message",
