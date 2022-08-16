@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-12 13:31:19
+ * @LastEditTime: 2022-08-16 14:31:51
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -390,6 +390,7 @@ export default class MisesExtensionController {
       const count = await this.web3.misesWeb3.getMisesAccounts();
       return count;
     } catch (error) {
+      console.log(error,'getMisesAccounts')
       return Promise.reject(error);
     }
   }
@@ -410,7 +411,7 @@ export default class MisesExtensionController {
     }
   }
   isIos(){
-    return navigator.userAgent.indexOf('iPhone') > -1
+    return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
   }
   // get metamask version
   getMetamaskVersion() {
