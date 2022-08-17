@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-08-12 11:36:13
+ * @LastEditTime: 2022-08-16 15:34:47
  * @LastEditors: lmk
  * @Description:
  */
@@ -64,13 +64,14 @@ const Home = ({ history, children = [] }) => {
     });
   }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = async () => {
-    const accounts = await window.ethereum.request({ method: "eth_accounts" });
-    if(accounts.length === 0){
-      // dispatch(setUserAuth(''));
-      // dispatch(setUserToken(''));
-      // dispatch(setLoginForm({}));
-      return 
-    }
+    // const accounts = await window.ethereum.request({ method: "eth_accounts" });
+    // console.log(accounts,'accountsaccountsaccounts')
+    // if(accounts.length === 0){
+    //   // dispatch(setUserAuth(''));
+    //   // dispatch(setUserToken(''));
+    //   // dispatch(setLoginForm({}));
+    //   return 
+    // }
     console.log(auth, token)
     if (auth && token) {
       return getUserSelfInfo()
