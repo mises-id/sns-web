@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-17 20:32:54
+ * @LastEditTime: 2022-08-19 14:10:27
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -228,7 +228,9 @@ export default class MisesExtensionController {
 
   async resetAccount(res) {
     console.log("resetAccount");
+    console.time("getAddressToMisesId time");
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
+    console.timeEnd("getAddressToMisesId time");
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
     if (loginForm.misesid && loginForm.misesid.indexOf(misesid) === -1) {
@@ -303,15 +305,19 @@ export default class MisesExtensionController {
   async requestAccounts() {
     console.log("requestAccounts");
     try {
+      console.time("requestAccounts time");
       const res = await this.getAuth();
+      console.timeEnd("requestAccounts time");
       // const nonce = new Date().getTime();
       // const sign = res.mises_id+nonce;
       // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop
       store.dispatch(setUserAuth(res.auth));
+      console.time("signin time");
       const data = await signin({
         provider: "mises",
         user_authz: { auth: res.auth },
       });
+      console.timeEnd("signin time");
       this.selectedAddress = res.accounts[0];
       data.token && store.dispatch(setUserToken(data.token));
       return Promise.resolve();

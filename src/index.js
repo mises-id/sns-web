@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-07 23:23:36
- * @LastEditTime: 2022-07-18 17:34:00
+ * @LastEditTime: 2022-08-19 18:21:25
  * @LastEditors: lmk
  * @Description: 
  */
@@ -15,7 +15,13 @@ import './locales'
 import MisesExtensionController from  './utils/postMessage'
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
+import { isIosPlatform } from './utils';
+import { patchHttpsUrl } from './api/updata';
 window.mises = new MisesExtensionController()
+
+if (document.readyState === "loading" && isIosPlatform()) {
+  patchHttpsUrl()
+}
 if(!process.env.NODE_ENV === "development"){
   Sentry.init({
     dsn: "https://ce70d202b4be4f7685dbf1ed40a55227@o1162849.ingest.sentry.io/6274250",

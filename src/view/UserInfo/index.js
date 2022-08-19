@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-05-24 16:31:38
+ * @LastEditTime: 2022-08-18 15:25:49
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -136,6 +136,7 @@ const UserInfo = (props) => {
     window.mises.setUserInfo(userInfo).then(()=>{
       console.log(NFTSelected.image_preview_url)
       setNFTSelected(NFTSelected.image_preview_url ? {} : {...NFTSelected,image_preview_url:''});
+      Toast.show(t("updataUserInfoSuccess"));
     }).catch((err) => {
       if (err === "Wallet not activated") {
         loginModal(() => {
@@ -174,7 +175,7 @@ const UserInfo = (props) => {
       }
       Promise.all(promise)
         .then(() => {
-          Toast.show(t("updataUserInfoSuccess"));
+          // Toast.show(t("updataUserInfoSuccess"));
           saveMisesInfo();
         })
         .catch((err) => {
@@ -185,7 +186,7 @@ const UserInfo = (props) => {
   const setAvatarInfo = (res) => {
     return submit({ avatar: res }, "avatar")
       .then(() => {
-        Toast.show(t("updataUserInfoSuccess"));
+        // Toast.show(t("updataUserInfoSuccess"));
         saveMisesInfo();
       })
       .catch((err) => {
