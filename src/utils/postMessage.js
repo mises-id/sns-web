@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-16 17:57:50
+ * @LastEditTime: 2022-08-17 20:32:54
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -165,10 +165,17 @@ export default class MisesExtensionController {
     }
     window.ethereum.on("accountsChanged", async (res) => {
       if (res.length) {
-        store.dispatch(setWeb3AccountChanged(true));
-        await this.resetAccount(res[0]);
-        store.dispatch(setWeb3AccountChanged(false));
-        this.selectedAddress = res[0]
+        console.log('accountsChanged')
+        // fist time connect
+        if (this.selectedAddress) {
+          store.dispatch(setWeb3AccountChanged(true));
+          await this.resetAccount(res[0]);
+          store.dispatch(setWeb3AccountChanged(false));
+          this.selectedAddress = res[0]
+        }else{
+          console.log('is first')
+        }
+        
       }
       // if(res.length===0) {
       //   this.resetApp()
@@ -176,6 +183,7 @@ export default class MisesExtensionController {
     });
     window.ethereum.request({ method: "eth_accounts" }).then((res) => {
       if (res.length > 0) {
+        console.log('eth_accounts')
         this.selectedAddress = res[0]
         this.resetAccount(res[0]);
         return false;
@@ -385,13 +393,13 @@ export default class MisesExtensionController {
       // const flag = await this.isInitMetaMask();
       // if(!flag) return Promise.reject()
       const flag = await this.isInitMetaMask(showModal);
-      if (!flag) return Promise.reject();
+      if (!flag) return Promise.reject('Please install MetaMask');
       await this.init();
       const count = await this.web3.misesWeb3.getMisesAccounts();
       return count;
     } catch (error) {
       console.log(error,'getMisesAccounts')
-      return Promise.reject(error);
+      return Promise.reject(error || 'con\'t find accounts');
     }
   }
 
@@ -402,6 +410,7 @@ export default class MisesExtensionController {
       if (!flag) return Promise.reject();
       await this.init();
       const getActive = isIos() ?  await this.web3.misesWeb3.getActive() : window.ethereum._state.isUnlocked;
+      console.log(getActive,'getActive')
       return getActive
         ? Promise.resolve(true)
         : Promise.reject("Wallet not activated");
