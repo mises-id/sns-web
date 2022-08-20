@@ -8,132 +8,143 @@ exports[`UserInfo should render correctly 1`] = `
   <div
     className="m-layout m-bg-f8f8f8 userinfo"
   >
-    <div
-      className="m-bg-fff"
+    <ForwardRef
+      footer={
+        <div
+          className="m-padding20 save-box"
+        >
+          <ForwardRef
+            block={true}
+            color="primary"
+            fill="outline"
+            onClick={[Function]}
+            shape="rounded"
+          >
+            Preview
+          </ForwardRef>
+          <ForwardRef
+            block={true}
+            className="m-margin-top10"
+            color="primary"
+            loading={false}
+            onClick={[Function]}
+            shape="rounded"
+          >
+            apply
+          </ForwardRef>
+        </div>
+      }
+      layout="horizontal"
+      name="form"
+      onFinish={[Function]}
     >
-      <Cell
-        className="m-padding-lr15 m-padding-tb12"
+      <FormItem
+        arrow={true}
         label="avatar"
-        rightChild={
-          <div
-            className="m-position-relative"
-            onClick={[Function]}
-          >
-            <input
-              accept="image/png,image/jpeg"
-              className="avatar-input hidden"
-              onChange={[Function]}
-              type="file"
-            />
-            <NFTAvatar
-              size="35px"
-            />
-          </div>
-        }
-        showIcon={false}
-      />
-      <Cell
-        className="m-padding-lr15 m-padding-tb19"
+      >
+        <div
+          className="m-position-relative avatar-container"
+          onClick={[Function]}
+        >
+          <input
+            accept="image/png,image/jpeg"
+            className="avatar-input hidden"
+            onChange={[Function]}
+            type="file"
+          />
+          <NFTAvatar
+            size="35px"
+          />
+        </div>
+      </FormItem>
+      <FormItem
+        arrow={true}
         label="username"
-        rightChild={
-          <Input
-            clearable={false}
-            maxLength={25}
-            onChange={[Function]}
-            placeholder="placeholder"
-            type="text"
-          />
-        }
-        showIcon={false}
-      />
-      <Cell
-        className="m-padding-lr15 m-padding-tb19"
+        name="username"
+      >
+        <ForwardRef
+          placeholder="placeholder"
+          style={
+            Object {
+              "--font-size": "14px",
+              "--text-align": "right",
+            }
+          }
+        />
+      </FormItem>
+      <FormItem
+        arrow={true}
         label="gender"
-        rightChild={
-          <div
-            className="placeholder"
-            onClick={[Function]}
-          >
-            placeholder
-          </div>
-        }
-        showIcon={false}
-      />
-      <Cell
-        className="m-padding-lr15 m-padding-tb19"
+        name="gender"
+        onClick={[Function]}
+      >
+        <ForwardRef
+          placeholder="placeholder"
+          readOnly={true}
+          style={
+            Object {
+              "--font-size": "14px",
+              "--text-align": "right",
+            }
+          }
+        />
+      </FormItem>
+      <FormItem
+        arrow={true}
         label="phone"
-        rightChild={
-          <Input
-            className="userinfo-input"
-            clearable={false}
-            onChange={[Function]}
-            placeholder="phonePlaceholder"
-            type="text"
-          />
-        }
-        showIcon={false}
-      />
-      <Cell
-        className="m-padding-lr15 m-padding-tb19"
+        name="mobile"
+      >
+        <ForwardRef
+          placeholder="phonePlaceholder"
+          style={
+            Object {
+              "--font-size": "14px",
+              "--text-align": "right",
+            }
+          }
+        />
+      </FormItem>
+      <FormItem
+        arrow={true}
         label="mail"
-        rightChild={
-          <Input
-            autoHeight={true}
-            className="userinfo-input"
-            clearable={false}
-            onChange={[Function]}
-            placeholder="emailPlaceholder"
-            type="text"
-          />
-        }
-        showIcon={false}
-      />
-      <Cell
-        className="m-padding-lr15 m-padding-tb19 m-col-top"
+        name="email"
+      >
+        <ForwardRef
+          placeholder="emailPlaceholder"
+          style={
+            Object {
+              "--font-size": "14px",
+              "--text-align": "right",
+            }
+          }
+        />
+      </FormItem>
+      <FormItem
+        arrow={true}
+        className="intro"
         label="intro"
-        rightChild={
-          <div>
-            <ForwardRef
-              autoSize={
-                Object {
-                  "maxRows": 5,
-                  "minRows": 3,
-                }
-              }
-              defaultValue=""
-              onChange={[Function]}
-              placeholder="introPlaceholder"
-              rows={2}
-              showCount={false}
-            />
-          </div>
-        }
-        showIcon={false}
-      />
-    </div>
-    <div
-      className="m-padding20 save-box"
-    >
-      <ForwardRef
-        block={true}
-        color="primary"
-        fill="outline"
-        onClick={[Function]}
-        shape="rounded"
+        name="intro"
       >
-        Preview
-      </ForwardRef>
-      <ForwardRef
-        block={true}
-        className="m-margin-top10"
-        color="primary"
-        loading={false}
-        onClick={[Function]}
-        shape="rounded"
-      >
-        apply
-      </ForwardRef>
-    </div>
+        <ForwardRef
+          autoSize={
+            Object {
+              "maxRows": 5,
+              "minRows": 3,
+            }
+          }
+          defaultValue=""
+          placeholder="introPlaceholder"
+          rows={2}
+          showCount={false}
+          style={
+            Object {
+              "--font-size": "14px",
+              "--text-align": "right",
+            }
+          }
+        />
+      </FormItem>
+    </ForwardRef>
   </div>
   <Modal
     animationDuration={200}
@@ -199,41 +210,33 @@ exports[`UserInfo should render correctly 1`] = `
       viewMode={1}
     />
   </Modal>
-  <ForwardRef(forwardRef)
-    dataSource={
+  <Picker
+    columns={
       Array [
-        Object {
-          "label": "female",
-          "value": "female",
-        },
-        Object {
-          "label": "male",
-          "value": "male",
-        },
-        Object {
-          "label": "other",
-          "value": "other",
-        },
-      ]
-    }
-    defaultValue={
-      Array [
-        undefined,
+        Array [
+          Object {
+            "label": "female",
+            "value": "female",
+          },
+          Object {
+            "label": "male",
+            "value": "male",
+          },
+          Object {
+            "label": "other",
+            "value": "other",
+          },
+        ],
       ]
     }
     onCancel={[Function]}
-    onOk={[Function]}
+    onConfirm={[Function]}
     value={
       Array [
         undefined,
       ]
     }
     visible={false}
-    wheelDefaultValue={
-      Array [
-        undefined,
-      ]
-    }
   />
   <ForwardRef(forwardRef)
     actions={
