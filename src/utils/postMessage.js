@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-20 18:12:38
+ * @LastEditTime: 2022-08-20 18:22:58
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -15,7 +15,6 @@ import {
   // setLoginForm,
   setUserAuth,
   setUserToken,
-  setWeb3AccountChanged,
   setWeb3Init,
   setWeb3ProviderMaxFlag,
 } from "@/actions/user";
@@ -170,9 +169,7 @@ export default class MisesExtensionController {
         console.log('accountsChanged')
         // fist time connect
         if (this.selectedAddress) {
-          store.dispatch(setWeb3AccountChanged(true));
           await this.resetAccount(res[0]);
-          store.dispatch(setWeb3AccountChanged(false));
           this.selectedAddress = res[0]
         }else{
           console.log('is first')
