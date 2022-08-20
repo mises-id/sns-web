@@ -10,12 +10,18 @@ import { store } from "@/stores";
 import { Modal, Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 
+import { isIosPlatform } from '.';
+import fetchAdapter  from './fetchAdapter';
+
+
+
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 export const baseURL = 'https://api.alb.mises.site/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url
+  adapter: isIosPlatform()?fetchAdapter:null,
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 100000 // request timeout
 })
