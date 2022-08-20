@@ -1,50 +1,46 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-08-18 15:25:49
+ * @LastEditTime: 2022-08-20 18:12:58
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
-import Cell from "@/components/Cell";
-import { objToUrl, useBind, useList, useLoginModal } from "@/utils";
+import { objToUrl, useList, useLoginModal } from "@/utils";
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Modal, Picker, Toast, ActionSheet } from "zarm";
-import {Button} from 'antd-mobile'
+import { Modal, Toast, ActionSheet } from "zarm";
+import { Button, Form } from "antd-mobile";
 import "./index.scss";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { attachment } from "@/api/updata";
 import selectNFTIcon from "@/images/selected_NFT.png";
-import { getMyNFTAsset, getUserSelfInfo, updateUser } from "@/api/user";
+import { getMyNFTAsset, updateUser } from "@/api/user";
 import { setLoginForm } from "@/actions/user";
 import Navbar from "@/components/NavBar";
-import { Image, NavBar, TextArea } from "antd-mobile";
+import { Image, NavBar, TextArea, Input, Picker } from "antd-mobile";
 import { useEffect } from "react";
 import Avatar from "@/components/NFTAvatar";
 import { Popup } from "antd-mobile";
 import PullList from "@/components/PullList";
 import { useHistory } from "react-router-dom";
-const genderList = [
+const genderList = [[
   { value: "female", label: "female" },
   { value: "male", label: "male" },
   { value: "other", label: "other" },
-];
+]];
 const UserInfo = (props) => {
   const { t } = useTranslation();
-  const { loginForm = {}, accountsChanged } =
+  const { loginForm = {} } =
     useSelector((state) => state.user) || {};
+  const formRef = useRef(null);
   const [user, setuser] = useState(loginForm);
-  const username = useBind(user.username);
-  const phone = useBind(user.mobile);
-  const mail = useBind(user.email);
-  const intro = useBind(user.intro);
   const [avatar, setavatar] = useState("");
   const [visible, setvisible] = useState(false);
   const [cropper, setcropper] = useState(null);
   const [pickerVisible, setpickerVisible] = useState(false);
-  const [selectGender, setselectGender] = useState([user.gender]);
+  // const [selectGender, setselectGender] = useState([user.gender]);
   const [avatarLoading, setavatarLoading] = useState(false);
   const [saveLoading, setsaveLoading] = useState(false);
   const dispatch = useDispatch();
@@ -62,22 +58,11 @@ const UserInfo = (props) => {
     }
   };
   useEffect(() => {
-    if (!accountsChanged) {
-      getUserSelfInfo()
-        .then((res) => {
-          setuser({ ...res });
-          username.onChange(res.username);
-          phone.onChange(res.mobile);
-          mail.onChange(res.email);
-          intro.onChange(res.intro);
-          setNFTSelected({id:res.avatar.nft_asset_id});
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if(loginForm){
+      formRef.current.setFieldsValue(loginForm);
+      console.log(loginForm)
     }
-    // eslint-disable-next-line
-  }, [accountsChanged]);
+  },[loginForm])
 
   //send avatar
   const sendAvatar = () => {
@@ -113,53 +98,56 @@ const UserInfo = (props) => {
     });
   };
   const pickerSubmit = (e) => {
-    if (e.length) {
-      user.gender = e[0].label;
-      setuser({ ...user });
-      setselectGender([e[0].value]);
-    }
+    const gender = e[0];
+    formRef.current?.setFieldsValue({gender})
     setpickerVisible(false);
   };
   const loginModal = useLoginModal();
-  const saveMisesInfo = () => {
+  const saveMisesInfoToChain = () => {
+    const info = formRef.current.getFieldsValue();
     const avatarUrl = user.avatar && user.avatar.large ? user.avatar.large : "";
     const userInfo = {
-      name: username.value,
-      gender: user.gender,
-      telephones: [phone.value].filter((val) => val),
-      emails: [mail.value].filter((val) => val),
-      avatarUrl:NFTSelected.image_preview_url || avatarUrl,
+      name: info.username,
+      gender: info.gender,
+      telephones: [info.mobile].filter((val) => val),
+      emails: [info.email].filter((val) => val),
+      avatarUrl: NFTSelected.image_preview_url || avatarUrl,
       homePageUrl: "",
-      intro: intro.value,
+      intro: info.intro,
     };
     console.log("update mises network", userInfo);
-    window.mises.setUserInfo(userInfo).then(()=>{
-      console.log(NFTSelected.image_preview_url)
-      setNFTSelected(NFTSelected.image_preview_url ? {} : {...NFTSelected,image_preview_url:''});
-      Toast.show(t("updataUserInfoSuccess"));
-    }).catch((err) => {
-      if (err === "Wallet not activated") {
-        loginModal(() => {
-          saveMisesInfo();
-        });
-      }
-    });
+    window.mises
+      .setUserInfo(userInfo)
+      .then(() => {
+        console.log(NFTSelected.image_preview_url);
+        setNFTSelected(
+          NFTSelected.image_preview_url
+            ? {}
+            : { ...NFTSelected, image_preview_url: "" }
+        );
+        Toast.show(t("updataUserInfoSuccess"));
+      })
+      .catch((err) => {
+        if (err === "Wallet not activated") {
+          loginModal(() => {
+            saveMisesInfoToChain();
+          });
+        }
+      });
   };
   const saveInfo = (by = "info") => {
+    const info = formRef.current.getFieldsValue();
     const form = {
       username: {
-        username: username.value,
+        username: info.username,
       },
       profile: {
-        mobile: phone.value,
-        email: mail.value,
-        intro: intro.value,
-        gender: user.gender,
+        ...info
       },
     };
     if (by === "info") {
       const reg = /^[A-Za-z0-9]+(_?)+([A-Za-z0-9]+)$/;
-      if (username.value && !reg.test(username.value)) {
+      if (info.username && !reg.test(info.username)) {
         // Toast.show('Incorrect username')
         Modal.alert({
           title: "Message",
@@ -170,13 +158,13 @@ const UserInfo = (props) => {
       }
       setsaveLoading(true);
       const promise = [submit(form, "profile")];
-      if (username.value && username.value !== loginForm.username) {
+      if (info.username && info.username !== loginForm.username) {
         promise.push(submit(form, "username"));
       }
       Promise.all(promise)
         .then(() => {
           // Toast.show(t("updataUserInfoSuccess"));
-          saveMisesInfo();
+          saveMisesInfoToChain();
         })
         .catch((err) => {
           console.log(err);
@@ -187,7 +175,7 @@ const UserInfo = (props) => {
     return submit({ avatar: res }, "avatar")
       .then(() => {
         // Toast.show(t("updataUserInfoSuccess"));
-        saveMisesInfo();
+        saveMisesInfoToChain();
       })
       .catch((err) => {
         console.log(err);
@@ -251,13 +239,13 @@ const UserInfo = (props) => {
   }, [last_id]);
 
   const [NFTData, setNFTData] = useState([]);
-  
+
   useEffect(() => {
     if (dataSource.length > 0) {
       const slugArr = [];
       dataSource.forEach((item) => {
         const {
-          collection: { slug,name },
+          collection: { slug, name },
         } = item;
         const hasSlug = slugArr.find((val) => val.slugName === slug);
         // group by slug
@@ -323,20 +311,60 @@ const UserInfo = (props) => {
   //   setNFTSelected({});
   // }
   const history = useHistory();
+  const preivewInfo = ()=>{
+    const info = formRef.current.getFieldsValue();
+    history.push({
+      pathname: "/userDetail",
+      search: objToUrl({
+        uid: user.uid,
+        username: info.username,
+        avatar: user.avatar && user.avatar.medium,
+        is_followed: info.is_followed,
+        misesid: user.misesid,
+      }),
+    });
+  }
+  const inputStyle = {
+    '--text-align': 'right',
+    '--font-size': '14px'
+  }
   return (
     <div>
       <Navbar title={t("userInfoPageTitle")} />
       <div className="m-layout m-bg-f8f8f8 userinfo">
-        <div className="m-bg-fff">
-          <Cell
-            label={t("avatar")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb12"
-            rightChild={
-              <div
-                className="m-position-relative"
-                onClick={() => setActionSheetVisible(true)}
+        <Form
+          name="form"
+          ref={formRef}
+          onFinish={() => saveInfo("info")}
+          layout='horizontal'
+          footer={
+            <div className="m-padding20 save-box">
+              <Button
+                color="primary"
+                block
+                fill="outline"
+                shape="rounded"
+                onClick={preivewInfo}
               >
+                Preview
+              </Button>
+              <Button
+                color="primary"
+                block
+                className="m-margin-top10"
+                loading={saveLoading}
+                shape="rounded"
+                onClick={() => saveInfo("info")}
+              >
+                {t("apply")}
+              </Button>
+            </div>
+          }
+        >
+          <Form.Item  arrow label={t("avatar")} >
+              <div
+                className="m-position-relative avatar-container" 
+                onClick={() => setActionSheetVisible(true)}>
                 <input
                   type="file"
                   ref={inputRef}
@@ -346,101 +374,25 @@ const UserInfo = (props) => {
                 ></input>
                 <Avatar avatarItem={loginForm.avatar} size="35px" />
               </div>
-            }
-          ></Cell>
-          <Cell
-            label={t("username")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
-            rightChild={
-              <Input
-                type="text"
-                clearable={false}
-                maxLength={25}
-                {...username}
-                placeholder={t("placeholder")}
-              />
-            }
-          ></Cell>
-          <Cell
-            label={t("gender")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
-            rightChild={
-              <div
-                className={!user.gender ? "placeholder" : ""}
-                onClick={() => setpickerVisible(true)}
-              >
-                {user.gender || t("placeholder")}
-              </div>
-            }
-          ></Cell>
-          <Cell
-            label={t("phone")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
-            rightChild={
-              <Input
-                type="text"
-                className="userinfo-input"
-                clearable={false}
-                {...phone}
-                placeholder={t("phonePlaceholder")}
-              />
-            }
-          ></Cell>
-          <Cell
-            label={t("mail")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb19"
-            rightChild={
-              <Input
-                className="userinfo-input"
-                clearable={false}
-                autoHeight
-                {...mail}
-                placeholder={t("emailPlaceholder")}
-              />
-            }
-          ></Cell>
-          <Cell
-            label={t("intro")}
-            showIcon={false}
-            className="m-padding-lr15 m-padding-tb19 m-col-top"
-            rightChild={
-              <div>
-                <TextArea
-                  autoSize={{ minRows: 3, maxRows: 5 }}
-                  placeholder={t("introPlaceholder")}
-                  {...intro}
-                />
-              </div>
-            }
-          ></Cell>
-        </div>
-        <div className="m-padding20 save-box">
-          <Button color="primary" 
-            block
-            fill="outline"
-            shape="rounded"
-            onClick={() => {
-              history.push({
-                pathname: "/userDetail",
-                search: objToUrl({ uid: user.uid, username: user.username, avatar:user.avatar&&user.avatar.medium,is_followed: user.is_followed,misesid:user.misesid }),
-              });
-            }}>
-            Preview
-          </Button>
-          <Button color="primary" 
-            block
-            className="m-margin-top10"
-            loading={saveLoading}
-            shape="rounded"
-            onClick={() => saveInfo("info")}
-          >
-            {t("apply")}
-          </Button>
-        </div>
+            </Form.Item>
+          <Form.Item name='username' arrow label={t("username")}>
+            <Input placeholder={t("placeholder")} style={inputStyle}/>
+          </Form.Item>
+          <Form.Item name='gender' arrow label={t("gender")}  onClick={()=>setpickerVisible(true)}>
+            <Input readOnly placeholder={t("placeholder")} style={inputStyle}/>
+          </Form.Item>
+          <Form.Item name='mobile' arrow label={t("phone")}>
+            <Input placeholder={t("phonePlaceholder")} style={inputStyle}/>
+          </Form.Item>
+          <Form.Item name='email' arrow label={t("mail")}>
+            <Input placeholder={t("emailPlaceholder")} style={inputStyle}/>
+          </Form.Item>
+          <Form.Item name='intro' className="intro" arrow label={t("intro")}>
+            <TextArea style={inputStyle}
+            placeholder={t("introPlaceholder")}
+            autoSize={{ minRows: 3, maxRows: 5 }} />
+          </Form.Item>
+        </Form>
       </div>
       <Modal
         visible={visible}
@@ -492,12 +444,10 @@ const UserInfo = (props) => {
       </Modal>
       <Picker
         visible={pickerVisible}
-        dataSource={genderList}
-        defaultValue={selectGender}
-        onOk={pickerSubmit}
+        columns={genderList}
+        value={[formRef.current?.getFieldValue('gender')]}
+        onConfirm={pickerSubmit}
         onCancel={() => setpickerVisible(false)}
-        wheelDefaultValue={selectGender}
-        value={selectGender}
       ></Picker>
 
       <ActionSheet
@@ -507,7 +457,13 @@ const UserInfo = (props) => {
         onMaskClick={() => setActionSheetVisible(false)}
         onCancel={() => setActionSheetVisible(false)}
       />
-      <Popup visible={NFTVisible} bodyStyle={{borderTopLeftRadius:"10px",borderTopRightRadius:"10px"}}>
+      <Popup
+        visible={NFTVisible}
+        bodyStyle={{
+          borderTopLeftRadius: "10px",
+          borderTopRightRadius: "10px",
+        }}
+      >
         <NavBar
           left={<span onClick={() => setNFTVisible(false)}>{t("cancel")}</span>}
           backArrow={false}
@@ -529,7 +485,8 @@ const UserInfo = (props) => {
             renderView={renderView}
             data={NFTData}
             emptyText="NFTEmpty"
-            load={fetchData} />
+            load={fetchData}
+          />
         </div>
       </Popup>
       {/* <Modal 

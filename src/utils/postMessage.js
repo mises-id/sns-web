@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-19 14:10:27
+ * @LastEditTime: 2022-08-20 18:12:38
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -9,7 +9,9 @@
 import Web3 from "web3";
 import { isIos, isMisesBrowser, urlToJson } from "./";
 import {
+  setFirstLogin,
   setFollowingBadge,
+  setLoginForm,
   // setLoginForm,
   setUserAuth,
   setUserToken,
@@ -18,7 +20,7 @@ import {
   setWeb3ProviderMaxFlag,
 } from "@/actions/user";
 import { store } from "@/stores";
-import { signin } from "@/api/user";
+import { getUserSelfInfo, signin } from "@/api/user";
 import {
   clearCache,
   dropByCacheKey,
@@ -319,7 +321,10 @@ export default class MisesExtensionController {
       });
       console.timeEnd("signin time");
       this.selectedAddress = res.accounts[0];
-      data.token && store.dispatch(setUserToken(data.token));
+      if(data.token){
+        store.dispatch(setUserToken(data.token));
+        this.getUserInfo(data.token)
+      }
       return Promise.resolve();
     } catch (error) {
       if (error && error.code === 4001) {
@@ -329,7 +334,21 @@ export default class MisesExtensionController {
       return Promise.reject(error);
     }
   }
-
+  getUserInfo(token){
+    getUserSelfInfo(null, {
+      Authorization: `Bearer ${token}`
+    }).then(res=>{
+      console.log(res);
+      store.dispatch(setLoginForm(res));
+      localStorage.setItem("uid", res.uid);
+      setTimeout(() => {
+        if (!res.is_logined && window.history.location.pathname !== "airdrop") {
+          window.history.push("/airdrop");
+          store.dispatch(setFirstLogin(true));
+        }
+      }, 100);
+    })
+  }
   async getAuth() {
     console.log("getAuth");
     try {

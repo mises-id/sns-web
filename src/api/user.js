@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:45:39
- * @LastEditTime: 2022-06-16 17:19:48
+ * @LastEditTime: 2022-08-20 16:08:06
  * @LastEditors: lmk
  * @Description: user request
  */
@@ -10,10 +10,11 @@ import request from "@/utils/request"
 /**
 * @param {*} get user self info
 */
-export function getUserSelfInfo(params){
+export function getUserSelfInfo(params,headers={}){
   return request({
     params,
-    url:'/user/me'
+    url:'/user/me',
+    headers
   })
 }
 /**

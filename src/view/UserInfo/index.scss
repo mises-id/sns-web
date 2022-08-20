@@ -123,3 +123,14 @@ body .za-button--primary.za-button--loading .za-activity-indicator.za-activity-i
 // .center-content{
 //   padding: 20px 0;
 // }
+
+.avatar-container{
+  display: flex;
+  justify-content: flex-end;
+}
+.intro{
+  .adm-list-item-content-arrow{
+    align-self: flex-start;
+    padding-top: 20px;
+  }
+}
