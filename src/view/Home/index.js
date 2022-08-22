@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-10 16:12:04
- * @LastEditTime: 2022-08-16 15:34:47
+ * @LastEditTime: 2022-08-20 15:53:07
  * @LastEditors: lmk
  * @Description:
  */
@@ -58,11 +58,11 @@ const Home = ({ history, children = [] }) => {
   };
   const user = useSelector((state) => state.user) || {};
   const { auth, token, badge = {} } = user;
-  useEffect(() => {
-    getUserInfo().catch((err) => {
-      console.log(err);
-    });
-  }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   // getUserInfo().catch((err) => {
+  //   //   console.log(err);
+  //   // });
+  // }, [auth, token]); // eslint-disable-line react-hooks/exhaustive-deps
   const getUserInfo = async () => {
     // const accounts = await window.ethereum.request({ method: "eth_accounts" });
     // console.log(accounts,'accountsaccountsaccounts')

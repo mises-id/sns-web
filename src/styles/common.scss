@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 13:15:26
- * @LastEditTime: 2022-05-19 09:58:24
+ * @LastEditTime: 2022-08-20 17:28:43
  * @LastEditors: lmk
  * @Description: common style
  */
@@ -286,5 +286,29 @@ body{
   height: 50px;
   .adm-tabs-tab-wrapper-stretch{
     flex: 1;
+  }
+}
+.adm-form{
+  .adm-form .adm-list.adm-list{
+    --border-inner: 1px solid #EEEEEE;
+  }
+  .adm-list-default .adm-list-body{
+    border: none;
+  }
+  .adm-list-item{
+    padding-left: 0;
+  }
+  .adm-list-item-content-main{
+    padding: 15px 0;
+  }
+  .adm-list-item-content-arrow{
+    font-size: 11px;
+    color: #cdcdcc;
+    font-weight: bold;
+    margin-left: 15px;
+  }
+  .adm-list-item-content{
+    padding-left:15px ;
+    padding-right: 29px;
   }
 }

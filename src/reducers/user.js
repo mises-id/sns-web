@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 22:26:09
- * @LastEditTime: 2022-02-10 18:12:54
+ * @LastEditTime: 2022-08-20 18:23:13
  * @LastEditors: lmk
  * @Description: 
  */
@@ -20,7 +20,6 @@ const initialState = {
   },
   web3Status:false,
   web3ProviderFlag:true,
-  accountsChanged: false,
   isFistLogin:false
 };
 const userReducers = (state = initialState, action) => {
@@ -66,11 +65,6 @@ const userReducers = (state = initialState, action) => {
         return {
           ...state,
           web3ProviderFlag: action.data,
-        };
-      case 'SET_WEB3_ACCOUNTCHANGED': // Set web3 account changed
-        return {
-          ...state,
-          accountsChanged: action.data,
         };
       
       case 'SET_FIRST_LOGIN': // Set web3 account changed

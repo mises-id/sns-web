@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-17 20:32:54
+ * @LastEditTime: 2022-08-20 18:22:58
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -9,16 +9,17 @@
 import Web3 from "web3";
 import { isIos, isMisesBrowser, urlToJson } from "./";
 import {
+  setFirstLogin,
   setFollowingBadge,
+  setLoginForm,
   // setLoginForm,
   setUserAuth,
   setUserToken,
-  setWeb3AccountChanged,
   setWeb3Init,
   setWeb3ProviderMaxFlag,
 } from "@/actions/user";
 import { store } from "@/stores";
-import { signin } from "@/api/user";
+import { getUserSelfInfo, signin } from "@/api/user";
 import {
   clearCache,
   dropByCacheKey,
@@ -168,9 +169,7 @@ export default class MisesExtensionController {
         console.log('accountsChanged')
         // fist time connect
         if (this.selectedAddress) {
-          store.dispatch(setWeb3AccountChanged(true));
           await this.resetAccount(res[0]);
-          store.dispatch(setWeb3AccountChanged(false));
           this.selectedAddress = res[0]
         }else{
           console.log('is first')
@@ -228,7 +227,9 @@ export default class MisesExtensionController {
 
   async resetAccount(res) {
     console.log("resetAccount");
+    console.time("getAddressToMisesId time");
     const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
+    console.timeEnd("getAddressToMisesId time");
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
     if (loginForm.misesid && loginForm.misesid.indexOf(misesid) === -1) {
@@ -303,17 +304,24 @@ export default class MisesExtensionController {
   async requestAccounts() {
     console.log("requestAccounts");
     try {
+      console.time("requestAccounts time");
       const res = await this.getAuth();
+      console.timeEnd("requestAccounts time");
       // const nonce = new Date().getTime();
       // const sign = res.mises_id+nonce;
       // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop
       store.dispatch(setUserAuth(res.auth));
+      console.time("signin time");
       const data = await signin({
         provider: "mises",
         user_authz: { auth: res.auth },
       });
+      console.timeEnd("signin time");
       this.selectedAddress = res.accounts[0];
-      data.token && store.dispatch(setUserToken(data.token));
+      if(data.token){
+        store.dispatch(setUserToken(data.token));
+        this.getUserInfo(data.token)
+      }
       return Promise.resolve();
     } catch (error) {
       if (error && error.code === 4001) {
@@ -323,7 +331,21 @@ export default class MisesExtensionController {
       return Promise.reject(error);
     }
   }
-
+  getUserInfo(token){
+    getUserSelfInfo(null, {
+      Authorization: `Bearer ${token}`
+    }).then(res=>{
+      console.log(res);
+      store.dispatch(setLoginForm(res));
+      localStorage.setItem("uid", res.uid);
+      setTimeout(() => {
+        if (!res.is_logined && window.history.location.pathname !== "airdrop") {
+          window.history.push("/airdrop");
+          store.dispatch(setFirstLogin(true));
+        }
+      }, 100);
+    })
+  }
   async getAuth() {
     console.log("getAuth");
     try {

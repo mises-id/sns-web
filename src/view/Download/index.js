@@ -1,15 +1,17 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-30 12:51:50
+ * @LastEditTime: 2022-08-22 12:05:41
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
 import { getReferralUrl } from "@/api/user";
+import { isIosPlatform } from "@/utils";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 const Download = () => {
-  const [downloadUrl, setdownloadUrl] = useState('https://play.google.com/store/apps/details?id=site.mises.browser')
+  const defaultUrl = isIosPlatform() ? "https://testflight.apple.com/join/Tk1BxD1i" : "https://play.google.com/store/apps/details?id=site.mises.browser";
+  const [downloadUrl, setdownloadUrl] = useState(defaultUrl)
   useEffect(() => {
     const referrer = sessionStorage.getItem('referrer')
     if(referrer){
@@ -19,7 +21,8 @@ const Download = () => {
         type:'url',
         medium:'landing'
       }).then(res=>{
-        setdownloadUrl(res.medium_url)
+        const url = isIosPlatform() ? res.ios_medium_link : res.medium_url
+        setdownloadUrl(url)
       })
     } else {
       const search = new URLSearchParams(window.location.search);
@@ -30,7 +33,8 @@ const Download = () => {
           type:'url',
           medium:'invite'
         }).then(res=>{
-          setdownloadUrl(res.medium_url)
+          const url = isIosPlatform() ? res.ios_medium_link : res.medium_url
+          setdownloadUrl(url)
         })
       }
     }
