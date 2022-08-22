@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 22:30:53
- * @LastEditTime: 2022-06-11 00:32:16
+ * @LastEditTime: 2022-08-22 17:26:46
  * @LastEditors: lmk
  * @Description:
  */
@@ -15,7 +15,7 @@ const Navbar = ({ title,rightChild,customBack}) => {
       customBack()
       return
     }
-    if (window.history.length === 1) {
+    if (!window.history.state) {
       window.location.replace("/home/discover");
     } else {
       window.history.back();
