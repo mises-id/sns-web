@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-08-23 11:48:26
+ * @LastEditTime: 2022-08-23 12:02:20
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -59,8 +59,11 @@ const UserInfo = (props) => {
   };
   useEffect(() => {
     if(loginForm){
-      setNFTSelected({});
+      setNFTSelected(loginForm.avatar.nft_asset_id ? {
+        image_preview_url: loginForm.avatar.large
+      } : {});
       formRef.current.setFieldsValue(loginForm);
+      setuser(loginForm);
       console.log(loginForm)
     }
   },[loginForm])
