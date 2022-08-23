@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-20 18:22:58
+ * @LastEditTime: 2022-08-23 15:39:12
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from "web3";
-import { isIos, isMisesBrowser, urlToJson } from "./";
+import { isIos, isIosPlatform, isMisesBrowser, urlToJson } from "./";
 import {
   setFirstLogin,
   setFollowingBadge,
@@ -40,7 +40,8 @@ export default class MisesExtensionController {
   getMax = 10;
   getNum = 0;
   switchNetworkLoading = false;
-  selectedAddress = '';
+  isConnect = false;
+  connectStatus = 'complete'
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor() {
     setTimeout(() => {
@@ -151,12 +152,6 @@ export default class MisesExtensionController {
       ],
     });
     store.dispatch(setWeb3Init(true));
-
-    // If the initialization is completed, the currently selected account will be obtained
-    // setTimeout(() => {
-    //   const {selectedAddress} = window.ethereum
-
-    // }, 150);
     return Promise.resolve();
   }
 
@@ -166,44 +161,42 @@ export default class MisesExtensionController {
     }
     window.ethereum.on("accountsChanged", async (res) => {
       if (res.length) {
-        console.log('accountsChanged')
-        // fist time connect
-        if (this.selectedAddress) {
+        console.log('accountsChanged',res)
+        if(this.isConnect && this.connectStatus === 'complete'){
           await this.resetAccount(res[0]);
-          this.selectedAddress = res[0]
         }else{
           console.log('is first')
         }
-        
       }
-      // if(res.length===0) {
-      //   this.resetApp()
-      // }
     });
-    window.ethereum.request({ method: "eth_accounts" }).then((res) => {
-      if (res.length > 0) {
-        console.log('eth_accounts')
-        this.selectedAddress = res[0]
-        this.resetAccount(res[0]);
-        return false;
-      }
-      /**
-       * @description: 
-          Case 1: if the connected account list is empty and unlocked, it means that no account is connected to the website, and the existing local user data needs to be cleared
+    if(isIosPlatform()){
+      const ethAddress = localStorage.getItem('ethAddress');
+      this.isConnect = !!ethAddress;
+    }else{
+      window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+        if (res.length > 0) {
+          console.log("eth_accounts");
+          this.resetAccount(res[0]);
+          return false;
+        }
+        /**
+         * @description: 
+            Case 1: if the connected account list is empty and unlocked, it means that no account is connected to the website, and the existing local user data needs to be cleared
 
-          Case 2: if the list of connected accounts in the locked state is empty, the existing local user data will not be processed
-       */
-
-      res.length === 0 &&
-        this.isActive()
-          .then((res) => {
-            console.log("not find selectedAddress");
-            this.resetApp();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    });
+            Case 2: if the list of connected accounts in the locked state is empty, the existing local user data will not be processed
+        */
+        res.length === 0 &&
+          this.isActive()
+            .then((res) => {
+              console.log("not find selectedAddress");
+              this.resetApp();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+      });
+    }
+    
     window.ethereum.on("chainChanged", (res) => {
       console.log(res);
     });
@@ -225,14 +218,15 @@ export default class MisesExtensionController {
     }
   }
 
-  async resetAccount(res) {
+  async resetAccount(ethAddress) {
     console.log("resetAccount");
-    console.time("getAddressToMisesId time");
-    const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
-    console.timeEnd("getAddressToMisesId time");
+    // console.time("getAddressToMisesId time");
+    // const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
+    // console.timeEnd("getAddressToMisesId time");
+    const storageEthAddress = localStorage.getItem('ethAddress');
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
-    if (loginForm.misesid && loginForm.misesid.indexOf(misesid) === -1) {
+    if (loginForm.misesid && storageEthAddress!==ethAddress) {
       this.disconnect(loginForm.uid);
       this.resetUser();
     }
@@ -304,6 +298,7 @@ export default class MisesExtensionController {
   async requestAccounts() {
     console.log("requestAccounts");
     try {
+      this.connectStatus = 'loading'
       console.time("requestAccounts time");
       const res = await this.getAuth();
       console.timeEnd("requestAccounts time");
@@ -311,13 +306,14 @@ export default class MisesExtensionController {
       // const sign = res.mises_id+nonce;
       // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop
       store.dispatch(setUserAuth(res.auth));
+      localStorage.setItem('ethAddress',res.address)
       console.time("signin time");
       const data = await signin({
         provider: "mises",
         user_authz: { auth: res.auth },
       });
+      this.connectStatus = 'complete'
       console.timeEnd("signin time");
-      this.selectedAddress = res.accounts[0];
       if(data.token){
         store.dispatch(setUserToken(data.token));
         this.getUserInfo(data.token)
@@ -339,7 +335,7 @@ export default class MisesExtensionController {
       store.dispatch(setLoginForm(res));
       localStorage.setItem("uid", res.uid);
       setTimeout(() => {
-        if (!res.is_logined && window.history.location.pathname !== "airdrop") {
+        if (!res.is_logined && window.history.location?.pathname !== "airdrop") {
           window.history.push("/airdrop");
           store.dispatch(setFirstLogin(true));
         }
@@ -353,15 +349,16 @@ export default class MisesExtensionController {
       if (!flag) return Promise.reject();
       await this.init();
       const res = await this.web3.misesWeb3.requestAccounts();
-      // const getCollectibles = await this.getCollectibles()
-      // console.log(getCollectibles)
       const { mises_id } = urlToJson(`?${res.auth}`);
       await this.connect(mises_id);
+      this.isConnect = true;
       return {
         ...res,
         mises_id,
+        address: res.accounts[0]
       };
     } catch (error) {
+      this.isConnect = false;
       return Promise.reject(error);
     }
   }

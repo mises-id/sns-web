@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-08-12 13:38:10
+ * @LastEditTime: 2022-08-23 14:05:15
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -94,10 +94,10 @@ const NFTPage = ({history}) => {
   const loginModal = useLoginModal()
   const pullList = useRef(null);
   const importWallet = ()=>{
-    const version =  window.mises.getMetamaskVersion()
+    const version = window.mises.getMetamaskVersion()
     version && window.mises.NFTPage()
-    if(window.mises.selectedAddress){
-      getOpenseaNFTAsset(window.mises.selectedAddress).then(res=>{
+    if(window.ethereum.selectedAddress){
+      getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
         Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
         if(res.length>0){
           pullList.current.refreshData()
