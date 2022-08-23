@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-08-20 18:12:58
+ * @LastEditTime: 2022-08-23 11:48:26
  * @LastEditors: lmk
  * @Description: UserInfo page
  */
@@ -59,6 +59,7 @@ const UserInfo = (props) => {
   };
   useEffect(() => {
     if(loginForm){
+      setNFTSelected({});
       formRef.current.setFieldsValue(loginForm);
       console.log(loginForm)
     }
