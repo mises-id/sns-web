@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-30 15:42:46
+ * @LastEditTime: 2022-08-24 09:35:07
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -131,7 +131,7 @@ const MyInvitation = () => {
       return false;
     }
     navigator.share&&navigator.share({
-      text: `I'm using the free speech decentralized social media #Mises, join me in experiencing the new social of the #Web3 world!`,
+      text: `Join me to use Mises  Browser to start your #Web3 journey!<br/><br/>#Mises #Browser #DeFi #NFT #SocialFi`,
       url: `${window.location.origin}/download?misesid=${misesId}`,
     }).catch(err=>{
       console.log(err)
