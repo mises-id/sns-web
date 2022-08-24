@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-08-03 16:30:49
+ * @LastEditTime: 2022-08-24 09:24:06
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -93,7 +93,7 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo?.misesid || selector.loginForm?.misesid?.replace('did:mises:','')
-  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop, come and join @Mises001 to experience the coolest decentralized social media with me!<br/><br/>Follow the only Mises official Twitter @Mises001 for more information<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/> #Mises  #Decentralized  #SocialMedia  #Web3`
+  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop$MIS airdrop by using Mises Browser,come and join @Mises001 to start your #web3 journey !<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #DeFi #NFT #SocialFi`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
