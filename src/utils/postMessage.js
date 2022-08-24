@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-23 15:39:12
+ * @LastEditTime: 2022-08-24 20:20:49
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -28,6 +28,7 @@ import {
 } from "react-router-cache-route";
 import { Modal } from "zarm";
 import { setVisibility } from "@/actions/app";
+// import { Toast } from "antd-mobile";
 window.clearCache = clearCache;
 window.dropByCacheKey = dropByCacheKey;
 window.getCachingKeys = getCachingKeys;
@@ -126,6 +127,8 @@ export default class MisesExtensionController {
         {
           name: "getActive",
           call: "mises_getActive",
+          params: 1,
+          inputFormatter: [null],
         },
         {
           name: "connect",
@@ -161,7 +164,7 @@ export default class MisesExtensionController {
     }
     window.ethereum.on("accountsChanged", async (res) => {
       if (res.length) {
-        console.log('accountsChanged',res)
+        console.log('accountsChanged',res, this.connectStatus, this.isConnect)
         if(this.isConnect && this.connectStatus === 'complete'){
           await this.resetAccount(res[0]);
         }else{
@@ -169,11 +172,15 @@ export default class MisesExtensionController {
         }
       }
     });
-    if(isIosPlatform()){
-      const ethAddress = localStorage.getItem('ethAddress');
-      this.isConnect = !!ethAddress;
-    }else{
-      window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+   
+    window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+      if(isIosPlatform()){
+        const ethAddress = localStorage.getItem('ethAddress');
+        this.isConnect = !!ethAddress;
+        if (res.length > 0 && ethAddress !== res[0]) {
+          this.resetAccount(res[0]);
+        }
+      }else{
         if (res.length > 0) {
           console.log("eth_accounts");
           this.resetAccount(res[0]);
@@ -182,11 +189,11 @@ export default class MisesExtensionController {
         /**
          * @description: 
             Case 1: if the connected account list is empty and unlocked, it means that no account is connected to the website, and the existing local user data needs to be cleared
-
+  
             Case 2: if the list of connected accounts in the locked state is empty, the existing local user data will not be processed
         */
         res.length === 0 &&
-          this.isActive()
+          this.isActive('eth_accounts')
             .then((res) => {
               console.log("not find selectedAddress");
               this.resetApp();
@@ -194,8 +201,8 @@ export default class MisesExtensionController {
             .catch((err) => {
               console.log(err);
             });
-      });
-    }
+      }
+    });
     
     window.ethereum.on("chainChanged", (res) => {
       console.log(res);
@@ -316,21 +323,24 @@ export default class MisesExtensionController {
       console.timeEnd("signin time");
       if(data.token){
         store.dispatch(setUserToken(data.token));
-        this.getUserInfo(data.token)
+        await this.getUserInfo(data.token)
       }
       return Promise.resolve();
     } catch (error) {
       if (error && error.code === 4001) {
         window.location.reload();
       }
+      this.connectStatus = 'complete'
       console.log(error);
+      // Toast.show('signin接口出错了')
       return Promise.reject(error);
     }
   }
-  getUserInfo(token){
-    getUserSelfInfo(null, {
-      Authorization: `Bearer ${token}`
-    }).then(res=>{
+  async getUserInfo(token){
+    try {
+      const res = await  getUserSelfInfo(null, {
+        Authorization: `Bearer ${token}`
+      })
       console.log(res);
       store.dispatch(setLoginForm(res));
       localStorage.setItem("uid", res.uid);
@@ -340,7 +350,11 @@ export default class MisesExtensionController {
           store.dispatch(setFirstLogin(true));
         }
       }, 100);
-    })
+      return Promise.resolve()
+    } catch (error) {
+      // Toast.show('user/me接口出错了')
+      return Promise.reject('user/me接口出错了')
+    }
   }
   async getAuth() {
     console.log("getAuth");
@@ -366,7 +380,7 @@ export default class MisesExtensionController {
   async setUserInfo(data) {
     console.log("setUserInfo");
     try {
-      await this.isActive();
+      await this.isActive('setUserInfo');
       await this.web3.misesWeb3.setUserInfo(data);
       return true;
     } catch (error) {
@@ -422,13 +436,15 @@ export default class MisesExtensionController {
     }
   }
 
-  async isActive() {
-    console.log("isActive");
+  async isActive(source) {
+    console.log("isActive",source);
     try {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      const getActive = isIos() ?  await this.web3.misesWeb3.getActive() : window.ethereum._state.isUnlocked;
+      const { loginForm } = store.getState().user;
+      console.log(this.connectStatus)
+      const getActive = isIos() ?  await this.web3.misesWeb3.getActive(loginForm.misesid) : window.ethereum._state.isUnlocked;
       console.log(getActive,'getActive')
       return getActive
         ? Promise.resolve(true)
