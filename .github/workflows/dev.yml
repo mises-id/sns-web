@@ -41,7 +41,7 @@ jobs:
            sns-web-test.tar.gz s3://misesid
       - name: Deploy static files to S3
         run: |
-          aws s3 cp \
+          aws s3 cp --recursive \
            --region us-east-1 \
            build/ s3://home.mises/test
       - name: CodeDeploy to EC2
