@@ -37,6 +37,11 @@ jobs:
           aws s3 cp \
            --region us-east-1 \
            sns-web.tar.gz s3://misesid
+      - name: Deploy static files to S3
+        run: |
+          aws s3 cp \
+           --region us-east-1 \
+           build/ s3://home.mises/main
       - name: CodeDeploy to EC2
         run: |
           aws deploy create-deployment \
