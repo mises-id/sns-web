@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-24 20:20:49
+ * @LastEditTime: 2022-08-29 11:39:02
  * @LastEditors: lmk
  * @Description: to extension
  */
@@ -86,7 +86,8 @@ export default class MisesExtensionController {
       return Promise.resolve();
     }
     console.log("init");
-    this.web3 = new Web3(window.ethereum || "ws://localhost:8545");
+    const matamaskProvider = !window.ethereum.providers ? window.ethereum : this.getMetamaskProvider();
+    this.web3 = new Web3( matamaskProvider || "ws://localhost:8545");
     this.web3.extend({
       property: "misesWeb3",
       methods: [
@@ -157,7 +158,10 @@ export default class MisesExtensionController {
     store.dispatch(setWeb3Init(true));
     return Promise.resolve();
   }
-
+  getMetamaskProvider(){
+    const providerMap = window.ethereum.providerMap;
+    return providerMap.get("MetaMask")
+  }
   listen() {
     if (!window.ethereum) {
       return false;
@@ -170,6 +174,11 @@ export default class MisesExtensionController {
         }else{
           console.log('is first')
         }
+      }else{
+        console.log(res.length, res, 'accountsChanged')
+        setTimeout(() => {
+          this.checkedHasAccount();
+        }, 100);
       }
     });
    
@@ -207,14 +216,28 @@ export default class MisesExtensionController {
     window.ethereum.on("chainChanged", (res) => {
       console.log(res);
     });
-    window.ethereum.on("restoreAccount", (res) => {
-      console.log(res, "restoreAccount");
-    });
-    window.ethereum.on("unlocked", (res) => {
-      console.log(res, "unlocked");
-    });
-  }
 
+    this.checkedHasAccount();
+  }
+  checkedHasAccount(){
+    this.getMisesAccounts().then(res=>{
+      const { loginForm={} } = store.getState().user;
+      console.log(res,loginForm.uid)
+      if(!res && loginForm.uid){
+        console.log('check has wallet account')
+        store.dispatch(setUserAuth(''));
+        store.dispatch(setUserToken(''));
+        store.dispatch(setLoginForm({}));
+        store.dispatch(setWeb3Init(false));
+        setTimeout(() => {
+          store.dispatch(setWeb3Init(true));
+        }, 200);
+      }
+    }).catch(error=>{
+      console.log(error, 'getMisesAccounts')
+    })
+   
+  }
   resetApp() {
     const { loginForm } = store.getState().user;
     if (loginForm.misesid) {
@@ -435,7 +458,10 @@ export default class MisesExtensionController {
       return Promise.reject(error || 'con\'t find accounts');
     }
   }
-
+  getCurrentProvider(){
+    const metamaskProvider = this.web3.currentProvider
+    return metamaskProvider
+  }
   async isActive(source) {
     console.log("isActive",source);
     try {
@@ -444,7 +470,8 @@ export default class MisesExtensionController {
       await this.init();
       const { loginForm } = store.getState().user;
       console.log(this.connectStatus)
-      const getActive = isIos() ?  await this.web3.misesWeb3.getActive(loginForm.misesid) : window.ethereum._state.isUnlocked;
+      const metamaskProvider = this.getCurrentProvider();
+      const getActive = isIos() ?  await this.web3.misesWeb3.getActive(loginForm.misesid) : metamaskProvider._state.isUnlocked;
       console.log(getActive,'getActive')
       return getActive
         ? Promise.resolve(true)
