@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-05-23 10:05:43
+ * @LastEditTime: 2022-08-30 17:13:27
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -88,10 +88,10 @@ const reject = ({code,message})=>{
     invalidAuth()
     return
   }
-  if(code===400000){
-    invalidAuth()
-    return
-  }
+  // if(code===400000){
+  //   invalidAuth()
+  //   return
+  // }
   console.log(code);
   Toast.show(message|| 'error')
 }
