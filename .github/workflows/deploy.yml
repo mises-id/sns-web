@@ -49,3 +49,9 @@ jobs:
            --deployment-group-name SnsWebDeployGroup \
            --s3-location bucket=misesid,key=sns-web.tar.gz,bundleType=tgz \
            --file-exists-behavior RETAIN
+      - name: Invalidate cloudfront
+        run: |
+          aws cloudfront create-invalidation \
+           --region us-east-1 \
+           --distribution-id E35CF9N6UYLICP \
+           --paths "/index.html"
