@@ -25,32 +25,17 @@ jobs:
           yarn build
         env:
           CI: true
-      - name: 'Tar files'
-        run: |
-          tar --transform='s|appspec.test|appspec|' -czvf sns-web-test.tar.gz build/ appspec.test.yml scripts/
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: Deploy to S3
-        run: |
-          aws s3 cp \
-           --region us-east-1 \
-           sns-web-test.tar.gz s3://misesid
       - name: Deploy static files to S3
         run: |
           aws s3 cp --recursive \
            --region us-east-1 \
            build/ s3://home.mises/test
-      - name: CodeDeploy to EC2
-        run: |
-          aws deploy create-deployment \
-           --application-name sns-web-test \
-           --deployment-group-name SnsWebDeployGroup \
-           --s3-location bucket=misesid,key=sns-web-test.tar.gz,bundleType=tgz \
-           --file-exists-behavior RETAIN
       - name: Invalidate cloudfront
         run: |
           aws cloudfront create-invalidation \
