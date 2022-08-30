@@ -87,6 +87,10 @@ async function getResponse(request, config) {
  * This function will create a Request object based on configuration's axios
  */
 function createRequest(config) {
+    const method = config.method.toUpperCase();
+    if(method !== 'GET' && method !== 'HEAD' && config.headers['Content-Type']==="multipart/form-data"){
+        delete config.headers['Content-Type']
+    }
     const headers = new Headers(config.headers);
 
     // HTTP basic authentication
@@ -96,7 +100,6 @@ function createRequest(config) {
         headers.set('Authorization', `Basic ${btoa(username + ':' + password)}`);
     }
 
-    const method = config.method.toUpperCase();
     const options = {
         headers: headers,
         method,
