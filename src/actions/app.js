@@ -19,3 +19,10 @@ export function resetPageData(data){
     data
   };
 }
+// visibility flag
+export function setReportVisibility(data){
+  return {
+    type: 'SET_REPORT_VISIVILITY',
+    data
+  };
+}

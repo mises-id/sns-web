@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import { ConfigProvider} from 'zarm';
-import { ConfigProvider as AntdProvider } from 'antd-mobile'
+import { ConfigProvider as AntdProvider, Modal, TextArea, Toast } from 'antd-mobile'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import enUS from 'zarm/lib/config-provider/locale/en_US';
 import antdEnUS from 'antd-mobile/es/locales/en-US'
@@ -17,7 +17,7 @@ import {setTheme} from '@/styles/setZarmTheme'
 import { CacheSwitch } from 'react-router-cache-route'
 // import { useState } from 'react';
 import { useLogin } from './components/PostsIcons/common';
-import { setVisibility } from './actions/app';
+import { setReportVisibility, setVisibility } from './actions/app';
 import { Popup } from 'antd-mobile';
 import { isMisesBrowser } from './utils';
 const SetRoute = ()=>{
@@ -48,7 +48,6 @@ const  Download = ()=>{
     <div className='launchApp-empty'></div>
   </> : <></>
 }
-// 封装antd的popup
 const DownloadPopUp = ()=>{
   const visible = useSelector(state=>state.app.visible)
   const dispatch = useDispatch()
@@ -71,7 +70,49 @@ const DownloadPopUp = ()=>{
       }}>Download</div>
   </Popup>
 }
-  
+const ReportPopup = ()=>{
+  const visible = useSelector(state=>state.app.reportVisible)
+  const dispatch = useDispatch()
+  const [value,setValue] = useState('')
+  return <Modal
+    visible={visible}
+    style={{width: '90%'}}
+    title="Report"
+    content={
+      <div className='textarea-border'>
+        <TextArea 
+          placeholder='Enter the reason' 
+          autoSize={{minRows: 6,maxRows: 6}}
+          value={value}
+          onChange={setValue}
+          border/>
+      </div>
+    }
+    closeOnAction
+    showCloseButton
+    onClose={() => {
+      dispatch(setReportVisibility(false))
+    }}
+    actions={[
+      {
+        key: 'confirm',
+        text: 'submit',
+        primary: true,
+        className: 'modal-btn'
+      },
+    ]}
+    onAction={() =>{
+      if(!value){
+        Toast.show('Please enter a value')
+        return Promise.reject('Please enter a value')
+      }
+      setTimeout(() => {
+        Toast.show('Report Success')
+        setValue('')
+      }, 200);
+    }}
+  />
+}
 
 const App = ()=> {
   // const [isHref, setisHref] = useState(false)
@@ -103,6 +144,7 @@ const App = ()=> {
           <Download />
           <SetRoute />
           <DownloadPopUp />
+          <ReportPopup />
         </PersistGate>
       </Provider>
     </ConfigProvider>

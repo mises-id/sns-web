@@ -8,7 +8,8 @@
 import {REHYDRATE} from 'redux-persist';
 const initialState = {
   visible:false,
-  resetPageDataFlag:false
+  resetPageDataFlag:false,
+  reportVisible: false
 };
 const appReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -18,6 +19,11 @@ const appReducers = (state = initialState, action) => {
       return {
         ...state,
         visible: action.data,
+      };
+    case 'SET_REPORT_VISIVILITY': //Set user information
+      return {
+        ...state,
+        reportVisible: action.data,
       };
     case 'SET_PAGE_DATA_FLAG': //reset page data
       return {

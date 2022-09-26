@@ -1,21 +1,23 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-05-12 15:58:16
+ * @LastEditTime: 2022-09-26 23:14:01
  * @LastEditors: lmk
  * @Description:
  */
 import Avatar from "@/components/NFTAvatar";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import deteleIcon from "@/images/arrow-down.png";
 import privateIcon from "@/images/private.png";
 import { useLogin } from "@/components/PostsIcons/common";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatTimeStr, objToUrl, useLoginModal, username } from "@/utils";
 import MButton from "@/components/MButton";
 import addIcon from "@/images/add.png";
 import { useHistory } from "react-router-dom";
+import { Image, Popover } from "antd-mobile";
+import { setReportVisibility } from "@/actions/app";
 const UserHeader = ({
   size,
   btnType = "follow",
@@ -50,6 +52,26 @@ const UserHeader = ({
   const isFollow = item.is_followed ? "followedTxt" : "followTxt";
   const followedItem = (e) => hasLogin(e, followed);
   const deleteItemClick = (e) => hasLogin(e, deleteItem);
+  const popoverRef = useRef(null);
+  const [reportVisible,setreportVisible] = useState(false);
+  const showReport = (e)=>{
+    hasLogin(e, ()=>{
+      setreportVisible(!reportVisible)
+    })
+  }
+  const dispatch = useDispatch()
+  const report = ()=>{
+    dispatch(setReportVisibility(true))
+    setreportVisible(false)
+  }
+  document.addEventListener('click',()=>{
+    setreportVisible(false)
+  })
+  useEffect(() => {
+    const container = document.querySelector('.m-layout')
+    if(container) container.style.overflow = reportVisible ? 'hidden' : 'visible'
+  }, [reportVisible])
+  
   return (
     <div className={`m-flex m-row-between ${size ? "forward" : "normal"}`}>
       <div className="m-flex">
@@ -67,21 +89,35 @@ const UserHeader = ({
           </div>}
         </div>
       </div>
-      {!isMe && btnType === "follow" && (
-        <MButton
-          txt={t(isFollow)}
-          onPress={followedItem}
-          {...(item.is_followed
-            ? {
-                borderColor: "#DDDDDD",
-                txtColor: "#666",
-                txtSize: !size ? 12 : 11,
-              }
-            : {})}
-          imgIcon={!item.is_followed ? addIcon : ""}
-          width={!size ? 70 : 60}
-          height={!size ? 25 : 20}
-        />
+      {!isMe && btnType === "follow" && ( 
+        <div className="m-flex">
+          <MButton
+            txt={t(isFollow)}
+            onPress={followedItem}
+            {...(item.is_followed
+              ? {
+                  borderColor: "#DDDDDD",
+                  txtColor: "#666",
+                  txtSize: !size ? 12 : 11,
+                }
+              : {})}
+            imgIcon={!item.is_followed ? addIcon : ""}
+            width={!size ? 70 : 60}
+            height={!size ? 25 : 20}
+          />
+          <Popover.Menu
+            actions={[{
+              text: 'Report',icon: null
+            }]}
+            ref={popoverRef}
+            onAction={report}
+            visible={reportVisible}
+            trigger='click'
+            placement='bottom'
+          >
+            <Image src="/static/images/more.png" lazy={false} width={20} onClick={showReport}/>
+          </Popover.Menu>
+        </div>
       )}
       {btnType === "myPosts" && (
         <MButton
