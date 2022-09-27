@@ -72,8 +72,10 @@ iframe{
   position: relative;
   padding: 10px;
   margin-top: 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
 }
-.textarea-border::after{
+/* .textarea-border::after{
   content: '';
   position: absolute;
   width: 200%;
@@ -83,4 +85,4 @@ iframe{
   border-radius: 5px;
   left: -50%;
   top: -50%;
-}
+} */
