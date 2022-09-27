@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-09-26 23:14:01
+ * @LastEditTime: 2022-09-27 09:25:57
  * @LastEditors: lmk
  * @Description:
  */
@@ -69,7 +69,7 @@ const UserHeader = ({
   })
   useEffect(() => {
     const container = document.querySelector('.m-layout')
-    if(container) container.style.overflow = reportVisible ? 'hidden' : 'visible'
+    if(container) container.style.overflow = reportVisible ? 'hidden' : 'auto'
   }, [reportVisible])
   
   return (
