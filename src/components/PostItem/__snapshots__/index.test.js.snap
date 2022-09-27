@@ -11,6 +11,7 @@ exports[`CreateMisesId should render correctly 1`] = `
       Object {
         "created_at": undefined,
         "from_type": undefined,
+        "id": undefined,
         "is_public": undefined,
       }
     }
