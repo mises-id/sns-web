@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 01:03:58
- * @LastEditTime: 2022-09-27 09:25:57
+ * @LastEditTime: 2022-09-27 11:57:58
  * @LastEditors: lmk
  * @Description:
  */
@@ -17,7 +17,7 @@ import MButton from "@/components/MButton";
 import addIcon from "@/images/add.png";
 import { useHistory } from "react-router-dom";
 import { Image, Popover } from "antd-mobile";
-import { setReportVisibility } from "@/actions/app";
+import { setReportTargetId, setReportVisibility } from "@/actions/app";
 const UserHeader = ({
   size,
   btnType = "follow",
@@ -62,6 +62,8 @@ const UserHeader = ({
   const dispatch = useDispatch()
   const report = ()=>{
     dispatch(setReportVisibility(true))
+    console.log(item)
+    dispatch(setReportTargetId(item.id))
     setreportVisible(false)
   }
   document.addEventListener('click',()=>{

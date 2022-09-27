@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-21 21:50:40
- * @LastEditTime: 2022-02-08 15:01:15
+ * @LastEditTime: 2022-09-27 11:42:41
  * @LastEditors: lmk
  * @Description: status
  */
@@ -150,5 +150,15 @@ export function refreshStatus(ids){
     url:'/status/list',
     method:'post',
     data:{ids}
+  })
+}
+/**
+* @param {*} report the status 
+*/
+export function complaint(data){
+  return request({
+    url:'/complaint',
+    method:'post',
+    data
   })
 }

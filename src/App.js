@@ -17,9 +17,10 @@ import {setTheme} from '@/styles/setZarmTheme'
 import { CacheSwitch } from 'react-router-cache-route'
 // import { useState } from 'react';
 import { useLogin } from './components/PostsIcons/common';
-import { setReportVisibility, setVisibility } from './actions/app';
+import { setReportTargetId, setReportVisibility, setVisibility } from './actions/app';
 import { Popup } from 'antd-mobile';
 import { isMisesBrowser } from './utils';
+import { complaint } from './api/status';
 const SetRoute = ()=>{
   const {isLogin} = useLogin()
   return <Router>
@@ -72,6 +73,7 @@ const DownloadPopUp = ()=>{
 }
 const ReportPopup = ()=>{
   const visible = useSelector(state=>state.app.reportVisible)
+  const target_id = useSelector(state=>state.app.target_id)
   const dispatch = useDispatch()
   const [value,setValue] = useState('')
   return <Modal
@@ -91,6 +93,8 @@ const ReportPopup = ()=>{
     closeOnAction
     showCloseButton
     onClose={() => {
+      setValue('')
+      dispatch(setReportTargetId(''))
       dispatch(setReportVisibility(false))
     }}
     actions={[
@@ -106,10 +110,15 @@ const ReportPopup = ()=>{
         Toast.show('Please enter a value')
         return Promise.reject('Please enter a value')
       }
-      setTimeout(() => {
+      // setTimeout(() => {
+      //   Toast.show('Report Success')
+      //   setValue('')
+      // }, 200);
+      return complaint({target_type: 'status',reason: value,target_id}).then(res=>{
         Toast.show('Report Success')
         setValue('')
-      }, 200);
+        dispatch(setReportTargetId(''))
+      })
     }}
   />
 }

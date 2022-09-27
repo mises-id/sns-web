@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-12 22:28:09
- * @LastEditTime: 2022-05-24 17:07:48
+ * @LastEditTime: 2022-09-27 11:57:04
  * @LastEditors: lmk
  * @Description:
  */
@@ -66,6 +66,7 @@ const PostItem = ({
           is_public: val.is_public,
           from_type: val.from_type,
           created_at: val.created_at,
+          id: val.id
         }}
         followed={() => changeFollow(val)}
         btnType={btnType}
