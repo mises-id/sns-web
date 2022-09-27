@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-08-24 11:18:39
+ * @LastEditTime: 2022-09-21 12:11:56
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -29,7 +29,7 @@ const AirdropResult = () => {
           username:search.username,
           misesid:search.misesid,
         })
-        setStatus(setViewStatus(search,res.twitter))
+        setStatus(setViewStatus(search,res))
       })
     }
     if(search.get('code')==='2'){
@@ -37,16 +37,23 @@ const AirdropResult = () => {
     }
     // eslint-disable-next-line
   }, [])
-  const setViewStatus = (search,twitter)=>{
+  const setViewStatus = (search,res)=>{
+    if(res.airdrop && res.airdrop.status==='success'){
+      return 'gotMIS'
+    }
+    if(res.airdrop){
+      return 'unGotMIS'
+    }
+    if(res.twitter.followers_count===0){
+      return 'followers_countError'
+    }
+    if(res.twitter.amount>0){
+      return 'success'
+    }
     if(search.get('code')==='1'){
       return 'fail'
     }
-    if(twitter.followers_count===0){
-      return 'followers_countError'
-    }
-    if(twitter.amount>0){
-      return 'success'
-    }
+    // 
     return 'timeFail'
   }
   const history = useHistory()
@@ -86,9 +93,17 @@ const AirdropResult = () => {
       });
   };
   const statusTxt = ()=>{
-    if(status==='fail') return 'Account has been verified'
-    if(status==='timeFail') return 'This Account was created after May. 1, 2022'
-    if(status==='followers_countError') return 'Your Twitter account does not meet the requirements'
+    const statusObj = {
+      'fail': 'Account has been verified',
+      'timeFail': 'This Account was created after May. 1, 2022',
+      'followers_countError': 'Your Twitter account does not meet the requirements',
+      'unauth': 'Sorry, you canceled the authorization!',
+      'gotMIS': 'This Twitter Account has got the MIS Airdrop, Thanks for your support!',
+      'unGotMIS': 'You have successfully claimed your MIS Airdrop, Airdroping could take a few minutes.'
+    }
+    if(statusObj[status]){
+      return statusObj[status];
+    }
     return 'Sorry, you canceled the authorization!'
   }
   const selector = useSelector(state => state.user) || {};
@@ -136,10 +151,12 @@ const AirdropResult = () => {
           </>}
 
           {status!=='success'&&status!==''&&<>
+            {!['gotMIS','unGotMIS'].includes(status) ? <>
             <p className="fail-reason">Your account does not meet the requirements</p>
             <p className="fail-reason">
               Reason: {statusTxt()}
-            </p>
+            </p></> : <p className="get-airdrop-reason">{statusTxt()}</p>}
+            
             <Button 
               className="btn-fail" 
               fill='outline' 

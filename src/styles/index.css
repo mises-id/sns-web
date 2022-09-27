@@ -17,6 +17,7 @@ code {
   --active-line-height:1px;
   --fixed-active-line-width:9px;
   --adm-color-text-secondary: #333;
+  --adm-center-popup-min-width: 85vw
   
 }
 div.adm-nav-bar{

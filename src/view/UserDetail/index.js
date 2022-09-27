@@ -105,7 +105,7 @@ const UserDetail = (props) => {
   const removeBlackButton = [
     {
       // Black user
-      text: "unBlock",
+      text: "UnBlock",
       theme: "danger",
       onClick: () => {
         removeBlackList(state.uid).then(successBlock);
@@ -115,7 +115,7 @@ const UserDetail = (props) => {
   ];
   // Judge the display content according to the status
   const [buttons, setbuttons] = useState(joinBlackButton);
-  // const showCheckItem = ()=> setVisible(true)
+  const showCheckItem = ()=> setVisible(true)
   const back = () => {
     window.history.back();
   };
@@ -215,6 +215,7 @@ const UserDetail = (props) => {
               alt=""
               onClick={back}
             ></img>
+            <Image src='/static/images/user_more.png' alt="" onClick={showCheckItem} width={30}/>
           </div>
           {/* userinfo */}
           <div className="userinfo-box m-flex">
