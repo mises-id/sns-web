@@ -105,7 +105,7 @@ const ReportPopup = ()=>{
         className: 'modal-btn'
       },
     ]}
-    onAction={() =>{
+    onAction={async () =>{
       if(!value){
         Toast.show('Please enter a value')
         return Promise.reject('Please enter a value')
@@ -114,11 +114,16 @@ const ReportPopup = ()=>{
       //   Toast.show('Report Success')
       //   setValue('')
       // }, 200);
-      return complaint({target_type: 'status',reason: value,target_id}).then(res=>{
+      try {
+        await complaint({target_type: 'status',reason: value,target_id})
         Toast.show('Report Success')
         setValue('')
         dispatch(setReportTargetId(''))
-      })
+        return Promise.resolve();
+      } catch (error) {
+        Toast.show(error)
+        return Promise.reject();
+      }
     }}
   />
 }

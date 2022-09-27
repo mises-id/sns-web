@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-08-30 17:13:27
+ * @LastEditTime: 2022-09-27 16:02:40
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -73,7 +73,7 @@ request.interceptors.response.use(
   },
   error => {
     error.response&&reject(error.response.data)
-    console.log('err' + error.message) // for debug
+    console.log('err:' + error.message) // for debug
     const message = error.response ? error.response.data.message : error.message
     return Promise.reject(message)
   }
