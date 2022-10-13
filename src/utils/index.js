@@ -10,7 +10,7 @@ import { Modal } from "zarm";
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-10-06 13:09:11
+ * @LastEditTime: 2022-10-13 12:22:56
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -435,7 +435,7 @@ export function isMisesBrowser() {
 }
 
 export function isIos() {
-  return !!navigator.userAgent.match(/Mac OS X/) && window.ethereum && window.ethereum.isMetaMask;
+  return !!navigator.userAgent.match(/Mac OS X/) && window.misesEthereum && window.misesEthereum.isMetaMask;
 }
 export function isIosPlatform() {
   return !!navigator.userAgent.match(/Mac OS X/);
