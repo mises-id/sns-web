@@ -435,7 +435,7 @@ export function isMisesBrowser() {
 }
 
 export function isIos() {
-  return !!navigator.userAgent.match(/Mac OS X/) && window.ethereum && window.ethereum.isMetaMask;
+  return !!navigator.userAgent.match(/Mac OS X/) && window.misesEthereum && window.misesEthereum.isMetaMask;
 }
 export function isIosPlatform() {
   return !!navigator.userAgent.match(/Mac OS X/);
