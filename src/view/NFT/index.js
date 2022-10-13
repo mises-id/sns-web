@@ -96,8 +96,8 @@ const NFTPage = ({history}) => {
   const importWallet = ()=>{
     const version = window.mises.getMetamaskVersion()
     version && window.mises.NFTPage()
-    if(window.misesEthereum.selectedAddress){
-      getOpenseaNFTAsset(window.misesEthereum.selectedAddress).then(res=>{
+    if(window.ethereum.selectedAddress){
+      getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
         Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
         if(res.length>0){
           pullList.current.refreshData()
