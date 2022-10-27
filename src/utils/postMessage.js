@@ -1,13 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:38:14
- * @LastEditTime: 2022-08-31 15:42:22
+ * @LastEditTime: 2022-10-27 11:51:25
  * @LastEditors: lmk
  * @Description: to extension
  */
 
 import Web3 from "web3";
-import { isIos, isIosPlatform, isMisesBrowser, urlToJson } from "./";
+import { getProvider, isIos, isIosPlatform, isMisesBrowser, urlToJson } from "./";
 import {
   setFirstLogin,
   setFollowingBadge,
@@ -51,13 +51,14 @@ export default class MisesExtensionController {
   }
 
   getProvider() {
-    console.log(this.getNum, window.ethereum);
+    const provider = getProvider();
+    console.log(this.getNum, provider);
     if (this.getNum === this.getMax) {
       this.clear();
       store.dispatch(setWeb3ProviderMaxFlag(false));
       return false;
     }
-    if (window.ethereum && window.ethereum.chainId) {
+    if (provider && provider.chainId) {
       this.init();
       this.listen();
       this.clear();
@@ -76,7 +77,8 @@ export default class MisesExtensionController {
   }
 
   init() {
-    if (!window.ethereum) {
+    const provider = getProvider();
+    if (!provider) {
       console.log("unInit");
       this.resetApp();
       return Promise.reject();
@@ -86,8 +88,7 @@ export default class MisesExtensionController {
       return Promise.resolve();
     }
     console.log("init");
-    const matamaskProvider = !window.ethereum.providers ? window.ethereum : this.getMetamaskProvider();
-    this.web3 = new Web3( matamaskProvider || "ws://localhost:8545");
+    this.web3 = new Web3( provider || "ws://localhost:8545");
     this.web3.extend({
       property: "misesWeb3",
       methods: [
@@ -158,15 +159,12 @@ export default class MisesExtensionController {
     store.dispatch(setWeb3Init(true));
     return Promise.resolve();
   }
-  getMetamaskProvider(){
-    const providerMap = window.ethereum.providerMap;
-    return providerMap.get("MetaMask")
-  }
   listen() {
-    if (!window.ethereum) {
+    const provider = getProvider()
+    if (!provider) {
       return false;
     }
-    window.ethereum.on("accountsChanged", async (res) => {
+    provider.on("accountsChanged", async (res) => {
       if (res.length) {
         console.log('accountsChanged',res, this.connectStatus, this.isConnect)
         if(this.isConnect && this.connectStatus === 'complete'){
@@ -182,7 +180,7 @@ export default class MisesExtensionController {
       }
     });
    
-    window.ethereum.request({ method: "eth_accounts" }).then((res) => {
+    provider.request({ method: "eth_accounts" }).then((res) => {
       if(isIosPlatform()){
         const ethAddress = localStorage.getItem('ethAddress');
         this.isConnect = !!ethAddress;
@@ -213,7 +211,7 @@ export default class MisesExtensionController {
       }
     });
     
-    window.ethereum.on("chainChanged", (res) => {
+    provider.on("chainChanged", (res) => {
       console.log(res);
     });
 
@@ -265,13 +263,14 @@ export default class MisesExtensionController {
     // this.connect(loginForm.misesid)
   }
   async isInitMetaMask(hideModal) {
-    if (!window.ethereum && !hideModal) {
+    const provider = getProvider()
+    if (!provider && !hideModal) {
       return this.isUnInitMetaMask();
     }
-    if (window.ethereum && !window.ethereum.chainId && !hideModal) {
+    if (provider && !provider.chainId && !hideModal) {
       return this.isUnInitMetaMask();
     }
-    return window.ethereum && Boolean(window.ethereum.chainId)
+    return provider && Boolean(provider.chainId)
       ? Promise.resolve(true)
       : !hideModal && this.isUnInitMetaMask();
   }
@@ -496,8 +495,9 @@ export default class MisesExtensionController {
     const flag = await this.isInitMetaMask();
     if (!flag) return Promise.reject();
     await this.init();
-    console.log(window.ethereum)
-    if(window.ethereum.chainId!=='0x1'){
+    const provider = getProvider()
+    console.log(provider)
+    if(provider.chainId!=='0x1'){
       Modal.confirm({
         title: "Message",
         width: "83%",
@@ -516,7 +516,8 @@ export default class MisesExtensionController {
   }
 
   switchChianNetwork() {
-    return window.ethereum.request({
+    const provider = getProvider()
+    return provider.request({
       method: "wallet_switchEthereumChain",
       params: [{
         chainId: "0x1",

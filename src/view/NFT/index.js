@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-15 12:51:04
- * @LastEditTime: 2022-10-13 12:22:11
+ * @LastEditTime: 2022-10-27 11:52:17
  * @LastEditors: lmk
  * @Description: NFT page
  */
@@ -13,7 +13,7 @@ import like_NFT from '@/images/like_NFT.png'
 import importIcon from '@/images/Import.png'
 import Navbar from "@/components/NavBar";
 import PullList from "@/components/PullList";
-import { objToUrl, useList, useLoginModal, useRouteState } from "@/utils";
+import { getProvider, objToUrl, useList, useLoginModal, useRouteState } from "@/utils";
 import { Button, Image, Toast } from "antd-mobile";
 import { getMyNFTAsset, getNFTAsset, getOpenseaNFTAsset } from "@/api/user";
 const NFTPage = ({history}) => {
@@ -96,8 +96,9 @@ const NFTPage = ({history}) => {
   const importWallet = ()=>{
     const version = window.mises.getMetamaskVersion()
     version && window.mises.NFTPage()
-    if(window.ethereum.selectedAddress){
-      getOpenseaNFTAsset(window.ethereum.selectedAddress).then(res=>{
+    const provider = getProvider()
+    if(provider.selectedAddress){
+      getOpenseaNFTAsset(provider.selectedAddress).then(res=>{
         Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
         if(res.length>0){
           pullList.current.refreshData()

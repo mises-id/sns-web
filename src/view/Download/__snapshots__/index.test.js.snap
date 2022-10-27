@@ -2,9 +2,7 @@
 
 exports[`GreatePosts should render correctly 1`] = `
 <Fragment>
-  <div
-    className="m-position-relative"
-  >
+  <div>
     <div
       className="mises-bg"
       style={
@@ -14,17 +12,23 @@ exports[`GreatePosts should render correctly 1`] = `
       }
     >
       <div
-        className="m-flex"
+        className="mises-logo-wrap"
       >
         <img
           alt=""
           className="download-logo"
           src="/static/images/download-logo.png"
         />
-        <p
-          className="mises-txt"
-        >
-          Mises
+        <img
+          alt=""
+          className="download-name"
+          src="/static/images/MisesBrowser.png"
+        />
+        <p>
+          The world's first extension-supported 
+        </p>
+        <p>
+          mobile Web3 browser
         </p>
       </div>
     </div>
@@ -34,19 +38,6 @@ exports[`GreatePosts should render correctly 1`] = `
     className="download-png"
     src="/static/images/download.png"
   />
-  <div
-    className="option"
-  >
-    <p>
-      · A decentralized social network
-    </p>
-    <p>
-      · A browser to discover the brand new world of web3
-    </p>
-    <p>
-      · A crypto wallet supports ethereum and other chains
-    </p>
-  </div>
   <a
     className="download"
     href="https://play.google.com/store/apps/details?id=site.mises.browser"
