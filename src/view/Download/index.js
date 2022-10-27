@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-08-22 12:05:41
+ * @LastEditTime: 2022-10-27 13:59:25
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -43,20 +43,17 @@ const Download = () => {
 
   return (
     <>
-      <div className="m-position-relative">
+      <div>
         <div className="mises-bg" style={{backgroundImage:"url('/static/images/bg.png')"}}>
-          <div className="m-flex">
+          <div className="mises-logo-wrap">
             <img src="/static/images/download-logo.png" alt="" className="download-logo"/>
-            <p className="mises-txt">Mises</p>
+            <img src="/static/images/MisesBrowser.png" alt=""  className="download-name"/>
+            <p>The world's first extension-supported </p>
+            <p>mobile Web3 browser</p>
           </div>
         </div>
       </div>
       <img src="/static/images/download.png" alt="" className="download-png"/>
-      <div className="option">
-        <p>· A decentralized social network</p>
-        <p>· A browser to discover the brand new world of web3</p>
-        <p>· A crypto wallet supports ethereum and other chains</p>
-      </div>
       <a href={downloadUrl} target="_blank" className="download" rel="noreferrer">Download</a>
     </>
   );
