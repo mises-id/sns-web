@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-10-09 15:04:22
+ * @LastEditTime: 2022-11-02 14:32:11
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -131,7 +131,7 @@ const MyInvitation = () => {
       return false;
     }
     navigator.share&&navigator.share({
-      text: `Join me to use Mises Browser to start your #Web3 journey!\n\n#Mises #Browser #DeFi #NFT #SocialFi`,
+      text: `Join me to use Mises Browser to start your #Web3 journey!\n\n#Mises #Browser #web3 #extension`,
       url: `${window.location.origin}/download?misesid=${misesId}`,
     }).catch(err=>{
       console.log(err)
