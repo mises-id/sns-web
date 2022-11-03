@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-10-31 18:12:48
+ * @LastEditTime: 2022-11-03 17:08:01
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -108,7 +108,7 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = airdropInfo?.misesid || selector.loginForm?.misesid?.replace('did:mises:','')
-  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop by using Mises Browser,which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
+  const unEditText = `I have claimed ${airdropInfo.amount} $MIS airdrop by using Mises Browser @Mises001, which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
