@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-06-29 20:22:55
+ * @LastEditTime: 2022-11-04 17:11:45
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -29,7 +29,7 @@ const Airdrop = () => {
   const init = () => {
     const flag = historyState.isFrom === "homePage";
     setShowSkip(!flag);
-    setMIS(historyState.MIS);
+    setMIS(Number(historyState.MIS));
     const isRefresh = sessionStorage.getItem("isRefresh");
     if (!flag && !isRefresh) {
       sessionStorage.setItem("isRefresh", true);
@@ -38,6 +38,11 @@ const Airdrop = () => {
     if (flag && MIS === 0) {
       getAirdropInfo()
         .then((res) => {
+          if(!res.airdrop && res.twitter){
+            const isWaitStatus = !res.twitter.username ? 0 : 1;
+            history.replace(`/airdropResult?code=${isWaitStatus}`);
+            return
+          }
           if (res.airdrop) {
             let url = null;
             const { status, coin } = res.airdrop;
