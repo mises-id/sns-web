@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 19:10:33
+ * @LastEditTime: 2022-11-04 19:34:18
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -26,9 +26,11 @@ const Airdrop = () => {
   useDidRecover(() => {
     window.refreshByCacheKey("/airdrop");
   });
+  
   const init = () => {
     const flag = historyState.isFrom === "homePage";
     setShowSkip(!flag);
+    console.log(historyState.MIS)
     setMIS(historyState.MIS);
     const isRefresh = sessionStorage.getItem("isRefresh");
     if (!flag && !isRefresh) {
@@ -61,9 +63,7 @@ const Airdrop = () => {
                 break;
             }
             setPageLoading(false);
-            window.refreshByCacheKey("/airdrop");
-            url && history.replace(url);
-            
+            history.replace(url);
             return;
           }else{
             setPageLoading(false);
@@ -80,7 +80,7 @@ const Airdrop = () => {
       setMIS(0);
     };
     // eslint-disable-next-line
-  }, []);
+  }, [location.search]);
   const [loading, setLoading] = useState(false);
   const getAuth = () => {
     setLoading(true);
