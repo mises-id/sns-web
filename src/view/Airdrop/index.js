@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 17:48:04
+ * @LastEditTime: 2022-11-04 19:04:48
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -29,7 +29,7 @@ const Airdrop = () => {
   const init = () => {
     const flag = historyState.isFrom === "homePage";
     setShowSkip(!flag);
-    setMIS(Number(historyState.MIS));
+    setMIS(historyState.MIS);
     const isRefresh = sessionStorage.getItem("isRefresh");
     if (!flag && !isRefresh) {
       sessionStorage.setItem("isRefresh", true);
