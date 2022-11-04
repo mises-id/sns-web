@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 18:40:53
+ * @LastEditTime: 2022-11-04 18:49:33
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -117,11 +117,11 @@ const AirdropResult = () => {
             <p className="text-bold success-tips">We'll send MIS airdrops according to your Twitter data</p>
             <p className="twitter-tips">You will automatically follow @Mises001 and send the following tweet to claim the airdrop</p>
             <div className="text-area">
-              <p className="font-14 tweet">
-                You can check the airdrop status anytime on the Airdrop page
-              </p>
               <p className="font-14 tweet" dangerouslySetInnerHTML={{__html:unEditText}}></p>
             </div>
+            <p className="twitter-tips mt-5">
+              You can check the airdrop status anytime on the Airdrop page
+            </p>
             <Button 
               className="btn" 
               fill='solid' 
