@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 18:49:33
+ * @LastEditTime: 2022-11-04 22:29:26
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -97,7 +97,7 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = (airdropInfo?.misesid || selector.loginForm?.misesid || '').replace('did:mises:','')
-  const unEditText = `I have claimed $MIS airdrop by using Mises Browser @Mises001, which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
+  // const unEditText = `I have claimed $MIS airdrop by using Mises Browser @Mises001, which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -113,13 +113,16 @@ const AirdropResult = () => {
           </div>
 
           {status==='success'&&<>
-            <p className="text-bold success-tips">Your airdrop is in process</p>
-            <p className="text-bold success-tips">We'll send MIS airdrops according to your Twitter data</p>
-            <p className="twitter-tips">You will automatically follow @Mises001 and send the following tweet to claim the airdrop</p>
-            <div className="text-area">
+            <p className="twitter-tips">Your airdrop is in process</p>
+            <p className="twitter-tips">We'll send MIS airdrops according to your Twitter data</p>
+            <p className="twitter-tips">If you are eligible for getting airdrop, You'll automatically and send a tweet to claim the airdrop</p>
+            {/* <div className="text-area">
               <p className="font-14 tweet" dangerouslySetInnerHTML={{__html:unEditText}}></p>
-            </div>
-            <p className="twitter-tips mt-5">
+            </div> */}
+            <p className="twitter-tips">
+              You don't need to send tweet by yourself
+            </p>
+            <p className="twitter-tips">
               You can check the airdrop status anytime on the Airdrop page
             </p>
             <Button 
