@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 19:04:48
+ * @LastEditTime: 2022-11-04 19:10:33
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -61,7 +61,9 @@ const Airdrop = () => {
                 break;
             }
             setPageLoading(false);
+            window.refreshByCacheKey("/airdrop");
             url && history.replace(url);
+            
             return;
           }else{
             setPageLoading(false);
