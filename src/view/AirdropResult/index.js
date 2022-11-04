@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-03 17:08:01
+ * @LastEditTime: 2022-11-04 10:33:14
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -44,10 +44,10 @@ const AirdropResult = () => {
     if(res.airdrop){
       return 'unGotMIS'
     }
-    if(res.twitter.followers_count===0){
+    if(res.twitter&&res.twitter.followers_count===0){
       return 'followers_countError'
     }
-    if(res.twitter.amount>0){
+    if(res.twitter&&res.twitter.amount>0){
       return 'success'
     }
     if(search.get('code')==='1'){
