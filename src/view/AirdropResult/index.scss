@@ -49,6 +49,7 @@
   font-weight: bold;
   color: #333;
   margin-bottom: 13px;
+  word-break: keep-all;
 }
 .text-area{
   background: #F8F8F8;
@@ -94,4 +95,7 @@
 }
 .tweet{
   word-break: break-word;
+}
+.mt-5{
+  margin-top: 13px;
 }

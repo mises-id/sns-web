@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 17:23:10
+ * @LastEditTime: 2022-11-04 18:49:33
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -97,6 +97,7 @@ const AirdropResult = () => {
   }
   const selector = useSelector(state => state.user) || {};
   const misesid = (airdropInfo?.misesid || selector.loginForm?.misesid || '').replace('did:mises:','')
+  const unEditText = `I have claimed $MIS airdrop by using Mises Browser @Mises001, which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
   return (
     <>
       <Navbar title={t('airdropPageTitle')} customBack={customBack}/>
@@ -108,7 +109,7 @@ const AirdropResult = () => {
           </div>
           <div className="listItem">
             <span className="label">Twitter ID:</span>
-            <span className="value">{airdropInfo.username || 'NULL'}</span>
+            <span className="value">{airdropInfo.username || airdropInfo.twitter_user_id ||'NULL'}</span>
           </div>
 
           {status==='success'&&<>
@@ -116,10 +117,11 @@ const AirdropResult = () => {
             <p className="text-bold success-tips">We'll send MIS airdrops according to your Twitter data</p>
             <p className="twitter-tips">You will automatically follow @Mises001 and send the following tweet to claim the airdrop</p>
             <div className="text-area">
-              <p className="font-14 tweet">
-                You can check the airdrop status anytime on the Airdrop page
-              </p>
+              <p className="font-14 tweet" dangerouslySetInnerHTML={{__html:unEditText}}></p>
             </div>
+            <p className="twitter-tips mt-5">
+              You can check the airdrop status anytime on the Airdrop page
+            </p>
             <Button 
               className="btn" 
               fill='solid' 
