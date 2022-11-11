@@ -106,3 +106,23 @@
   border: none;
   box-shadow: 0px 8px 15px 0px rgba(255, 215, 47, 0.3);
 }
+.ant-modal-class{
+  --min-width: 70vw;
+  --border-radius: 22px;
+  .adm-modal-title{
+    margin-bottom: 0;
+    padding-top:10px;
+    font-size: 20px;
+  }
+  .adm-modal-content{
+    font-size: 17px;
+    color: #666;
+    padding: 20px 25px;
+    text-align: center;
+  }
+  .adm-modal-footer{
+    border-top: 1px solid #EEEEEE;
+    padding:15px 0;
+  }
+  
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:08:05
- * @LastEditTime: 2022-08-12 10:56:27
+ * @LastEditTime: 2022-11-07 11:12:52
  * @LastEditors: lmk
  * @Description:
  */
@@ -126,7 +126,7 @@ const Myself = ({ history }) => {
   }, [selector.web3ProviderFlag]);
 
   useEffect(() => {
-    list[2].badge = selector.badge.notifications_count;
+    list[2].badge = selector.badge.notifications_count > 99 ? '99+' : selector.badge.notifications_count;
     setTabList([...list]);
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
 

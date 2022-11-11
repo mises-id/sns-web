@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-08 15:07:17
- * @LastEditTime: 2022-05-24 16:10:12
+ * @LastEditTime: 2022-11-07 11:15:44
  * @LastEditors: lmk
  * @Description:
  */
@@ -146,6 +146,7 @@ const Follow = ({ history = {} }) => {
               res.latest_message && res.latest_message.user
                 ? res.latest_message.user.avatar
                 : {},
+              notifications_count: res.notifications_count,
           });
           dispatch(
             setFollowingBadge({
@@ -395,7 +396,7 @@ const Follow = ({ history = {} }) => {
               /> */}
               <Avatar size="30px" avatarItem={notifitionObj.avatar}/>
               <div className="notification-txt">
-                {notifitionObj.notifications_count} Notification
+                {notifitionObj.notifications_count > 99 ? '99+' : notifitionObj.notifications_count} Notification
               </div>
             </div>
           )}

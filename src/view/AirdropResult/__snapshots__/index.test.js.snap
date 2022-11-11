@@ -17,32 +17,8 @@ exports[`GreatePosts should render correctly 1`] = `
     <div
       className="airdrop-box"
     >
-      <div
-        className="listItem"
-      >
-        <span
-          className="label"
-        >
-          Mises ID:
-        </span>
-        <span
-          className="value"
-        />
-      </div>
-      <div
-        className="listItem"
-      >
-        <span
-          className="label"
-        >
-          Twitter ID:
-        </span>
-        <span
-          className="value"
-        >
-          NULL
-        </span>
-      </div>
+      <SuccessLayout />
+      <FailLayout />
     </div>
   </div>
 </Fragment>

@@ -127,7 +127,7 @@
 }
 .notification{
   background: #333333;
-  width: 150px;
+  width: 155px;
   height: 40px;
   border-radius: 20px;
   color: white;
@@ -137,9 +137,13 @@
   align-items: center;
   margin: 20px auto;
   .notification-txt{
-    margin-left: 13px;
+    padding-left: 13px;
     font-size: 13px;
     font-weight: bold;
+    white-space: nowrap;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 .follower-view{
