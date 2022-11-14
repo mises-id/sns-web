@@ -1,9 +1,15 @@
-.content{
-  font-size: 20px;
+.waiting{
+  font-size: 18px;
   font-weight: bold;
   color: #333;
   line-height: 25px;
-  padding: 22px 30px;
+  text-align: center;
+}
+.criterion{
+  color: #999999;
+  font-size: 12px;
+  padding: 25px 0;
+  line-height: 1;
   text-align: center;
 }
 .success-img{
@@ -19,7 +25,7 @@
 }
 .airdrop-box{
   background: white;
-  margin: 35px 15px 30px;
+  margin: 90px 15px 30px;
   background: #FFFFFF;
   border: 3px solid #BAEBFC;
   border-radius: 15px;
@@ -53,12 +59,18 @@
   line-height:18px;
   word-break: keep-all;
 }
-.text-area{
+.success-misesid{
   background: #F8F8F8;
   border: 1px solid #EEEEEE;
   border-radius: 5px;
-  padding: 15px;
+  padding: 14px;
+  color: #333333;
   font-size: 14px;
+}
+.misesid-title{
+  color: #666666;
+  display: inline-block;
+  margin-right: 5px;
 }
 .btn{
   height: 50px;
@@ -85,19 +97,34 @@
   font-weight: 400;
   color: #FF6464;
   margin-bottom: 15px;
+  word-break: break-word;
 }
 .get-airdrop-reason{
   font-size: 14px;
   font-weight: 400;
   color: rgb(65, 160, 65);
   margin-bottom: 15px;
+  word-break: break-word;
 }
 .font-14{
   font-size: 14px;
 }
-.tweet{
+.airdrop-tips{
   word-break: break-word;
+  color: #999999;
+  text-align: center;
+  margin-top: 15px;
+  line-height: 18px;
 }
-.mt-5{
-  margin-top: 13px;
+.hourglass{
+  width: 35px;
+  display: block;
+  margin: 16px auto;
+}
+.remove-twitter-auth{
+  color: #5D61FF;
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  margin-top: 20px;
 }

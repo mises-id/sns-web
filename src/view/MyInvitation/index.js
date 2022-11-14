@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-03 17:29:51
+ * @LastEditTime: 2022-11-11 12:20:44
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
@@ -131,8 +131,7 @@ const MyInvitation = () => {
       return false;
     }
     navigator.share&&navigator.share({
-      text: `Join me to use Mises Browser, which supports Web3 sites and extensions on mobile.\n\n#Mises #Browser #web3 #extension`,
-      url: `${window.location.origin}/download?misesid=${misesId}`,
+      text: `Join me to use Mises Browser, which supports Web3 sites and extensions on mobile.\n\n${window.location.origin}/download?misesid=${misesId}\n\n#Mises #Browser #web3 #extension`,
     }).catch(err=>{
       console.log(err)
     })

@@ -1,14 +1,15 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-04 19:34:18
+ * @LastEditTime: 2022-11-11 16:36:47
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
 import { getAirdropInfo, getTwitterAuth } from "@/api/user";
 import Navbar from "@/components/NavBar";
+import { useLogin } from "@/components/PostsIcons/common";
 import { useRouteState } from "@/utils";
-import { Button } from "antd-mobile";
+import { Button, Modal } from "antd-mobile";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -82,8 +83,44 @@ const Airdrop = () => {
     // eslint-disable-next-line
   }, [location.search]);
   const [loading, setLoading] = useState(false);
+  const {isLogin} = useLogin()
   const getAuth = () => {
+    if(!isLogin){
+      const loginModal = Modal.show({
+        title: 'Message',
+        className: 'ant-modal-class',
+        content: 'You need to register a Mises ID to claim the Airdrop',
+        onAction: () => {
+          loginModal.close()
+          window.mises
+            .requestAccounts()
+            .catch((err) => {
+              console.log(err);
+              if (err && err.code === -32002) {
+                const waitModal = Modal.show({
+                  content: "Please switch to the unlock tab to unlock your account",
+                  title: "Message",
+                  className: 'ant-modal-class',
+                  onAction: () => {
+                    waitModal.close()
+                  },
+                  actions:[{
+                    key: 'confirm',
+                    text: 'Close',
+                  }]
+                });
+              }
+            });
+        },
+        actions:[{
+          key: 'confirm',
+          text: 'Create/Restore',
+        }]
+      })
+      return 
+    }
     setLoading(true);
+    
     getTwitterAuth()
       .then((res) => {
         window.location.href = res.url;
