@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-16 00:15:24
- * @LastEditTime: 2022-11-11 15:48:06
+ * @LastEditTime: 2022-11-15 11:02:09
  * @LastEditors: lmk
  * @Description: createPosts page
  */
@@ -121,8 +121,8 @@ const AirdropResult = () => {
             <span>{shortenAddress(misesid)}</span>
           </div>
           <p className="font-14 airdrop-tips">
-            If your account is eligible, you will automatically follow @mises001
-            and retweet a post to claim the airdrop
+            If your account is eligible, you will automatically follow @mises001 , 
+            like and retweet a post to claim the airdrop
           </p>
           <a
             className="remove-twitter-auth"
