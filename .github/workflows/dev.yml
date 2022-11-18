@@ -22,7 +22,7 @@ jobs:
         run: |
           yarn
           yarn test
-          yarn build
+          yarn build:test
         env:
           CI: true
       - name: Configure AWS Credentials

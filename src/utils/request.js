@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-11-18 09:48:37
+ * @LastEditTime: 2022-11-18 09:55:32
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -17,7 +17,12 @@ import fetchAdapter  from './fetchAdapter';
 
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
-export const baseURL = 'https://api.alb.mises.site/api/v1/'
+const isProd = process.env.REACT_APP_NODE_ENV==='production'
+console.log(process.env.REACT_APP_NODE_ENV)
+// if(istest){
+//   headers['Mises-Env'] = 'development'
+// }
+export const baseURL = isProd ? 'https://api.alb.mises.site/api/v1/' : 'https://api.test.mises.site/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url
