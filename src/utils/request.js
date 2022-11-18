@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-11-04 16:54:21
+ * @LastEditTime: 2022-11-18 09:28:51
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -17,7 +17,7 @@ import fetchAdapter  from './fetchAdapter';
 
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
-export const baseURL = 'https://api.test.mises.site/api/v1/'
+export const baseURL = 'https://api.mises.site/api/v1/'
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url
