@@ -167,7 +167,6 @@ export function useChangePosts(setdataSource, dataSource, cb) {
           actionType: val.is_liked ? "like" : "unlike",
         })
       );
-      console.log(val.is_liked ? "like" : "unlike");
     } catch (error) {
       setlikeLoading(false);
       return Promise.reject();
@@ -184,7 +183,6 @@ export function useChangePosts(setdataSource, dataSource, cb) {
       setfollowLoading(false);
       success();
     } catch (error) {
-      console.log(error, 'followPress');
       setfollowLoading(false);
       error === "Wallet not activated" &&
         loginModal(() => {

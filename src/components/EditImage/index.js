@@ -309,7 +309,6 @@ const EditImage = ({ image, index, closePop, send }) => {
   const saveEdit = () => {
     const image = dataURLtoFile(returnEditImage(),`image${index}.png`);
     send(image, index);
-    console.log(image);
   };
 
   const rotateImage = () => {

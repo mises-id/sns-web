@@ -39,9 +39,6 @@ const PostsIcons = ({item={},likeCallback,forwardCallback,commentPage,type})=>{
   const selector = useSelector((state) => state.user) || {};
   const sharetoPress = e=>{
     e.stopPropagation();
-    // Toast.show('shareTo')
-    console.log(navigator.share,'navigator.share')
-    console.log(window.navigator,'window.navigator')
     if(!navigator.share){
       Toast.show('Browser cannot share website')
     }

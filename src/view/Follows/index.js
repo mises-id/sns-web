@@ -78,7 +78,6 @@ const Follow = ({ history = {} }) => {
       const start = 0;
       const maxCacheCount = 200;
       const data = dataSource.slice(start, maxCacheCount)
-      console.log(last_id,downRefreshLastId)
       localStorage.setItem(
         storeageKey,
         JSON.stringify({
@@ -220,7 +219,6 @@ const Follow = ({ history = {} }) => {
   const getOldUid = localStorage.getItem('uid');
   useEffect(() => {
     const getUid = localStorage.getItem('uid');
-    console.log('%c storeageKey','color:red',storeageKey,getOldUid)
     if(user.loginForm.uid===Number(getUid)&&getUid!==getOldUid){
       window.refreshByCacheKey('/home')
     }
