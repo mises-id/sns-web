@@ -409,6 +409,7 @@ export function getLink(content) {
   return xss(contentDom,{
     whiteList: {
       a: ["href", "title", "target"],
+      br:[]
     },
   });
 }
