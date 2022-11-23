@@ -125,7 +125,6 @@ const MyInvitation = () => {
     );
   };
   const share = ()=>{
-    console.log(`${window.location.origin}/download?misesid=${misesId}`)
     if(!navigator.share){
       Toast.show('Browser cannot share website')
       return false;

@@ -11,7 +11,6 @@ import PinchZoom from 'pinch-zoom-js'
 import "./style.scss";
 const TouchImage = (props) => {
   const ref = useRef(null)
-  console.log(ref)
   useEffect(() => {
     let el = document.querySelector('#img');
     new PinchZoom(el, {});

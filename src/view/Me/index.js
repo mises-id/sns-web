@@ -110,7 +110,6 @@ const Myself = ({ history }) => {
   }, [token]);
   useEffect(() => {
     getMisesAccountFlag();
-    console.log(selector.web3Status,'selector.web3Statusselector.web3Status')
     if(selector.web3Status){
       setloading(false);
     }

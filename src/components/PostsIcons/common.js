@@ -41,7 +41,6 @@ export async function followed(item={}){
   const fetchFn = val.is_followed ? unfollow : follow;
   try {
     await window.mises.isActive();
-    console.log('followed')
     val.is_followed ? window.mises.userUnFollow(val.misesid) : window.mises.userFollow(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;

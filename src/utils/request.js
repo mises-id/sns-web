@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-06-17 13:20:42
- * @LastEditTime: 2022-11-18 09:55:32
+ * @LastEditTime: 2022-11-23 10:10:25
  * @LastEditors: lmk
  * @Description: common request
  */
@@ -10,7 +10,7 @@ import { store } from "@/stores";
 import { Modal, Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 
-import { isIosPlatform } from '.';
+import { isIosPlatform, randomString } from '.';
 import fetchAdapter  from './fetchAdapter';
 
 
@@ -39,6 +39,12 @@ request.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
+    let misesDeviceId = localStorage.getItem('misesDeviceId');
+    if(!misesDeviceId){
+      misesDeviceId = randomString();
+      localStorage.setItem('misesDeviceId', misesDeviceId);
+    }
+    config.headers['mises-device-id'] = misesDeviceId
     return config
   },
   error => {

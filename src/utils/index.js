@@ -167,7 +167,6 @@ export function useChangePosts(setdataSource, dataSource, cb) {
           actionType: val.is_liked ? "like" : "unlike",
         })
       );
-      console.log(val.is_liked ? "like" : "unlike");
     } catch (error) {
       setlikeLoading(false);
       return Promise.reject();
@@ -184,7 +183,6 @@ export function useChangePosts(setdataSource, dataSource, cb) {
       setfollowLoading(false);
       success();
     } catch (error) {
-      console.log(error, 'followPress');
       setfollowLoading(false);
       error === "Wallet not activated" &&
         loginModal(() => {
@@ -442,4 +440,14 @@ export function isIos() {
 }
 export function isIosPlatform() {
   return !!navigator.userAgent.match(/Mac OS X/);
+}
+export function randomString() {
+  const len = 32
+  const $chars ='ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' 
+  const maxPos = $chars.length
+  let pwd = ''
+  for (let i = 0; i < len; i++) {
+    pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
+  }
+  return pwd
 }

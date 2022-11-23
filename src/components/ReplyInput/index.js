@@ -19,7 +19,6 @@ const ReplyInput = ({submit,content,placeholder,setselectItem,defaultItem},ref) 
           <form onSubmit={submit} className="m-flex-1 m-flex ">
             <Input placeholder={placeholder||t('commentPlaceholder')} ref={ref} className="input" clearable={false} {...content} type="text" onBlur={()=>{
               setisFocus(false)
-              console.log(defaultItem);
               setselectItem(defaultItem || '')
               
             }} onFocus={()=>setisFocus(true)}></Input>
