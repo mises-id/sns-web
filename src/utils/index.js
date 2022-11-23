@@ -404,7 +404,6 @@ export function getLink(content) {
       link.length > 25 ? "..." : ""
     }</a>`
   )
-  .replace(/\n/g, "<br/>")
 
   return xss(contentDom,{
     whiteList: {
