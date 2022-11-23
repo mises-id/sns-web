@@ -441,3 +441,13 @@ export function isIos() {
 export function isIosPlatform() {
   return !!navigator.userAgent.match(/Mac OS X/);
 }
+export function randomString() {
+  const len = 32
+  const $chars ='ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' 
+  const maxPos = $chars.length
+  let pwd = ''
+  for (let i = 0; i < len; i++) {
+    pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
+  }
+  return pwd
+}
