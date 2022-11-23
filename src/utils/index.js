@@ -7,10 +7,11 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Modal } from "zarm";
+import xss from 'xss'
 /*
  * @Author: lmk
  * @Date: 2021-07-15 14:16:46
- * @LastEditTime: 2022-10-30 13:36:15
+ * @LastEditTime: 2022-11-23 18:17:08
  * @LastEditors: lmk
  * @Description: project util function
  */
@@ -396,14 +397,20 @@ export function getLink(content) {
   const link = result ? result[0] : "";
   //the link according to the link to remove the http/https
   const getOrigin = link.replace(/^(http|https):\/\//, "").substring(0, 25);
-  return content
-    .replace(
-      reg,
-      `<a href="${link}" onclick="event.stopPropagation()"  class="link" title="${link}" target="_blank">${getOrigin}${
-        link.length > 25 ? "..." : ""
-      }</a>`
-    )
-    .replace(/\n/g, "<br/>");
+  const contentDom = content
+  .replace(
+    reg,
+    `<a href="${link}" onclick="event.stopPropagation()"  class="link" title="${link}" target="_blank">${getOrigin}${
+      link.length > 25 ? "..." : ""
+    }</a>`
+  )
+  .replace(/\n/g, "<br/>")
+
+  return xss(contentDom,{
+    whiteList: {
+      a: ["href", "title", "target"],
+    },
+  });
 }
 
 export function numToKMGTPE(num, digits = 1) {
