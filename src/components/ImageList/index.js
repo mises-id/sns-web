@@ -18,20 +18,22 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
   // get image width and height
   const imageLoad = (e) => {
     const { naturalWidth, naturalHeight } = e.target;
-    //set once image width
-    const radio = naturalWidth / naturalHeight;
+    const ratio = naturalWidth / naturalHeight;
+
     if (naturalWidth > naturalHeight) {
       style = {
         width: "200px",
         height: "auto",
       };
     }
+
     if (naturalWidth < naturalHeight) {
       style = {
-        height: "200px",
-        width: radio * 200 + "px",
+        // height: "200px",
+        width: ratio * 200 + "px",
       };
     }
+    console.log(style, e.target.src)
     setstyle(style);
   };
   // only one
@@ -43,6 +45,7 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
         onLoad={imageLoad}
         className="imgListOnce"
         {...style}
+        fit="contain"
         onClick={e=>{
           e.stopPropagation()
           ImageViewer.show({ image: list[0]})
