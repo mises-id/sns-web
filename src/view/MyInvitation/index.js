@@ -17,6 +17,7 @@ import {
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 // import { useLocation } from "react-router-dom";
 import { Toast } from "zarm";
@@ -34,9 +35,12 @@ const MyInvitation = () => {
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
   const search = new URLSearchParams(window.location.search);
-  const misesId = search.get("misesId")?.includes("did:mises:")
-    ? search.get("misesId").replace("did:mises:", "")
-    : search.get("misesId");
+  const user = useSelector((state) => state.user) || {};
+  const { loginForm = {} } = user;
+  const getMiseId = id =>{
+    return id.includes("did:mises:") ? id.replace("did:mises:", "") : id;
+  }
+  const misesId = getMiseId(search.get("misesId") || loginForm.misesid)
   useEffect(() => {
     if (misesId) {
       getInfo(misesId);
@@ -125,6 +129,7 @@ const MyInvitation = () => {
     );
   };
   const share = ()=>{
+    console.log(`Join me to use Mises Browser, which supports Web3 sites and extensions on mobile.\n\n${window.location.origin}/download?misesid=${misesId}\n\n#Mises #Browser #web3 #extension`)
     if(!navigator.share){
       Toast.show('Browser cannot share website')
       return false;
