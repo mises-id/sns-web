@@ -58,17 +58,15 @@ const AirdropResult = () => {
     // eslint-disable-next-line
   }, []);
   const setViewStatus = (search, res) => {
-    if (res.airdrop && res.airdrop.status === "success") {
+    if (res.airdrop && ["success","default"].includes(res.airdrop.status)) {
       return "gotMIS";
     }
     if (res.airdrop) {
       return "unGotMIS";
     }
     if(res.twitter){
-      if(res.twitter.check_state === "valid"){  // wait for airdrop
-        return "unGotMIS"
-      }
-      return res.twitter.check_state
+      // wait for airdrop or fail
+      return res.twitter.check_state === "valid" ? "unGotMIS" : res.twitter.check_state
     }
     if (search.get("code") === "1") {
       return "fail";

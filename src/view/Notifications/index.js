@@ -87,7 +87,6 @@ const Notifications = ({ history }) => {
       const topic_id = meta_data.group_id || meta_data.comment_id
       const res = await getCommentId(topic_id)
       res.username = username(res.user);
-      console.log(res);
       setcommentPop({
         state_id:status.id,
         id:topic_id,
