@@ -38,6 +38,7 @@ const MyInvitation = () => {
   const user = useSelector((state) => state.user) || {};
   const { loginForm = {} } = user;
   const getMiseId = id =>{
+    if(!id) return '';
     return id.includes("did:mises:") ? id.replace("did:mises:", "") : id;
   }
   const misesId = getMiseId(search.get("misesId") || loginForm.misesid)
