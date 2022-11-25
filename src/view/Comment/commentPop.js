@@ -89,7 +89,6 @@ const CommentsPop = (
       // update datalist
       setData(res) {
         if(res){
-          console.log(res);
           dataSource.unshift(res);
           setdataSource([...dataSource]);
         }

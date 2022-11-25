@@ -33,7 +33,6 @@ const ImageList = ({ thumbImages=[], list = [], boxWidth = window.innerWidth }) 
         width: ratio * 200 + "px",
       };
     }
-    console.log(style, e.target.src)
     setstyle(style);
   };
   // only one

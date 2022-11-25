@@ -363,7 +363,6 @@ export default class MisesExtensionController {
       const res = await  getUserSelfInfo(null, {
         Authorization: `Bearer ${token}`
       })
-      console.log(res);
       store.dispatch(setLoginForm(res));
       localStorage.setItem("uid", res.uid);
       setTimeout(() => {
