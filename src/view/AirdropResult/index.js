@@ -24,6 +24,22 @@ const AirdropResult = () => {
     const search = new URLSearchParams(location.search);
     // code : 0 1 2
     if (search.get("code") !== "2") {
+      // const res = {
+      //   "twitter": {
+      //     "twitter_user_id": "1461679761202286597",
+      //     "misesid": "mises17z5t4lkd2vvv5f8ggggf7zvmxmsgz2mxx4nyv6",
+      //     "name": "chen guo",
+      //     "username": "vim_guo",
+      //     "check_state": "invalid",
+      //     "invalid_code": "invalid",
+      //     "reason": "This Account was created after May. 1, 2022",
+      //     "followers_count": 11,
+      //     "tweet_count": 1,
+      //     "twitter_created_at": "2022-11-19T20:56:36+08:00",
+      //     "amount": 1.004,
+      //     "created_at": "2022-06-15T10:37:37+08:00"
+      //   },
+      // }
       getAirdropInfo().then((res) => {
         if(!res.twitter && !res.airdrop){
           history.replace('/airdrop?isFrom=homePage')
@@ -49,15 +65,10 @@ const AirdropResult = () => {
       return "unGotMIS";
     }
     if(res.twitter){
-      if(!res.twitter.username){
-        return "success" // waiting for twitter auth 
+      if(res.twitter.check_state === "valid"){  // wait for airdrop
+        return "unGotMIS"
       }
-      if(res.twitter.followers_count === 0){
-        return "followers_countError"
-      }
-      if (res.twitter.amount > 0) {
-        return "success"; // get twitter auth success 
-      }
+      return res.twitter.check_state
     }
     if (search.get("code") === "1") {
       return "fail";
@@ -85,9 +96,6 @@ const AirdropResult = () => {
   };
   const statusTxt = () => {
     const statusObj = {
-      fail: "This Twitter account has been verified with another Mises ID",
-      timeFail: "This Account was created after May. 1, 2022",
-      followers_countError: "Insufficient social data in this Twitter account",
       unauth: "Sorry, you canceled the authorization!",
       gotMIS:
         "This Twitter Account has got the MIS Airdrop, Thanks for your support!",
@@ -109,7 +117,7 @@ const AirdropResult = () => {
   // const unEditText = `I have claimed $MIS airdrop by using Mises Browser @Mises001, which supports Web3 sites and extensions on mobile.<br/><br/>https://www.mises.site/download?MisesID=${misesid}<br/><br/>#Mises #Browser #web3 #extension`
 
   const SuccessLayout = () => {
-    if (status === "success") {
+    if (status === "pending") {
       return (
         <>
           <Image src="/static/images/hourglass.png" className="hourglass" />
@@ -147,7 +155,7 @@ const AirdropResult = () => {
   };
 
   const FailLayout = () => {
-    if (status !== "success" && status !== "") {
+    if (status !== "pending" && status !== "") {
       return (
         <>
           <div className="listItem">
@@ -168,7 +176,7 @@ const AirdropResult = () => {
                 </p>
               )}
               <p className="fail-reason">
-                {status !== "unauth" && <span>Reason:</span>} {statusTxt()}
+                {status !== "unauth" && <span>Reason:</span>} {airdropInfo.reason}
               </p>
               <Button
                 className="btn-fail"
