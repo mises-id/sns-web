@@ -22,7 +22,7 @@ const AirdropSuccess = () => {
           <p className="content">{t('airdropSuccessContent')}</p>
         </div>
         <div className="viewInWallet">
-          <Button block shape="round" theme="primary" onClick={()=>window.mises.openRestore()}>
+          <Button block shape="round" theme="primary" onClick={()=>window.mises.openWallet()}>
             <span className="btn-txt">{t("viewInWallet")}</span>
           </Button>
         </div>

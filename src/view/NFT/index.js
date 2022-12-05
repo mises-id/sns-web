@@ -13,9 +13,9 @@ import like_NFT from '@/images/like_NFT.png'
 import importIcon from '@/images/Import.png'
 import Navbar from "@/components/NavBar";
 import PullList from "@/components/PullList";
-import { getProvider, objToUrl, useList, useLoginModal, useRouteState } from "@/utils";
-import { Button, Image, Toast } from "antd-mobile";
-import { getMyNFTAsset, getNFTAsset, getOpenseaNFTAsset } from "@/api/user";
+import { objToUrl, useList, useRouteState } from "@/utils";
+import { Button, Image } from "antd-mobile";
+import { getMyNFTAsset, getNFTAsset } from "@/api/user";
 const NFTPage = ({history}) => {
   const {t} = useTranslation();
   const NFTDetail = item=>{
@@ -91,24 +91,10 @@ const NFTPage = ({history}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource.length])
   // import NFT
-  const loginModal = useLoginModal()
+  // const loginModal = useLoginModal()
   const pullList = useRef(null);
   const importWallet = ()=>{
-    const version = window.mises.getMetamaskVersion()
-    version && window.mises.NFTPage()
-    const provider = getProvider()
-    if(provider.selectedAddress){
-      getOpenseaNFTAsset(provider.selectedAddress).then(res=>{
-        Toast.show(res.length===0 ? 'Number of collections is 0' : 'Import success',1)
-        if(res.length>0){
-          pullList.current.refreshData()
-        }
-      })
-      return
-    }
-    loginModal(()=>{
-      importWallet()
-    })
+    alert('待定')
   }
   const [loading, setLoading] = useState(true);
   return (

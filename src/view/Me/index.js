@@ -16,7 +16,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_7 from "@/images/me_7.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button, Modal } from "zarm";
+import { ActivityIndicator, Badge, Button } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -68,12 +68,16 @@ const Myself = ({ history }) => {
       url: "/NFT",
     },
   ]);
+
   useEffect(() => {
+
     setLoginForm(selector.loginForm);
     settoken(selector.token);
+
     list[1].isNew = !!selector.loginForm.new_fans_count;
     list[1].badge = selector.loginForm.fans_count;
     list[0].badge = selector.loginForm.followings_count;
+
   }, [selector]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [flag, setflag] = useState(false);
@@ -82,24 +86,24 @@ const Myself = ({ history }) => {
   const [loadingMisesTxt, setloadingMisesTxt] = useState("Loading Mises");
 
   let timer;
-  const getMisesAccountFlag = () => {
+
+  const getMisesAccountStatus = async () => {
     if (selector.web3Status && !selector.token) {
-      window.mises &&
-        window.mises.getMisesAccounts(true).then((res) => {
-          setflag(!!res);
-          setmisesLoading(false);
-          setloadingMisesTxt("Loading Mises")
-          clearTimeout(timer);
-          timer = null;
-        }).catch(err=>{
-          console.log(err)
-        });
+
+      const misesWeb3Client = await window.mises.misesWeb3Client()
+      const hasAccount = await misesWeb3Client.hasWalletAccount();
+
+      setflag(hasAccount);
+      setmisesLoading(false);
+      setloadingMisesTxt("Loading Mises")
+      clearTimeout(timer);
+      timer = null;
     } else {
-      // setflag(false)
       setmisesLoading(true);
+
       if(!timer){
         timer = setTimeout(() => {
-          setloadingMisesTxt('Injecting Metamask')
+          setloadingMisesTxt('Injecting Mises Wallet')
         }, 2000);
       }
     }
@@ -109,7 +113,7 @@ const Myself = ({ history }) => {
     if (token) setloading(false);
   }, [token]);
   useEffect(() => {
-    getMisesAccountFlag();
+    getMisesAccountStatus();
     if(selector.web3Status){
       setloading(false);
     }
@@ -129,22 +133,28 @@ const Myself = ({ history }) => {
     setTabList([...list]);
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onclick = () => {
-    window.mises
-      .requestAccounts()
-      .then((res) => {
-        // window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err && err.code === -32002) {
-          Modal.alert({
-            content: "Please switch to the unlock tab to unlock your account",
-            width: "77%",
-            title: "Message",
-          });
-        }
-      });
+  const onclick = async () => {
+    const provider = await window.mises.getProvider();
+    // provider.getKey('mainnet')
+    await provider.enable('mainnet');
+    window.mises.requestAccounts().then(res=>{
+
+    })
+    // window.mises
+    //   .requestAccounts()
+    //   .then((res) => {
+    //     // window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     if (err && err.code === -32002) {
+    //       Modal.alert({
+    //         content: "Please switch to the unlock tab to unlock your account",
+    //         width: "77%",
+    //         title: "Message",
+    //       });
+    //     }
+    //   });
   };
   /* 
   ,

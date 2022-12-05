@@ -17,8 +17,10 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { isIosPlatform } from './utils';
 import { patchHttpsUrl } from './api/updata';
-window.mises = new MisesExtensionController()
 
+if(document.readyState === "loading"){
+  window.mises = new MisesExtensionController()
+}
 if (document.readyState === "loading" && isIosPlatform()) {
   patchHttpsUrl()
 }
@@ -33,12 +35,7 @@ if(!process.env.NODE_ENV === "development"){
   });
 }
 
-render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+render(<App />, document.getElementById('root'));
 // new VConsole();
 
 // If you want to start measuring performance in your app, pass a function
