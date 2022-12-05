@@ -90,7 +90,7 @@ const Myself = ({ history }) => {
   const getMisesAccountStatus = async () => {
     if (selector.web3Status && !selector.token) {
 
-      const misesWeb3Client = await window.mises.misesWeb3Client()
+      const misesWeb3Client = await window.misesExtension.misesWeb3Client()
       const hasAccount = await misesWeb3Client.hasWalletAccount();
 
       setflag(hasAccount);
@@ -134,13 +134,13 @@ const Myself = ({ history }) => {
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onclick = async () => {
-    const provider = await window.mises.getProvider();
+    const provider = await window.misesExtension.getProvider();
     // provider.getKey('mainnet')
     await provider.enable('mainnet');
-    window.mises.requestAccounts().then(res=>{
+    window.misesExtension.requestAccounts().then(res=>{
 
     })
-    // window.mises
+    // window.misesExtension
     //   .requestAccounts()
     //   .then((res) => {
     //     // window.location.reload();

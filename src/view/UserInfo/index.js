@@ -120,7 +120,7 @@ const UserInfo = (props) => {
       intro: info.intro,
     };
     console.log("update mises network", userInfo);
-    window.mises
+    window.misesExtension
       .setUserInfo(userInfo)
       .then(() => {
         console.log(NFTSelected.image_preview_url);

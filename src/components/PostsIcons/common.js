@@ -40,8 +40,8 @@ export async function followed(item={}){
   const val = item.user || item;
   const fetchFn = val.is_followed ? unfollow : follow;
   try {
-    await window.mises.isActive();
-    val.is_followed ? window.mises.userUnFollow(val.misesid) : window.mises.userFollow(val.misesid);
+    await window.misesExtension.isActive();
+    val.is_followed ? window.misesExtension.userUnFollow(val.misesid) : window.misesExtension.userFollow(val.misesid);
     await fetchFn({to_user_id:val.uid})
     val.is_followed = !val.is_followed;
     store.dispatch(setUserSetting({

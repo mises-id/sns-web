@@ -176,7 +176,7 @@ const Follow = ({ history = {} }) => {
   };
   const find = () => history.push("/home/discover");
   const connect = () => {
-    window.mises
+    window.misesExtension
       .requestAccounts()
       .catch((err) => {
         console.log(err);
@@ -195,7 +195,7 @@ const Follow = ({ history = {} }) => {
   let timer = null;
   const getMisesAccountFlag = async () => {
     if (selector.web3Status) {
-      const misesWeb3Client = await window.mises.misesWeb3Client()
+      const misesWeb3Client = await window.misesExtension.misesWeb3Client()
       const hasAccount = await misesWeb3Client.hasWalletAccount();
       setflag(hasAccount);
       setMisesloading(false)

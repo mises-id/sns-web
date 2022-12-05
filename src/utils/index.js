@@ -199,8 +199,8 @@ export function useLoginModal() {
   const { t } = useTranslation();
   const loginModal = async (cb) => {
     try {
-      // await window.mises.isInitMetaMask()
-      const misesWeb3Client = await window.mises.misesWeb3Client()
+      // await window.misesExtension.isInitMetaMask()
+      const misesWeb3Client = await window.misesExtension.misesWeb3Client()
       const hasAccount = await misesWeb3Client.hasWalletAccount();
       // const flag = count > 0;
       const content = hasAccount ? t("notLogin") : t("notRegister");
@@ -211,7 +211,7 @@ export function useLoginModal() {
         onCancel: () => {},
         okText: hasAccount ? "Connect" : "Create",
         onOk: () => {
-          window.mises
+          window.misesExtension
             .requestAccounts()
             .then(cb)
             .catch((err) => {

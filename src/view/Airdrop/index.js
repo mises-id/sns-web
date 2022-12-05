@@ -92,7 +92,7 @@ const Airdrop = () => {
         content: 'You need to register a Mises ID to claim the Airdrop',
         onAction: () => {
           loginModal.close()
-          window.mises
+          window.misesExtension
             .requestAccounts()
             .catch((err) => {
               console.log(err);

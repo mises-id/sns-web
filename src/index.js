@@ -19,7 +19,7 @@ import { isIosPlatform } from './utils';
 import { patchHttpsUrl } from './api/updata';
 
 if(document.readyState === "loading"){
-  window.mises = new MisesExtensionController()
+  window.misesExtension = new MisesExtensionController()
 }
 if (document.readyState === "loading" && isIosPlatform()) {
   patchHttpsUrl()

@@ -51,19 +51,19 @@ export default class MisesExtensionController {
   }
 
   async getProvider() {
-    if (window.keplr) {
-      return window.keplr;
+    if (window.mises) {
+      return window.mises;
     }
 
     if (document.readyState === "complete") {
-      return window.keplr;
+      return window.mises;
     }
 
     return new Promise((resolve,reject) => {
       const documentStateChange = (event) => {
         if (event.target && event.target.readyState === "complete") {
-          window.keplr ? resolve(window.keplr) : reject();
-          console.log(window.keplr)
+          window.mises ? resolve(window.mises) : reject();
+          console.log(window.mises)
           document.removeEventListener("readystatechange", documentStateChange);
         }
       };
@@ -86,8 +86,8 @@ export default class MisesExtensionController {
 
   async listen() {
     const provider = await this.getProvider()
-    window.addEventListener("keplr_keystorechange", () => {
-      console.log("Key store in Keplr is changed. You may need to refetch the account info.")
+    window.addEventListener("mises_keystorechange", () => {
+      console.log("Key store in mises is changed. You may need to refetch the account info.")
       const offlineSigner = provider.getOfflineSigner?.('mainnet');
       if(offlineSigner){
         offlineSigner.getAccounts().then((res)=>{
