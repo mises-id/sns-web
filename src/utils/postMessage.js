@@ -85,8 +85,8 @@ export default class MisesExtensionController {
 
   async listen() {
     const provider = await this.getProvider()
-    window.addEventListener("keplr_keystorechange", () => {
-      console.log("Key store in Keplr is changed. You may need to refetch the account info.")
+    window.addEventListener("mises_keystorechange", () => {
+      console.log("Key store in mises is changed. You may need to refetch the account info.")
       const offlineSigner = provider.getOfflineSigner?.('mainnet');
       if(offlineSigner){
         offlineSigner.getAccounts().then((res)=>{
