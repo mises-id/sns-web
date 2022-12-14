@@ -51,19 +51,19 @@ export default class MisesExtensionController {
   }
 
   async getProvider() {
-    if (window.keplr) {
-      return window.keplr;
+    if (window.misesWallet) {
+      return window.misesWallet;
     }
 
     if (document.readyState === "complete") {
-      return window.keplr;
+      return window.misesWallet;
     }
 
     return new Promise((resolve,reject) => {
       const documentStateChange = (event) => {
         if (event.target && event.target.readyState === "complete") {
-          window.keplr ? resolve(window.keplr) : reject();
-          console.log(window.keplr)
+          window.misesWallet ? resolve(window.misesWallet) : reject();
+
           document.removeEventListener("readystatechange", documentStateChange);
         }
       };
@@ -75,13 +75,12 @@ export default class MisesExtensionController {
 
   async initAccount() {
     const provider = await this.getProvider()
-    const isUnlocked = await provider.isunlocked()
+    const isUnlocked = await provider.isUnlocked()
     const { loginForm = {} } = store.getState().user;
 
     if(isUnlocked && !loginForm.uid){
       this.requestAccounts()
     }
-
   }
 
   async listen() {
@@ -293,7 +292,7 @@ export default class MisesExtensionController {
   
   async isActive() {
     const provider = await this.getProvider()
-    const isunlocked = await provider.isunlocked();
+    const isunlocked = await provider.isUnlocked();
     return isunlocked ? Promise.resolve() : Promise.reject('Wallet not activated')
   }
 }

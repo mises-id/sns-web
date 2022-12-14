@@ -16,7 +16,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_7 from "@/images/me_7.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button } from "zarm";
+import { ActivityIndicator, Badge, Button, Modal } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -136,25 +136,22 @@ const Myself = ({ history }) => {
   const onclick = async () => {
     const provider = await window.mises.getProvider();
     // provider.getKey('mainnet')
-    await provider.enable('mainnet');
-    window.mises.requestAccounts().then(res=>{
-
-    })
-    // window.mises
-    //   .requestAccounts()
-    //   .then((res) => {
-    //     // window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     if (err && err.code === -32002) {
-    //       Modal.alert({
-    //         content: "Please switch to the unlock tab to unlock your account",
-    //         width: "77%",
-    //         title: "Message",
-    //       });
-    //     }
-    //   });
+    provider.enable && await provider.enable('mainnet');
+    window.mises
+      .requestAccounts()
+      .then(() => {
+        // window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err && err.code === -32002) {
+          Modal.alert({
+            content: "Please switch to the unlock tab to unlock your account",
+            width: "77%",
+            title: "Message",
+          });
+        }
+      });
   };
   /* 
   ,
