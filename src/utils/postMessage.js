@@ -223,7 +223,7 @@ export default class MisesExtensionController {
     try {
       const provider = await this.getProvider();
 
-      await provider.enable('mainnet');
+      await this.enable();
 
       const result = await provider.misesAccount()
 
@@ -237,10 +237,21 @@ export default class MisesExtensionController {
     }
   }
 
+  async enable(){
+    try {
+      const provider = await this.getProvider();
+      await provider.enable('mainnet');
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject()
+    }
+  }
+
   async setUserInfo(data) {
     console.log("setUserInfo");
     try {
       await this.isActive()
+      await this.enable();
 
       const misesWeb3Client = await this.misesWeb3Client()
       await misesWeb3Client.setUserInfo(data);
@@ -254,6 +265,7 @@ export default class MisesExtensionController {
   async userFollow(data) {
     try {
       console.log("userFollow");
+      await this.enable();
       
       const misesWeb3Client = await this.misesWeb3Client()
       await misesWeb3Client.userFollow(data);
@@ -264,6 +276,9 @@ export default class MisesExtensionController {
 
   async userUnFollow(data) {
     try {
+      await this.enable();
+      console.log("userUnFollow");
+
       const misesWeb3Client = await this.misesWeb3Client()
       await misesWeb3Client.userUnFollow(data);
     } catch (error) {
