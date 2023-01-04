@@ -85,6 +85,7 @@ export default class MisesExtensionController {
 
   async listen() {
     const provider = await this.getProvider()
+    console.log("listen")
     window.addEventListener("mises_keystorechange", () => {
       console.log("Key store in mises is changed. You may need to refetch the account info.")
       const offlineSigner = provider.getOfflineSigner?.('mainnet');
@@ -147,6 +148,12 @@ export default class MisesExtensionController {
 
   async connect(userid) {
     const misesWeb3Client = await this.misesWeb3Client()
+    console.log({
+      domain: "mises.site", //
+      appid: this.appid,
+      userid,
+      permissions: [],
+    })
     return misesWeb3Client.connect({
       domain: "mises.site", //
       appid: this.appid,
@@ -177,8 +184,8 @@ export default class MisesExtensionController {
       if (data.token) {
         store.dispatch(setUserToken(data.token));
         await this.getUserInfo(data.token);
-        const uid = localStorage.getItem("uid");
-        this.connect(uid)
+        const misesId = localStorage.getItem("misesId");
+        this.connect(misesId)
       }
 
       return Promise.resolve();
@@ -200,6 +207,7 @@ export default class MisesExtensionController {
 
       store.dispatch(setLoginForm(res));
       localStorage.setItem("uid", res.uid);
+      localStorage.setItem("misesId", res.misesid);
 
       setTimeout(() => {
         if (
