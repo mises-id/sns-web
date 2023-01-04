@@ -18,7 +18,7 @@ import fetchAdapter  from './fetchAdapter';
 // import { setLoginForm, setUserToken } from '@/actions/user';
 // import { getAuth, openLoginPage } from './postMessage';
 const isProd = process.env.REACT_APP_NODE_ENV==='production'
-console.log(process.env.REACT_APP_NODE_ENV)
+
 // if(istest){
 //   headers['Mises-Env'] = 'development'
 // }

@@ -12,17 +12,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './locales'
 // import VConsole from 'vconsole';
-import MisesExtensionController from  './utils/postMessage'
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { isIosPlatform } from './utils';
 import { patchHttpsUrl } from './api/updata';
-window.mises = new MisesExtensionController()
+import "@/utils/extension"
 
 if (document.readyState === "loading" && isIosPlatform()) {
   patchHttpsUrl()
 }
-if(!process.env.NODE_ENV === "development"){
+
+if(process.env.REACT_APP_NODE_ENV==='production'){
   Sentry.init({
     dsn: "https://ce70d202b4be4f7685dbf1ed40a55227@o1162849.ingest.sentry.io/6274250",
     integrations: [new BrowserTracing()],
@@ -33,12 +33,7 @@ if(!process.env.NODE_ENV === "development"){
   });
 }
 
-render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+render(<App />, document.getElementById('root'));
 // new VConsole();
 
 // If you want to start measuring performance in your app, pass a function
