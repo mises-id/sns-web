@@ -22,7 +22,7 @@ if (document.readyState === "loading" && isIosPlatform()) {
   patchHttpsUrl()
 }
 
-if(!process.env.NODE_ENV === "development"){
+if(process.env.REACT_APP_NODE_ENV==='production'){
   Sentry.init({
     dsn: "https://ce70d202b4be4f7685dbf1ed40a55227@o1162849.ingest.sentry.io/6274250",
     integrations: [new BrowserTracing()],
