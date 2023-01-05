@@ -81,6 +81,11 @@ export default class MisesExtensionController {
     if(isUnlocked && !loginForm.uid){
       this.requestAccounts()
     }
+
+    if(isUnlocked && loginForm.uid){
+      const currentAccount = await provider.misesAccount();
+      this.resetAccount(currentAccount.address)
+    }
   }
 
   async listen() {
