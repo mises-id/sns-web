@@ -77,11 +77,12 @@ export default class MisesExtensionController {
     const provider = await this.getProvider()
     const isUnlocked = await provider.isUnlocked()
     const { loginForm = {} } = store.getState().user;
-
-    if(isUnlocked && !loginForm.uid){
+    const misesId = localStorage.getItem("misesId");
+    // is logined
+    if(isUnlocked && !loginForm.uid && misesId){
       this.requestAccounts()
     }
-
+    // active user
     if(isUnlocked && loginForm.uid){
       const currentAccount = await provider.misesAccount();
       this.resetAccount(currentAccount.address)
