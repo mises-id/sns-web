@@ -16,31 +16,26 @@ const Download = () => {
     const referrer = sessionStorage.getItem('referrer')
     if(referrer){
       const misesId = referrer.indexOf('did:mises:')>-1 ? referrer.split('did:mises:')[1] : referrer
+      getDownloadUrl('landing', misesId)
+    } else {
+      const search = new URLSearchParams(window.location.search);
+      const misesId = search.get('misesid');
+      getDownloadUrl('invite', misesId)
+    }
+  }, [])
+
+  const getDownloadUrl = (medium, misesId)=>{
+    if(misesId){
       getReferralUrl({
         misesId,
         type:'url',
-        medium:'landing'
+        medium
       }).then(res=>{
         const url = isIosPlatform() ? res.ios_medium_link : res.medium_url
         setdownloadUrl(url)
       })
-    } else {
-      const search = new URLSearchParams(window.location.search);
-      const misesid = search.get('misesid');
-      if(misesid){
-        getReferralUrl({
-          misesId: misesid,
-          type:'url',
-          medium:'invite'
-        }).then(res=>{
-          const url = isIosPlatform() ? res.ios_medium_link : res.medium_url
-          setdownloadUrl(url)
-        })
-      }
     }
-
-  }, [])
-
+  }
   return (
     <>
       <div>

@@ -20,7 +20,7 @@ const initialState = {
   },
   web3Status:false,
   web3ProviderFlag:true,
-  isFistLogin:false
+  isFirstLogin:false
 };
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -70,7 +70,7 @@ const userReducers = (state = initialState, action) => {
       case 'SET_FIRST_LOGIN': // Set web3 account changed
         return {
           ...state,
-          isFistLogin: action.data,
+          isFirstLogin: action.data,
         };
     default:
       return state;

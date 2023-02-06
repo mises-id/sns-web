@@ -115,7 +115,7 @@ export default class MisesExtensionController {
     const { loginForm } = store.getState().user;
 
     if (loginForm.misesid !== address) {
-      await this.disconnect(loginForm.uid);
+      loginForm.uid && await this.disconnect(loginForm.uid);
       this.resetUser();
     }
 
@@ -220,7 +220,7 @@ export default class MisesExtensionController {
           !res.is_logined &&
           window.history.location?.pathname !== "airdrop"
         ) {
-          window.history.push("/airdrop");
+          // window.history.push("/airdrop");
           store.dispatch(setFirstLogin(true));
         }
       }, 100);
