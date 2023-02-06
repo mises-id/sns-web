@@ -59,8 +59,8 @@ const UserInfo = (props) => {
   };
   useEffect(() => {
     if(loginForm){
-      setNFTSelected(loginForm.avatar.nft_asset_id ? {
-        image_preview_url: loginForm.avatar.large
+      setNFTSelected(loginForm.avatar?.nft_asset_id ? {
+        image_preview_url: loginForm.avatar?.large
       } : {});
       formRef.current.setFieldsValue(loginForm);
       setuser(loginForm);

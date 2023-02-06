@@ -367,7 +367,6 @@ export default class MisesExtensionController {
       localStorage.setItem("uid", res.uid);
       setTimeout(() => {
         if (!res.is_logined && window.history.location?.pathname !== "airdrop") {
-          window.history.push("/airdrop");
           store.dispatch(setFirstLogin(true));
         }
       }, 100);
@@ -415,9 +414,9 @@ export default class MisesExtensionController {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      this.web3.misesWeb3.userFollow(data);
+      await this.web3.misesWeb3.userFollow(data);
     } catch (error) {
-      return Promise.reject(error);
+      console.log(error)
     }
   }
 
@@ -427,9 +426,10 @@ export default class MisesExtensionController {
       const flag = await this.isInitMetaMask();
       if (!flag) return Promise.reject();
       await this.init();
-      this.web3.misesWeb3.userUnFollow(data);
+      await this.web3.misesWeb3.userUnFollow(data);
     } catch (error) {
-      return Promise.reject(error);
+      console.log(error)
+      // return Promise.reject(error);
     }
   }
 

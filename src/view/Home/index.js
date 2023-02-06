@@ -57,7 +57,7 @@ const Home = ({ history, children = [] }) => {
     }
   };
   const user = useSelector((state) => state.user) || {};
-  const { auth, token, badge = {} } = user;
+  const { auth, token, badge = {}, isFirstLogin } = user;
   // useEffect(() => {
   //   // getUserInfo().catch((err) => {
   //   //   console.log(err);
@@ -80,7 +80,7 @@ const Home = ({ history, children = [] }) => {
           localStorage.setItem("uid", res.uid);
           setTimeout(() => {
             if (!res.is_logined && history.location.pathname !== "airdrop") {
-              history.push("/airdrop");
+              // history.push("/airdrop");
               dispatch(setFirstLogin(true));
             }
           }, 100);
@@ -91,6 +91,14 @@ const Home = ({ history, children = [] }) => {
     }
     return Promise.resolve();
   };
+  useEffect(() => {
+    if(isFirstLogin){
+      history.push("/airdrop");
+      dispatch(setFirstLogin(false));
+    }
+  }, [isFirstLogin]) // eslint-disable-line react-hooks/exhaustive-deps
+  
+
   useDidRecover(() => {
     window.getCachingKeys().forEach((res) => {
       if (

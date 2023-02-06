@@ -107,12 +107,12 @@ const reject = ({code,message})=>{
   Toast.show(message|| 'error')
 }
 const invalidToken = ()=>{
-  window.mises.resetUser()
+  window.mises?.resetUser()
   store.dispatch(setUserToken(''))
   window.location.reload()
 }
 const invalidAuth = ()=>{
-  window.mises.resetUser()
+  window.mises?.resetUser()
   store.dispatch(setUserToken(''))
   Modal.alert({
     title: 'Message',
