@@ -30,6 +30,14 @@ if(process.env.REACT_APP_NODE_ENV==='production'){
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
+    ignoreErrors: ["UnhandledRejection"],
+    beforeSend: (event, hint) => {
+      if (["Error: Request rejected", "Error: No error message"].includes(hint.originalException?.toString())) {
+        return null;
+      }
+      console.log(event);
+      return event;
+    },
   });
 }
 

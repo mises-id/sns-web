@@ -227,8 +227,7 @@ export default class MisesExtensionController {
 
       return Promise.resolve();
     } catch (error) {
-      // Toast.show('user/me接口出错了')
-      return Promise.reject("user/me接口出错了");
+      return Promise.reject("user/me failed");
     }
   }
 
@@ -247,7 +246,7 @@ export default class MisesExtensionController {
       }
     } catch (error) {
       console.log(error)
-      throw new Error('Not found account')
+      // throw new Error('Not found account')
     }
   }
 
