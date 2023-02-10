@@ -57,7 +57,7 @@ const MyInvitation = () => {
       setinfo({ ...misesInfo });
     } catch (error) {
       console.log(error);
-      return await Promise.reject(error);
+      // return Promise.reject(error);
     }
   };
   const loadMore = async () => {

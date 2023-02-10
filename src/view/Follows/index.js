@@ -417,8 +417,12 @@ const Follow = ({ history = {} }) => {
           getSuccess={setdataSourceStorage}
           load={async (e) => {
             getFollowingLatest();
-            const res = await fetchData(e);
-            return res;
+            try {
+              const res = await fetchData(e);
+              return res;
+            } catch (error) {
+              return Promise.reject(error);
+            }
           }}
         />
       )}
