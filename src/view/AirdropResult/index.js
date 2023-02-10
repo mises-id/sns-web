@@ -41,9 +41,9 @@ const AirdropResult = () => {
       //   },
       // }
       getAirdropInfo().then((res) => {
-        if(!res.twitter && !res.airdrop){
-          history.replace('/airdrop?isFrom=homePage')
-        }
+        // if(!res.twitter && !res.airdrop){
+        //   history.replace('/airdrop?isFrom=homePage')
+        // }
         setAirdropInfo(
           res.twitter || {
             username: search.get("username"),
@@ -94,6 +94,9 @@ const AirdropResult = () => {
   };
   const statusTxt = () => {
     const statusObj = {
+      fail: "This Twitter account has been verified with another Mises ID",
+      timeFail: "This Account was created after May. 1, 2022",
+      followers_countError: "Insufficient social data in this Twitter account",
       unauth: "Sorry, you canceled the authorization!",
       gotMIS:
         "This Twitter Account has got the MIS Airdrop, Thanks for your support!",
@@ -174,7 +177,7 @@ const AirdropResult = () => {
                 </p>
               )}
               <p className="fail-reason">
-                {status !== "unauth" && <span>Reason:</span>} {airdropInfo.reason}
+                {status !== "unauth" && <span>Reason:</span>} {airdropInfo.reason || statusTxt()}
               </p>
               <Button
                 className="btn-fail"
