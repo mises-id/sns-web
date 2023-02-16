@@ -22,24 +22,23 @@ if (document.readyState === "loading" && isIosPlatform()) {
   patchHttpsUrl()
 }
 
-if(process.env.REACT_APP_NODE_ENV==='production'){
-  Sentry.init({
-    dsn: "https://ce70d202b4be4f7685dbf1ed40a55227@o1162849.ingest.sentry.io/6274250",
-    integrations: [new BrowserTracing()],
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
-    ignoreErrors: ["UnhandledRejection"],
-    beforeSend: (event, hint) => {
-      if (["Error: Request rejected", "Error: No error message"].includes(hint.originalException?.toString())) {
-        return null;
-      }
-      console.log(event);
-      return event;
-    },
-  });
-}
+Sentry.init({
+  enabled: process.env.REACT_APP_NODE_ENV==='production',
+  dsn: "https://ce70d202b4be4f7685dbf1ed40a55227@o1162849.ingest.sentry.io/6274250",
+  integrations: [new BrowserTracing()],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+  ignoreErrors: ["UnhandledRejection"],
+  beforeSend: (event, hint) => {
+    const otherSiteError = hint.originalException.stack.indexOf('chrome-extension://') > -1;
+    if (["Error: Request rejected", "Error: No error message"].includes(hint.originalException?.toString()) || hint.originalException?.toString().indexOf('The method "mises_') > -1 || otherSiteError) {
+      return null;
+    }
+    return event;
+  },
+});
 
 render(<App />, document.getElementById('root'));
 // new VConsole();
