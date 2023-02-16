@@ -34,9 +34,17 @@ jobs:
           aws s3 cp --recursive \
            --region us-east-1 \
            build/ s3://home.mises/main
+      - name: Put object index.html to S3
+        run: |
+          aws s3api put-object --bucket home.mises \
+           --key main/index.html \
+           --body build/index.html \
+           --cache-control max-age=86400 \
+           --content-type text/html
       - name: Invalidate cloudfront
         run: |
           aws cloudfront create-invalidation \
            --region us-east-1 \
            --distribution-id E1QQ1UZAGS8W9P \
            --paths "/index.html"
+           
