@@ -179,7 +179,9 @@ export default class MisesExtensionController {
     console.log("requestAccounts");
     try {
       const res = await this.getAuth();
-
+      if(!res){
+        return;
+      }
       store.dispatch(setUserAuth(res.auth));
 
       const data = await signin({
