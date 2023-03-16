@@ -183,7 +183,7 @@ $align:center left right;
 }
 .m-layout{
   overflow-y: auto;
-  height: calc(100vh - var(--window-layout-height) - 45px)
+  height: calc(100vh - var(--window-layout-height) - 100px)
 }
 body{
   .za-nav-bar{

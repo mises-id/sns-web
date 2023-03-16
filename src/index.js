@@ -32,7 +32,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
   ignoreErrors: ["UnhandledRejection"],
   beforeSend: (event, hint) => {
-    const otherSiteError = hint.originalException.stack.indexOf('chrome-extension://') > -1;
+    const otherSiteError = hint.originalException.stack?.indexOf('chrome-extension://') > -1;
     if (["Error: Request rejected", "Error: No error message"].includes(hint.originalException?.toString()) || hint.originalException?.toString().indexOf('The method "mises_') > -1 || otherSiteError) {
       return null;
     }
