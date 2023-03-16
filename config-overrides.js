@@ -61,7 +61,7 @@ const addCommonsChunkPlugin = (config) => {
         minSize: 50000,
         minChunks: 1,
         chunks: "initial",
-        priority: 1, // 该配置项是设置处理的优先级，数值越大越优先处理，处理后优先级低的如果包含相同模块则不再处理
+        priority: 1, 
       },
       commons: {
         test: /[\\/]src[\\/]/,
@@ -70,16 +70,16 @@ const addCommonsChunkPlugin = (config) => {
         minChunks: 2,
         chunks: "initial",
         priority: -1,
-        reuseExistingChunk: true, // 这个配置允许我们使用已经存在的代码块
+        reuseExistingChunk: true, 
       },
       lodash: {
-        name: "lodash", // 单独将 lodash 拆包
+        name: "lodash", 
         priority: 20,
         test: /[\\/]node_modules[\\/]lodash[\\/]/,
         chunks: "all",
       },
       reactLib: {
-        name: "react-lib", // 单独将 lodash 拆包
+        name: "react-lib", 
         priority: 20,
         test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
         chunks: "all",
