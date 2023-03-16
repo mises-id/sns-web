@@ -39,75 +39,53 @@ const addCommonsChunkPlugin = (config) => {
   config.optimization.splitChunks = {
     chunks: "all",
     name: true,
-    minSize: 30000, 
-    maxAsyncRequests: 5, 
-    maxInitialRequests: 3, 
+    minSize: 20000,
+    maxSize: 30000,
+    minChunks: 1,
     cacheGroups: {
       vendors: {
+        name: 'chunk-vendors',
         test: /[\\/]node_modules[\\/]/,
-        name: "vendors",
-        minSize: 20000,
-        minChunks: 1,
-        chunks: "initial",
-        priority: 1,
+        priority: -10,
+        chunks: 'initial'
       },
-      reactLib: { 
-        chunks: 'all',
-        test: /(react|react-dom|react-dom-router|babel-polyfill|react-redux|redux|redux-persist)/,
-        priority: 100,
-        name: "react-lib",
+      common: {
+        name: 'chunk-common',
+        minChunks: 2,
+        priority: -20,
+        chunks: 'initial',
+        reuseExistingChunk: true
       },
       lodash: {
-        name: "lodash", 
+        name: true, 
         priority: 20,
-        test: /[\\/]node_modules[\\/]lodash[\\/]/,
+        test: /[\\/]lodash[\\/]/,
         chunks: "all",
-      },
-      konvaLib: {
-        name: "konva", 
-        priority: 20,
-        test: /[\\/]node_modules[\\/]konva[\\/]/,
-        chunks: "async",
       },
       antdMobile: {
-        name: "antd-mobile", 
+        name: true, 
         priority: 20,
-        test: /[\\/]node_modules[\\/]antd-mobile[\\/]/,
+        test: /[\\/]antd-mobile[\\/]/,
+        chunks: "async",
+      },
+      antdMobileIcon: {
+        name: true, 
+        priority: 20,
+        test: /[\\/]antd-mobile-icons[\\/]/,
+        chunks: "async",
+      },
+      betterScroll: {
+        name: true, 
+        priority: 20,
+        test: /[\\/]better-scroll[\\/]/,
+        chunks: "async",
+      },
+      react: {
+        name: true, 
+        priority: 20,
+        test: /[\\/]react(.+?)[\\/]/,
         chunks: "all",
       },
-      zarmLib: {
-        name: "zarm", 
-        priority: 20,
-        test: /[\\/]node_modules[\\/]zarm[\\/]/,
-        chunks: "async",
-      },
-      betterScrollLib: {
-        name: "better-scroll", 
-        priority: 20,
-        test: /[\\/]node_modules[\\/]better-scroll[\\/]/,
-        chunks: "async",
-      },
-      ethersprojectLib: {
-        name: "ethersproject", 
-        priority: 20,
-        test: /[\\/]node_modules[\\/]@ethersproject[\\/]/,
-        chunks: "async",
-      },
-      idnaUts46HxLib: {
-        name: "idna-uts46-hx", 
-        priority: 20,
-        test: /[\\/]node_modules[\\/]idna-uts46-hx [\\/]/,
-        chunks: "async",
-      },
-      commons: {
-        test: /[\\/]src[\\/]/,
-        name: "commons",
-        minChunks: 2,
-        minSize: 0,
-        chunks: "initial",
-        priority: -1,
-        reuseExistingChunk: true, 
-      }
     },
   };
   return config;
