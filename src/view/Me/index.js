@@ -22,6 +22,8 @@ import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
 import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
+import { setWeb3ProviderMaxFlag } from "@/actions/user";
+import { store } from "@/stores";
 // import {Skeleton} from 'antd-mobile'
 const Myself = ({ history }) => {
   const { t } = useTranslation();
@@ -86,26 +88,31 @@ const Myself = ({ history }) => {
   const [loadingMisesTxt, setloadingMisesTxt] = useState("Loading Mises");
 
   let timer;
-
   const getMisesAccountStatus = async () => {
-    if (selector.web3Status && !selector.token) {
+    try {
+      if (selector.web3Status && !selector.token) {
 
-      const misesWeb3Client = await window.mises.misesWeb3Client()
-      const hasAccount = await misesWeb3Client.hasWalletAccount();
-
-      setflag(hasAccount);
-      setmisesLoading(false);
-      setloadingMisesTxt("Loading Mises")
-      clearTimeout(timer);
-      timer = null;
-    } else {
-      setmisesLoading(true);
-
-      if(!timer){
-        timer = setTimeout(() => {
-          setloadingMisesTxt('Injecting Mises Wallet')
-        }, 2000);
+        const hasAccount = await window.mises.getMisesAccounts()
+        console.log(hasAccount)
+        // const hasAccount = await misesWeb3Client.hasWalletAccount();
+  
+        setflag(hasAccount);
+        setmisesLoading(false);
+        setloadingMisesTxt("Loading Mises")
+        clearTimeout(timer);
+        timer = null;
+      } else {
+        setmisesLoading(true);
+  
+        if(!timer){
+          timer = setTimeout(() => {
+            setloadingMisesTxt('Injecting Mises Wallet')
+          }, 2000);
+        }
       }
+    } catch (error) {
+      // seterrorText(error.toString())
+      store.dispatch(setWeb3ProviderMaxFlag(false));
     }
   };
 
