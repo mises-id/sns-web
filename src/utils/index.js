@@ -437,6 +437,7 @@ export function numToKMGTPE(num, digits = 1) {
 export function isMisesBrowser() {
   return navigator.userAgent.indexOf("Chrome/77.0.3865.116") >
   -1 || navigator.userAgent.indexOf("Chrome/105") >
+  -1  || navigator.userAgent.indexOf("Chrome/111") >
   -1 || isIos();
 }
 export function getProvider(){

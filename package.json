@@ -17,6 +17,7 @@
     "caniuse-lite": "^1.0.30001359",
     "commitizen": "^4.2.4",
     "commitlint": "^16.2.3",
+    "compression-webpack-plugin": "^6.0.5",
     "customize-cra": "^1.0.0",
     "dayjs": "^1.10.6",
     "enzyme": "^3.11.0",
