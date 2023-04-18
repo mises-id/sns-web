@@ -6,11 +6,11 @@
  * @Description: Airdrop page
  */
 import { getReferralUrl } from "@/api/user";
-import { isIosPlatform } from "@/utils";
+// import { isIosPlatform } from "@/utils";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 const Download = () => {
-  const defaultUrl = isIosPlatform() ? "https://testflight.apple.com/join/Tk1BxD1i" : "https://play.google.com/store/apps/details?id=site.mises.browser";
+  const defaultUrl = "https://play.google.com/store/apps/details?id=site.mises.browser";
   const [downloadUrl, setdownloadUrl] = useState(defaultUrl)
   useEffect(() => {
     const referrer = sessionStorage.getItem('referrer')
@@ -31,7 +31,7 @@ const Download = () => {
         type:'url',
         medium
       }).then(res=>{
-        const url = isIosPlatform() ? res.ios_medium_link : res.medium_url
+        const url = res.medium_url
         setdownloadUrl(url)
       })
     }

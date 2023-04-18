@@ -393,20 +393,15 @@ export function isMe(user, createdUserId) {
 export function getLink(content) {
   const reg =
     // eslint-disable-next-line
-    /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/g;
-  const result = reg.exec(content);
-  const link = result ? result[0] : "";
-  //the link according to the link to remove the http/https
-  const getOrigin = link.replace(/^(http|https):\/\//, "").substring(0, 25);
-  const contentDom = content
-  .replace(
-    reg,
-    `<a href="${link}" onclick="event.stopPropagation()"  class="link" title="${link}" target="_blank">${getOrigin}${
-      link.length > 25 ? "..." : ""
+    /https?:\/\/[a-z]+\.[a-z]+\.[a-z]+\/[a-zA-Z0-9\/]+/g;
+  const result = content.replace(reg,link=>{
+    const getOrigin = link.replace(/^(http|https):\/\//, "");
+    const max = 25;
+    return `<a href="${link}" onclick="event.stopPropagation()"  class="link" title="${link}" target="_blank">${getOrigin.substring(0, max)}${
+      getOrigin.length > max ? "..." : ""
     }</a>`
-  )
-
-  return xss(contentDom,{
+  });
+  return xss(result,{
     whiteList: {
       a: ["href", "title", "target"],
       br:[]

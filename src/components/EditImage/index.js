@@ -498,7 +498,7 @@ const EditImage = ({ image, index, closePop, send }) => {
     return dataURL;
   };
   return (
-    <div style={{'--window-height':`${window.innerHeight}px`}}>
+    <div style={{'--window-height':`${window.innerHeight}px`, height: `${window.innerHeight}px`}}>
       {/* Show edit photo */}
       <div className={`m-flex m-flex-col edit-image-box`}>
         {!textFlag && (
