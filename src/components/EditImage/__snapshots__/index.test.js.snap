@@ -5,6 +5,7 @@ exports[`EditImage should render correctly 1`] = `
   style={
     Object {
       "--window-height": "768px",
+      "height": "768px",
     }
   }
 >

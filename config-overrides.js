@@ -39,8 +39,8 @@ const addCommonsChunkPlugin = (config) => {
   config.optimization.splitChunks = {
     chunks: "all",
     name: true,
-    minSize: 20000,
-    maxSize: 30000,
+    minSize: 200000,
+    maxSize: 400000,
     minChunks: 1,
     cacheGroups: {
       vendors: {
