@@ -1,4 +1,4 @@
-import { isMisesBrowser } from "@/utils";
+// import { isMisesBrowser } from "@/utils";
 
 /*
  * @Author: lmk
@@ -7,7 +7,7 @@ import { isMisesBrowser } from "@/utils";
  * @LastEditors: lmk
  * @Description: set zarm UI theme
  */
-export function setTheme(){
+export function setTheme(isMises){
   const themeObj = {
     '--theme-primary':'#5c65f6',
     "--action-sheet-item-height":'55px',
@@ -18,7 +18,7 @@ export function setTheme(){
     "--theme-danger":"#FF3D62",
     "--badge-height":'16px',
     "--modal-title-font-size":"20px",
-    '--window-layout-height': !isMisesBrowser() ? '50px' :'0px'
+    '--window-layout-height': !isMises ? '50px' :'0px'
   }
   if(window.innerHeight){
     themeObj['--window-height'] = `${window.innerHeight}px`
