@@ -19,7 +19,7 @@ import { CacheSwitch } from 'react-router-cache-route'
 import { useLogin } from './components/PostsIcons/common';
 import { setReportTargetId, setReportVisibility, setVisibility } from './actions/app';
 import { Popup } from 'antd-mobile';
-import { isMisesBrowser } from './utils';
+import { getMisesWalletProvider } from './utils';
 import { complaint } from './api/status';
 const SetRoute = ()=>{
   const {isLogin} = useLogin()
@@ -32,7 +32,18 @@ const SetRoute = ()=>{
 }
 const  Download = ()=>{
   // const selector = useSelector((state) => state.user) || {};
-  const isMises = isMisesBrowser()
+  const [isMises, setisMises] = useState(true)
+  useEffect(() => {
+    getMisesWalletProvider().then(res=>{
+      setisMises(!!res)
+      setTheme(true)
+    }).catch(err=>{
+      setisMises(false)
+      setTheme(false)
+    })
+  }, [])
+  
+  // const isMises = isMisesBrowser()
   return !isMises&&!['/download'].includes(window.location.pathname) ? <>
     <div className='launchApp m-flex'>
       <div className='m-flex-1 m-flex'>
@@ -131,26 +142,26 @@ const ReportPopup = ()=>{
 const App = ()=> {
   // const [isHref, setisHref] = useState(false)
  
-  useEffect(() => {
-    setTheme()
-    // const error = e=>{
-    //   if(e.message==="Uncaught SyntaxError: Unexpected token '<'" 
-    //   || (e.reason && ["CSS_CHUNK_LOAD_FAILED","ChunkLoadError"].includes(e.reason.code || e.reason.name))){
-    //     const pathname = window.location.pathname
-    //     if(!isHref&&pathname!=='error'){
-    //       window.location.replace('/error')
-    //       setisHref(true)
-    //     }
-    //   }
-    // }
-    // window.addEventListener('error',error,true)
-    // window.addEventListener('unhandledrejection',error)
-    // return ()=>{
-    //   window.removeEventListener('error',error)
-    //   window.removeEventListener('unhandledrejection',error)
-    // }
-    // eslint-disable-next-line
-  }, [])
+  // useEffect(() => {
+    
+  //   // const error = e=>{
+  //   //   if(e.message==="Uncaught SyntaxError: Unexpected token '<'" 
+  //   //   || (e.reason && ["CSS_CHUNK_LOAD_FAILED","ChunkLoadError"].includes(e.reason.code || e.reason.name))){
+  //   //     const pathname = window.location.pathname
+  //   //     if(!isHref&&pathname!=='error'){
+  //   //       window.location.replace('/error')
+  //   //       setisHref(true)
+  //   //     }
+  //   //   }
+  //   // }
+  //   // window.addEventListener('error',error,true)
+  //   // window.addEventListener('unhandledrejection',error)
+  //   // return ()=>{
+  //   //   window.removeEventListener('error',error)
+  //   //   window.removeEventListener('unhandledrejection',error)
+  //   // }
+  //   // eslint-disable-next-line
+  // }, [])
   return <AntdProvider  locale={antdEnUS}>
     <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
       <Provider store={store}>
