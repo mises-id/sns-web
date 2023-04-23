@@ -457,23 +457,46 @@ export function randomString() {
   return pwd
 }
 export async function getMisesWalletProvider() {
-  if (window.misesWallet) {
-    return window.misesWallet;
+  if(isIosPlatform()){
+    if (window.ethereum) {
+      return window.ethereum;
+    }
+  
+    if (document.readyState === "complete") {
+      return window.ethereum;
+    }
+  
+    return new Promise((resolve,reject) => {
+      const documentStateChange = (event) => {
+        if (event.target && event.target.readyState === "complete") {
+          window.ethereum ? resolve(window.ethereum) : reject();
+  
+          document.removeEventListener("readystatechange", documentStateChange);
+        }
+      };
+  
+      document.addEventListener("readystatechange", documentStateChange);
+    });
+  } else {
+    if (window.misesWallet) {
+      return window.misesWallet;
+    }
+  
+    if (document.readyState === "complete") {
+      return window.misesWallet;
+    }
+  
+    return new Promise((resolve,reject) => {
+      const documentStateChange = (event) => {
+        if (event.target && event.target.readyState === "complete") {
+          window.misesWallet ? resolve(window.misesWallet) : reject();
+  
+          document.removeEventListener("readystatechange", documentStateChange);
+        }
+      };
+  
+      document.addEventListener("readystatechange", documentStateChange);
+    });
   }
-
-  if (document.readyState === "complete") {
-    return window.misesWallet;
-  }
-
-  return new Promise((resolve,reject) => {
-    const documentStateChange = (event) => {
-      if (event.target && event.target.readyState === "complete") {
-        window.misesWallet ? resolve(window.misesWallet) : reject();
-
-        document.removeEventListener("readystatechange", documentStateChange);
-      }
-    };
-
-    document.addEventListener("readystatechange", documentStateChange);
-  });
+  
 }
