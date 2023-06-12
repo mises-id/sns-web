@@ -136,9 +136,9 @@ const Home = ({ history, children = [] }) => {
   const createPosts = () => {
     history.push({ pathname: "/createPosts" });
   };
-  const getAirdrop = () => {
-    history.push("/airdrop?isFrom=homePage");
-  };
+  // const getAirdrop = () => {
+  //   history.push("/airdrop?isFrom=homePage");
+  // };
   //Show current route
   const showChild = (path) =>
     children.find((val) => val.key === path) || <div></div>;
