@@ -188,11 +188,11 @@ const Home = ({ history, children = [] }) => {
       {token && (
         <div className="m-position-fixed createPosts">
           <Image width={75} height={75} src={send} onClick={createPosts}/>
-          {user.loginForm.airdrop_status&&!user.loginForm.is_airdropped ? <img 
+          {/* {user.loginForm.airdrop_status&&!user.loginForm.is_airdropped ? <img 
           alt=""
           className="airdrop" 
           src="/static/images/airdrop@2x.png"
-           onClick={getAirdrop} />: null}
+           onClick={getAirdrop} />: null} */}
         </div>
       )}
     </>

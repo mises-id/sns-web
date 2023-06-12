@@ -158,7 +158,6 @@ export default class MisesExtensionController {
   }
 
   async requestAccounts() {
-    console.log("requestAccounts");
     try {
       const res = await this.getAuth();
       if(!res){
