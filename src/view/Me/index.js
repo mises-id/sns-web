@@ -142,6 +142,7 @@ const Myself = ({ history }) => {
 
   const onclick = async () => {
     const provider = await window.mises.getProvider();
+    console.log(provider)
     // provider.getKey('mainnet')
     provider.enable && await provider.enable('mainnet');
     window.mises

@@ -446,6 +446,11 @@ export function isIos() {
 export function isIosPlatform() {
   return !!navigator.userAgent.match(/Mac OS X/);
 }
+export function isSmallIOS() {
+  return (
+    typeof navigator !== 'undefined' && /iPhone|iPod/.test(navigator.userAgent)
+  );
+}
 export function randomString() {
   const len = 32
   const $chars ='ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' 
@@ -457,7 +462,7 @@ export function randomString() {
   return pwd
 }
 export async function getMisesWalletProvider() {
-  if(isIosPlatform()){
+  if(isSmallIOS()){
     if (window.ethereum) {
       return window.ethereum;
     }
