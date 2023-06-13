@@ -5,17 +5,11 @@
  * @LastEditors: lmk
  * @Description: Airdrop page
  */
-import { getReferralList, getReferralUrl } from "@/api/user";
 import Navbar from "@/components/NavBar";
 import {
   Button,
-  Grid,
-  InfiniteScroll,
-  List,
-  PullToRefresh,
 } from "antd-mobile";
-import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -24,16 +18,16 @@ import { Toast } from "zarm";
 import "./index.scss";
 const MyInvitation = () => {
   const { t } = useTranslation();
-  const [info, setinfo] = useState({
-    airdrop_amount: 0,
-    total_channel_user: 0,
-  });
+  // const [info, setinfo] = useState({
+  //   airdrop_amount: 0,
+  //   total_channel_user: 0,
+  // });
 
-  const [data, setData] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [error, setError] = useState(false);
+  // const [data, setData] = useState([]);
+  // const [hasMore, setHasMore] = useState(true);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [page, setPage] = useState(1);
+  // const [error, setError] = useState(false);
   const search = new URLSearchParams(window.location.search);
   const user = useSelector((state) => state.user) || {};
   const { loginForm = {} } = user;
@@ -42,93 +36,93 @@ const MyInvitation = () => {
     return id.includes("did:mises:") ? id.replace("did:mises:", "") : id;
   }
   const misesId = getMiseId(search.get("misesId") || loginForm.misesid)
-  useEffect(() => {
-    if (misesId) {
-      getInfo(misesId);
-    }
-    // eslint-disable-next-line
-  }, []);
-  const getInfo = async (misesId) => {
-    try {
-      const misesInfo = await getReferralUrl({
-        misesId,
-        medium: "invite",
-      });
-      setinfo({ ...misesInfo });
-    } catch (error) {
-      console.log(error);
-      // return Promise.reject(error);
-    }
-  };
-  const loadMore = async () => {
-    if (isLoading || error) return;
-    setIsLoading(true);
-    setError(false);
-    return fetchData()
-      .then((res) => {
-        setData([...data, ...res]);
-        setPage(page + 1);
-        setHasMore(res.length >= pageSize);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-  const onRefresh = async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    setError(false);
-    setPage(1);
-    setHasMore(true);
-    fetchData(1)
-      .then((res) => {
-        setData([...res]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-  const pageSize = 20;
-  const fetchData = async (pageNum) => {
-    try {
-      const res = await getReferralList({
-        misesid: misesId,
-        page_size: pageSize,
-        page_num: pageNum || page,
-      });
-      const arr = res.data.map((val, index) => {
-        // airdrop_state: 0 默认，1 正在处理 ， 2 空投成功，3 空投失败
-        const misesId = val.user.misesid.replace("did:mises:", "");
-        const misesStr = `${misesId.slice(0, 8)}******${misesId.slice(-4)}`;
-        return {
-          key: index,
-          misesId: misesStr,
-          airdrop_state: val.airdrop_state,
-          created_at: dayjs(val.created_at).format("YYYY-MM-DD HH:mm:ss"),
-          airdropState: val.airdrop_state === 2 ? "Complete" : "Incomplete",
-        };
-      });
-      return Promise.resolve(arr);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  };
-  const renderView = (val, index) => {
-    return (
-      <div className="table-body-item" key={index}>
-        <Grid columns={2}>
-          <Grid.Item>
-            <div className="text-center table-header">{val.misesId}</div>
-          </Grid.Item>
-          <Grid.Item>
-            <div className={`text-center table-header table-body-last ${val.airdrop_state===2 ? 'complete' : 'incomplete'}`}>
-              {val.airdropState}
-            </div>
-          </Grid.Item>
-        </Grid>
-      </div>
-    );
-  };
+  // useEffect(() => {
+  //   if (misesId) {
+  //     getInfo(misesId);
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
+  // const getInfo = async (misesId) => {
+  //   try {
+  //     const misesInfo = await getReferralUrl({
+  //       misesId,
+  //       medium: "invite",
+  //     });
+  //     setinfo({ ...misesInfo });
+  //   } catch (error) {
+  //     console.log(error);
+  //     // return Promise.reject(error);
+  //   }
+  // };
+  // const loadMore = async () => {
+  //   if (isLoading || error) return;
+  //   setIsLoading(true);
+  //   setError(false);
+  //   return fetchData()
+  //     .then((res) => {
+  //       setData([...data, ...res]);
+  //       setPage(page + 1);
+  //       setHasMore(res.length >= pageSize);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
+  // const onRefresh = async () => {
+  //   if (isLoading) return;
+  //   setIsLoading(true);
+  //   setError(false);
+  //   setPage(1);
+  //   setHasMore(true);
+  //   fetchData(1)
+  //     .then((res) => {
+  //       setData([...res]);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
+  // const pageSize = 20;
+  // const fetchData = async (pageNum) => {
+  //   try {
+  //     const res = await getReferralList({
+  //       misesid: misesId,
+  //       page_size: pageSize,
+  //       page_num: pageNum || page,
+  //     });
+  //     const arr = res.data.map((val, index) => {
+  //       // airdrop_state: 0 默认，1 正在处理 ， 2 空投成功，3 空投失败
+  //       const misesId = val.user.misesid.replace("did:mises:", "");
+  //       const misesStr = `${misesId.slice(0, 8)}******${misesId.slice(-4)}`;
+  //       return {
+  //         key: index,
+  //         misesId: misesStr,
+  //         airdrop_state: val.airdrop_state,
+  //         created_at: dayjs(val.created_at).format("YYYY-MM-DD HH:mm:ss"),
+  //         airdropState: val.airdrop_state === 2 ? "Complete" : "Incomplete",
+  //       };
+  //     });
+  //     return Promise.resolve(arr);
+  //   } catch (error) {
+  //     return Promise.reject(error);
+  //   }
+  // };
+  // const renderView = (val, index) => {
+  //   return (
+  //     <div className="table-body-item" key={index}>
+  //       <Grid columns={2}>
+  //         <Grid.Item>
+  //           <div className="text-center table-header">{val.misesId}</div>
+  //         </Grid.Item>
+  //         <Grid.Item>
+  //           <div className={`text-center table-header table-body-last ${val.airdrop_state===2 ? 'complete' : 'incomplete'}`}>
+  //             {val.airdropState}
+  //           </div>
+  //         </Grid.Item>
+  //       </Grid>
+  //     </div>
+  //   );
+  // };
   const share = ()=>{
     console.log(`Join me to use Mises Browser, which supports Web3 sites and extensions on mobile.\n\n${window.location.origin}/download?misesid=${misesId}\n\n#Mises #Browser #web3 #extension`)
     if(!navigator.share){
@@ -158,9 +152,9 @@ const MyInvitation = () => {
           />
           <div className="position-absolute">
             <div className="text">
-              <p>Invite your friends to join Mises, you </p>
-              <p>can get 10% of your friends' </p>
-              <p>airdrop rewards</p>
+              <p>Invite your friends to join Mises </p>
+              {/* <p>can get 10% of your friends' </p> */}
+              {/* <p>airdrop rewards</p> */}
             </div>
             <div className="m-flex position-relative share-btn-box">
               <Button
@@ -177,15 +171,15 @@ const MyInvitation = () => {
                   className="arrow"
                 />
               </Button>
-              <img
+              {/* <img
                 src="/static/images/airdropIcon.png"
                 alt=""
                 className="airdropIcon"
-              />
+              /> */}
             </div>
           </div>
         </div>
-        <div className="list">
+        {/* <div className="list">
           <p className="stas">
             Number of Invitation: {info.total_channel_user}
           </p>
@@ -214,7 +208,7 @@ const MyInvitation = () => {
             )}
             <InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
           </PullToRefresh>
-        </div>
+        </div> */}
       </div>
     </div>
   );
