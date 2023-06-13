@@ -25,13 +25,7 @@ exports[`MyInvitation should render correctly 1`] = `
           className="text"
         >
           <p>
-            Invite your friends to join Mises, you 
-          </p>
-          <p>
-            can get 10% of your friends' 
-          </p>
-          <p>
-            airdrop rewards
+            Invite your friends to join Mises 
           </p>
         </div>
         <div
@@ -55,63 +49,8 @@ exports[`MyInvitation should render correctly 1`] = `
               src="/static/images/arrow@2x.png"
             />
           </ForwardRef>
-          <img
-            alt=""
-            className="airdropIcon"
-            src="/static/images/airdropIcon.png"
-          />
         </div>
       </div>
-    </div>
-    <div
-      className="list"
-    >
-      <p
-        className="stas"
-      >
-        Number of Invitation: 
-        0
-      </p>
-      <p
-        className="stas"
-      >
-        Reward: 
-        <span>
-          0
-        </span>
-         MIS
-         
-      </p>
-      <div
-        className="table-header-item"
-      >
-        <Grid
-          columns={2}
-        >
-          <GridItem>
-            <div
-              className="text-center table-header"
-            >
-              Mises ID
-            </div>
-          </GridItem>
-          <GridItem>
-            <div
-              className="text-center table-header table-header-last"
-            >
-              Status
-            </div>
-          </GridItem>
-        </Grid>
-      </div>
-      <PullToRefresh
-        onRefresh={[Function]}
-      >
-        <InfiniteScroll
-          hasMore={true}
-          loadMore={[Function]}
-        />
-      </PullToRefresh>
     </div>
   </div>
 </div>
