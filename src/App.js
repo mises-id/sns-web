@@ -21,6 +21,8 @@ import { setReportTargetId, setReportVisibility, setVisibility } from './actions
 import { Popup } from 'antd-mobile';
 import { getMisesWalletProvider } from './utils';
 import { complaint } from './api/status';
+import { useAnalytics } from './utils/useAnalytics';
+import { logEvent } from "firebase/analytics";
 const SetRoute = ()=>{
   const {isLogin} = useLogin()
   return <Router>
@@ -162,6 +164,13 @@ const App = ()=> {
   //   // }
   //   // eslint-disable-next-line
   // }, [])
+  const analytics = useAnalytics()
+
+  useEffect(() => {
+    logEvent(analytics, 'open_discover_site')
+    // eslint-disable-next-line
+  }, [])
+  
   return <AntdProvider  locale={antdEnUS}>
     <ConfigProvider locale={enUS} theme="light" primaryColor='#5c65f6'>
       <Provider store={store}>
