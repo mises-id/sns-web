@@ -10,7 +10,7 @@ import { isIosPlatform } from "@/utils";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 const Download = () => {
-  const defaultUrl = isIosPlatform() ? "https://testflight.apple.com/join/dFykgML6" : "https://play.google.com/store/apps/details?id=site.mises.browser";
+  const defaultUrl = isIosPlatform() ? "https://apps.apple.com/us/app/mises-browser/id6451129542" : "https://play.google.com/store/apps/details?id=site.mises.browser";
   const [downloadUrl, setdownloadUrl] = useState(defaultUrl)
   useEffect(() => {
     const referrer = sessionStorage.getItem('referrer')
