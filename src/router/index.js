@@ -19,8 +19,8 @@ import GreatePosts from '@/view/GreatePosts'
 import Forward from '@/view/Forward'
 import Notifications from '@/view/Notifications'
 import ShareWith from '@/view/ShareWith'
-import Airdrop from '@/view/Airdrop'
-import AirdropSuccess from '@/view/AirdropSuccess'
+// import Airdrop from '@/view/Airdrop'
+// import AirdropSuccess from '@/view/AirdropSuccess'
 import Error from '@/view/Error'
 import Me from '@/view/Me'
 import UserInfo from '@/view/UserInfo'
@@ -28,7 +28,7 @@ import Following from '@/view/Following'
 import Download from '@/view/Download'
 import NFTPage from '@/view/NFT'
 import NFTDetail from '@/view/NFTDetail'
-import AirdropResult from '@/view/AirdropResult'
+// import AirdropResult from '@/view/AirdropResult'
 import MyInvitation from '@/view/MyInvitation'
 const routeConfig = [
 	{
@@ -106,18 +106,18 @@ const routeConfig = [
 		path: '/userFollowPage',
 		component: UserFollowPage,
 	},
-	{
-		path: '/airdrop',
-		component: Airdrop,
-	},
-	{
-		path: '/airdropSuccess',
-		component: AirdropSuccess,
-	},
-	{
-		path: '/airdropResult',
-		component: AirdropResult,
-	},
+	// {
+	// 	path: '/airdrop',
+	// 	component: Airdrop,
+	// },
+	// {
+	// 	path: '/airdropSuccess',
+	// 	component: AirdropSuccess,
+	// },
+	// {
+	// 	path: '/airdropResult',
+	// 	component: AirdropResult,
+	// },
 	{
 		path: '/error',
 		component: Error,
