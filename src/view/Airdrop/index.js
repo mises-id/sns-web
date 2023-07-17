@@ -25,7 +25,7 @@ const Airdrop = () => {
   const history = useHistory();
   const [pageLoading, setPageLoading] = useState(true);
   useDidRecover(() => {
-    window.refreshByCacheKey("/airdrop");
+    // window.refreshByCacheKey("/airdrop");
   });
   
   const init = () => {
@@ -39,41 +39,42 @@ const Airdrop = () => {
       window.location.reload();
     }
     if (flag && MIS === 0) {
-      getAirdropInfo()
-        .then((res) => {
-          if(!res.airdrop && res.twitter){
-            const isWaitStatus = !res.twitter.username ? 0 : 1;
-            history.replace(`/airdropResult?code=${isWaitStatus}`);
-            return
-          }
-          if (res.airdrop) {
-            let url = null;
-            const { status, coin } = res.airdrop;
-            switch (status) {
-              case "default":
-                url = `/airdrop?isFrom=homePage&MIS=${coin}`;
-                break;
-              case "success":
-                url = "/airdropSuccess";
-                break;
-              case "failed":
-                url = "/airdropResult?code=1";
-                break;
-              default:
-                url = "/airdropResult?code=0";
-                break;
-            }
-            setPageLoading(false);
-            history.replace(url);
-            return;
-          }else{
-            setPageLoading(false);
-          }
-        })
-        .catch((err) => {});
-    } else {
       setPageLoading(false);
-    }
+    //   getAirdropInfo()
+    //     .then((res) => {
+    //       if(!res.airdrop && res.twitter){
+    //         const isWaitStatus = !res.twitter.username ? 0 : 1;
+    //         history.replace(`/airdropResult?code=${isWaitStatus}`);
+    //         return
+    //       }
+    //       if (res.airdrop) {
+    //         let url = null;
+    //         const { status, coin } = res.airdrop;
+    //         switch (status) {
+    //           case "default":
+    //             url = `/airdrop?isFrom=homePage&MIS=${coin}`;
+    //             break;
+    //           case "success":
+    //             url = "/airdropSuccess";
+    //             break;
+    //           case "failed":
+    //             url = "/airdropResult?code=1";
+    //             break;
+    //           default:
+    //             url = "/airdropResult?code=0";
+    //             break;
+    //         }
+    //         setPageLoading(false);
+    //         history.replace(url);
+    //         return;
+    //       }else{
+    //         setPageLoading(false);
+    //       }
+    //     })
+    //     .catch((err) => {});
+    // } else {
+    //   setPageLoading(false);
+    // }
   };
   useEffect(() => {
     init();
