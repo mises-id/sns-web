@@ -28,6 +28,7 @@ import { getNotifications } from "@/api/notifications";
 import { setFollowingBadge } from "@/actions/user";
 import { useDidRecover } from "react-router-cache-route";
 import Avatar from '@/components/NFTAvatar'
+import GoogleAds from "@/components/GoogleAds";
 const Follow = ({ history = {} }) => {
   // Is it a discover page
   const isDiscoverFn = ()=> {
@@ -171,6 +172,7 @@ const Follow = ({ history = {} }) => {
           changeFollow={followPress}
           setLike={setLike}
         />
+        <GoogleAds />
       </div>
     );
   };
