@@ -437,7 +437,7 @@ export function isMisesBrowser() {
   -1 || isIos();
 }
 export function getProvider(){
-  return window.misesEthereum || window.ethereum  || null;
+  return window.misesEthereum || window.ethereum || null;
 }
 export function isIos() {
   const provider = getProvider();
