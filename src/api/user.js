@@ -211,3 +211,9 @@ export async function unlikeNFT(id){
      params
    });
  }
+
+ export function fetchBonusCount(){
+  return request({
+    url: '/mining/bonus'
+  })
+}

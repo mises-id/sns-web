@@ -5,7 +5,7 @@
  * @LastEditors: lmk
  * @Description:
  */
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./index.scss";
 import { UndoOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_7 from "@/images/me_7.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Button, Modal } from "zarm";
+import { ActivityIndicator, Badge, Modal } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -24,6 +24,9 @@ import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
 import { setWeb3ProviderMaxFlag } from "@/actions/user";
 import { store } from "@/stores";
+import { Button } from "antd-mobile";
+import { fetchBonusCount } from "@/api/user";
+import BigNumber from "bignumber.js";
 // import {Skeleton} from 'antd-mobile'
 const Myself = ({ history }) => {
   const { t } = useTranslation();
@@ -86,6 +89,13 @@ const Myself = ({ history }) => {
   const [loading, setloading] = useState(true);
   const [misesLoading, setmisesLoading] = useState(true);
   const [loadingMisesTxt, setloadingMisesTxt] = useState("Loading Mises");
+
+  const [bonusesCount, setbonusesCount] = useState(0)
+  useEffect(() => {
+    fetchBonusCount().then(res => {
+      setbonusesCount(BigNumber(res.bonus).decimalPlaces(2, BigNumber.ROUND_DOWN).toString())
+    })
+  }, [])
 
   let timer;
   const getMisesAccountStatus = async () => {
@@ -261,6 +271,24 @@ const Myself = ({ history }) => {
       window.location.reload();
     }
   };
+
+  const Bonuses = memo(() => {
+    
+    return <div className="bonuses-container">
+      <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path d="M640 224c19.2 0 38.4 9.6 51.2 25.6l118.4 156.8c19.2 25.6 16 57.6-3.2 80l-246.4 275.2c-22.4 25.6-64 28.8-89.6 6.4-3.2 0-3.2-3.2-3.2-3.2l-249.6-275.2c-19.2-22.4-22.4-57.6-3.2-83.2l118.4-156.8c12.8-16 32-25.6 51.2-25.6h256z m0 64h-256l-118.4 156.8 246.4 275.2 246.4-275.2L640 288z m-32 96c19.2 0 32 12.8 32 32s-12.8 32-32 32h-192c-19.2 0-32-12.8-32-32s12.8-32 32-32h192z" fill="#333333" data-spm-anchor-id="a313x.search_index.0.i0.72cd3a81Rm0qVB"></path></svg>
+      <div className="flex-1 right-content">
+        <p className="bonuses-title">My Bonuses</p>
+        <p className="mb-10 bonuses-value">{bonusesCount}</p>
+      </div>
+      <div className="flex align-center">
+        <Button type="button" color="primary" shape="rounded" size="small" onClick={() => {
+          window.open('https://mining.test.mises.site/bonuses','target=_blank');
+        }}>
+          Redeem
+        </Button>
+      </div>
+    </div>
+  }, () => false)
   const myselfView = () => {
     return (
       <div className="m-layout">
@@ -271,6 +299,7 @@ const Myself = ({ history }) => {
             labelStyle={{ fontSize: "23px", fontWeight: "bold" }}
             onPress={userInfo}
           />
+          <Bonuses />
           {list.map((val, index) => (
             <Cell
               shape="square"
