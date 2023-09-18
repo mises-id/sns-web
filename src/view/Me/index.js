@@ -16,7 +16,7 @@ import me_4 from "@/images/me_4.png";
 import me_5 from "@/images/me_5.png";
 import me_7 from "@/images/me_7.png";
 import Cell from "@/components/Cell";
-import { ActivityIndicator, Badge, Modal } from "zarm";
+import { ActivityIndicator, Badge, Modal, Button } from "zarm";
 import { useSelector } from "react-redux";
 import bg from "@/images/me-bg.png";
 import { objToUrl, username } from "@/utils";
@@ -24,7 +24,7 @@ import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
 import { setWeb3ProviderMaxFlag } from "@/actions/user";
 import { store } from "@/stores";
-import { Button } from "antd-mobile";
+import { Button as AntdButton } from "antd-mobile";
 import { fetchBonusCount } from "@/api/user";
 import BigNumber from "bignumber.js";
 // import {Skeleton} from 'antd-mobile'
@@ -92,10 +92,12 @@ const Myself = ({ history }) => {
 
   const [bonusesCount, setbonusesCount] = useState(0)
   useEffect(() => {
-    fetchBonusCount().then(res => {
-      setbonusesCount(BigNumber(res.bonus).decimalPlaces(2, BigNumber.ROUND_DOWN).toString())
-    })
-  }, [])
+    if(selector.token) {
+      fetchBonusCount().then(res => {
+        setbonusesCount(BigNumber(res.bonus).decimalPlaces(2, BigNumber.ROUND_DOWN).toString())
+      })
+    }
+  }, [selector.token])
 
   let timer;
   const getMisesAccountStatus = async () => {
@@ -281,11 +283,11 @@ const Myself = ({ history }) => {
         <p className="mb-10 bonuses-value">{bonusesCount}</p>
       </div>
       <div className="flex align-center">
-        <Button type="button" color="primary" shape="rounded" size="small" onClick={() => {
+        <AntdButton type="button" color="primary" shape="rounded" size="small" onClick={() => {
           window.open('https://mining.test.mises.site/bonuses','target=_blank');
         }}>
           Redeem
-        </Button>
+        </AntdButton>
       </div>
     </div>
   }, () => false)
