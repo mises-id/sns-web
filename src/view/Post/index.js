@@ -19,6 +19,7 @@ import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 import Empty from "@/components/Empty";
 import PostItem from "@/components/PostItem";
 import { CommentView } from "./CommentView";
+import GoogleAds from "@/components/GoogleAds";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState(""); // post data 
@@ -60,13 +61,6 @@ const Post = ({ history = {} }) => {
   useDidRecover(() => {
     dropByCacheKey('/comment')
   })
-  useEffect(() => {
-    // eslint-disable-next-line
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    return () => {
-      window.$misesShare = ''
-    }
-  }, [])
 
   return (
     <div className="post-detail">
@@ -82,12 +76,7 @@ const Post = ({ history = {} }) => {
               setLike={setLike}
             />
 
-            <ins class="adsbygoogle"
-              style={{ display: 'block', textAlign: 'center' }}
-              data-ad-layout="in-article"
-              data-ad-format="fluid"
-              data-ad-client="ca-pub-3526707353288294"
-              data-ad-slot="3934314180"></ins>
+            <GoogleAds />
           </div>
           <CommentView item={item} setitem={setitem} refresh={getDetail} />
         </div>
