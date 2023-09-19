@@ -468,7 +468,7 @@ export default class MisesExtensionController {
       await this.init();
       console.log(this.connectStatus)
       const metamaskProvider = this.getCurrentProvider();
-      const getActive = metamaskProvider._state.isUnlocked;
+      const getActive = metamaskProvider._metamask.isUnlocked();
       console.log(getActive,'getActive')
       return getActive
         ? Promise.resolve(true)
