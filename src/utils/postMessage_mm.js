@@ -6,7 +6,6 @@
  * @Description: to extension
  */
 
-import Web3 from "web3";
 import { getProvider, isMisesBrowser } from "./";
 import {
   setFirstLogin,
@@ -83,81 +82,83 @@ export default class MisesExtensionController {
       this.resetApp();
       return Promise.reject();
     }
-    if (this.web3) {
-      store.dispatch(setWeb3Init(true));
-      return Promise.resolve();
-    }
-    console.log("init");
-    this.web3 = new Web3( provider || "ws://localhost:8545");
-    // this.web3.extend({
-    //   property: "misesWeb3",
-    //   methods: [
-    //     {
-    //       name: "requestAccounts",
-    //       call: "mises_requestAccounts",
-    //     },
-    //     {
-    //       name: "setUserInfo",
-    //       call: "mises_setUserInfo",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "userFollow",
-    //       call: "mises_userFollow",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "userUnFollow",
-    //       call: "mises_userUnFollow",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "getMisesAccounts",
-    //       call: "mises_getMisesAccount",
-    //     },
-    //     {
-    //       name: "openRestore",
-    //       call: "mises_openRestore",
-    //     },
-    //     {
-    //       name: "openNFTPage",
-    //       call: "mises_openNFTPage",
-    //     },
-    //     {
-    //       name: "getActive",
-    //       call: "mises_getActive",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "connect",
-    //       call: "mises_connect",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "disconnect",
-    //       call: "mises_disconnect",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "getAddressToMisesId",
-    //       call: "mises_getAddressToMisesId",
-    //       params: 1,
-    //       inputFormatter: [null],
-    //     },
-    //     {
-    //       name: "getCollectibles",
-    //       call: "mises_getCollectibles",
-    //     },
-    //   ],
-    // });
+
     store.dispatch(setWeb3Init(true));
     return Promise.resolve();
+    // if (this.web3) {
+      
+    // }
+    // console.log("init");
+    // this.web3 = new Web3( provider || "ws://localhost:8545");
+    // // this.web3.extend({
+    // //   property: "misesWeb3",
+    // //   methods: [
+    // //     {
+    // //       name: "requestAccounts",
+    // //       call: "mises_requestAccounts",
+    // //     },
+    // //     {
+    // //       name: "setUserInfo",
+    // //       call: "mises_setUserInfo",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "userFollow",
+    // //       call: "mises_userFollow",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "userUnFollow",
+    // //       call: "mises_userUnFollow",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "getMisesAccounts",
+    // //       call: "mises_getMisesAccount",
+    // //     },
+    // //     {
+    // //       name: "openRestore",
+    // //       call: "mises_openRestore",
+    // //     },
+    // //     {
+    // //       name: "openNFTPage",
+    // //       call: "mises_openNFTPage",
+    // //     },
+    // //     {
+    // //       name: "getActive",
+    // //       call: "mises_getActive",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "connect",
+    // //       call: "mises_connect",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "disconnect",
+    // //       call: "mises_disconnect",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "getAddressToMisesId",
+    // //       call: "mises_getAddressToMisesId",
+    // //       params: 1,
+    // //       inputFormatter: [null],
+    // //     },
+    // //     {
+    // //       name: "getCollectibles",
+    // //       call: "mises_getCollectibles",
+    // //     },
+    // //   ],
+    // // });
+    // store.dispatch(setWeb3Init(true));
+    // return Promise.resolve();
   }
   listen() {
     const provider = getProvider()
@@ -179,7 +180,6 @@ export default class MisesExtensionController {
         }, 100);
       }
     });
-    console.log(11111)
     provider.request({ method: "eth_accounts" }).then((res) => {
       const ethAddress = localStorage.getItem('ethAddress');
       this.isConnect = !!ethAddress;
@@ -188,12 +188,8 @@ export default class MisesExtensionController {
         this.resetAccount(res[0]);
       }
     });
-    
-    provider.on("chainChanged", (res) => {
-      console.log(res);
-    });
 
-    this.checkedHasAccount();
+    // this.checkedHasAccount();
   }
   checkedHasAccount(){
     this.getMisesAccounts().then(res=>{
@@ -233,7 +229,6 @@ export default class MisesExtensionController {
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
     if (loginForm.misesid && storageEthAddress!==ethAddress) {
-      this.disconnect(loginForm.uid);
       this.resetUser();
     }
     return this.requestAccounts();
@@ -326,9 +321,9 @@ export default class MisesExtensionController {
       }
       return Promise.resolve();
     } catch (error) {
-      if (error && error.code === 4001) {
-        window.location.reload();
-      }
+      // if (error && error.code === 4001) {
+      //   window.location.reload();
+      // }
       this.connectStatus = 'complete'
       console.log(error);
       // Toast.show('signin接口出错了')
