@@ -325,7 +325,6 @@ export default class MisesExtensionController {
       //   window.location.reload();
       // }
       this.connectStatus = 'complete'
-      console.log(error);
       // Toast.show('signin接口出错了')
       return Promise.reject(error);
     }
@@ -387,6 +386,7 @@ export default class MisesExtensionController {
       // };
     } catch (error) {
       this.isConnect = false;
+      console.log(1111)
       return Promise.reject(error);
     }
   }

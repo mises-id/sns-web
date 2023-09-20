@@ -24,7 +24,7 @@ import Avatar from "@/components/NFTAvatar";
 import 'antd-mobile/es/global/global.css';
 import { setWeb3ProviderMaxFlag } from "@/actions/user";
 import { store } from "@/stores";
-import { Button as AntdButton } from "antd-mobile";
+import { Button as AntdButton, Toast } from "antd-mobile";
 import { fetchBonusCount } from "@/api/user";
 import BigNumber from "bignumber.js";
 // import {Skeleton} from 'antd-mobile'
@@ -153,25 +153,35 @@ const Myself = ({ history }) => {
   }, [selector.badge]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onclick = async () => {
-    const provider = await window.mises.getProvider();
-    console.log(provider)
-    // provider.getKey('mainnet')
-    provider.enable && await provider.enable('mainnet');
-    window.mises
-      .requestAccounts()
-      .then(() => {
-        // window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err && err.code === -32002) {
-          Modal.alert({
-            content: "Please switch to the unlock tab to unlock your account",
-            width: "77%",
-            title: "Message",
-          });
-        }
-      });
+    try {
+      const provider = await window.mises.getProvider();
+      console.log(provider)
+      // provider.getKey('mainnet')
+      provider.enable && await provider.enable('mainnet');
+      window.mises
+        .requestAccounts()
+        .then(() => {
+          // window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err && err.code === -32002) {
+            Modal.alert({
+              content: "Please switch to the unlock tab to unlock your account",
+              width: "77%",
+              title: "Message",
+            });
+            return 
+          }
+          if(err && err.message) {
+            Toast.show(err.message)
+          }
+        });
+    } catch (error) {
+      if(error && error.message) {
+        Toast.show(error.message)
+      }
+    }
   };
   /* 
   ,

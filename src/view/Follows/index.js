@@ -29,6 +29,7 @@ import { setFollowingBadge } from "@/actions/user";
 import { useDidRecover } from "react-router-cache-route";
 import Avatar from '@/components/NFTAvatar'
 import GoogleAds from "@/components/GoogleAds";
+import { Toast } from "antd-mobile";
 const Follow = ({ history = {} }) => {
   // Is it a discover page
   const isDiscoverFn = ()=> {
@@ -188,6 +189,10 @@ const Follow = ({ history = {} }) => {
             width: "77%",
             title: "Message",
           });
+          return 
+        }
+        if(err && err.message) {
+          Toast.show(err.message)
         }
       });
   };
