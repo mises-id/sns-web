@@ -484,17 +484,17 @@ export async function getMisesWalletProvider() {
   //   });
   // } else {
   if (window.misesWallet) {
-    return window.misesWallet;
+    return window.misesWallet || window.misesEthereum;
   }
 
   if (document.readyState === "complete") {
-    return window.misesWallet;
+    return window.misesWallet || window.misesEthereum;
   }
 
   return new Promise((resolve,reject) => {
     const documentStateChange = (event) => {
       if (event.target && event.target.readyState === "complete") {
-        window.misesWallet ? resolve(window.misesWallet) : reject();
+        window.misesWallet || window.misesEthereum ? resolve(window.misesWallet || window.misesEthereum) : reject();
 
         document.removeEventListener("readystatechange", documentStateChange);
       }
