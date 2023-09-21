@@ -27,6 +27,7 @@ import {
 } from "react-router-cache-route";
 import { Modal } from "zarm";
 import { setVisibility } from "@/actions/app";
+import Web3 from "web3";
 // import { Toast } from "antd-mobile";
 window.clearCache = clearCache;
 window.dropByCacheKey = dropByCacheKey;
@@ -41,7 +42,8 @@ export default class MisesExtensionController {
   getNum = 0;
   switchNetworkLoading = false;
   isConnect = false;
-  connectStatus = 'complete'
+  connectStatus = 'complete';
+  requestAccountPending = 0;
   // appid = "did:misesapp:mises1g3atpp5nlrzgqkzd4qfuzrdfkn8vy0a4jepr2t"; // dev
   constructor() {
     setTimeout(() => {
@@ -98,10 +100,11 @@ export default class MisesExtensionController {
       
       const ethAddress = localStorage.getItem('ethAddress');
       this.isConnect = !!ethAddress;
-      if (res.length > 0 && ethAddress !== res[0] && ethAddress) {
+      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase() && ethAddress) {
         console.log(res, 'res')
         this.resetAccount(res[0]);
-        this.requestAccounts()
+        this.requestAccountPending = 1;
+        // this.requestAccounts()
       }
       if(res.length === 0) {
         this.cleanAccount()
@@ -123,13 +126,13 @@ export default class MisesExtensionController {
     provider.request({ method: "eth_accounts" }).then((res) => {
       const ethAddress = localStorage.getItem('ethAddress');
       this.isConnect = !!ethAddress;
-      if (res.length > 0 && ethAddress !== res[0] && ethAddress) {
+      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase() && ethAddress) {
         console.log(res, 'res')
         this.resetAccount(res[0]);
       }
-      if(res.length === 0) {
-        this.cleanAccount()
-      }
+      // if(res.length === 0) {
+      //   this.cleanAccount()
+      // }
     });
 
     // this.cleanAccount();
@@ -165,7 +168,7 @@ export default class MisesExtensionController {
     const storageEthAddress = localStorage.getItem('ethAddress');
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
-    if (loginForm.misesid && storageEthAddress!==ethAddress) {
+    if (loginForm.misesid && storageEthAddress.toLowerCase()!==ethAddress.toLowerCase()) {
       this.resetUser();
     }
     // return this.requestAccounts();
@@ -216,6 +219,7 @@ export default class MisesExtensionController {
     store.dispatch(setUserToken(''));
     store.dispatch(setLoginForm({}));
     store.dispatch(setWeb3Init(false));
+    localStorage.removeItem('token');
     setTimeout(() => {
       store.dispatch(setWeb3Init(true));
     }, 200);
@@ -263,11 +267,13 @@ export default class MisesExtensionController {
         store.dispatch(setUserToken(data.token));
         await this.getUserInfo(data.token)
       }
+      this.requestAccountPending = 0;
       return Promise.resolve();
     } catch (error) {
       // if (error && error.code === 4001) {
       //   window.location.reload();
       // }
+      console.log(111)
       this.connectStatus = 'complete'
       // Toast.show('signin接口出错了')
       return Promise.reject(error);
@@ -306,12 +312,14 @@ export default class MisesExtensionController {
       })
       
       const timestamp = new Date().getTime();
-      const address = account[0]
-      const sigMsg = `address=${address}&nonce=${timestamp}`
-      const personalSignMsg = await provider.request({
-        method: 'personal_sign',
-        params: [address, sigMsg]
-      })
+      const address = Web3.utils.toChecksumAddress(account[0])
+      const nonce = `${timestamp}`
+      const sigMsg = `address=${address}&nonce=${nonce}`
+      const {sig: personalSignMsg} = await provider.signMessageForAuth(address, nonce)
+      // const personalSignMsg = await provider.request({
+      //   method: 'personal_sign',
+      //   params: [address, sigMsg]
+      // })
 
       const auth = `${sigMsg}&sig=${personalSignMsg}`
       return {
