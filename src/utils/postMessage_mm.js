@@ -396,10 +396,6 @@ export default class MisesExtensionController {
     //   return Promise.reject(error || 'con\'t find accounts');
     // }
   }
-  getCurrentProvider(){
-    const metamaskProvider = this.web3.currentProvider
-    return metamaskProvider
-  }
   async isActive(source) {
     console.log("isActive",source);
     try {
@@ -407,7 +403,7 @@ export default class MisesExtensionController {
       if (!flag) return Promise.reject();
       await this.init();
       console.log(this.connectStatus)
-      const metamaskProvider = this.getCurrentProvider();
+      const metamaskProvider = getProvider()
       const getActive = metamaskProvider._metamask.isUnlocked();
       console.log(getActive,'getActive')
       return getActive
