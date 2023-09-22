@@ -202,8 +202,7 @@ const Follow = ({ history = {} }) => {
   let timer = null;
   const getMisesAccountFlag = async () => {
     if (selector.web3Status) {
-      const misesWeb3Client = await window.mises.misesWeb3Client()
-      const hasAccount = await misesWeb3Client.hasWalletAccount();
+      const hasAccount = await window.mises.getMisesAccounts();
       setflag(hasAccount);
       setMisesloading(false)
     }else{

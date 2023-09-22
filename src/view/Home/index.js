@@ -15,6 +15,7 @@ import { setFirstLogin, setLoginForm, setUserAuth } from "@/actions/user";
 import { urlToJson } from "@/utils";
 import { useDidRecover } from "react-router-cache-route";
 import { Tabs, Badge, Image } from "antd-mobile";
+import { useDocumentVisibility } from "ahooks";
 const Home = ({ history, children = [] }) => {
   const { t } = useTranslation();
   const [tab, setTab] = useState([
@@ -148,6 +149,15 @@ const Home = ({ history, children = [] }) => {
   //   sessionStorage.setItem('isCloseTips',true)
   //   setCloseTipsState(true)
   // }
+  const documentVisibility = useDocumentVisibility();
+
+  useEffect(() => {
+    console.log(`Current document visibility state: ${documentVisibility}`);
+    if(documentVisibility === 'visible' && window.misesEthereum && window.mises && window.mises.requestAccountPending === 1) {
+      console.log('request Account')
+      window.mises.requestAccounts()
+    }
+  }, [documentVisibility, user.token]);
   return (
     <>
     {/* {isMises&&!closeTipsState&&<div className="tips">

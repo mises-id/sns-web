@@ -27,7 +27,6 @@ import { store } from "@/stores";
 import { Button as AntdButton, Toast } from "antd-mobile";
 import { fetchBonusCount } from "@/api/user";
 import BigNumber from "bignumber.js";
-import { useDocumentVisibility } from "ahooks";
 // import {Skeleton} from 'antd-mobile'
 const Myself = ({ history }) => {
   const { t } = useTranslation();
@@ -184,15 +183,7 @@ const Myself = ({ history }) => {
       }
     }
   };
-  const documentVisibility = useDocumentVisibility();
 
-  useEffect(() => {
-    console.log(`Current document visibility state: ${documentVisibility}`);
-    if(documentVisibility === 'visible' && window.misesEthereum && window.mises && window.mises.requestAccountPending === 1) {
-      console.log('request Account')
-      window.mises.requestAccounts()
-    }
-  }, [documentVisibility, selector.token]);
   /* 
   ,
     {

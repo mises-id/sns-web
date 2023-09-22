@@ -98,9 +98,9 @@ export default class MisesExtensionController {
     }
     provider.on("accountsChanged", async (res) => {
       
-      const ethAddress = localStorage.getItem('ethAddress');
+      const ethAddress = localStorage.getItem('ethAddress') || '';
       this.isConnect = !!ethAddress;
-      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase() && ethAddress) {
+      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase()) {
         console.log(res, 'res')
         this.resetAccount(res[0]);
         this.requestAccountPending = 1;
@@ -109,26 +109,14 @@ export default class MisesExtensionController {
       if(res.length === 0) {
         this.cleanAccount()
       }
-      // if (res.length) {
-      //   console.log('accountsChanged',res, this.connectStatus, this.isConnect)
-      //   if(this.isConnect && this.connectStatus === 'complete'){
-      //     await this.resetAccount(res[0]);
-      //   }else{
-      //     console.log('is first')
-      //   }
-      // }else{
-      //   console.log(res.length, res, 'accountsChanged')
-      //   setTimeout(() => {
-      //     this.cleanAccount();
-      //   }, 100);
-      // }
     });
     provider.request({ method: "eth_accounts" }).then((res) => {
-      const ethAddress = localStorage.getItem('ethAddress');
+      const ethAddress = localStorage.getItem('ethAddress') || '';
       this.isConnect = !!ethAddress;
-      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase() && ethAddress) {
+      if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase()) {
         console.log(res, 'res')
         this.resetAccount(res[0]);
+        this.requestAccounts()
       }
       // if(res.length === 0) {
       //   this.cleanAccount()
@@ -145,9 +133,15 @@ export default class MisesExtensionController {
       store.dispatch(setUserToken(''));
       store.dispatch(setLoginForm({}));
       store.dispatch(setWeb3Init(false));
+      store.dispatch(
+        setFollowingBadge({
+          total: 0,
+          notifications_count: 0,
+        })
+      );
       setTimeout(() => {
         store.dispatch(setWeb3Init(true));
-      }, 200);
+      }, 100);
     }
   }
   resetApp() {
@@ -165,7 +159,7 @@ export default class MisesExtensionController {
     // console.time("getAddressToMisesId time");
     // const misesid = await this.web3.misesWeb3.getAddressToMisesId(res);
     // console.timeEnd("getAddressToMisesId time");
-    const storageEthAddress = localStorage.getItem('ethAddress');
+    const storageEthAddress = localStorage.getItem('ethAddress') || '';
     const { loginForm } = store.getState().user;
     // If the selected user is different from the current user
     if (loginForm.misesid && storageEthAddress.toLowerCase()!==ethAddress.toLowerCase()) {

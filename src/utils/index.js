@@ -200,8 +200,7 @@ export function useLoginModal() {
   const loginModal = async (cb) => {
     try {
       // await window.mises.isInitMetaMask()
-      const misesWeb3Client = await window.mises.misesWeb3Client()
-      const hasAccount = await misesWeb3Client.hasWalletAccount();
+      const hasAccount = await window.mises.getMisesAccounts()
       // const flag = count > 0;
       const content = hasAccount ? t("notLogin") : t("notRegister");
       Modal.confirm({
