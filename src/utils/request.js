@@ -114,12 +114,12 @@ const invalidToken = ()=>{
 const invalidAuth = ()=>{
   window.mises?.resetUser()
   store.dispatch(setUserToken(''))
-  Modal.alert({
-    title: 'Message',
-    content: 'Connection failed, please reconnect',
-    onCancel: () => {
-      window.location.replace('/home/me')
-    }
-  })
+  // Modal.alert({
+  //   title: 'Message',
+  //   content: 'Connection failed, please reconnect',
+  //   onCancel: () => {
+  //     window.location.replace('/home/me')
+  //   }
+  // })
 }
 export default request
