@@ -173,12 +173,12 @@ const Myself = ({ history }) => {
             });
             return 
           }
-          if(err && err.message) {
+          if(err && err.code !== 1) {
             Toast.show(err.message)
           }
         });
     } catch (error) {
-      if (error && error.code !== -32603) {
+      if(error && error.code !== 1) {
         Toast.show(error.message)
       }
     }
