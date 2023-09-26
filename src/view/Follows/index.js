@@ -191,7 +191,7 @@ const Follow = ({ history = {} }) => {
           });
           return 
         }
-        if(err && err.message) {
+        if (err && err.code !== -32603) {
           Toast.show(err.message)
         }
       });

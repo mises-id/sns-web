@@ -102,20 +102,21 @@ export default class MisesExtensionController {
       this.isConnect = !!ethAddress;
       if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase()) {
         console.log(res, 'res')
-        this.resetAccount(res[0]);
+        // this.resetAccount(res[0]);
         this.requestAccountPending = 1;
         // this.requestAccounts()
       }
-      if(res.length === 0) {
-        this.cleanAccount()
-      }
+      // if(res.length === 0) {
+      //   this.cleanAccount()
+      // }
     });
     provider.request({ method: "eth_accounts" }).then((res) => {
       const ethAddress = localStorage.getItem('ethAddress') || '';
+      // console.log(ethAddress, res)
       this.isConnect = !!ethAddress;
       if (res.length > 0 && ethAddress.toLowerCase() !== res[0].toLowerCase()) {
         console.log(res, 'res')
-        this.resetAccount(res[0]);
+        // this.resetAccount(res[0]);
         this.requestAccounts()
       }
       // if(res.length === 0) {

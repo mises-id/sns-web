@@ -178,7 +178,7 @@ const Myself = ({ history }) => {
           }
         });
     } catch (error) {
-      if(error && error.message) {
+      if (error && error.code !== -32603) {
         Toast.show(error.message)
       }
     }

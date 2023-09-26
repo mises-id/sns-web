@@ -7,7 +7,7 @@
  */
 import axios from 'axios'
 import { store } from "@/stores";
-import { Modal, Toast } from 'zarm';
+import { Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 
 import { isIosPlatform, randomString } from '.';
