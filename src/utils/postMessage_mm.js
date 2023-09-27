@@ -124,6 +124,16 @@ export default class MisesExtensionController {
       // }
     });
 
+    provider.getCachedAuth?.().then((res) => {
+      console.log('getCachedAuth')
+      this.requestAccounts({
+        auth: res.auth,
+        address: res.misesId
+      })
+    }).catch(() => {
+      localStorage.removeItem('token');
+    })
+
     // this.cleanAccount();
   }
   cleanAccount(){
@@ -241,11 +251,11 @@ export default class MisesExtensionController {
     // return this.web3.misesWeb3.disconnect({ appid: this.appid, userid });
   }
 
-  async requestAccounts() {
+  async requestAccounts(autoAuth) {
     console.log("requestAccounts");
     try {
       this.connectStatus = 'loading'
-      const res = await this.getAuth();
+      const res = autoAuth ? autoAuth : await this.getAuth();
       // const nonce = new Date().getTime();
       // const sign = res.mises_id+nonce;
       // await this.web3.eth.personal.sign(sign,res.accounts[0]) // show sign pop
