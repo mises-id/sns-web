@@ -7,10 +7,10 @@
  */
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {  Loading } from "zarm";
+import { Loading } from "zarm";
 import "./index.scss";
 import Navbar from "@/components/NavBar";
-import {getStatusItem } from "@/api/status";
+import { getStatusItem } from "@/api/status";
 import {
   useChangePosts,
   useRouteState,
@@ -19,6 +19,7 @@ import { dropByCacheKey, useDidRecover } from "react-router-cache-route";
 import Empty from "@/components/Empty";
 import PostItem from "@/components/PostItem";
 import { CommentView } from "./CommentView";
+import GoogleAds from "@/components/GoogleAds";
 const Post = ({ history = {} }) => {
   const { t } = useTranslation();
   const [item, setitem] = useState(""); // post data 
@@ -30,10 +31,10 @@ const Post = ({ history = {} }) => {
   useEffect(() => {
     if (state) {
       // const historyState = urlToJson(location.search);
-      state.id&&Loading.show();
+      state.id && Loading.show();
       getDetail(state.id);
-      if(state.misesid){
-        sessionStorage.setItem('referrer',state.misesid)
+      if (state.misesid) {
+        sessionStorage.setItem('referrer', state.misesid)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,13 +42,13 @@ const Post = ({ history = {} }) => {
   // like function 
   // get this post detail 
   const getDetail = async (id) => {
-    if(!id) return  
+    if (!id) return
     try {
       const res = await getStatusItem(id)
       setitem(res);
       window.$misesShare = {
-        url:window.location.href,
-        images:res.thumb_images&&res.thumb_images[0] ? res.thumb_images[0] : 'https://home.mises.site/logo192.png'
+        url: window.location.href,
+        images: res.thumb_images && res.thumb_images[0] ? res.thumb_images[0] : 'https://home.mises.site/logo192.png'
       };
       Loading.hide();
       return res;
@@ -57,15 +58,10 @@ const Post = ({ history = {} }) => {
       console.log(error)
     }
   };
-  useDidRecover(()=>{
+  useDidRecover(() => {
     dropByCacheKey('/comment')
   })
-  useEffect(() => {
-    return () => {
-      window.$misesShare = ''
-    }
-  }, [])
-  
+
   return (
     <div className="post-detail">
       <Navbar title={t("postPageTitle")} />
@@ -79,8 +75,10 @@ const Post = ({ history = {} }) => {
               changeFollow={followPress}
               setLike={setLike}
             />
+
+            <GoogleAds />
           </div>
-          <CommentView item={item} setitem={setitem} refresh={getDetail}/>
+          <CommentView item={item} setitem={setitem} refresh={getDetail} />
         </div>
       )}
       {notFound && (<Empty />)}

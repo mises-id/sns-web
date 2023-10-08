@@ -28,6 +28,8 @@ import { getNotifications } from "@/api/notifications";
 import { setFollowingBadge } from "@/actions/user";
 import { useDidRecover } from "react-router-cache-route";
 import Avatar from '@/components/NFTAvatar'
+import GoogleAds from "@/components/GoogleAds";
+import { Toast } from "antd-mobile";
 const Follow = ({ history = {} }) => {
   // Is it a discover page
   const isDiscoverFn = ()=> {
@@ -171,6 +173,7 @@ const Follow = ({ history = {} }) => {
           changeFollow={followPress}
           setLike={setLike}
         />
+        <GoogleAds />
       </div>
     );
   };
@@ -186,6 +189,10 @@ const Follow = ({ history = {} }) => {
             width: "77%",
             title: "Message",
           });
+          return 
+        }
+        if (err && err.code !== -32603) {
+          Toast.show(err.message)
         }
       });
   };
@@ -195,8 +202,7 @@ const Follow = ({ history = {} }) => {
   let timer = null;
   const getMisesAccountFlag = async () => {
     if (selector.web3Status) {
-      const misesWeb3Client = await window.mises.misesWeb3Client()
-      const hasAccount = await misesWeb3Client.hasWalletAccount();
+      const hasAccount = await window.mises.getMisesAccounts();
       setflag(hasAccount);
       setMisesloading(false)
     }else{

@@ -117,7 +117,7 @@ const UserHeader = ({
             trigger='click'
             placement='bottom'
           >
-            <Image src="/static/images/more.png" lazy={false}  width={20} onClick={showReport}/>
+            <Image src="/static/images/more.png" lazy={false} placeholder=""   width={20} onClick={showReport}/>
           </Popover.Menu>
         </div>
       )}

@@ -200,8 +200,7 @@ export function useLoginModal() {
   const loginModal = async (cb) => {
     try {
       // await window.mises.isInitMetaMask()
-      const misesWeb3Client = await window.mises.misesWeb3Client()
-      const hasAccount = await misesWeb3Client.hasWalletAccount();
+      const hasAccount = await window.mises.getMisesAccounts()
       // const flag = count > 0;
       const content = hasAccount ? t("notLogin") : t("notRegister");
       Modal.confirm({
@@ -437,7 +436,7 @@ export function isMisesBrowser() {
   -1 || isIos();
 }
 export function getProvider(){
-  return window.misesEthereum || window.ethereum  || null;
+  return window.misesEthereum || window.ethereum || null;
 }
 export function isIos() {
   const provider = getProvider();
@@ -462,46 +461,46 @@ export function randomString() {
   return pwd
 }
 export async function getMisesWalletProvider() {
-  if(isSmallIOS()){
-    if (window.ethereum) {
-      return window.ethereum;
-    }
+  // if(isSmallIOS()){
+  //   if (window.ethereum) {
+  //     return window.ethereum;
+  //   }
   
-    if (document.readyState === "complete") {
-      return window.ethereum;
-    }
+  //   if (document.readyState === "complete") {
+  //     return window.ethereum;
+  //   }
   
-    return new Promise((resolve,reject) => {
-      const documentStateChange = (event) => {
-        if (event.target && event.target.readyState === "complete") {
-          window.ethereum ? resolve(window.ethereum) : reject();
+  //   return new Promise((resolve,reject) => {
+  //     const documentStateChange = (event) => {
+  //       if (event.target && event.target.readyState === "complete") {
+  //         window.ethereum ? resolve(window.ethereum) : reject();
   
-          document.removeEventListener("readystatechange", documentStateChange);
-        }
-      };
+  //         document.removeEventListener("readystatechange", documentStateChange);
+  //       }
+  //     };
   
-      document.addEventListener("readystatechange", documentStateChange);
-    });
-  } else {
-    if (window.misesWallet) {
-      return window.misesWallet;
-    }
-  
-    if (document.readyState === "complete") {
-      return window.misesWallet;
-    }
-  
-    return new Promise((resolve,reject) => {
-      const documentStateChange = (event) => {
-        if (event.target && event.target.readyState === "complete") {
-          window.misesWallet ? resolve(window.misesWallet) : reject();
-  
-          document.removeEventListener("readystatechange", documentStateChange);
-        }
-      };
-  
-      document.addEventListener("readystatechange", documentStateChange);
-    });
+  //     document.addEventListener("readystatechange", documentStateChange);
+  //   });
+  // } else {
+  if (window.misesWallet) {
+    return window.misesWallet || window.misesEthereum;
   }
-  
+
+  if (document.readyState === "complete") {
+    return window.misesWallet || window.misesEthereum;
+  }
+
+  return new Promise((resolve,reject) => {
+    const documentStateChange = (event) => {
+      if (event.target && event.target.readyState === "complete") {
+        window.misesWallet || window.misesEthereum ? resolve(window.misesWallet || window.misesEthereum) : reject();
+
+        document.removeEventListener("readystatechange", documentStateChange);
+      }
+    };
+
+    document.addEventListener("readystatechange", documentStateChange);
+  });
 }
+  
+// }

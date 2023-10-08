@@ -7,7 +7,7 @@
  */
 import axios from 'axios'
 import { store } from "@/stores";
-import { Modal, Toast } from 'zarm';
+import { Toast } from 'zarm';
 import { setUserToken } from '@/actions/user';
 
 import { isIosPlatform, randomString } from '.';
@@ -114,12 +114,12 @@ const invalidToken = ()=>{
 const invalidAuth = ()=>{
   window.mises?.resetUser()
   store.dispatch(setUserToken(''))
-  Modal.alert({
-    title: 'Message',
-    content: 'Connection failed, please reconnect',
-    onCancel: () => {
-      window.location.replace('/home/me')
-    }
-  })
+  // Modal.alert({
+  //   title: 'Message',
+  //   content: 'Connection failed, please reconnect',
+  //   onCancel: () => {
+  //     window.location.replace('/home/me')
+  //   }
+  // })
 }
 export default request
