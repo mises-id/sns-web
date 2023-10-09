@@ -296,7 +296,7 @@ const Myself = ({ history }) => {
       </div>
       <div className="flex align-center">
         <AntdButton type="button" color="primary" shape="rounded" size="small" onClick={() => {
-          window.open('https://mining.test.mises.site/bonuses','target=_blank');
+          window.open(process.env.REACT_APP_NODE_ENV==='production' ? 'https://mining.mises.site/bonuses' : 'https://mining.test.mises.site/bonuses','target=_blank');
         }}>
           Redeem
         </AntdButton>
