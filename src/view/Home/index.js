@@ -158,7 +158,10 @@ const Home = ({ history, children = [] }) => {
       const oldConnectAddress = localStorage.getItem('ethAddress')
       window.misesEthereum && window.misesEthereum.getCachedAuth().then(res => {
         if(res.misesId !== oldConnectAddress) {
-          window.mises.requestAccounts(res)
+          window.mises.requestAccounts({
+            auth: res.auth,
+            address: res.misesId
+          })
         }
       }).catch(err => {
         window.mises.resetUser()
