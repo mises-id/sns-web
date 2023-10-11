@@ -155,7 +155,14 @@ const Home = ({ history, children = [] }) => {
     console.log(`Current document visibility state: ${documentVisibility}`);
     if(documentVisibility === 'visible' && window.misesEthereum && window.mises && window.mises.requestAccountPending === 1) {
       console.log('request Account')
-      window.mises.requestAccounts()
+      const oldConnectAddress = localStorage.getItem('ethAddress')
+      window.misesEthereum && window.misesEthereum.getCachedAuth().then(res => {
+        if(res.misesId !== oldConnectAddress) {
+          window.mises.requestAccounts(res)
+        }
+      }).catch(err => {
+        window.mises.resetUser()
+      })
     }
   }, [documentVisibility, user.token]);
   return (
